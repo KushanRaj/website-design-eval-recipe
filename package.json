@@ -1,0 +1,13 @@
+{
+  "name": "website-design-eval-recipe",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "screenshots": "node scripts/capture-screenshots.mjs test-site/screenshot-manifest.json",
+    "screenshots:install": "playwright install chromium"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}

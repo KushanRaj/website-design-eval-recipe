@@ -1,9 +1,14 @@
 *jobs
+*research
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
+
+# Node dependencies
+node_modules/
+.playwright/
 
 # C extensions
 *.so

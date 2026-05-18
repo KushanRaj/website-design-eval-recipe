@@ -4,4 +4,33 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11.5"
-dependencies = []
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "colormath>=3.0.0",
+    "dreamsim",
+    "lxml>=6.1.0",
+    "matplotlib>=3.10.9",
+    "nltk>=3.9.4",
+    "numpy>=2.4.5",
+    "open-clip-torch>=3.3.0",
+    "openai>=2.37.0",
+    "opencv-python-headless>=4.13.0.92",
+    "pillow>=12.2.0",
+    "playwright>=1.60.0",
+    "rouge>=1.0.1",
+    "scikit-image>=0.26.0",
+    "scikit-learn>=1.8.0",
+]
+
+[project.scripts]
+website-design-eval = "website_design_eval.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["website_design_eval"]
+
+[tool.uv.sources]
+dreamsim = { path = "research/source-repos/dreamsim" }
