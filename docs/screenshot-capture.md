@@ -87,3 +87,18 @@ CMD ["npm", "run", "screenshots"]
 ```
 
 The exact Docker setup can wait. The important thing for now is that the website generator emits a manifest that describes all important visual states, and the screenshot runner can replay those states deterministically.
+
+## Metric Renderer Caveat
+
+Some metrics do not only consume the saved screenshot. Visual-block-style metrics render helper HTML internally so they can recover text blocks, bounding boxes, or DOM/CSSOM information.
+
+Those internal renders must use the same manifest state as the saved screenshot:
+
+- same page path
+- same viewport
+- same `fullPage` vs viewport screenshot mode
+- same actions, such as hover, click, focus, scroll, and wait
+
+If the saved screenshot shows a dropdown open but the metric's helper render does not perform the hover, the metric is looking at the wrong state. If the saved screenshot is a scrolled viewport but the helper render is an unscrolled full page, the coordinate system is wrong.
+
+For now, stateful captures that a metric cannot replay should be reported as `N/A` or `metric_state_mismatch`, not as a true zero score.

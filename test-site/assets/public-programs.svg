@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 500" role="img" aria-labelledby="title desc">
+  <title id="title">Public education program map</title>
+  <desc id="desc">A stylized map and planning board for public education programs.</desc>
+  <rect width="720" height="500" rx="28" fill="#eef8f6"/>
+  <path d="M88 118h210l48 62h286v230H88z" fill="#ffffff"/>
+  <path d="M122 168c72-48 142 34 220-4 88-44 134 18 252-10v208c-112 42-176-24-260 18-74 36-152-38-212 16z" fill="#cfece8"/>
+  <path d="M154 302c62-68 142-68 238-16 56 30 112 34 174 12" fill="none" stroke="#0f8b8d" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="170" cy="286" r="18" fill="#e76f51"/>
+  <circle cx="350" cy="270" r="18" fill="#f2a65a"/>
+  <circle cx="560" cy="298" r="18" fill="#192331"/>
+  <rect x="118" y="76" width="182" height="26" rx="13" fill="#192331"/>
+  <rect x="118" y="428" width="330" height="18" rx="9" fill="#9db8b5"/>
+  <rect x="118" y="456" width="250" height="18" rx="9" fill="#bfd3d0"/>
+</svg>

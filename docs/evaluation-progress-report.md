@@ -67,6 +67,12 @@ This exposed an important grading question: missing states should not silently d
 | `visual_block_score` | HTML + screenshot pair | Wired through the checked-in WebCode2M/Design2Code OCR-free block metric; promising but still optional/experimental. |
 | `element_block_pixelmatch_score` | HTML + screenshot pair | Uses the visual block matcher, then runs pixelmatch on matched block crops. |
 | `cssom_block_style_score` | HTML + screenshot pair | Uses the visual block matcher, then compares computed CSSOM styles for resolved matched blocks. |
+| `mobile_overflow_tags` | Rendered HTML page | Emits WebCoderBench-style mobile overflow tags and raw overflow measurements. |
+| `accessibility_control_tags` | Rendered HTML page | Emits WebCoderBench/Lighthouse-style control accessibility tags from rendered controls. |
+| `webcoderbench_tags` | Rendered HTML page | Bundles the currently implemented WebCoderBench-inspired tag surfaces. |
+| `webcoderbench_visual_quality_scores` | Rendered HTML + screenshot | Bundles paper-formula fallbacks for WebCoderBench component, icon, layout, and sparsity metrics. |
+| `presentation_diff_tags` | Screenshot pair | Emits WebSee-style visual-diff cluster tags and raw diff measurements. |
+| `websee_dom_localization_tags` | HTML + screenshot pair | Maps local WebSee-style visual diff clusters to candidate DOM/CSSOM boxes. |
 
 ## Metric Results
 
@@ -153,6 +159,61 @@ Interpretation:
 - This does not change `visual_block_score`; it uses the visual block matcher as correspondence.
 - It compares CSSOM groups for resolved rendered nodes: typography, color, spacing, shape, effects, and layout.
 - The bad attempt has a moderate matched-style score on the small subset it matches, but the coverage-adjusted score is low because most reference blocks are missing or unmatched.
+
+Terminology note:
+
+- `dom_resolution_score` means the share of already matched visual-block pairs that were resolvable back to rendered DOM nodes.
+- `visual_block_coverage_score` means the underlying WebCode2M/Design2Code block coverage, including unmatched reference blocks.
+- The bad page can have `dom_resolution_score = 1.0` because all 12 matched pairs resolved to DOM nodes, while `visual_block_coverage_score = 0.096` shows that most reference blocks were not matched in the first place.
+
+### WebCoderBench / WebSee Diagnostic Tags
+
+These are tag and measurement surfaces, not final reward scores. They are intentionally separate from `visual_block_score`.
+
+WebCoderBench-inspired page diagnostics:
+
+| Page | Tags | Mobile overflow | Accessibility issues | Controls |
+| --- | --- | ---: | ---: | ---: |
+| `test-site/index.html` | `mobile_horizontal_overflow` at threshold 0 | 4 px | 0 | 19 |
+| `test-site/index.html --threshold-px 4` | None | 4 px tolerated | 0 | 19 |
+| `claude-attempt-01/index.html` | `mobile_horizontal_overflow`, `element_horizontal_overflow` | 110 px | 0 | 14 |
+| `claude-attempt-02-bad/index.html` | None | 0 px | 0 | 17 |
+
+WebSee-inspired visual diff diagnostics:
+
+| Reproduction | Diff ratio | Cluster count | Tags |
+| --- | ---: | ---: | --- |
+| `claude-attempt-01` | 0.114 | 788 | `visual_diff`, `visual_diff_cluster`, `large_visual_diff` |
+| `claude-attempt-02-bad` | 0.457 | 448 | `visual_diff`, `visual_diff_cluster`, `large_visual_diff` |
+
+Interpretation:
+
+- `mobile_overflow_tags` covers the fastest WebCoderBench-style mobile compatibility case: rendered page wider than a phone viewport.
+- `accessibility_control_tags` covers buttons, links, inputs, selects, textareas, ARIA controls, and focusable controls for missing rendered accessible names or labels.
+- `webcoderbench_tags` currently bundles the no-screenshot surfaces. `webcoderbench_visual_quality_scores` separately adds component style, icon style, layout consistency, and layout sparsity fallbacks using the paper formulas.
+- `presentation_diff_tags` implements WebSee-like visual-difference detection and clustering. `websee_dom_localization_tags` adds local DOM/CSSOM localization for those clusters.
+
+WebCoderBench visual-quality fallback smoke results:
+
+| Page | Component style | Icon style | Layout consistency | Layout sparsity |
+| --- | ---: | ---: | ---: | ---: |
+| `test-site/index.html` | 100.000 | 100.000 | 62.619 | 93.037 |
+| `claude-attempt-01/index.html` | 100.000 | 100.000 | 52.607 | 94.120 |
+| `claude-attempt-02-bad/index.html` | 100.000 | 100.000 | 16.046 | 92.035 |
+
+WebSee-style DOM localization at `--min-cluster-area 5000`:
+
+| Reproduction | Diff ratio | Large clusters | Localized clusters | What top clusters point to |
+| --- | ---: | ---: | ---: | --- |
+| `claude-attempt-01` | 0.114 | 7 | 7 | Schools card, hero visual, `See our work` button, H1, section boundary. |
+| `claude-attempt-02-bad` | 0.457 | 13 | 13 | Stats band, header/nav, footer, work-card section, government card. |
+
+Notes:
+
+- These are no-reference page-quality metrics from the WebCoderBench paper, not reference-vs-candidate design matching metrics.
+- Public WebCoderBench artifacts checked so far expose leaderboard/result files but not runnable evaluator code, so these are paper-formula local fallbacks.
+- The strongest new signals are WebSee-style reference diff/localization and WebCoderBench layout consistency. Component style, icon style, and sparsity are weak separators on these two attempts.
+- The WebSee upstream Java repo was cloned, but build failed because Maven could not resolve old dependencies through the HTTP USC Artifactory repository. The local WebSee fallback maps visual diff clusters to candidate DOM/CSSOM elements.
 
 ### VLM Judge
 

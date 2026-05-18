@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "brightpath-education-test-site",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home.desktop.full",
+      "page": "home",
+      "state": "full page",
+      "path": "/index.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": true }
+    },
+    {
+      "id": "governments.desktop.full",
+      "page": "governments",
+      "state": "full page",
+      "path": "/governments.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": true }
+    },
+    {
+      "id": "enterprises.desktop.full",
+      "page": "enterprises",
+      "state": "full page",
+      "path": "/enterprises.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": true }
+    },
+    {
+      "id": "schools.desktop.full",
+      "page": "schools",
+      "state": "full page",
+      "path": "/schools.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": true }
+    },
+    {
+      "id": "careers.desktop.full",
+      "page": "careers",
+      "state": "full page",
+      "path": "/careers.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": true }
+    },
+    {
+      "id": "contact.desktop.full",
+      "page": "contact",
+      "state": "full page",
+      "path": "/contact.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": true }
+    },
+    {
+      "id": "home.desktop.work-dropdown",
+      "page": "home",
+      "state": "work dropdown open",
+      "path": "/index.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "actions": [
+        { "type": "hover", "selector": ".dropdown", "settleMs": 250 }
+      ],
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "home.desktop.work-section",
+      "page": "home",
+      "state": "scrolled to work cards",
+      "path": "/index.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "actions": [
+        { "type": "scroll", "selector": "#work", "settleMs": 150 }
+      ],
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "contact.desktop.email-focused",
+      "page": "contact",
+      "state": "email field focused",
+      "path": "/contact.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "actions": [
+        { "type": "click", "selector": "input[name='email']", "settleMs": 100 }
+      ],
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "home.desktop.viewport",
+      "enabled": false,
+      "page": "home",
+      "state": "default viewport",
+      "path": "/index.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "governments.desktop.viewport",
+      "enabled": false,
+      "page": "governments",
+      "state": "default viewport",
+      "path": "/governments.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "enterprises.desktop.viewport",
+      "enabled": false,
+      "page": "enterprises",
+      "state": "default viewport",
+      "path": "/enterprises.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "schools.desktop.viewport",
+      "enabled": false,
+      "page": "schools",
+      "state": "default viewport",
+      "path": "/schools.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "careers.desktop.viewport",
+      "enabled": false,
+      "page": "careers",
+      "state": "default viewport",
+      "path": "/careers.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "contact.desktop.viewport",
+      "enabled": false,
+      "page": "contact",
+      "state": "default viewport",
+      "path": "/contact.html",
+      "viewport": { "width": 1440, "height": 900 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "home.mobile.viewport",
+      "enabled": false,
+      "page": "home",
+      "state": "mobile viewport",
+      "path": "/index.html",
+      "viewport": { "width": 390, "height": 844 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "governments.mobile.viewport",
+      "enabled": false,
+      "page": "governments",
+      "state": "mobile viewport",
+      "path": "/governments.html",
+      "viewport": { "width": 390, "height": 844 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "enterprises.mobile.viewport",
+      "enabled": false,
+      "page": "enterprises",
+      "state": "mobile viewport",
+      "path": "/enterprises.html",
+      "viewport": { "width": 390, "height": 844 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "schools.mobile.viewport",
+      "enabled": false,
+      "page": "schools",
+      "state": "mobile viewport",
+      "path": "/schools.html",
+      "viewport": { "width": 390, "height": 844 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "careers.mobile.viewport",
+      "enabled": false,
+      "page": "careers",
+      "state": "mobile viewport",
+      "path": "/careers.html",
+      "viewport": { "width": 390, "height": 844 },
+      "screenshot": { "fullPage": false }
+    },
+    {
+      "id": "contact.mobile.viewport",
+      "enabled": false,
+      "page": "contact",
+      "state": "mobile viewport",
+      "path": "/contact.html",
+      "viewport": { "width": 390, "height": 844 },
+      "screenshot": { "fullPage": false }
+    }
+  ]
+}

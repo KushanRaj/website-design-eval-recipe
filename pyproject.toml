@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11.5"
 dependencies = [
     "beautifulsoup4>=4.14.3",
+    "claude-agent-sdk>=0.1.6",
     "colormath>=3.0.0",
     "dreamsim",
     "lxml>=6.1.0",
@@ -17,6 +18,7 @@ dependencies = [
     "opencv-python-headless>=4.13.0.92",
     "pillow>=12.2.0",
     "playwright>=1.60.0",
+    "pydantic>=2.12.5",
     "rouge>=1.0.1",
     "scikit-image>=0.26.0",
     "scikit-learn>=1.8.0",
@@ -24,13 +26,30 @@ dependencies = [
 
 [project.scripts]
 website-design-eval = "website_design_eval.cli:main"
+website-generator = "Generator.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.0",
+]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["website_design_eval"]
+packages = ["website_design_eval", "Generator"]
+
+[tool.pytest.ini_options]
+norecursedirs = [
+    ".git",
+    ".venv",
+    ".playwright",
+    "jobs",
+    "metrics-results",
+    "node_modules",
+    "research",
+]
 
 [tool.uv.sources]
 dreamsim = { path = "research/source-repos/dreamsim" }

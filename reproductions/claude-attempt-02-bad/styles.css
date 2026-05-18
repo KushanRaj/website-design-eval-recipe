@@ -1,0 +1,335 @@
+/* ==========================================================================
+   BrightPath — deliberately weak replica
+   different palette, different fonts, different layout
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #fff4e6;
+  color: #4a2c5a;
+  line-height: 1.7;
+  text-align: center;
+}
+
+a { color: #8b3a8b; text-decoration: underline; }
+
+img, svg { max-width: 100%; }
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+/* Header */
+.topbar {
+  background: #b85cb8;
+  color: #fff;
+  padding: 18px 0;
+  border-bottom: 6px dotted #ffcc66;
+}
+
+.topbar-inner {
+  display: block;
+  text-align: center;
+}
+
+.logo {
+  font-family: "Comic Sans MS", "Marker Felt", cursive;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 0 #5a1a5a;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
+.menu li {
+  display: inline-block;
+  margin: 4px 6px;
+}
+
+.menu a {
+  background: #ffcc66;
+  color: #4a2c5a;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 2px solid #4a2c5a;
+  font-weight: bold;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.cta-top {
+  background: #ff6b35;
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 4px;
+  border: 3px solid #4a2c5a;
+  display: inline-block;
+  margin-top: 10px;
+  font-family: "Comic Sans MS", cursive;
+}
+
+/* Generic */
+
+h1 {
+  font-family: "Comic Sans MS", "Marker Felt", cursive;
+  color: #6b1f6b;
+  font-size: 36px;
+  margin: 30px 0 14px;
+  text-align: center;
+  text-decoration: underline wavy #ffcc66;
+}
+
+h2 {
+  font-family: Georgia, serif;
+  color: #6b1f6b;
+  font-size: 26px;
+  margin: 28px 0 12px;
+  font-style: italic;
+  text-align: center;
+}
+
+h3 {
+  font-family: Georgia, serif;
+  color: #8b3a8b;
+  font-size: 18px;
+  margin: 20px 0 6px;
+  text-align: center;
+}
+
+p {
+  text-align: center;
+  font-size: 15px;
+}
+
+.tag {
+  color: #ff6b35;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  margin: 24px 0 8px;
+  font-weight: bold;
+}
+
+.btnish {
+  display: inline-block;
+  padding: 10px 22px;
+  margin: 6px 4px;
+  background: #6b1f6b;
+  color: #ffcc66;
+  border: 2px dashed #ffcc66;
+  font-family: "Comic Sans MS", cursive;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.btnish.alt {
+  background: #ffcc66;
+  color: #6b1f6b;
+  border-color: #6b1f6b;
+}
+
+/* Hero — pile everything centered top-down */
+.hero-bad {
+  padding: 40px 20px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #fff4e6 0,
+      #fff4e6 18px,
+      #ffe5cc 18px,
+      #ffe5cc 22px
+    );
+  border-bottom: 4px solid #ffcc66;
+}
+
+.hero-art-bad {
+  width: 220px;
+  height: 160px;
+  margin: 22px auto 6px;
+  background: #ffcc66;
+  border: 4px solid #6b1f6b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b1f6b;
+  font-family: "Comic Sans MS", cursive;
+  font-size: 22px;
+}
+
+/* Stats — vertical instead of 4-up grid */
+.stats-bad {
+  background: #6b1f6b;
+  color: #ffcc66;
+  padding: 30px 20px;
+}
+
+.stat-bad {
+  margin: 16px 0;
+  font-family: "Comic Sans MS", cursive;
+}
+
+.stat-bad strong {
+  display: block;
+  font-size: 32px;
+  color: #ffcc66;
+}
+
+.stat-bad span {
+  font-size: 13px;
+  color: #fff4e6;
+}
+
+/* Cards — stacked single-column with thick borders */
+.cards-bad {
+  padding: 30px 20px;
+}
+
+.card-bad {
+  border: 4px solid #6b1f6b;
+  background: #ffe5cc;
+  margin: 18px auto;
+  padding: 22px;
+  max-width: 520px;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #ff6b35;
+}
+
+.card-bad h3 {
+  color: #4a2c5a;
+  background: #ffcc66;
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 10px;
+}
+
+/* Process — bullet list, not vertical bar */
+.process-bad {
+  list-style: square inside;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 540px;
+  text-align: left;
+}
+
+.process-bad li {
+  background: #ffe5cc;
+  border: 2px dotted #6b1f6b;
+  padding: 10px 14px;
+  margin: 10px 0;
+  font-style: italic;
+}
+
+/* Steps — pile vertically */
+.step-bad {
+  border: 3px solid #ffcc66;
+  background: #fff;
+  padding: 16px;
+  margin: 16px auto;
+  max-width: 480px;
+}
+
+.step-bad .n {
+  background: #ff6b35;
+  color: #fff;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  font-family: "Comic Sans MS", cursive;
+  margin-bottom: 6px;
+}
+
+/* Logo row — vertical list */
+.logos-bad {
+  margin: 20px auto;
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+.logos-bad span {
+  display: block;
+  padding: 6px;
+  color: #8b3a8b;
+}
+
+/* Role list — basic blocks */
+.role-bad {
+  background: #ffcc66;
+  border: 3px solid #6b1f6b;
+  padding: 14px;
+  margin: 12px auto;
+  max-width: 500px;
+}
+
+.role-bad .meta-bad {
+  color: #6b1f6b;
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* Contact — single column form, no cards */
+.form-bad {
+  max-width: 480px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.form-bad label {
+  display: block;
+  margin-top: 14px;
+  font-weight: bold;
+  color: #6b1f6b;
+  font-family: "Comic Sans MS", cursive;
+  font-size: 13px;
+}
+
+.form-bad input,
+.form-bad textarea {
+  width: 100%;
+  border: 2px dashed #8b3a8b;
+  background: #fff4e6;
+  padding: 8px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: #4a2c5a;
+  border-radius: 0;
+}
+
+.contact-info-bad {
+  font-family: Georgia, serif;
+  font-style: italic;
+  margin: 20px auto;
+  max-width: 540px;
+}
+
+.contact-info-bad p { margin: 6px 0; }
+
+/* Footer */
+.footer-bad {
+  background: #4a2c5a;
+  color: #ffcc66;
+  padding: 30px 20px;
+  margin-top: 40px;
+  text-align: center;
+  font-family: "Comic Sans MS", cursive;
+}
+
+.footer-bad a {
+  color: #ffcc66;
+  margin: 0 8px;
+  font-size: 13px;
+}

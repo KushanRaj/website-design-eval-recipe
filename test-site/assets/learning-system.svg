@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">Education dashboard illustration</title>
+  <desc id="desc">A stylized education operations dashboard with student, school, and program cards.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#e8f6f3"/>
+      <stop offset="1" stop-color="#fff3df"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#13202f" flood-opacity=".16"/>
+    </filter>
+  </defs>
+  <rect width="960" height="640" rx="34" fill="url(#bg)"/>
+  <circle cx="804" cy="118" r="68" fill="#f2a65a" opacity=".85"/>
+  <circle cx="118" cy="524" r="92" fill="#0f8b8d" opacity=".18"/>
+  <g filter="url(#shadow)">
+    <rect x="130" y="88" width="700" height="464" rx="26" fill="#ffffff"/>
+    <rect x="130" y="88" width="700" height="74" rx="26" fill="#192331"/>
+    <circle cx="184" cy="125" r="12" fill="#f26f4f"/>
+    <circle cx="224" cy="125" r="12" fill="#f2a65a"/>
+    <circle cx="264" cy="125" r="12" fill="#0f8b8d"/>
+    <rect x="172" y="207" width="230" height="116" rx="18" fill="#e8f6f3"/>
+    <rect x="430" y="207" width="182" height="116" rx="18" fill="#fff3df"/>
+    <rect x="640" y="207" width="124" height="116" rx="18" fill="#f8e8e2"/>
+    <rect x="172" y="360" width="260" height="30" rx="15" fill="#192331"/>
+    <rect x="172" y="414" width="510" height="18" rx="9" fill="#d9e1e8"/>
+    <rect x="172" y="456" width="440" height="18" rx="9" fill="#d9e1e8"/>
+    <rect x="172" y="498" width="320" height="18" rx="9" fill="#d9e1e8"/>
+    <path d="M482 390c36-74 78-92 126-68 40 20 76 2 108-52" fill="none" stroke="#0f8b8d" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="482" cy="390" r="16" fill="#0f8b8d"/>
+    <circle cx="608" cy="322" r="16" fill="#0f8b8d"/>
+    <circle cx="716" cy="270" r="16" fill="#0f8b8d"/>
+  </g>
+  <g fill="#192331">
+    <rect x="196" y="236" width="94" height="14" rx="7"/>
+    <rect x="196" y="268" width="144" height="14" rx="7" opacity=".55"/>
+    <rect x="454" y="236" width="82" height="14" rx="7"/>
+    <rect x="454" y="268" width="108" height="14" rx="7" opacity=".55"/>
+    <rect x="662" y="236" width="54" height="14" rx="7"/>
+    <rect x="662" y="268" width="70" height="14" rx="7" opacity=".55"/>
+  </g>
+</svg>

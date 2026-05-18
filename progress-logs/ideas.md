@@ -215,3 +215,170 @@ There is also a separate label-disclosure axis. Screenshot names like `home.desk
 - shuffled anonymous labels: random order with no page/state clues
 
 For now, this is just an abstraction to keep in mind. The important point is: generate a full canonical capture set, then derive both the agent-facing evidence and the grader-facing evaluation set from policy.
+
+## Tuesday, 19 May 2026
+
+### Renderer-state contract for metrics
+
+One important issue showed up with the visual-block score: some metrics do their own internal render of the HTML instead of only looking at the already-captured screenshot.
+
+That means the metric must render the exact same state as the screenshot manifest. If the screenshot was taken after hover, click, focus, scroll, or some other interaction, then the internal metric render also has to perform the same interaction before extracting blocks or DOM/CSSOM information.
+
+The concrete failure case:
+
+- `home.desktop.work-dropdown` screenshot has the `Work` dropdown open.
+- `home.desktop.work-section` screenshot is scrolled to the work section.
+- The visual-block metric internally rendered `index.html` again, but it rendered the default page state.
+- It did not hover the dropdown and did not scroll to the work section.
+- So the helper render and the screenshot were not the same state.
+- The metric found zero text blocks and returned zero.
+
+That zero should be treated as evaluator failure / not applicable, not as evidence that the candidate design is bad.
+
+The fix is to make every render-based metric consume the same capture contract:
+
+```text
+capture id
+page path
+viewport
+actions: hover / click / focus / scroll / wait / etc.
+screenshot mode: full page or viewport
+```
+
+For visual block specifically, the internal flow should be:
+
+1. Take the reference HTML and create the color-mutated helper HTML.
+2. Open that helper HTML in Playwright with the manifest viewport.
+3. Replay the reference capture actions, such as `hover .dropdown`.
+4. Take the helper screenshot with the same `fullPage` setting as the real reference screenshot.
+5. Do the same for the second color-mutated reference helper HTML.
+6. Repeat the same process for the candidate HTML, using the candidate manifest actions/selectors.
+7. Extract blocks from helper screenshots whose state and geometry now match the real screenshots.
+
+If the candidate cannot provide an equivalent state, that should be a missing-state or unsupported-state signal. It should not silently become a zero visual-block score unless we explicitly want to penalize missing interaction coverage.
+
+This matters for React/Solid/etc. too. The robust input to render-based metrics should eventually be "render this app to this manifest state, then extract screenshot + DOM/CSSOM", not "parse raw HTML and hope it represents the same state."
+
+## Tuesday, 19 May 2026, 2:19 AM IST
+
+### Metric pruning and reward hierarchy
+
+We should stop treating every metric as equally useful. The current experiments suggest a narrower hierarchy.
+
+DreamSim should stay as the main global perceptual signal. SSIM, MSE, and MAE should not be part of the main reward surface. They are too noisy for website screenshots, especially when full-page heights, crops, or small layout shifts differ.
+
+Pixelmatch and visual diff should not be first-pass metrics. A better hierarchy is:
+
+```text
+first: DreamSim
+then: WebCode2M-style VLM
+then, only if those are good enough: pixelmatch / diff-style local checks
+```
+
+The intuition is that if the page is globally not close, pixel-level differences do not add much. If the page is globally close, pixelmatch or diff can become useful for catching smaller residual differences.
+
+CLIP does not look valuable enough for the main scoring path. It is semantic and broad, and in the toy examples it did not separate good and bad reproductions with enough confidence. Keep it as optional research/debug at most.
+
+The metrics that still look worth keeping in the main scoring discussion:
+
+- DreamSim score / distance
+- WebCode2M-style VLM judge
+- visual block core scores: size, text, position, text color
+- block/bbox geometry: bbox score, IoU, area similarity, center similarity
+- CSSOM/block style scores
+- HTML text and DOM metrics, with the future caveat that these should move from raw source HTML to rendered DOM for React/Solid/etc.
+
+The metrics that should move out of the main scoring report:
+
+- SSIM
+- MSE
+- MAE
+- global CLIP
+- WebCoderBench-style diagnostics
+- WebCode2M bbox tree inventory table
+- WebSee-style diff cluster inventory
+
+Render sanity is still useful, but only as a validity guard: did the screenshot render, is it blank, did the capture fail? It is not a reward metric.
+
+The next question is redundancy inside the narrower set. For example:
+
+- DreamSim vs VLM: do both add signal, or is one enough?
+- visual block position vs bbox geometry: are they measuring the same thing?
+- visual block text vs HTML/rendered-DOM text: how much overlap is there?
+- CSSOM layout/style vs bbox geometry: does CSSOM add signal beyond geometry?
+
+For now, the record is: prune aggressively, keep the promising metrics, and treat the next phase as redundancy testing rather than metric accumulation.
+
+### Future matcher: rendered elements beyond text blocks
+
+Another important limitation: the current WebCode2M/Design2Code visual-block coverage is not full element coverage. It is mostly text-block coverage.
+
+The OCR-free extractor works by associating rendered pixels with text/color extracted from HTML. That makes it strong for headings, paragraphs, nav labels, and text buttons, but weak for:
+
+- central hero images
+- icon-only controls
+- form controls with little visible text
+- background shapes, gradients, cards, and decorative panels
+- canvas/video/SVG-heavy interfaces
+- pages or states with very little text
+
+So `visual_block.size`, `PM Coverage`, and `CSSOM Coverage` should be interpreted as coverage over detected text-ish visual blocks, not coverage over every meaningful UI element.
+
+The future direction should keep the research-backed assignment shape from Design2Code/WebCode2M but replace/augment the element universe:
+
+```text
+extract rendered reference elements
+extract rendered candidate elements
+compute all pairwise similarities
+run maximum-weight one-to-one assignment
+report matched elements, missing reference elements, and extra candidate elements
+```
+
+The rendered element representation should include multiple channels:
+
+- semantic: tag, role, accessible name, visible text, input type
+- geometry: bbox, center, area, aspect ratio, viewport-normalized location
+- style: computed typography, color, background, spacing, border, radius, shadow, opacity
+- visual: screenshot crop pixel stats, perceptual hash, optional CLIP/DreamSim/DINO crop embedding
+- context: parent/section membership, sibling order, nearby text, child summary
+
+Matching should be type-aware rather than hardcoded:
+
+```text
+text nodes: text/name + bbox + style
+buttons/links/inputs/selects/radios: role + accessible name + bbox + style
+images/svg/icons/video/canvas: media tag + bbox/aspect + crop similarity + context
+cards/sections/containers: child summary + bbox + background/style
+decorative visual regions: bbox + color/gradient/crop similarity
+```
+
+The matcher should be hierarchical where possible:
+
+```text
+page regions -> components/cards -> leaf controls/text/media
+```
+
+This avoids matching the wrong repeated "Learn more" or repeated card element across distant page sections.
+
+This should become an experimental `rendered_element_match_score` later. It should not replace `visual_block_score`; it should sit beside it and give a second coverage/matching substrate for DOM/CSSOM, bbox, and element-pixel scores when the page is image-heavy or control-heavy.
+
+### Screenshot size as a separate signal
+
+Full-page screenshots can have different heights even when the viewport is fixed. In this prototype the desktop full-page captures are `1440px` wide, but their heights depend on each page's rendered document height.
+
+That matters because pixel-level metrics usually resize or pad before comparison:
+
+- pixelmatch, MSE, SSIM, and CLIP resize the candidate to the reference dimensions in the current scorer.
+- MAE pads to a shared larger canvas before resizing.
+- VLM judges see the raw image sizes/aspect ratios, so a taller page can make all content look compressed relative to a fixed-viewport crop.
+
+The insight is that page-height mismatch should not only leak through pixelmatch/MSE/SSIM or VLM perception. It should be surfaced explicitly as a diagnostic:
+
+```text
+screenshot_size_match_score
+  width_score  = min(widths) / max(widths)
+  height_score = min(heights) / max(heights)
+  score        = width_score * height_score
+```
+
+Then full-page captures can be used for content/section completeness, while fixed-viewport captures remain better for local layout, scale, typography, and VLM judging.

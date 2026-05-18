@@ -555,6 +555,7 @@ def cssom_block_style_score(
     include_pairs: bool = False,
     viewport: tuple[int, int] | None = None,
     min_resolution_score: float = 0.35,
+    visual_block_result: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Score computed CSS styles over existing visual-block matched pairs.
 
@@ -565,16 +566,21 @@ def cssom_block_style_score(
 
     from .block_visual import visual_block_score
 
-    visual_block = visual_block_score(
-        reference_html,
-        candidate_html,
-        reference_screenshot,
-        candidate_screenshot,
-        tmp_dir=tmp_dir,
-        device=device,
-        debug=debug,
-        include_pairs=True,
-    )
+    if visual_block_result is None:
+        visual_block = visual_block_score(
+            reference_html,
+            candidate_html,
+            reference_screenshot,
+            candidate_screenshot,
+            tmp_dir=tmp_dir,
+            device=device,
+            debug=debug,
+            include_pairs=True,
+        )
+    else:
+        visual_block = visual_block_result
+        if "matched_pairs" not in visual_block:
+            raise ValueError("visual_block_result must include matched_pairs")
     reference_snapshot = extract_cssom_snapshot(
         reference_html,
         screenshot_path=reference_screenshot,
