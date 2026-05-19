@@ -1,0 +1,9 @@
+{
+  "id": "storm-chasers-community",
+  "one_liner": "An experimental amateur meteorology and storm-chasing community website with radar-green monospace UI, live doppler embeds, chase log entries, gear review pages, regional spotter forum, an event calendar of severe weather outlooks, photo gallery of supercells, and a callsign-driven member directory.",
+  "metadata": {
+    "visual_feel": "experimental utilitarian dashboard",
+    "palette": "radar green, black, amber alert orange",
+    "density": "very high"
+  }
+}

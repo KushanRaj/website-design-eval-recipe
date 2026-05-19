@@ -1,0 +1,41 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "abyssal-current-institute",
+      "score": 0.84,
+      "accept": true,
+      "strengths": [
+        "10 well-differentiated pages aligned with seed taxonomy",
+        "Concrete interactions: faceted publication search, date scrubber tying map to table, cite-this dropdown, sparkline previews",
+        "Strong domain motifs (bathymetric contours, tide-table grids, hairline rules)",
+        "Clear content model with cruise IDs, ORCID, GeoJSON tracks, accession IDs",
+        "Live indicators strip (SST anomaly, ENSO, sea ice) signals genuine institutional dashboard"
+      ],
+      "weaknesses": [
+        "Some pages lean on generic 'directory grid' patterns without unique twist",
+        "Visual treatment slightly conservative; less sensory differentiation than candidate 2",
+        "No dedicated person-detail page despite PI focus"
+      ]
+    },
+    {
+      "candidate_id": "meridian-deep-sea-observatory",
+      "score": 0.89,
+      "accept": true,
+      "strengths": [
+        "10 pages with strong structural variety including a dedicated person-detail page",
+        "Distinctive motif: sonar two-line section headers, rust live-data dots, italic 'Fig.' captions",
+        "Rich domain-specific interactions: spectrogram audio player for bioacoustics, preview drawer with quick plots, live buoy strip with last-updated timestamp",
+        "Content model adds Sensor Station with last reading timestamp — reinforces continuous observation message",
+        "Rust accent reserved for live data creates legible information hierarchy",
+        "Discipline bands on /research feel editorial rather than templatey"
+      ],
+      "weaknesses": [
+        "Publications page slightly less detailed than candidate 1's right-rail saved-search treatment",
+        "Mobile sidebar slide-in described but discipline group behavior could be more specific"
+      ]
+    }
+  ],
+  "best_candidate_id": "meridian-deep-sea-observatory",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

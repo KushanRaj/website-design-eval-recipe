@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Table — Meeple &amp; Mug</title>
+  <meta name="description" content="Book a private room at Meeple & Mug. Pick a room, time, add-ons, and place a deposit. Birthdays, company offsites, and tournament squads all welcome.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/meeple-mark.svg">
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></span>
+      <span class="brand-text">Meeple &amp; Mug<small>Board Game Cafe</small></span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false">☰ Menu</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="book.html" class="is-active">Book</a></li>
+        <li><a href="tavern-pass.html">Tavern Pass</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta"><a href="book.html" class="btn btn--purple btn--sm">Book a table</a></div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section class="hero" style="padding:48px 0 24px;">
+    <div>
+      <span class="eyebrow">⬢ Reserve in under 90 seconds</span>
+      <h1><span>Book</span> <span class="alt">a Room</span></h1>
+      <p class="lede">Three private rooms, sized from a cozy duo to a full company offsite. Pick a room, pick a time, optionally bring a host. Deposit holds the room — applied to your tab.</p>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 480">
+        <rect x="40" y="80" width="180" height="160" rx="14" fill="#ff7a1f" stroke="#1d1830" stroke-width="5"/>
+        <text x="130" y="170" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="22" fill="#fff4dc">Dragon's</text>
+        <text x="130" y="200" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="22" fill="#fff4dc">Den</text>
+        <rect x="240" y="80" width="200" height="160" rx="14" fill="#7a3fff" stroke="#1d1830" stroke-width="5"/>
+        <text x="340" y="170" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="22" fill="#fff4dc">Hex Hall</text>
+        <rect x="40" y="260" width="400" height="160" rx="14" fill="#5fe3c0" stroke="#1d1830" stroke-width="5"/>
+        <text x="240" y="350" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="22" fill="#1d1830">The Quiet Corner</text>
+        <!-- mascots on top -->
+        <g transform="translate(360, 50)">
+          <path d="M30 0 C40 0 47 7 47 17 C47 23 44 26 42 28 C54 28 70 32 70 48 L70 80 L50 80 L50 60 L20 60 L20 80 L0 80 L0 48 C0 32 16 28 28 28 C26 26 23 23 23 17 C23 7 20 0 30 0 Z" fill="#ff7a1f" stroke="#1d1830" stroke-width="4"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- STEPPER -->
+  <ol class="stepper" aria-label="Booking steps">
+    <li class="is-current" data-step-label="room" data-step-index="1"><span class="num">1</span> Pick room</li>
+    <li data-step-label="date" data-step-index="2"><span class="num">2</span> Date &amp; party</li>
+    <li data-step-label="addons" data-step-index="3"><span class="num">3</span> Add-ons</li>
+    <li data-step-label="contact" data-step-index="4"><span class="num">4</span> Contact &amp; deposit</li>
+  </ol>
+
+  <section class="book-layout">
+    <div>
+      <!-- STEP 1 -->
+      <div data-step="room">
+        <h2>Step 1 · Choose your room</h2>
+        <p class="muted">Hover or tap to pick. You can change it before deposit.</p>
+        <div class="room-grid">
+          <div class="room-card" data-room="The Dragon's Den" data-rate="45" data-capacity="6-10" data-deposit="50">
+            <div class="room-cover" style="background:#ff7a1f;">
+              <svg viewBox="0 0 120 120" width="90"><path d="M20 80 Q60 30 100 80 L90 95 Q60 80 30 95 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><circle cx="50" cy="60" r="5" fill="#1d1830"/><path d="M70 65 Q75 55 85 65" fill="none" stroke="#1d1830" stroke-width="3"/></svg>
+            </div>
+            <div class="room-body">
+              <h3>The Dragon's Den</h3>
+              <div class="room-meta">6–10 players · velvet booths · dim sconces · sound buffered.</div>
+              <div class="room-meta">Includes: any 4 games from the library + table-side host call button.</div>
+              <span class="room-rate">$45/hr</span>
+            </div>
+          </div>
+          <div class="room-card" data-room="The Hex Hall" data-rate="65" data-capacity="10-18" data-deposit="80">
+            <div class="room-cover" style="background:#7a3fff;">
+              <svg viewBox="0 0 120 120" width="90"><polygon points="60,15 95,35 95,75 60,95 25,75 25,35" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><polygon points="60,30 85,42 85,68 60,80 35,68 35,42" fill="#5fe3c0" stroke="#1d1830" stroke-width="3"/></svg>
+            </div>
+            <div class="room-body">
+              <h3>The Hex Hall</h3>
+              <div class="room-meta">10–18 players · hex-grid mural · whiteboard wall · projector.</div>
+              <div class="room-meta">Includes: 6 games + projector for rules videos.</div>
+              <span class="room-rate">$65/hr</span>
+            </div>
+          </div>
+          <div class="room-card" data-room="The Quiet Corner" data-rate="28" data-capacity="2-4" data-deposit="30">
+            <div class="room-cover" style="background:#5fe3c0;">
+              <svg viewBox="0 0 120 120" width="90"><rect x="20" y="40" width="80" height="50" rx="10" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><rect x="30" y="50" width="30" height="30" rx="4" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/><rect x="65" y="50" width="25" height="30" rx="4" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/></svg>
+            </div>
+            <div class="room-body">
+              <h3>The Quiet Corner</h3>
+              <div class="room-meta">2–4 players · window light · acoustic panels · gentle vibes.</div>
+              <div class="room-meta">Includes: 2 games + tea service for the table.</div>
+              <span class="room-rate">$28/hr</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:20px; display:flex; gap:10px;">
+          <a href="#" data-go="date" class="btn btn--purple">Next: date &amp; party →</a>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div data-step="date" style="display:none;">
+        <h2>Step 2 · When &amp; how many?</h2>
+        <div class="panel" style="margin-top:14px;">
+          <div class="form-row">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+              <div>
+                <label for="book-date">Date</label>
+                <input id="book-date" type="date" value="2026-05-23">
+              </div>
+              <div>
+                <label for="book-time">Start time</label>
+                <select id="book-time">
+                  <option>4:00 PM</option><option>5:00 PM</option><option selected>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+              <div>
+                <label for="book-hours">Duration (hours)</label>
+                <input id="book-hours" type="number" min="2" max="6" value="3">
+              </div>
+              <div>
+                <label for="book-party">Party size</label>
+                <input id="book-party" type="number" min="2" max="18" value="8">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="#" data-go="room" class="btn">← Back</a>
+          <a href="#" data-go="addons" class="btn btn--purple">Next: add-ons →</a>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div data-step="addons" style="display:none;">
+        <h2>Step 3 · Add-ons (optional)</h2>
+        <p class="muted">Tap to toggle. We'll add to the running total in the sidebar.</p>
+        <div class="addons">
+          <div class="addon" data-addon="snack-platter">
+            <svg viewBox="0 0 32 32" width="36"><rect x="4" y="10" width="24" height="14" rx="4" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/><circle cx="11" cy="17" r="3" fill="#fff4dc"/><circle cx="20" cy="17" r="3" fill="#fff4dc"/></svg>
+            <strong>Snack platter</strong>
+            <div class="muted" style="font-size:0.85rem;">Hummus, fries, cheese, cookies. Feeds 6.</div>
+            <span class="chip chip--tangerine">$38</span>
+          </div>
+          <div class="addon" data-addon="host">
+            <svg viewBox="0 0 32 32" width="36"><circle cx="16" cy="10" r="6" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/><path d="M4 28 Q4 18 16 18 Q28 18 28 28" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/></svg>
+            <strong>Dedicated host</strong>
+            <div class="muted" style="font-size:0.85rem;">A staff member teaches rules, fetches drinks, scores games.</div>
+            <span class="chip chip--purple">$65</span>
+          </div>
+          <div class="addon" data-addon="themed">
+            <svg viewBox="0 0 32 32" width="36"><polygon points="16,4 28,12 28,24 16,30 4,24 4,12" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/><circle cx="16" cy="17" r="5" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg>
+            <strong>Themed setup</strong>
+            <div class="muted" style="font-size:0.85rem;">We pre-pick games + decor matching your vibe (heist, fantasy, retro).</div>
+            <span class="chip chip--mint">$45</span>
+          </div>
+        </div>
+        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="#" data-go="date" class="btn">← Back</a>
+          <a href="#" data-go="contact" class="btn btn--purple">Next: contact →</a>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div data-step="contact" style="display:none;">
+        <h2>Step 4 · Contact &amp; deposit</h2>
+        <form class="panel" onsubmit="event.preventDefault(); alert('Reservation request received! We will confirm by email within 2 hours.');">
+          <div class="form-row">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+              <div><label for="b-name">Your name</label><input id="b-name" type="text" placeholder="Riley Tabletop" required></div>
+              <div><label for="b-phone">Phone</label><input id="b-phone" type="tel" placeholder="(555) 100-2000" required></div>
+            </div>
+            <div><label for="b-email">Email</label><input id="b-email" type="email" placeholder="riley@example.com" required></div>
+            <div><label for="b-occasion">Occasion (optional)</label>
+              <select id="b-occasion"><option>Friends night</option><option>Birthday</option><option>Company offsite</option><option>Date night</option><option>Tournament squad practice</option></select></div>
+            <div><label for="b-notes">Anything we should know?</label><textarea id="b-notes" rows="3" placeholder="Dietary needs, surprise guest, song requests…"></textarea></div>
+            <div>
+              <label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" required> I agree to the deposit terms. The deposit applies to my final tab; refundable up to 48h before.</label>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a href="#" data-go="addons" class="btn">← Back</a>
+              <button class="btn btn--purple btn--lg" type="submit">Pay deposit &amp; reserve →</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- SUMMARY SIDEBAR -->
+    <aside class="summary-card">
+      <h3>Your reservation</h3>
+      <div class="line"><span>Room</span><span data-sum-room>— not selected —</span></div>
+      <div class="line"><span>When</span><span data-sum-date>—</span></div>
+      <div class="line"><span>Party</span><span>8 players</span></div>
+      <div data-sum-addons></div>
+      <div class="total"><span>Estimated total</span><span data-sum-total>$0</span></div>
+      <div class="line" style="margin-top:8px; font-weight:700;"><span>Deposit due</span><span data-sum-deposit>$0</span></div>
+      <p style="font-size:0.8rem; opacity:0.85; margin-top:14px;">Deposit applies to your final tab. Free cancellation 48h ahead.</p>
+    </aside>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2>Booking FAQ</h2>
+    <details open><summary>What's your cancellation policy?</summary><p>Full refund up to 48 hours before your start time. Inside 48 hours we keep the deposit, but you can move the reservation once for free.</p></details>
+    <details><summary>Can we bring outside food or drink?</summary><p>Outside drinks no — we're a licensed bar. Outside food yes for birthdays/special occasions if you flag it ahead, $15 cake plating fee covers utensils and cleanup.</p></details>
+    <details><summary>Are kids welcome?</summary><p>Of course. Until 8pm any room is family-time; after 8pm The Hex Hall and Dragon's Den shift to 16+ unless you've reserved the room privately. Quiet Corner is always kid-friendly.</p></details>
+    <details><summary>Do you teach the games?</summary><p>Yes — add the Dedicated Host upgrade and we'll teach up to three titles in your session. Otherwise our floor staff will gladly help when they're free, and the librarian writes a one-page cheat sheet for every game.</p></details>
+    <details><summary>What about accessibility?</summary><p>Step-free entrance off the parking lot, accessible restroom on the main floor, large-print rules cards available on request, and the Quiet Corner has dimmable lighting for sensory-sensitive guests.</p></details>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="brand-mark" style="background:#5fe3c0;"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#1d1830"/></svg></span><span class="brand-text">Meeple &amp; Mug<small>Roll, Sip, Repeat.</small></span></a>
+      <p style="margin-top:14px; color:rgba(255,244,220,0.75);">A neighborhood board game cafe in a converted warehouse — and a tabletop publisher of two original card games.</p>
+    </div>
+    <div><h4>Visit</h4><ul><li>412 Linwood Mill Ln</li><li>Linwood, NC 27000</li><li>(555) 314-DICE</li><li><a href="book.html">Book a table</a></li></ul></div>
+    <div><h4>Explore</h4><ul><li><a href="library.html">Game library</a></li><li><a href="menu.html">Drinks &amp; bites</a></li><li><a href="events.html">Events</a></li><li><a href="reviews.html">Friday reviews</a></li></ul></div>
+    <div><h4>Tavern Pass</h4><ul><li><a href="tavern-pass.html">Join the club</a></li><li><a href="tavern-pass.html#tiers">Tier perks</a></li><li><a href="tavern-pass.html#calc">Points calculator</a></li></ul></div>
+  </div>
+  <div class="shell legal"><span>© 2026 Meeple &amp; Mug Cafe LLC. All meeples loved equally.</span><span>Drink responsibly. Roll fearlessly.</span></div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

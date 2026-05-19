@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "regional-credit-union",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 150,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Almanac-style home cover, ledger stats stripe, chapter sections, reading room features, member voices testimonial",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "services-full",
+      "weight": 1.0,
+      "page": "services",
+      "state": "default",
+      "intent": "Tiered services index with sticky outline nav, four tier bands (Personal, Borrowing, Business, Cooperative), glossary, and guided-help form",
+      "path": "/services.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "calculators-full",
+      "weight": 1.0,
+      "page": "calculators",
+      "state": "default",
+      "intent": "Calculator workshop with 2x3 grid of six calculator cards plus assumptions sidebar and lender-call CTA",
+      "path": "/calculators.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "calculators-mortgage-expanded",
+      "weight": 0.5,
+      "page": "calculators",
+      "state": "mortgage-calculator-open",
+      "intent": "Expanded mortgage calculator with inputs and result panel revealed inline",
+      "path": "/calculators.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-calc=\"mortgage\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-us-full",
+      "weight": 1.0,
+      "page": "find-us",
+      "state": "default-branches",
+      "intent": "Regional vector map with terracotta pins and branch list grouped by river basin",
+      "path": "/find-us.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-us-branch-expanded",
+      "weight": 0.5,
+      "page": "find-us",
+      "state": "branch-detail-open",
+      "intent": "Expanded Linfield Headquarters branch summary revealing hours, services, manager, and archive note",
+      "path": "/find-us.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-105-summary-north-hollow-28-mill-lane\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-us-atm-heatmap",
+      "weight": 0.5,
+      "page": "find-us",
+      "state": "atms-tab-active",
+      "intent": "ATM heatmap tab showing shared-network density across the basin",
+      "path": "/find-us.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-tab=\"atms\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-us-filters",
+      "weight": 0.5,
+      "page": "find-us",
+      "state": "filters-tab-active",
+      "intent": "Filters tab exposing drive-thru, notary, safe-deposit selects and closure-alert subscription",
+      "path": "/find-us.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-tab=\"services\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "governance-full",
+      "weight": 1.0,
+      "page": "governance",
+      "state": "default",
+      "intent": "Annual meeting RSVP with countdown, board gallery with election chips, ballot panel, bylaws library, member proposals, and annual report spines archive",
+      "path": "/governance.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "reading-room-full",
+      "weight": 1.0,
+      "page": "reading-room",
+      "state": "default",
+      "intent": "Periodical cover Issue No. 109 with broadsheet two-column features, Loans at Work sidebar, sponsorships, scholarships, and past-issues archive carousel",
+      "path": "/reading-room.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "sign-in-personal-full",
+      "weight": 1.0,
+      "page": "sign-in",
+      "state": "default-personal-tab",
+      "intent": "Two-column secure sign-in with member login form, engraved trust marks, weekly security note, fraud-alert subscription toggles, and enrollment CTA",
+      "path": "/sign-in.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "sign-in-business-tab",
+      "weight": 0.5,
+      "page": "sign-in",
+      "state": "business-tab-active",
+      "intent": "Business Banking tab variant of the sign-in flow for commercial members",
+      "path": "/sign-in.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-tab=\"business\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    }
+  ]
+}

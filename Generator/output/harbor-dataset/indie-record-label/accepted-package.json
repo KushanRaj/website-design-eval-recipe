@@ -1,0 +1,276 @@
+{
+  "site_id": "indie-record-label",
+  "concept_seed": {
+    "id": "indie-record-label",
+    "one_liner": "A gritty independent record label website with riso-print textures, oversized brutalist headlines, neon accent inks on newsprint cream, artist roster grid, release catalog with vinyl mockups, tour date list, merch shop, label history zine page, and a sticky audio player bar.",
+    "metadata": {
+      "visual_feel": "gritty zine brutalist",
+      "palette": "newsprint cream, riso pink, electric cyan, black",
+      "density": "medium-high"
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "indie-record-label--xerox-pressing-co",
+    "domain": "independent music / record label",
+    "site_goal": "Position Xerox Pressing Co. as a fiercely independent riso-print record label, drive vinyl pre-orders, surface upcoming tour dates, and convert listeners into fans of specific roster artists through a zine-style browsing experience anchored by a persistent audio player bar.",
+    "audience": [
+      "indie music fans aged 18-40",
+      "vinyl collectors",
+      "music journalists and zine readers",
+      "touring bookers and venue promoters",
+      "merch buyers"
+    ],
+    "description": "A gritty, photocopied-zine feeling label site for Xerox Pressing Co., a fictional Brooklyn-and-Glasgow indie label specializing in noise rock, post-punk, and experimental electronics. The whole site reads like a stapled fanzine printed at 2am: newsprint cream paper texture, riso pink and electric cyan misregistered ink overlays, oversized black brutalist headlines that often run off the page edge, halftone photos of artists, hand-drawn arrows, paste-up tape marks at corners of cards, marker-scrawl annotations on release covers. A sticky audio player bar pinned to the bottom of every page plays a curated label sampler with track skip, scrubber, and a 'now spinning' marquee. The roster page is an asymmetric grid of artist cards built like trading-card cutouts; the catalog page renders each release as a vinyl-with-sleeve mockup the user can flip to see the B-side. Tour dates live on a typewriter-style list with a sold-out stamp motif. Merch is a contact-sheet grid. The history page is a long scrolling zine spread with column-broken text, footnotes, and inkjet-streak dividers.",
+    "motif": "photocopied zine paste-up with misregistered riso ink, halftone artist portraits, marker scrawls, masking-tape corners, and oversized condensed grotesk headlines smashed against a newsprint-cream paper grain",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "zine cover splash with oversized misregistered headline, featured release jacket, three latest news pull-quote cards, and an embedded sampler tracklist that loads into the sticky player",
+        "sections": [
+          "masthead with label name treated as a smudged cyan-over-pink riso block",
+          "lead headline of the month set in oversized condensed grotesk running off the right edge",
+          "featured new release card with vinyl mockup, artist credit, pre-order pill",
+          "three news/zine teaser cards with date stamps and marker underlines",
+          "label sampler tracklist (load-into-player) with track numbers in oversized digits",
+          "tear-off newsletter strip with dashed scissor cut and 'subscribe to the dispatch' field",
+          "sticky audio player bar pinned to bottom"
+        ]
+      },
+      {
+        "id": "roster",
+        "path": "/roster",
+        "layout_pattern": "asymmetric trading-card grid of artist portraits with tape corners, hand-drawn underlines, and chip-style genre filters across the top",
+        "sections": [
+          "page header reading 'The Roster' with cyan strike-through",
+          "genre filter chips (noise, post-punk, ambient, dub, no-wave, electronic)",
+          "12-16 artist cards in irregular column widths with halftone portraits, hometown, latest release thumbnail, and a 'hear them' play button that loads their last single into the player",
+          "submissions / demo policy footer block typed on a typewriter"
+        ]
+      },
+      {
+        "id": "artist-detail",
+        "path": "/roster/sable-circuit",
+        "layout_pattern": "long-form zine spread for a single artist: big halftone hero, three-column biography with pull quotes, vertical discography rail, and embedded tour dates",
+        "sections": [
+          "huge halftone hero portrait with the artist name overlaid in oversized stencil type",
+          "metadata strip: hometown, formed, members",
+          "three-column biography with footnote markers and pull-quote callouts",
+          "discography rail showing all releases as small vinyl mockups",
+          "selected press quotes set as torn-paper clippings",
+          "artist tour dates list filtered to this artist",
+          "social links and contact-for-booking line"
+        ]
+      },
+      {
+        "id": "catalog",
+        "path": "/catalog",
+        "layout_pattern": "catalog grid of vinyl-with-sleeve mockups, each flippable to reveal B-side; filterable by format and year with a left-rail catalog-number index",
+        "sections": [
+          "left rail with catalog number index (XRX-001 through XRX-047) acting as anchor links",
+          "filter row: format (LP / 7-inch / cassette / digital), year, in-stock toggle",
+          "grid of release cards, each a vinyl-sticking-out-of-sleeve mockup with cyan/pink color variant swatches",
+          "click-to-flip reveals B-side tracklist and liner-note excerpt",
+          "pre-order banner for upcoming pressings styled as a stamped notice"
+        ]
+      },
+      {
+        "id": "release-detail",
+        "path": "/catalog/xrx-039",
+        "layout_pattern": "single-release deep page with large sleeve art, tracklist with per-track preview, pressing variant selector, and credits ledger",
+        "sections": [
+          "large front sleeve art with riso-style overlay",
+          "metadata column: artist, catalog number, release date, format, pressing size",
+          "tracklist with each row having a play button that cues the sticky player and an A/B side divider",
+          "pressing variant selector swatches (black, cyan splatter, pink marble) with stock state",
+          "buy block with format prices and add-to-cart pill",
+          "credits ledger: produced by, mastered by, sleeve art by, recorded at",
+          "liner notes set as multi-column zine copy"
+        ]
+      },
+      {
+        "id": "tour",
+        "path": "/tour",
+        "layout_pattern": "typewriter-style chronological tour-date list with monospace columns, sold-out rubber-stamp marks, and a region filter",
+        "sections": [
+          "page header 'On The Road' with riso-misregistered subtitle",
+          "filter bar: artist, region (US East / US West / UK / EU), 'tickets left' toggle",
+          "tour date rows in monospace: date | city | venue | artist | support | tickets/sold-out stamp",
+          "embedded poster gallery thumbnails for the current touring cycle",
+          "promoter contact block at the bottom"
+        ]
+      },
+      {
+        "id": "merch",
+        "path": "/shop",
+        "layout_pattern": "contact-sheet grid of merch product photos with hand-numbered captions, plus a category sidebar and a sticky mini-cart pill",
+        "sections": [
+          "category sidebar: shirts, hoodies, totes, posters, pins, bundles",
+          "product grid of square photos shot like a screen-printer's contact sheet with frame numbers underneath",
+          "product card hover reveals price and 'add to bag'",
+          "shipping policy bar in typewriter type",
+          "bundle promo banner (LP + tee + zine)"
+        ]
+      },
+      {
+        "id": "history-zine",
+        "path": "/history",
+        "layout_pattern": "long scrolling zine spread chaptered by year, with multi-column text, photocopied photographs, pull quotes, footnotes, and an annotated catalog timeline at the bottom",
+        "sections": [
+          "chapter 01 — 2014: a basement and a 4-track",
+          "chapter 02 — 2017: the first sold-out pressing",
+          "chapter 03 — 2020: pressing plants and pandemics",
+          "chapter 04 — 2023: the Glasgow annex",
+          "pull-quote callouts misregistered in pink",
+          "footnote column with asterisk references",
+          "annotated horizontal timeline of every catalog number, ending with the latest release",
+          "colophon: who runs this label, mailing address, demo policy"
+        ]
+      }
+    ],
+    "message_intent": [
+      "we are loud, independent, and we press our own records",
+      "every artist on this roster has a voice worth hearing in full",
+      "buying a record here directly supports the band",
+      "come see these bands live in a small room near you",
+      "this label has a history and a point of view"
+    ],
+    "required_text": [
+      "Xerox Pressing Co.",
+      "Now Spinning",
+      "Roster",
+      "Catalog",
+      "Tour",
+      "Merch",
+      "History",
+      "Est. 2014  —  Brooklyn / Glasgow"
+    ],
+    "content_model": [
+      "Artist: name, hometown, genre tags, bio, photo, linked releases, tour dates, socials",
+      "Release: title, artist, catalog number, format (12-inch, 7-inch, cassette, digital), pressing variant, release date, tracklist, sleeve art front/back, audio previews, buy link, liner notes",
+      "Tour date: date, city, venue, support acts, ticket link, sold-out flag",
+      "Merch item: title, artist (or label), photo set, sizes, price, stock state",
+      "Zine entry: chapter title, year, body copy with footnotes, archival photos, pull quotes",
+      "Audio track: title, artist, release, duration, file"
+    ],
+    "interactions": [
+      "sticky bottom audio player bar with play/pause, prev/next, scrubber, volume, now-spinning marquee, and queue popout",
+      "click a release sleeve to flip it and read the B-side tracklist",
+      "filter roster by genre tag chips (noise, post-punk, ambient, dub, no-wave)",
+      "tour list filter by region and 'has tickets left' toggle",
+      "merch size selector and add-to-cart pill with cart counter in the header",
+      "newsletter signup styled as a tear-off bottom-of-page strip with dashed scissor line"
+    ],
+    "asset_needs": [
+      "halftone black-and-white artist portrait photos (12-16 artists)",
+      "front and back sleeve mockups for ~24 releases",
+      "vinyl label center artwork for each release",
+      "riso pink and cyan texture overlays (grain, ink splatter, misregistration)",
+      "newsprint-cream paper background texture",
+      "hand-drawn arrow, star, and asterisk SVG marks",
+      "masking-tape and staple decorative graphics",
+      "audio waveform graphics for player bar"
+    ],
+    "mobile_behavior": "Sticky audio player collapses to a slim bar with cover thumbnail, title marquee, and play toggle. Roster grid stacks into a single column of taped-down cards. Release flip becomes a tap-to-flip card. Tour dates remain a typewriter list. Header navigation collapses into a stamped 'menu' button revealing a full-screen zine-style nav sheet.",
+    "difficulty": "hard"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "indie-record-label--xerox-pressing-co",
+        "score": 0.88,
+        "accept": true,
+        "strengths": [
+          "Eight distinct pages with clearly differentiated layout patterns (zine cover, asymmetric grid, vinyl flip catalog, typewriter tour list, contact-sheet merch, foldout history)",
+          "Tight alignment with the seed: vinyl mockups, sticky audio player, tour list, merch shop, history zine page all present",
+          "Concrete motif execution — masking tape corners, halftone portraits, riso misregistration, marker scrawls, stencil type — not generic",
+          "Rich interactions: click-to-flip sleeves, B-side reveal, genre chip filtering, tear-off newsletter strip, queue popout in player",
+          "Specific content model with catalog numbers (XRX-001 to XRX-047), pressing variants, credits ledger"
+        ],
+        "weaknesses": [
+          "Roster card 'hear them' play interaction overlaps slightly with release-detail play behavior",
+          "History page chapter dates are plausibly fine but could risk feeling like a template timeline if not visually distinct"
+        ]
+      },
+      {
+        "candidate_id": "indie-record-label--low-tide-tapes",
+        "score": 0.86,
+        "accept": true,
+        "strengths": [
+          "Nine pages, all visually and functionally differentiated",
+          "Distinctive devices: cassette J-card fold-open, tide-line horizontal tour timeline, cassette-deck VU player bar, tape-club countdown",
+          "Strong regional flavor (Olympia/Oakland, PNW chips, hand-dubbed editions) avoids generic indie-label feel",
+          "Adds tape-club subscription page and reading-room essay index that go beyond the seed without drifting"
+        ],
+        "weaknesses": [
+          "Seed explicitly calls out 'vinyl mockups' as central; this concept leans cassette-first, making the vinyl emphasis secondary",
+          "Tide-line metaphor for tour dates is creative but slightly less legible than a straight chronological list for booker/promoter audience",
+          "Shop page is the least differentiated relative to candidate 1"
+        ]
+      }
+    ],
+    "best_candidate_id": "indie-record-label--xerox-pressing-co",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/real-run-9/indie-record-label/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "accessibility",
+        "message": "Several icon-only buttons (player controls, filter chips, cart toggle) lack discernible accessible names. Newsletter signup input has no associated label.",
+        "severity": "warning",
+        "path": "multiple pages"
+      },
+      {
+        "type": "component_consistency",
+        "message": "Roster card group flagged with hierarchy/tag mismatches across 10 of 16 cards. Visually the cards read as a single consistent system with intentional asymmetric column widths per the zine brief, but underlying markup differs enough to lower the heuristic score.",
+        "severity": "info",
+        "path": "/roster"
+      },
+      {
+        "type": "layout_alignment",
+        "message": "Layout consistency scores are mid-range on catalog (45) and roster (48). This is largely expected for a zine/brutalist motif with intentional misregistration, but a few alignment misses are real.",
+        "severity": "info",
+        "path": "/catalog, /roster"
+      }
+    ],
+    "scores": {
+      "accessibility": 0.78,
+      "mobile_responsiveness": 0.85,
+      "component_consistency": 0.78,
+      "layout_alignment": 0.72,
+      "render_quality": 0.99,
+      "page_completeness": 1.0,
+      "brand_fit": 0.96
+    },
+    "repair_instructions": [
+      "Add aria-label attributes to all icon-only buttons in the sticky audio player bar (play/pause, prev, next, queue, volume mute toggle) so screen readers announce them. Do the same for filter chip toggles that rely on visual state, the cart pill in the header, and the 'flip' button on catalog cards.",
+      "Wrap the newsletter email input in a <label> (or add an explicit for/id pair plus a visually-hidden label) on the home page tear-off strip so the field has an accessible name.",
+      "On the roster page, normalize the artist card markup so every card uses the same tag hierarchy (e.g. article > figure(img) > h3 > meta-row > tag-list > button). Keep the asymmetric column widths via CSS grid track sizing rather than by varying the inner HTML structure — that preserves the zine look while making the cards a real consistent component.",
+      "Audit the catalog page for stray vertical alignment misses: the left rail catalog index, filter row, and the first row of release cards should share a common top baseline. Visually-intended misregistration on sleeve mockups is fine and should be left alone.",
+      "Optional polish: the roster card art placeholders all show the same generic pink/cyan blob silhouette. Vary the halftone portraits per artist (even with deterministic SVG seeds) so the page reads as a roster of distinct people rather than 16 copies of the same shape."
+    ],
+    "deterministic_checks": {
+      "page_presence_resolved": {
+        "/": "index.html",
+        "/roster": "roster.html",
+        "/roster/sable-circuit": "artist.html (concrete instance)",
+        "/catalog": "catalog.html",
+        "/catalog/xrx-039": "release.html (concrete instance)",
+        "/tour": "tour.html",
+        "/shop": "shop.html",
+        "/history": "history.html"
+      },
+      "required_text_present": true,
+      "render_sanity_all_passed": true,
+      "accessibility_warnings": [
+        "missing_accessible_name on icon-only player controls",
+        "missing_form_label on newsletter input"
+      ]
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/real-run-9/indie-record-label/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/real-run-9/indie-record-label/site/screenshots/reference"
+}

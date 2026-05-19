@@ -1,0 +1,637 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "tabletop-gaming-cafe",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full home page with hero, quick links, tonight's events, featured games, drinks, Tavern Pass band, reviews row, and hours/address",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "menu-full",
+      "weight": 1.0,
+      "page": "menu",
+      "state": "default",
+      "intent": "Full menu page with diner board four-column layout, allergen chips, staff picks, and private event catering note",
+      "path": "/menu.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "menu-allergen-vegan",
+      "weight": 0.4,
+      "page": "menu",
+      "state": "allergen-vegan-active",
+      "intent": "Allergen filter chip active to demonstrate the dietary filter interaction on the menu board",
+      "path": "/menu.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-allergen=\"vegan\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "library-full",
+      "weight": 1.0,
+      "page": "library",
+      "state": "default",
+      "intent": "Full library page with filter rail (player count slider, time chips, complexity dots, mood pills, availability), sort, game grid, staff favorites, and request form",
+      "path": "/library.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "library-availability-on-shelf",
+      "weight": 0.4,
+      "page": "library",
+      "state": "availability-only-on-shelf",
+      "intent": "Only-show-on-shelf availability toggle active to demonstrate filtered game grid",
+      "path": "/library.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "#f-avail",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "library-mood-strategy",
+      "weight": 0.4,
+      "page": "library",
+      "state": "mood-strategy-active",
+      "intent": "Mood filter chip Strategy active to demonstrate mood pill filtering of the game grid",
+      "path": "/library.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-mood=\"strategy\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "events-full",
+      "weight": 1.0,
+      "page": "events",
+      "state": "default-month-bracket-open",
+      "intent": "Full events page in default Month calendar view with featured tournament bracket already expanded, weekly leagues sidebar, and submit-a-meetup form",
+      "path": "/events.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "events-list-view",
+      "weight": 0.5,
+      "page": "events",
+      "state": "list-view",
+      "intent": "Calendar List view toggle to show alternate layout for events listing",
+      "path": "/events.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-view=\"list\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "events-bracket-hidden",
+      "weight": 0.4,
+      "page": "events",
+      "state": "bracket-hidden",
+      "intent": "Featured tournament bracket collapsed to show the alternate bracket-hidden state of the toggle",
+      "path": "/events.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-bracket-toggle=\"#bracket-1\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "book-step1",
+      "weight": 1.0,
+      "page": "book",
+      "state": "step-1-pick-room",
+      "intent": "Booking flow Step 1: Pick a room with the three room cards, sticky reservation summary, and FAQ accordion",
+      "path": "/book.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "book-step2-date",
+      "weight": 0.5,
+      "page": "book",
+      "state": "step-2-date-party",
+      "intent": "Booking flow Step 2: Date and party size picker after advancing past room selection",
+      "path": "/book.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-103-a-next-date-party\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "book-step3-addons",
+      "weight": 0.5,
+      "page": "book",
+      "state": "step-3-addons",
+      "intent": "Booking flow Step 3: Add-ons selection after advancing from date/party step",
+      "path": "/book.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-103-a-next-date-party\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-130-a-next-add-ons\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "book-step4-contact",
+      "weight": 0.5,
+      "page": "book",
+      "state": "step-4-contact-deposit",
+      "intent": "Booking flow Step 4: Contact details and deposit form with checkbox and pay-deposit CTA",
+      "path": "/book.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-103-a-next-date-party\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-130-a-next-add-ons\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "a[data-go=\"contact\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "book-faq-open",
+      "weight": 0.3,
+      "page": "book",
+      "state": "faq-cancellation-open",
+      "intent": "Booking FAQ accordion expanded showing detailed answer for the cancellation policy item",
+      "path": "/book.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-216-summary-can-we-bring-outside-food-or-drink\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 150,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "tavern-pass-full",
+      "weight": 1.0,
+      "page": "tavern-pass",
+      "state": "default",
+      "intent": "Full Tavern Pass loyalty page with hero, how-it-works steps, tier ladder cards, perks comparison table, points calculator, signup form, and member testimonials",
+      "path": "/tavern-pass.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "reviews-full",
+      "weight": 1.0,
+      "page": "reviews",
+      "state": "default",
+      "intent": "Full Friday Reviews page with rubric filter chips, lead review with scorecard, three secondary reviews, reviewer roster strip, archive list, and subscribe form",
+      "path": "/reviews.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "reviews-rubric-party",
+      "weight": 0.4,
+      "page": "reviews",
+      "state": "rubric-party-active",
+      "intent": "Rubric category filter Party active to demonstrate filtering of the review grid",
+      "path": "/reviews.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-rubric=\"party\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    }
+  ]
+}

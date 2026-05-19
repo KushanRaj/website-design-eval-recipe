@@ -1,0 +1,39 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "site-05-retail-marketplace-vintage-c1",
+      "score": 0.82,
+      "accept": true,
+      "strengths": [
+        "Seven concrete pages each with distinct layout patterns and section lists",
+        "Strong editorial motif (salon-wall clustering, earthen palette, mixed serif/grotesque typography) directly fulfilling the seed",
+        "Rich interactions: faceted filters, sticky cart drawer, shipping calculator, make-an-offer, save-to-list with price-drop alerts",
+        "Detailed content model covering listing, storefront, journal, saved lists, orders",
+        "Mobile behavior specified per breakpoint"
+      ],
+      "weaknesses": [
+        "Aesthetic leans toward familiar editorial-marketplace territory (Tiempos/Söhne pairing is a common reference)",
+        "Provenance timeline and dimensions diagram are mentioned but not deeply differentiated from standard high-end marketplaces"
+      ]
+    },
+    {
+      "candidate_id": "site-05-retail-marketplace-vintage-c2",
+      "score": 0.88,
+      "accept": true,
+      "strengths": [
+        "Distinctive 'Drop' event mechanic gives the marketplace a time-bound, live feel that avoids generic catalog patterns",
+        "Patina Report and freight-route map are concrete, unusual modules tied to honest-wear thesis",
+        "Column-density slider (3/5/8) and masonry chaos are specific layout ideas not seen in typical templates",
+        "Picker's Log with location-tagged dispatches and shoppable hotspots gives the journal a unique voice",
+        "Seven pages with crisp section breakdowns and a clear mustard/brick/ink palette plus Druk/Caslon pairing"
+      ],
+      "weaknesses": [
+        "Drop countdown could overshadow always-on browsing if not handled carefully",
+        "Freight route map is ambitious and may be hard to mock convincingly"
+      ]
+    }
+  ],
+  "best_candidate_id": "site-05-retail-marketplace-vintage-c2",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

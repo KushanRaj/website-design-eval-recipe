@@ -829,6 +829,13 @@ Return strict JSON only. Use this schema:
 Rules:
 - Use only paths shown in the browser-rendered inventory.
 - Use only selectors shown in the browser-rendered inventory. Do not invent ids/classes.
+- Treat each capture as a desired browser-visible state. The action list is only the reproducible route to that state for this source website.
+- If an existing/prior manifest is used as intent guidance, preserve the target state, not the exact prior action or selector.
+- Pick the action that actually opens/reveals the state in this website. Do not use hover just because the state is called a dropdown/menu.
+- For disclosure widgets, details/summary controls, buttons, tabs, accordions, filters, and toggles, prefer click unless the rendered inventory or source clearly shows hover is required.
+- Use hover only for genuine hover-reveal or hover-style states where click would not be the natural control semantics.
+- Example: if the prior/oracle state is "Work dropdown open" reached by hovering `.dropdown`, but this website uses `<summary>Work</summary>` or a menu button, use click on the summary/button if that reveals the same Work menu state.
+- Example: if the prior/oracle state is "filter panel expanded" reached by clicking a button, but this website exposes the panel through a tab or accordion control, use the tab/accordion action that reaches the expanded filter-panel state.
 - For action selectors, prefer a selector_candidates entry with count=1. Prefer data_attr, id, name, and aria_label selectors over class or nth_path selectors.
 - data-wde-manifest-id selectors are deterministic oracle replay stamps and are acceptable when no semantic unique selector exists.
 - Avoid nth_path selectors unless they are the only unique selector candidate.
@@ -842,7 +849,6 @@ Rules:
 {_capture_limit_rule(max_captures)}
 - Use weights: full unique page = 1.0, major hidden surface or alternate layout = 0.5, representative filter/tab/accordion state = 0.25 to 0.5.
 - Use only these actions when needed: hover, click, focus, scroll, waitForSelector.
-- Use click for buttons/toggles whose state changes on click; use hover only for genuine hover-reveal or hover-style states.
 - For scroll actions prefer rendered section selectors like "#work" or a stable section id.
 - For focus actions prefer inputs with id/name selectors.
 - Add a short intent string for each non-default state capture.
@@ -888,6 +894,13 @@ The manifest must follow this schema:
 
 Capture rules:
 - If existing_manifest_prior is present, treat it as the intent/coverage guide. Preserve the same broad capture intentions unless the rendered browser inventory proves a selector/path is invalid.
+- Treat each capture as a desired browser-visible state. The action list is only the reproducible route to that state for this source website.
+- If an existing/prior manifest is used as intent guidance, preserve the target state, not the exact prior action or selector.
+- Pick the action that actually opens/reveals the state in this website. Do not use hover just because the state is called a dropdown/menu.
+- For disclosure widgets, details/summary controls, buttons, tabs, accordions, filters, and toggles, prefer click unless the rendered inventory or source clearly shows hover is required.
+- Use hover only for genuine hover-reveal or hover-style states where click would not be the natural control semantics.
+- Example: if the prior/oracle state is "Work dropdown open" reached by hovering `.dropdown`, but this website uses `<summary>Work</summary>` or a menu button, use click on the summary/button if that reveals the same Work menu state.
+- Example: if the prior/oracle state is "filter panel expanded" reached by clicking a button, but this website exposes the panel through a tab or accordion control, use the tab/accordion action that reaches the expanded filter-panel state.
 - Include full-page desktop captures for important unique pages.
 - Add interaction/state captures only when the state reveals substantial hidden content, changes the visible layout, or changes the visible data/content being evaluated.
 - Hidden navigation panels such as dropdowns, megamenus, and submenus are high-value interaction states when they reveal link groups or structured navigation content. Include a minimal representative set of these before lower-value filter, focus, or hover-style states.
@@ -900,7 +913,6 @@ Capture rules:
 {_capture_limit_rule(max_captures)}
 - Use weights: full unique page = 1.0, major hidden surface or alternate layout = 0.5, representative filter/tab/accordion state = 0.25 to 0.5.
 - Use only these actions: hover, click, focus, scroll, waitForSelector.
-- Use click for buttons/toggles whose state changes on click; use hover only for genuine hover-reveal or hover-style states.
 - Use only paths and selectors present in the rendered inventory.
 - Add a short intent string for each non-default state capture.
 - Do not include disabled captures.

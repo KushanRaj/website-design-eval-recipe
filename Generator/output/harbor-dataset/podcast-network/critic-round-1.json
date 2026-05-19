@@ -1,0 +1,43 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "podcast-network-static-hum",
+      "score": 0.82,
+      "accept": true,
+      "strengths": [
+        "Eight concrete pages well above the five-page floor, each with a distinct layout pattern and section list",
+        "Motif (oscilloscope waveform + glossy chrome panels + magenta→lime gradient washes) is specific and tied to the seed palette",
+        "Interactions are domain-specific and useful: docked global player, transcript-synced auto-scroll, hover waveform previews, subscribe-everywhere chip rack",
+        "Strong content model coverage (Show / Episode / Host / Tour / Membership / Sponsor) matches the seed brief precisely",
+        "Membership tier names (Listener / Insider / Patron) and Hum Club branding feel coherent and label-like"
+      ],
+      "weaknesses": [
+        "Home and shows-index lean a touch on familiar streaming-service tropes (tile grid + horizontal rail)",
+        "Advertise page is a fairly standard B2B scroll without a strongly distinctive motif beat",
+        "Hosts page is lighter on metadata depth than the rest of the site"
+      ]
+    },
+    {
+      "candidate_id": "podcast-network-frequency-room",
+      "score": 0.9,
+      "accept": true,
+      "strengths": [
+        "Ten pages, all with distinct layout patterns — well over the five-page floor and avoids near-duplicate templates",
+        "Channel-guide framing (numbered channels, per-show accent hue, liner-notes episode rows) is a fresh and editorially specific take on the seed",
+        "Concentric tuner-dial waveform motif plus low-magenta-lit portrait photography is concrete, atmospheric, and on-palette",
+        "Cross-network archive page with full-text transcript search, faceted filters and highlighted snippets is a standout, domain-specific feature",
+        "Membership tiering (Late Pass / Skeleton Key) and Inner Circle simulcast badge tie the club tier directly into live events",
+        "About / pitch-a-show page closes a credible loop for recruiting new hosts, which the seed audience explicitly includes",
+        "Vertical right-edge waveform rail on desktop collapsing to a docked mini-player on mobile is a thoughtful, distinctive global-player treatment"
+      ],
+      "weaknesses": [
+        "Membership and partner pages still follow recognizable conversion-landing patterns, even if dressed in the motif",
+        "Channel-guide row list could risk visual monotony if accent hues aren't carefully varied",
+        "Some overlap between archive page and per-show episode list — needs disciplined differentiation in execution"
+      ]
+    }
+  ],
+  "best_candidate_id": "podcast-network-frequency-room",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

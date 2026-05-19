@@ -1,0 +1,109 @@
+{
+  "id": "lutherie-guild",
+  "title": "The Worshipful Guild of Stringed-Instrument Luthiers",
+  "tagline": "Established MDCCXIV",
+  "one_liner": "An ornate craft guild website for stringed-instrument luthiers rendered as a leather-bound folio brought to the screen.",
+  "concept_summary": "An 18th-century editorial-heritage treatise translated to web: engraved frontispiece, two-column justified body with drop caps, hand-set chapter numerals (CAP. II, CAP. III…), foliate rules, wax-seal navigation, and tipped-in plates throughout.",
+  "palette": {
+    "walnut": "#4A2E1F",
+    "walnut_deep": "#2F1B11",
+    "walnut_soft": "#6B4A33",
+    "parchment": "#F2E6D0",
+    "parchment_pale": "#FAF1DD",
+    "parchment_deep": "#E8D6B3",
+    "burgundy": "#6B1E2A",
+    "burgundy_deep": "#4A0F1A",
+    "ink": "#221208"
+  },
+  "typography": {
+    "primary_serif": "Cormorant Garamond",
+    "fell_italic": "IM Fell English",
+    "small_caps": "IM Fell English SC",
+    "features": ["ligatures (ct, st, fi, fl)", "small-caps for proper nouns", "italic captions", "hanging drop caps", "Roman-numeral sections"]
+  },
+  "density": "medium-high",
+  "visual_feel": "ornate editorial heritage",
+  "motifs": [
+    "engraved frontispiece with acanthus scrollwork",
+    "wax-seal hover state on navigation",
+    "foliate rules between sections",
+    "tipped-in plate illustrations",
+    "copperplate captions",
+    "engraved house marks for member workshops",
+    "engraved arms of the guild"
+  ],
+  "pages": [
+    {
+      "id": "home",
+      "path": "index.html",
+      "title": "Frontispiece",
+      "summary": "Title cartouche with the guild's full Latin-and-English name, a MDCCXIV roundel, a centered engraved viola d'amore within an acanthus frame, two-column justified preface from the Warden with drop caps, three plate-card teasers (Apprenticeship, Exhibition, Journal), an instrument-of-the-month strip, and a footer with the guild oath."
+    },
+    {
+      "id": "workshops",
+      "path": "workshops.html",
+      "title": "Of the Member Workshops",
+      "summary": "Filter ribbon (instrument family, region, accepting apprentices) above a grid of twelve workshop cards each bearing an engraved house mark, master luthier, city, specialties, and founded year. Followed by an engraved foldout map of member locations and a call-to-action to apply for membership."
+    },
+    {
+      "id": "apprenticeship",
+      "path": "apprenticeship.html",
+      "title": "Cap. III — Of the Path to Mastery",
+      "summary": "Chapter-style page with drop-cap opening, a three-tier timeline (Apprentice → Journeyman → Master) with foliate dividers and marginal footnotes on stipend, bench hours, and examination. Closes with an engraved petition-style application form, complete with wax seal."
+    },
+    {
+      "id": "materials",
+      "path": "materials.html",
+      "title": "Cap. IV — Of Woods, Varnishes & Strings",
+      "summary": "Diderot-plate inspired catalogue: a large labelled cross-section engraving with five numbered callouts, a sortable materials table of ten tonewoods/varnishes/strings (species, grading, sourcing partner, sustainability), a varnish-recipe vignette with engraved bottles, a forester's sidebar note, and an interactive maple-billet rotator switching between quarter-sawn and flat-sawn engravings."
+    },
+    {
+      "id": "exhibition",
+      "path": "exhibition.html",
+      "title": "Cap. V — The Annual Exhibition",
+      "summary": "Year and host city cartouche (MMXXVI · Cremona · Palazzo dell'Arte), a Best-in-Show hero plate (the 'Cygnet' Violin) with juror citation, a two-column gallery of six juried instruments with copperplate captions, an attending-workshops list, and an archive carousel of past exhibition frontispieces back to MMXVIII."
+    },
+    {
+      "id": "instrument-of-the-month",
+      "path": "instrument-of-the-month.html",
+      "title": "Instrument of the Month",
+      "summary": "A tipped-in plate spread: a full engraving of the 'Maréchal' Theorbo (Bologna, 1672) on the verso with a copperplate caption, and on the recto a full entry with maker, year, dimensions, varnish, tonal notes, and a numbered provenance chain styled as a Roman-numeralled lineage. A phonograph-horn play button toggles 'sounding' state. A thumbnail strip of previously featured instruments follows."
+    },
+    {
+      "id": "journal",
+      "path": "journal.html",
+      "title": "Journal of Techniques",
+      "summary": "Engraved periodical layout: masthead with Vol. CCCX, Issue II in Roman numerals; table of contents; lead article 'On the Felting of the Bass-Bar — A Re-examination' in two justified columns with numbered figures (Fig. I, Fig. II), parchment-tooltip footnote pop-overs, Roman-numeralled sections (§ I — § IV), and an author colophon with engraved portrait. A sidebar lists past issues, subscription details, and editorial credits."
+    }
+  ],
+  "interactions": [
+    "wax-seal hover state on navigation that 'presses' a burgundy seal beneath each label",
+    "workshop directory filter chips for instrument family, region, and apprenticeship availability (dims non-matching cards)",
+    "interactive maple-billet rotator flipping between quarter-sawn and flat-sawn engravings",
+    "footnote pop-overs that surface citations in a parchment tooltip on hover/focus",
+    "sortable materials table",
+    "phonograph-horn play button that toggles a 'sounding' state with subtle animation",
+    "mobile hamburger menu opening a parchment drawer",
+    "soft fade page-turn transition between chapters"
+  ],
+  "mobile_behavior": "Two-column folio collapses to a single justified column; chapter numerals shrink to inline kickers; margin engravings reflow above their related paragraph as half-width plates; the wax-seal nav becomes a hamburger that opens a parchment drawer.",
+  "asset_strategy": "All engravings are hand-authored inline SVG using hatching patterns, double-rule frames, foliate rosettes, and small-caps inscriptions. No external image downloads. Webfonts loaded from Google Fonts (Cormorant Garamond, IM Fell English, IM Fell English SC) with system serif fallbacks.",
+  "files": [
+    "index.html",
+    "workshops.html",
+    "apprenticeship.html",
+    "materials.html",
+    "exhibition.html",
+    "instrument-of-the-month.html",
+    "journal.html",
+    "css/style.css",
+    "js/main.js",
+    "site_intent.json"
+  ],
+  "required_text_present": [
+    "The Worshipful Guild of Stringed-Instrument Luthiers",
+    "ESTABLISHED MDCCXIV",
+    "Instrument of the Month",
+    "Journal of Techniques"
+  ]
+}

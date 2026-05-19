@@ -1,0 +1,195 @@
+{
+  "id": "regional-credit-union",
+  "candidate_id": "regional-credit-union-b",
+  "site_name": "Three Rivers Cooperative Credit Union",
+  "one_liner": "An editorial-almanac website for a 90-year-old cooperative credit union, foregrounding governance, member voice, and tangible community lending — with a warm olive/terracotta/cream palette and scratchboard motifs.",
+  "site_goal": "Differentiate a 90-year-old credit union from commercial regional banks by foregrounding cooperative governance, member voting, community lending stories, and modern self-service tools — all in an almanac-style editorial frame.",
+  "metadata": {
+    "density": "medium",
+    "palette": "olive green, terracotta, cream",
+    "visual_feel": "warm community institutional",
+    "motif": "engraved scratchboard spot illustrations + horizontal ledger-stripe banding"
+  },
+  "design": {
+    "typography": {
+      "headlines": "Cooper-adjacent rounded humanist serif (Cooper Black, Bookman Old Style, Georgia fallback)",
+      "body": "Nunito / Quicksand / system rounded humanist sans",
+      "figures": "ui-monospace / SF Mono / Menlo — 'honest accounting' style",
+      "smallcaps": "tight tracking, 0.16em letter-spacing"
+    },
+    "palette": {
+      "olive": "#5d6b3a",
+      "olive_deep": "#424b27",
+      "olive_shade": "#38421d",
+      "terracotta": "#c45a3d",
+      "terracotta_deep": "#9b4128",
+      "cream": "#f3e8d0",
+      "cream_light": "#faf3df",
+      "ink": "#2a2418"
+    },
+    "motifs": [
+      "Horizontal olive ledger-stripe banding dividing each page into chapters",
+      "Terracotta Roman numerals as chapter markers (I. II. III. ...)",
+      "Inline SVG scratchboard engravings (bridge, wheat, river logo, board portraits, tool icons)",
+      "Faint engraved-line texture on cream body background",
+      "Chip-style badges and trust marks rendered as engraved circles",
+      "Annual report PDFs as 'ledger spines' in a year grid",
+      "Marginalia footnotes in a terracotta-bordered narrow column"
+    ],
+    "layout": "Asymmetric two-column broadsheet inside a max-1180px wrapper; sticky outline rails; ledger-stripe full-bleed bands separating major sections."
+  },
+  "pages": [
+    {
+      "id": "home",
+      "path": "index.html",
+      "title": "Almanac",
+      "layout_pattern": "Almanac cover with engraved bridge SVG, founding-year terracotta callout, ledger stripe of figures, then four Chapter sections (I Services, II Community Lending, III Governance, IV Reading Room), member-voice testimonial.",
+      "sections_implemented": [
+        "Almanac cover hero (Est. 1936, bridge engraving, mission, 'One member, one vote.')",
+        "Ledger stripe: 4.35% dividend / 84,217 members / 31 branches",
+        "Chapter I — Services overview (three tier cards)",
+        "Chapter II — Community lending (four anonymized recent loans funded)",
+        "Chapter III — Governance with live countdown + ballot-open chip",
+        "Chapter IV — Reading Room (three featured articles, Issue 109)",
+        "Member Voices long-form testimonial",
+        "Footer with full seven Rochdale Principles and NCUA / Equal Housing badges"
+      ]
+    },
+    {
+      "id": "services-tiered-nav",
+      "path": "services.html",
+      "title": "Services Index",
+      "layout_pattern": "Tiered services index with sticky outline rail and four ledger-stripe tier bands (Personal, Borrowing, Business, Cooperative).",
+      "sections_implemented": [
+        "Sticky left-rail outline (I–VI) with live scrollspy",
+        "Personal tier — 6-product typographic table with monospaced rates",
+        "Borrowing tier — 6 products incl. credit-builder loan",
+        "Business tier — operating accounts, SBA, CRE, agriculture",
+        "Cooperative lending tier — co-op startup, worker-owned conversion, community solar, CLT mortgage",
+        "Glossary marginalia (APR vs APY, share vs deposit, dividend vs interest, patronage refund)",
+        "'Not sure where to start?' guided-help launcher with form"
+      ]
+    },
+    {
+      "id": "loan-calculator-suite",
+      "path": "calculators.html",
+      "title": "Calculator Workshop",
+      "layout_pattern": "Six bordered tool-bench cards in a 3×2 grid, each with a scratchboard engraving icon. Selecting a card expands a two-column input/result panel inline with a 'Print this estimate' button.",
+      "sections_implemented": [
+        "Mortgage payment calculator (P&I + taxes + insurance + PMI, fully live)",
+        "Auto loan + refi savings (compares two rates and projects total savings)",
+        "Debt consolidation (current vs new monthly payment)",
+        "Savings goal projector (iterative simulation, returns months / years to goal)",
+        "HELOC draw period (credit-line and interest-only monthly)",
+        "Amortization schedule (first 12 months rendered live in a table)",
+        "Print-to-PDF on every calculator (window.print)",
+        "Assumptions / disclosures sidebar and schedule-a-lender CTA"
+      ]
+    },
+    {
+      "id": "branches-and-atms",
+      "path": "find-us.html",
+      "title": "Find Us",
+      "layout_pattern": "Tabbed locator with regional vector SVG map (three states, three rivers, terracotta pins) plus right-side branch list grouped by Upper/Middle/Lower basin. ATM heatmap and service filter tabs.",
+      "sections_implemented": [
+        "Hand-drawn SVG regional map with state outlines, three river curves, 12 branch pins",
+        "Branch list grouped by basin with expandable <details> entries (hours, services, manager, archive note, opened year)",
+        "ATM heatmap SVG with radial blobs over Linfield / Riverbend / Estuary / Hatcher",
+        "Shared-branching explainer card",
+        "Holiday-hours banner",
+        "Filter panel (drive-thru, notary, safe-deposit, Saturday hours) with weather-closure subscription"
+      ]
+    },
+    {
+      "id": "governance-and-voting",
+      "path": "governance.html",
+      "title": "Governance",
+      "layout_pattern": "Civic-style page with annual-meeting RSVP and live countdown, board portraits, member-authenticated ballot card with terracotta 'BALLOT OPEN' chip, bylaws library, member-proposal form, and a 30-year annual report 'spine' archive.",
+      "sections_implemented": [
+        "Annual meeting RSVP card with countdown timer (June 14 2026)",
+        "Board-of-directors gallery (6 directors with SVG portrait abstractions, terms, committees, statements; 3 marked UP FOR ELECTION)",
+        "Member-authenticated board ballot panel (terracotta band, sign-in CTA)",
+        "Bylaws & policies library (6 PDF cards)",
+        "Member proposals submission form",
+        "Annual report archive grid (1996 – 2025 as ledger spines)",
+        "Long-form Seven Rochdale Principles explainer"
+      ]
+    },
+    {
+      "id": "community-impact-blog",
+      "path": "reading-room.html",
+      "title": "The Reading Room",
+      "layout_pattern": "Periodical-style editorial blog. Olive-deep cover with monthly wheat-sheaf illustration and ToC. Broadsheet two-column feature with drop cap. Sidebar carries Loans-at-Work, sponsorship news, scholarships, mail-subscribe. Past-issue carousel below.",
+      "sections_implemented": [
+        "Periodical cover: Issue No. 109, May 2026, wheat-sheaf SVG, table-of-contents",
+        "Lead feature (broadsheet two-column with drop cap + marginalia footnote)",
+        "Loans-at-Work sidebar profile (Northbridge Print Coop)",
+        "Sponsorship news ticker (4 entries)",
+        "2026 scholarship recipients note",
+        "Subscribe-by-mail print newsletter form",
+        "Two additional features (debt-collector timeline, farm succession)",
+        "Past issues archive carousel (12 issues, scroll-snap with prev/next buttons)"
+      ]
+    },
+    {
+      "id": "secure-member-login",
+      "path": "sign-in.html",
+      "title": "Sign In",
+      "layout_pattern": "Two-column auth: left bordered cream login card with double-bordered engraved frame, right column with weekly fraud-team security note and engraved-circle trust marks. Tabs swap Personal / Business banking forms.",
+      "sections_implemented": [
+        "Personal login form (member number / password / trust device / MFA continuation)",
+        "Business banking tab with hardware-token field + treasury features list",
+        "Forgot username/password and first-time enrollment launchers",
+        "Security note of the week (lost-package SMS scam, with byline)",
+        "Fraud-alert subscription toggles (live status text)",
+        "Engraved-circle trust-mark row (NCUA / MFA / TLS 1.3)",
+        "24/7 fraud hotline call-out band"
+      ]
+    }
+  ],
+  "interactions_implemented": [
+    "Six live calculators with full math (mortgage, auto+refi, debt, savings, HELOC, amortization)",
+    "Print-to-PDF buttons (window.print) on every calculator",
+    "Live countdown timer to the annual meeting (home + governance)",
+    "Tabbed UI on Find Us (branches/ATMs/filters) and Sign In (personal/business)",
+    "Scrollspy on the services outline rail",
+    "Expandable branch <details> entries grouped by river basin",
+    "Past-issues scroll-snap carousel with prev/next controls",
+    "Fraud-alert subscription toggle with live state",
+    "Marginalia tap-to-expand glosses (mobile)",
+    "Multiple form 'submit' handlers showing acknowledgement notes (RSVP, proposal, subscribe, request callback)"
+  ],
+  "required_text_present": [
+    "Three Rivers Cooperative Credit Union",
+    "Est. 1936",
+    "One member, one vote.",
+    "Federally insured by NCUA",
+    "Equal Housing Lender"
+  ],
+  "files": [
+    "index.html",
+    "services.html",
+    "calculators.html",
+    "find-us.html",
+    "governance.html",
+    "reading-room.html",
+    "sign-in.html",
+    "css/style.css",
+    "js/app.js",
+    "site_intent.json"
+  ],
+  "tech": {
+    "html": "Static HTML 5, semantic landmarks, hand-authored",
+    "css": "One shared stylesheet, custom properties, no preprocessors",
+    "js": "Vanilla ES2015+, ~270 lines, no frameworks, no build tooling",
+    "assets": "All illustrations are inline SVG (no external images downloaded)"
+  },
+  "audience": [
+    "Multi-generational members across the three-state region",
+    "Worker-owned cooperatives seeking lending partners",
+    "Small farmers and ag businesses in succession planning",
+    "Civic-minded depositors choosing values-aligned banking",
+    "Business members needing commercial accounts",
+    "Long-time members participating in board elections"
+  ]
+}

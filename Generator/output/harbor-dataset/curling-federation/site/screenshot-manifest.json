@@ -1,0 +1,392 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "curling-federation",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full homepage with masthead, ticker, rankings panel, bracket teaser, news column, club spotlight, and sponsor strip.",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "footer.site-footer",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "home-rankings-women-tab",
+      "weight": 0.5,
+      "page": "home",
+      "state": "rankings-women-tab",
+      "intent": "Homepage National Rankings panel switched to the Women tab to reveal alternate ranking dataset.",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-95-div-women\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-95-div-women\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 200,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "standings-full",
+      "weight": 1.0,
+      "page": "standings",
+      "state": "default",
+      "intent": "Full standings page including filter chip rail, division tabs, sortable Premier table, legend sidebar, and download actions.",
+      "path": "/standings.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "#standings-premier",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "standings-challenger-tab",
+      "weight": 0.5,
+      "page": "standings",
+      "state": "challenger-tab",
+      "intent": "Standings page Challenger division tab activated to reveal an alternate league standings dataset.",
+      "path": "/standings.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-106-div-challenger\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-106-div-challenger\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 200,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "athletes-full",
+      "weight": 1.0,
+      "page": "athletes",
+      "state": "default",
+      "intent": "Full athletes roster directory: national squad spotlight, faceted filter rail (discipline, position, region, hand, age), athlete card grid, pagination.",
+      "path": "/athletes.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "aside.filter-rail",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "brackets-full",
+      "weight": 1.0,
+      "page": "brackets",
+      "state": "default",
+      "intent": "Full National Championship bracket page: tournament header, live final banner, playoff bracket with end-by-end grids, draw schedule, officials assigned panel.",
+      "path": "/brackets.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "#playoff-view",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "brackets-round-robin-toggle",
+      "weight": 0.5,
+      "page": "brackets",
+      "state": "round-robin-pools",
+      "intent": "Bracket page toggled to the Round-Robin Pools view to reveal pool standings layout instead of playoff bracket.",
+      "path": "/brackets.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "button[data-bracket-mode=\"rr\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "button[data-bracket-mode=\"rr\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 300,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "clubs-full",
+      "weight": 1.0,
+      "page": "clubs",
+      "state": "default",
+      "intent": "Full Find-a-Club locator: filter chip rail, national map with markers and selected-club flyout, search input, and scrollable club result list.",
+      "path": "/clubs.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "div[aria-label=\"Club filters\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "rules-full",
+      "weight": 1.0,
+      "page": "rules",
+      "state": "default",
+      "intent": "Full Rules & Officiating handbook page: sticky chapter TOC sidebar, subscribe form, edition banner, multi-chapter handbook body with diagrams and rule-change callouts.",
+      "path": "/rules.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "article.handbook",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "results-full",
+      "weight": 1.0,
+      "page": "results",
+      "state": "default",
+      "intent": "Full Results Archive page: filter chip rail with season range, year facet sidebar, grouped result tables by event, historical champions strip, export actions.",
+      "path": "/results.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "div[aria-label=\"Results filters\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "news-full",
+      "weight": 1.0,
+      "page": "news",
+      "state": "default",
+      "intent": "Full News & Bulletins page: category and format chip rails, lead press-release hero, two-column bulletin list, officiating notices sidebar, subscribe form, athlete of the month, partners panel.",
+      "path": "/news.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "section.news-hero",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 10000,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    }
+  ]
+}

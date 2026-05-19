@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "botanical-garden-nursery",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full-page home with illustrated hero, In Bloom This Week, featured cultivars, plan-your-visit strip, workshops, membership, and footer.",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "encyclopedia-index-full",
+      "weight": 1.0,
+      "page": "encyclopedia",
+      "state": "default",
+      "intent": "Full-page Cultivar Encyclopedia index with search, alphabet jump strip, taxonomic filter rail, plate grid, and pagination.",
+      "path": "/encyclopedia.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "encyclopedia-entry-full",
+      "weight": 1.0,
+      "page": "paphiopedilum-fairrieanum",
+      "state": "default",
+      "intent": "Full-page cultivar entry with illustration plate, quick facts table, sticky tabs, prose sections, conservation callout, and related plates.",
+      "path": "/encyclopedia/paphiopedilum-fairrieanum.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "encyclopedia-entry-tab-cultivation",
+      "weight": 0.4,
+      "page": "paphiopedilum-fairrieanum",
+      "state": "tab-cultivation",
+      "intent": "Cultivar entry scrolled to the Cultivation section to show sticky tab active state and bench notes content.",
+      "path": "/encyclopedia/paphiopedilum-fairrieanum.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-113-a-cultivation\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "encyclopedia-entry-tab-propagation",
+      "weight": 0.4,
+      "page": "paphiopedilum-fairrieanum",
+      "state": "tab-propagation",
+      "intent": "Cultivar entry showing the Propagation tab section with the conservation callout visible.",
+      "path": "/encyclopedia/paphiopedilum-fairrieanum.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-114-a-propagation\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "bloom-calendar-full",
+      "weight": 1.0,
+      "page": "bloom-calendar",
+      "state": "default",
+      "intent": "Full-page Bloom Calendar with circular bloom wheel, month slider, zone filter chips, and currently peaking species list.",
+      "path": "/bloom-calendar.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "garden-map-full",
+      "weight": 1.0,
+      "page": "garden-map",
+      "state": "default",
+      "intent": "Full-page Garden Map with interactive SVG zone map, right-rail zone detail panel, legend, and printed-map download.",
+      "path": "/garden-map.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "garden-map-bloom-highlights",
+      "weight": 0.4,
+      "page": "garden-map",
+      "state": "bloom-highlights-on",
+      "intent": "Garden map with Show Bloom Highlights toggled on to reveal coral bloom pins layered over the SVG map.",
+      "path": "/garden-map.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-53-input-show-bloom-highlights\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "workshops-full",
+      "weight": 1.0,
+      "page": "workshops",
+      "state": "default-calendar",
+      "intent": "Full-page Workshops with calendar/list toggle (calendar active), May-June grid, workshop card list, instructor spotlight strip, and member discount note.",
+      "path": "/workshops.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "workshops-list-view",
+      "weight": 0.4,
+      "page": "workshops",
+      "state": "list-view",
+      "intent": "Workshops with the List view toggled on instead of the calendar grid.",
+      "path": "/workshops.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-view=\"list\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "shop-full",
+      "weight": 1.0,
+      "page": "shop",
+      "state": "default",
+      "intent": "Full-page Nursery Shop with seasonal shipping notice, filter rail, product grid (including waitlist card), and waitlist join block.",
+      "path": "/shop.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "membership-full",
+      "weight": 1.0,
+      "page": "membership",
+      "state": "default",
+      "intent": "Full-page Membership with patron hero quote, four-tier table, conservation impact strip, FAQ accordion, and patron honor roll.",
+      "path": "/membership.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "membership-faq-open",
+      "weight": 0.3,
+      "page": "membership",
+      "state": "faq-first-open",
+      "intent": "Membership FAQ with the first question expanded to show accordion answer content.",
+      "path": "/membership.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-184-summary-what-does-my-membership-get-me-at-the-gate\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "field-notes-full",
+      "weight": 1.0,
+      "page": "field-notes",
+      "state": "default",
+      "intent": "Full-page Field Notes editorial magazine with featured plate-essay, dispatches grid, recent dispatches sidebar, author bylines, and printed almanac subscribe form.",
+      "path": "/field-notes.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "visit-full",
+      "weight": 1.0,
+      "page": "visit",
+      "state": "default",
+      "intent": "Full-page Plan Your Visit with hours, admission, find-us, reach-us, weekly highlights, accessibility, and member band.",
+      "path": "/visit.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ]
+}

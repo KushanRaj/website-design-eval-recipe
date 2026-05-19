@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Find a Club — National Curling Federation</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-bar">
+    <div>Member Portal · Officials Login · Calendar</div>
+    <div><a href="#">EN</a> · <a href="#">FR</a> · Season 2025–26</div>
+  </div>
+  <div class="masthead-main">
+    <div class="crest" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#BCD7E6" stroke-width="1.2"/>
+        <circle cx="20" cy="20" r="13" fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="8"  fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="3"  fill="#BCD7E6"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#BCD7E6" stroke-width="0.6"/>
+        <line x1="20" y1="2" x2="20" y2="38" stroke="#BCD7E6" stroke-width="0.6"/>
+      </svg>
+    </div>
+    <div class="masthead-title">
+      <h1>National Curling Federation</h1>
+      <span class="tagline">Est. 1903 · Hammer · Sweep · Sport for All</span>
+    </div>
+    <div class="masthead-meta">
+      <strong>2025–26 Season</strong>
+      Week 21 · 19 May 2026
+    </div>
+  </div>
+  <nav class="primary-nav">
+    <a href="index.html">Home</a>
+    <a href="standings.html">Standings</a>
+    <a href="athletes.html">Athletes</a>
+    <a href="brackets.html">Tournaments</a>
+    <a href="clubs.html" class="active">Find a Club</a>
+    <a href="rules.html">Rules &amp; Officiating</a>
+    <a href="results.html">Results Archive</a>
+    <a href="news.html">News</a>
+  </nav>
+</header>
+
+<div class="ticker" aria-label="Live results ticker">
+  <div class="ticker-label">Live · Results</div>
+  <div class="ticker-track">
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span><span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>U21-FINAL</strong> · Pine Hollow 8–2 Westbrook <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>MX-2D</strong> · Carrington 6–6 Sable Lakes · End 7</span><span class="sep">◆</span>
+    <span class="live">LIVE · Glacier Park 4–4 Brookmoor · End 6 · Sheet C</span><span class="sep">◆</span>
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span><span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>U21-FINAL</strong> · Pine Hollow 8–2 Westbrook <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>MX-2D</strong> · Carrington 6–6 Sable Lakes · End 7</span><span class="sep">◆</span>
+    <span class="live">LIVE · Glacier Park 4–4 Brookmoor · End 6 · Sheet C</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<main>
+  <div class="breadcrumbs"><a href="index.html">Home</a><span class="sep">/</span>Membership<span class="sep">/</span>Find a Club</div>
+  <h2>Find a Club · National Locator</h2>
+
+  <!-- Filter chips -->
+  <div class="chip-rail" role="toolbar" aria-label="Club filters">
+    <div class="chip-group">
+      <span class="lbl">League</span>
+      <span class="chip active">All</span>
+      <span class="chip">Competitive</span>
+      <span class="chip">Recreational</span>
+      <span class="chip">Senior</span>
+      <span class="chip">Mixed Doubles</span>
+    </div>
+    <div class="chip-group">
+      <span class="lbl">Program</span>
+      <span class="chip">Junior (U18)</span>
+      <span class="chip">Learn-to-Curl</span>
+      <span class="chip">High Performance</span>
+    </div>
+    <div class="chip-group">
+      <span class="lbl">Accessibility</span>
+      <span class="chip alt">Wheelchair Curling</span>
+      <span class="chip alt">Step-free Access</span>
+      <span class="chip alt">Visual-impairment Guides</span>
+    </div>
+    <div class="chip-group" data-chip-exclusive>
+      <span class="lbl">Sheets</span>
+      <span class="chip active">Any</span>
+      <span class="chip">2+</span>
+      <span class="chip">4+</span>
+      <span class="chip">6+</span>
+    </div>
+    <div class="chip-group" style="margin-left:auto;">
+      <a href="#" class="btn ghost" style="font-size:10px;">+ Submit a Club</a>
+    </div>
+  </div>
+
+  <!-- Layout -->
+  <div class="clubs-layout">
+
+    <!-- Map -->
+    <div class="clubs-map-pane">
+      <svg viewBox="0 0 600 700" preserveAspectRatio="xMidYMid meet" aria-label="National club locator map">
+        <!-- background grid -->
+        <defs>
+          <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#D2E4ED" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="700" fill="#E7F1F6"/>
+        <rect width="600" height="700" fill="url(#grid)"/>
+
+        <!-- abstract country outline (stylized) -->
+        <path d="M 80 60 L 200 40 L 320 70 L 460 50 L 540 100 L 560 220 L 520 320 L 540 420 L 500 520 L 460 600 L 380 660 L 280 640 L 200 600 L 120 540 L 80 460 L 60 360 L 80 240 Z"
+              fill="#FFFFFF" stroke="#3A3F45" stroke-width="1.2"/>
+
+        <!-- regions -->
+        <path d="M 80 60 L 200 40 L 320 70 L 290 240 L 200 250 L 80 240 Z" fill="#D2E4ED" stroke="#8FB9CE" stroke-width="0.8" opacity="0.7"/>
+        <text x="180" y="150" font-family="Helvetica" font-size="14" font-weight="700" fill="#3A3F45" letter-spacing="2">NORTH</text>
+
+        <path d="M 320 70 L 460 50 L 540 100 L 560 220 L 460 240 L 360 220 L 320 150 Z" fill="#BCD7E6" stroke="#8FB9CE" stroke-width="0.8" opacity="0.7"/>
+        <text x="430" y="160" font-family="Helvetica" font-size="14" font-weight="700" fill="#3A3F45" letter-spacing="2">HIGHLANDS</text>
+
+        <path d="M 80 240 L 200 250 L 290 240 L 360 220 L 460 240 L 520 320 L 460 380 L 320 400 L 200 380 L 80 360 Z" fill="#FFFFFF" stroke="#8FB9CE" stroke-width="0.8" opacity="0.7"/>
+        <text x="260" y="320" font-family="Helvetica" font-size="14" font-weight="700" fill="#3A3F45" letter-spacing="2">CENTRAL</text>
+
+        <path d="M 80 360 L 200 380 L 320 400 L 460 380 L 520 320 L 540 420 L 500 520 L 380 530 L 240 520 L 120 540 L 80 460 Z" fill="#D2E4ED" stroke="#8FB9CE" stroke-width="0.8" opacity="0.6"/>
+        <text x="260" y="460" font-family="Helvetica" font-size="14" font-weight="700" fill="#3A3F45" letter-spacing="2">CAPITAL</text>
+
+        <path d="M 120 540 L 240 520 L 380 530 L 500 520 L 460 600 L 380 660 L 280 640 L 200 600 Z" fill="#BCD7E6" stroke="#8FB9CE" stroke-width="0.8" opacity="0.6"/>
+        <text x="260" y="600" font-family="Helvetica" font-size="14" font-weight="700" fill="#3A3F45" letter-spacing="2">COASTAL</text>
+
+        <!-- rivers / coastline accents -->
+        <path d="M 80 240 Q 240 280 460 240" fill="none" stroke="#8FB9CE" stroke-width="0.6" stroke-dasharray="3,2"/>
+        <path d="M 80 460 Q 280 500 540 420" fill="none" stroke="#8FB9CE" stroke-width="0.6" stroke-dasharray="3,2"/>
+
+        <!-- markers -->
+        <g data-club-marker="whitestone" style="cursor:pointer;">
+          <circle cx="300" cy="450" r="9" fill="#3A3F45" stroke="#FFF" stroke-width="2"/>
+          <text x="312" y="454" font-family="Helvetica" font-size="11" fill="#3A3F45">Whitestone CC</text>
+        </g>
+        <g data-club-marker="brookmoor" style="cursor:pointer;">
+          <circle cx="370" cy="330" r="9" fill="#3A3F45" stroke="#FFF" stroke-width="2"/>
+          <text x="382" y="334" font-family="Helvetica" font-size="11" fill="#3A3F45">Brookmoor CC</text>
+        </g>
+        <g data-club-marker="northfield" style="cursor:pointer;">
+          <circle cx="220" cy="560" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="232" y="564" font-family="Helvetica" font-size="11" fill="#3A3F45">Northfield CC</text>
+        </g>
+        <g data-club-marker="ironcliff" style="cursor:pointer;">
+          <circle cx="180" cy="160" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="192" y="164" font-family="Helvetica" font-size="11" fill="#3A3F45">Ironcliff CC</text>
+        </g>
+        <g data-club-marker="greycap" style="cursor:pointer;">
+          <circle cx="470" cy="180" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="482" y="184" font-family="Helvetica" font-size="11" fill="#3A3F45">Greycap CC</text>
+        </g>
+        <g data-club-marker="foreland" style="cursor:pointer;">
+          <circle cx="430" cy="290" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="442" y="294" font-family="Helvetica" font-size="11" fill="#3A3F45">Foreland CC</text>
+        </g>
+        <g data-club-marker="pinehollow" style="cursor:pointer;">
+          <circle cx="380" cy="610" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="392" y="614" font-family="Helvetica" font-size="11" fill="#3A3F45">Pine Hollow CC</text>
+        </g>
+        <g data-club-marker="capeverity" style="cursor:pointer;">
+          <circle cx="320" cy="640" r="5" fill="#8FB9CE" stroke="#FFF" stroke-width="2"/>
+          <text x="330" y="644" font-family="Helvetica" font-size="11" fill="#3A3F45">Cape Verity CC</text>
+        </g>
+        <g data-club-marker="glacier" style="cursor:pointer;">
+          <circle cx="500" cy="120" r="5" fill="#8FB9CE" stroke="#FFF" stroke-width="2"/>
+          <text x="512" y="124" font-family="Helvetica" font-size="11" fill="#3A3F45">Glacier Park CC</text>
+        </g>
+        <g data-club-marker="sable" style="cursor:pointer;">
+          <circle cx="460" cy="540" r="5" fill="#8FB9CE" stroke="#FFF" stroke-width="2"/>
+          <text x="472" y="544" font-family="Helvetica" font-size="11" fill="#3A3F45">Sable Lakes CC</text>
+        </g>
+        <g data-club-marker="hearthstone" style="cursor:pointer;">
+          <circle cx="270" cy="330" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="282" y="334" font-family="Helvetica" font-size="11" fill="#3A3F45">Hearthstone CC</text>
+        </g>
+        <g data-club-marker="granite" style="cursor:pointer;">
+          <circle cx="350" cy="430" r="5" fill="#8FB9CE" stroke="#FFF" stroke-width="2"/>
+          <text x="362" y="434" font-family="Helvetica" font-size="11" fill="#3A3F45">Granite Bay CC</text>
+        </g>
+        <g data-club-marker="quill" style="cursor:pointer;">
+          <circle cx="140" cy="220" r="5" fill="#8FB9CE" stroke="#FFF" stroke-width="2"/>
+          <text x="152" y="224" font-family="Helvetica" font-size="11" fill="#3A3F45">Quill River CC</text>
+        </g>
+        <g data-club-marker="westbrook" style="cursor:pointer;">
+          <circle cx="240" cy="430" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="252" y="434" font-family="Helvetica" font-size="11" fill="#3A3F45">Westbrook CC</text>
+        </g>
+        <g data-club-marker="carrington" style="cursor:pointer;">
+          <circle cx="320" cy="500" r="7" fill="#1E5F86" stroke="#FFF" stroke-width="2"/>
+          <text x="332" y="504" font-family="Helvetica" font-size="11" fill="#3A3F45">Carrington CC</text>
+        </g>
+
+        <!-- compass rose -->
+        <g transform="translate(540 620)">
+          <circle r="22" fill="#FFFFFF" stroke="#3A3F45" stroke-width="0.8"/>
+          <text x="0" y="-10" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#3A3F45">N</text>
+          <text x="0" y="16" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#3A3F45">S</text>
+          <text x="-12" y="3" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#3A3F45">W</text>
+          <text x="12" y="3" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#3A3F45">E</text>
+          <polygon points="0,-18 -3,0 0,-4 3,0" fill="#3A3F45"/>
+        </g>
+      </svg>
+
+      <div class="map-overlay">
+        <div><strong>312 clubs nationwide</strong></div>
+        <div style="font-size:10px;color:var(--granite-70);margin-top:2px;">Drag to pan · scroll to zoom</div>
+        <div class="key">
+          <span><span class="dot lg"></span>6+ sheets</span>
+          <span><span class="dot md"></span>3–5 sheets</span>
+          <span><span class="dot sm"></span>1–2 sheets</span>
+        </div>
+      </div>
+
+      <!-- Flyouts -->
+      <div class="flyout" data-club-flyout="whitestone" style="display:block;">
+        <div class="ov">Capital Region · Member since 1908</div>
+        <h3>Whitestone Curling Club <span class="close" style="float:right;cursor:pointer;font-family:var(--mono);">×</span></h3>
+        <div class="row"><span class="k">Sheets</span><span class="v">8</span></div>
+        <div class="row"><span class="k">Members</span><span class="v">524</span></div>
+        <div class="row"><span class="k">Leagues</span><span class="v">14 (Comp · Rec · Mixed)</span></div>
+        <div class="row"><span class="k">Programs</span><span class="v">Jr · Learn-to-Curl · HP</span></div>
+        <div class="row"><span class="k">Access</span><span class="v">WCH · Step-free</span></div>
+        <div class="row"><span class="k">Contact</span><span class="v">info@whitestone.example</span></div>
+        <div style="margin-top:10px;"><a href="#" class="btn">Club Profile</a></div>
+      </div>
+
+      <div class="flyout" data-club-flyout="brookmoor" style="display:none;">
+        <div class="ov">Central Region · Member since 1924</div>
+        <h3>Brookmoor Curling Club <span class="close" style="float:right;cursor:pointer;font-family:var(--mono);">×</span></h3>
+        <div class="row"><span class="k">Sheets</span><span class="v">6</span></div>
+        <div class="row"><span class="k">Members</span><span class="v">412</span></div>
+        <div class="row"><span class="k">Leagues</span><span class="v">11</span></div>
+        <div class="row"><span class="k">Programs</span><span class="v">Jr · LTC · Wheelchair</span></div>
+        <div class="row"><span class="k">Access</span><span class="v">WCH · Step-free · Audio</span></div>
+        <div class="row"><span class="k">Contact</span><span class="v">curl@brookmoor.example</span></div>
+        <div style="margin-top:10px;"><a href="#" class="btn">Club Profile</a></div>
+      </div>
+
+      <div class="flyout" data-club-flyout="northfield" style="display:none;">
+        <div class="ov">Coastal Region · Member since 1931</div>
+        <h3>Northfield Curling Club <span class="close" style="float:right;cursor:pointer;font-family:var(--mono);">×</span></h3>
+        <div class="row"><span class="k">Sheets</span><span class="v">4</span></div>
+        <div class="row"><span class="k">Members</span><span class="v">298</span></div>
+        <div class="row"><span class="k">Leagues</span><span class="v">8</span></div>
+        <div class="row"><span class="k">Programs</span><span class="v">Jr · LTC</span></div>
+        <div class="row"><span class="k">Access</span><span class="v">Step-free</span></div>
+        <div class="row"><span class="k">Contact</span><span class="v">hello@northfield.example</span></div>
+        <div style="margin-top:10px;"><a href="#" class="btn">Club Profile</a></div>
+      </div>
+
+      <div class="flyout" data-club-flyout="ironcliff" style="display:none;">
+        <div class="ov">North Region · Member since 1919</div>
+        <h3>Ironcliff Curling Club <span class="close" style="float:right;cursor:pointer;font-family:var(--mono);">×</span></h3>
+        <div class="row"><span class="k">Sheets</span><span class="v">4</span></div>
+        <div class="row"><span class="k">Members</span><span class="v">263</span></div>
+        <div class="row"><span class="k">Leagues</span><span class="v">7</span></div>
+        <div class="row"><span class="k">Programs</span><span class="v">Jr · Senior · LTC</span></div>
+        <div class="row"><span class="k">Access</span><span class="v">WCH</span></div>
+        <div class="row"><span class="k">Contact</span><span class="v">contact@ironcliff.example</span></div>
+        <div style="margin-top:10px;"><a href="#" class="btn">Club Profile</a></div>
+      </div>
+    </div>
+
+    <!-- Club list -->
+    <div class="clubs-list-pane">
+      <div style="padding:10px 14px;border-bottom:1px solid var(--hairline);background:var(--paper-50);">
+        <input type="search" placeholder="Search clubs, cities, postal codes…" style="width:100%;padding:6px 8px;border:1px solid var(--granite-30);font-family:var(--sans);font-size:12px;" />
+        <div class="small-cap" style="margin-top:6px;">312 clubs · sorted by region</div>
+      </div>
+
+      <div class="club-row selected" data-club-row="whitestone">
+        <div>
+          <div class="nm">Whitestone Curling Club</div>
+          <div class="meta">Capital District · 41 Granite Row</div>
+        </div>
+        <div class="sheets">8<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill junior">Junior</span>
+          <span class="badge-pill acc">WCH</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="brookmoor">
+        <div>
+          <div class="nm">Brookmoor Curling Club</div>
+          <div class="meta">Vesper Lake · 18 Birch Quay</div>
+        </div>
+        <div class="sheets">6<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill junior">Junior</span>
+          <span class="badge-pill acc">WCH</span>
+          <span class="badge-pill">LTC</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="northfield">
+        <div>
+          <div class="nm">Northfield Curling Club</div>
+          <div class="meta">Northfield · 92 Pier Road</div>
+        </div>
+        <div class="sheets">4<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill">LTC</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="ironcliff">
+        <div>
+          <div class="nm">Ironcliff Curling Club</div>
+          <div class="meta">Ironcliff · 7 Pithead Lane</div>
+        </div>
+        <div class="sheets">4<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill acc">WCH</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="greycap">
+        <div>
+          <div class="nm">Greycap Curling</div>
+          <div class="meta">Greycap · 21 Steeple Way</div>
+        </div>
+        <div class="sheets">5<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill junior">Junior</span>
+          <span class="badge-pill">LTC</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="foreland">
+        <div>
+          <div class="nm">Foreland Curling Club</div>
+          <div class="meta">Foreland · 5 Harbor Crescent</div>
+        </div>
+        <div class="sheets">4<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill">Senior</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="pinehollow">
+        <div>
+          <div class="nm">Pine Hollow Curling Club</div>
+          <div class="meta">Pine Hollow · 14 Heather Loop</div>
+        </div>
+        <div class="sheets">6<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill junior">Junior</span>
+          <span class="badge-pill">HP</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="capeverity">
+        <div>
+          <div class="nm">Cape Verity Curling Club</div>
+          <div class="meta">Cape Verity · 88 Ferrymen's Walk</div>
+        </div>
+        <div class="sheets">2<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Recreational</span>
+          <span class="badge-pill">LTC</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="glacier">
+        <div>
+          <div class="nm">Glacier Park Curling Club</div>
+          <div class="meta">Glacier Park · 4 Summit Way</div>
+        </div>
+        <div class="sheets">2<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Recreational</span>
+          <span class="badge-pill">Senior</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="sable">
+        <div>
+          <div class="nm">Sable Lakes Curling Club</div>
+          <div class="meta">Sable Lakes · 17 Reed Drive</div>
+        </div>
+        <div class="sheets">3<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill">Mixed</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="hearthstone">
+        <div>
+          <div class="nm">Hearthstone Curling Club</div>
+          <div class="meta">Hearth · 9 Kiln Street</div>
+        </div>
+        <div class="sheets">5<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill junior">Junior</span>
+          <span class="badge-pill acc">WCH</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="granite">
+        <div>
+          <div class="nm">Granite Bay Curling Club</div>
+          <div class="meta">Granite Bay · 30 Stonewright Road</div>
+        </div>
+        <div class="sheets">3<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill">Senior</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="quill">
+        <div>
+          <div class="nm">Quill River Curling Club</div>
+          <div class="meta">Quill River · 1 Tannery Mill</div>
+        </div>
+        <div class="sheets">2<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Recreational</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="westbrook">
+        <div>
+          <div class="nm">Westbrook Curling Club</div>
+          <div class="meta">Westbrook · 26 Linden Avenue</div>
+        </div>
+        <div class="sheets">4<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill junior">Junior</span>
+        </div>
+      </div>
+
+      <div class="club-row" data-club-row="carrington">
+        <div>
+          <div class="nm">Carrington Curling Club</div>
+          <div class="meta">Carrington · 11 Old Mint Lane</div>
+        </div>
+        <div class="sheets">4<span class="lbl">Sheets</span></div>
+        <div class="badges">
+          <span class="badge-pill">Competitive</span>
+          <span class="badge-pill">Mixed</span>
+          <span class="badge-pill acc">WCH</span>
+        </div>
+      </div>
+
+      <div style="padding:14px;text-align:center;border-top:1px solid var(--hairline);background:var(--paper-50);">
+        <a class="btn ghost" href="#">Load 297 more clubs →</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="cols">
+    <div>
+      <h5>National Curling Federation</h5>
+      <p style="margin:0 0 6px 0;">Federation House, 41 Granite Row, Capital District — recognised national governing body affiliated with the World Curling Federation since 1966.</p>
+      <p style="margin:0;font-family:var(--mono);font-size:11px;color:var(--ice-200);">contact@ncf.example · +1 (555) 010-0190</p>
+    </div>
+    <div><h5>Competition</h5><a href="standings.html">Standings</a><a href="brackets.html">Tournaments</a><a href="results.html">Results Archive</a><a href="athletes.html">Athletes</a></div>
+    <div><h5>Officiating</h5><a href="rules.html">Rules Handbook</a><a href="rules.html">Certification Ladder</a><a href="rules.html">Equipment Bulletins</a><a href="news.html">Sanctions &amp; Notices</a></div>
+    <div><h5>Membership</h5><a href="clubs.html">Find a Club</a><a href="clubs.html">Register a Club</a><a href="#">Member Portal</a><a href="#">Insurance Schemes</a></div>
+  </div>
+  <div class="colophon"><span>© 2026 National Curling Federation · A registered not-for-profit</span><span>Document NCF-WEB-21 · 19 May 2026</span></div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

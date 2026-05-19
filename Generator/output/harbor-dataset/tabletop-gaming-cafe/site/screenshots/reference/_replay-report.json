@@ -1,0 +1,111 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/tabletop-gaming-cafe/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 17,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "menu-full",
+      "status": "ok",
+      "required": true,
+      "file": "menu-full.png"
+    },
+    {
+      "id": "menu-allergen-vegan",
+      "status": "ok",
+      "required": false,
+      "file": "menu-allergen-vegan.png"
+    },
+    {
+      "id": "library-full",
+      "status": "ok",
+      "required": true,
+      "file": "library-full.png"
+    },
+    {
+      "id": "library-availability-on-shelf",
+      "status": "ok",
+      "required": false,
+      "file": "library-availability-on-shelf.png"
+    },
+    {
+      "id": "library-mood-strategy",
+      "status": "ok",
+      "required": false,
+      "file": "library-mood-strategy.png"
+    },
+    {
+      "id": "events-full",
+      "status": "ok",
+      "required": true,
+      "file": "events-full.png"
+    },
+    {
+      "id": "events-list-view",
+      "status": "ok",
+      "required": false,
+      "file": "events-list-view.png"
+    },
+    {
+      "id": "events-bracket-hidden",
+      "status": "ok",
+      "required": false,
+      "file": "events-bracket-hidden.png"
+    },
+    {
+      "id": "book-step1",
+      "status": "ok",
+      "required": true,
+      "file": "book-step1.png"
+    },
+    {
+      "id": "book-step2-date",
+      "status": "ok",
+      "required": false,
+      "file": "book-step2-date.png"
+    },
+    {
+      "id": "book-step3-addons",
+      "status": "ok",
+      "required": false,
+      "file": "book-step3-addons.png"
+    },
+    {
+      "id": "book-step4-contact",
+      "status": "ok",
+      "required": false,
+      "file": "book-step4-contact.png"
+    },
+    {
+      "id": "book-faq-open",
+      "status": "ok",
+      "required": false,
+      "file": "book-faq-open.png"
+    },
+    {
+      "id": "tavern-pass-full",
+      "status": "ok",
+      "required": true,
+      "file": "tavern-pass-full.png"
+    },
+    {
+      "id": "reviews-full",
+      "status": "ok",
+      "required": true,
+      "file": "reviews-full.png"
+    },
+    {
+      "id": "reviews-rubric-party",
+      "status": "ok",
+      "required": false,
+      "file": "reviews-rubric-party.png"
+    }
+  ]
+}

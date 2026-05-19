@@ -4,6 +4,12 @@ This is the current final-score proposal for the website design evaluator. It is
 
 The school analogy is the right mental model: each capture has several exams. Passing the early exams matters, but early exams have small weight. A candidate that only does the basics well cannot receive a high final reward, because the high-value marks live in the later, more specific exams.
 
+Each pass has a 40% failure threshold. A failed pass does not erase the marks already earned in that pass, but it blocks eligibility for later passes:
+
+- Pass 1 score `< 0.40`: candidate can only receive Pass 1 contribution, so the maximum possible reward is 5%.
+- Pass 2 score `< 0.40`: candidate can receive Pass 1 and Pass 2 contribution, so the maximum possible reward is 20%.
+- Pass 1 and Pass 2 both `>= 0.40`: candidate is eligible for the Pass 3 contribution, making the full 100% possible.
+
 ## Included Metrics
 
 V0 counts:
@@ -47,6 +53,8 @@ foundation =
 
 This is deliberately low weight. A poor page should not get meaningful reward merely because it routed to a page or matched screenshot dimensions.
 
+If `foundation < 0.40`, Pass 2 and Pass 3 contributions are set to zero.
+
 ## Pass 2: Content And Broad Fit
 
 Pass 2 is worth 15% of the final score.
@@ -62,6 +70,8 @@ content =
 ```
 
 VLM and visual block size live here instead of Pass 1. They are stronger than pure attendance/size checks, but they should still not dominate the final reward. Text content remains the majority of Pass 2 because it varied meaningfully across the good and bad attempts.
+
+If `content < 0.40`, Pass 3 contribution is set to zero.
 
 ## Pass 3: Specifics
 
@@ -106,7 +116,16 @@ Pixelmatch belongs here, not in Pass 1. It is a local exactness signal after the
 ```text
 capture_score =
   manifest_coverage *
-  (0.05 * foundation + 0.15 * content + 0.80 * specifics)
+  (
+    0.05 * foundation
+  + pass1_ok * 0.15 * content
+  + pass1_ok * pass2_ok * 0.80 * specifics
+  )
+
+where:
+
+pass1_ok = foundation >= 0.40
+pass2_ok = content >= 0.40
 ```
 
 Missing captures stay in the denominator. They receive score `0`; they are not dropped.

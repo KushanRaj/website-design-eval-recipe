@@ -1,0 +1,43 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "meeple-and-mug-cafe",
+      "score": 0.86,
+      "accept": true,
+      "strengths": [
+        "Seven concrete pages with distinct layout patterns",
+        "Hits every explicit seed requirement: menu, library with filters, calendar with brackets, booking flow, loyalty signup, new-release reviews",
+        "Motif is specific: hex-tile grids, dice-face dividers, sticker price tags, meeple bullets",
+        "Realistic content model with shelf location, checked-out flag, complexity 1-5, mood tags, deposit",
+        "Interactions feel earned: availability badge per card, stepper booking with sticky summary, points calculator",
+        "Mobile behavior is thought-through, not boilerplate"
+      ],
+      "weaknesses": [
+        "Pawn/Knight/Queen tier names borrow from chess, mild theme drift",
+        "Blog rubric categories overlap with library mood tags",
+        "Three rooms named but differentiation not surfaced in booking step content"
+      ]
+    },
+    {
+      "candidate_id": "hex-and-hops-tavern-collective",
+      "score": 0.81,
+      "accept": true,
+      "strengths": [
+        "Publisher-first angle gives catalog real purpose (retailer locator, rulebook PDFs, designer diaries)",
+        "Stamp-card loyalty motif is fresh and tactile",
+        "Illustrated floor-plan booth picker is a memorable, domain-specific interaction",
+        "League standings plus bracket viewer with season switcher is concrete",
+        "Menu pairing toggle cleverly cross-links catalog and tavern"
+      ],
+      "weaknesses": [
+        "Only four flagship games undercuts the seed emphasis on library search with filters",
+        "Tavern and menu merged into one page deviates from seed's explicit menu/drinks page",
+        "Some sections lean on generic patterns (FAQ accordion, archive list, hours strip)",
+        "Designer roster on blog and league signup feel underdeveloped"
+      ]
+    }
+  ],
+  "best_candidate_id": "meeple-and-mug-cafe",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

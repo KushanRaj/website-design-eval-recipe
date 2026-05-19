@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar — Maple Hollow Community Schools</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="util-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="portal.html">🔑 Portal</a>
+    <a href="news.html">📰 News</a>
+  </div>
+  <div class="util-links">
+    <label for="locale" style="font-size:0.82rem;">Language:</label>
+    <select id="locale" class="locale-select">
+      <option value="en">English</option><option value="es">Español</option><option value="vi">Tiếng Việt</option><option value="so">Soomaali</option>
+    </select>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <div class="crest">M</div>
+    <div class="brand-text">
+      <span class="name">Maple Hollow Community Schools</span>
+      <span class="tag">District Calendar</span>
+    </div>
+  </a>
+  <div class="header-tools">
+    <a href="portal.html" class="btn robin">Portal</a>
+  </div>
+</header>
+
+<main class="shell">
+
+  <aside class="binder-nav">
+    <h4>Academics</h4>
+    <ul><li><a href="academics.html">Curriculum</a></li></ul>
+    <h4>Families</h4>
+    <ul>
+      <li><a href="portal.html">Parent Portal</a></li>
+      <li><a href="lunch.html">Lunch Menus</a></li>
+      <li><a href="our-schools.html">Bus Routes</a></li>
+      <li><a href="calendar.html" class="active">Calendar</a></li>
+    </ul>
+    <h4>About</h4>
+    <ul>
+      <li><a href="board.html">Board of Education</a></li>
+      <li><a href="news.html">News</a></li>
+    </ul>
+  </aside>
+
+  <section class="canvas">
+
+    <span class="dymo">Calendar</span>
+    <h1><span class="crayon">May 2026</span> at Maple Hollow</h1>
+
+    <div class="cal-bar">
+      <div class="cal-view-switch" style="display:flex;gap:0;">
+        <div class="toggle-group" style="display:inline-flex;border:2px solid var(--ink);border-radius:12px;overflow:hidden;">
+          <button data-view="month" class="active" style="background:var(--lemon-deep);border:none;padding:8px 14px;font-weight:800;font-family:inherit;cursor:pointer;">Month</button>
+          <button data-view="week" style="background:#fff;border:none;border-left:2px solid var(--ink);padding:8px 14px;font-weight:800;font-family:inherit;cursor:pointer;">Week</button>
+          <button data-view="agenda" style="background:#fff;border:none;border-left:2px solid var(--ink);padding:8px 14px;font-weight:800;font-family:inherit;cursor:pointer;">Agenda</button>
+        </div>
+      </div>
+      <div class="nav-arrows">
+        <button class="btn ghost" style="padding:6px 12px;">◀</button>
+        <button class="btn">Today</button>
+        <button class="btn ghost" style="padding:6px 12px;">▶</button>
+      </div>
+      <div class="month-label" style="margin-left:auto;">May 2026</div>
+      <a href="#" class="btn sage">📥 Subscribe</a>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+      <span class="pill">All schools ✕</span>
+      <span class="pill sage">Holiday</span>
+      <span class="pill apricot">Early Release</span>
+      <span class="pill lavender">Board</span>
+      <span class="pill apricot">Athletics</span>
+      <span class="pill blush">Performing Arts</span>
+      <span class="pill lemon">PTA</span>
+    </div>
+
+    <!-- Month grid view -->
+    <div data-cal-view="month">
+      <div class="cal-grid">
+        <div class="header-row">
+          <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+        </div>
+        <div class="week-row">
+          <div class="cell muted"><span class="num">26</span></div>
+          <div class="cell muted"><span class="num">27</span></div>
+          <div class="cell muted"><span class="num">28</span></div>
+          <div class="cell muted"><span class="num">29</span></div>
+          <div class="cell muted"><span class="num">30</span></div>
+          <div class="cell"><span class="num">1</span><span class="ev arts">Spring Art Show</span></div>
+          <div class="cell"><span class="num">2</span></div>
+        </div>
+        <div class="week-row">
+          <div class="cell"><span class="num">3</span></div>
+          <div class="cell"><span class="num">4</span><span class="ev">PTA Meeting</span></div>
+          <div class="cell"><span class="num">5</span><span class="ev athletics">Track Mtg</span></div>
+          <div class="cell"><span class="num">6</span></div>
+          <div class="cell"><span class="num">7</span><span class="ev arts">Band Concert</span></div>
+          <div class="cell"><span class="num">8</span><span class="ev">Early Release</span></div>
+          <div class="cell"><span class="num">9</span></div>
+        </div>
+        <div class="week-row">
+          <div class="cell"><span class="num">10</span></div>
+          <div class="cell"><span class="num">11</span><span class="ev board">Board Meeting</span></div>
+          <div class="cell"><span class="num">12</span></div>
+          <div class="cell"><span class="num">13</span><span class="ev athletics">Field Day K-2</span></div>
+          <div class="cell"><span class="num">14</span><span class="ev">5th Promotion</span></div>
+          <div class="cell"><span class="num">15</span><span class="ev arts">Choir Pop</span></div>
+          <div class="cell"><span class="num">16</span></div>
+        </div>
+        <div class="week-row">
+          <div class="cell"><span class="num">17</span></div>
+          <div class="cell"><span class="num">18</span></div>
+          <div class="cell" style="background:var(--lemon);"><span class="num">19</span><span class="ev">PTA Coffee</span><span class="ev athletics">Track</span></div>
+          <div class="cell"><span class="num">20</span><span class="ev athletics">Confs Meet</span></div>
+          <div class="cell"><span class="num">21</span><span class="ev board">Board Work Sess.</span></div>
+          <div class="cell"><span class="num">22</span><span class="ev arts">Spring Choir</span></div>
+          <div class="cell"><span class="num">23</span><span class="ev">Early Release</span></div>
+        </div>
+        <div class="week-row">
+          <div class="cell"><span class="num">24</span></div>
+          <div class="cell"><span class="num">25</span></div>
+          <div class="cell"><span class="num">26</span><span class="ev holiday">Holiday — No School</span></div>
+          <div class="cell"><span class="num">27</span></div>
+          <div class="cell"><span class="num">28</span><span class="ev">Open House — Birchwood</span></div>
+          <div class="cell"><span class="num">29</span><span class="ev">Open House — Hollow Creek</span></div>
+          <div class="cell"><span class="num">30</span><span class="ev athletics">Riverbend Grad</span></div>
+        </div>
+        <div class="week-row">
+          <div class="cell"><span class="num">31</span></div>
+          <div class="cell muted"><span class="num">1</span><span class="ev">Last day K-8</span></div>
+          <div class="cell muted"><span class="num">2</span><span class="ev">Last day Sapling</span></div>
+          <div class="cell muted"><span class="num">3</span></div>
+          <div class="cell muted"><span class="num">4</span></div>
+          <div class="cell muted"><span class="num">5</span></div>
+          <div class="cell muted"><span class="num">6</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week view -->
+    <div data-cal-view="week" style="display:none;">
+      <div class="card">
+        <h3 class="mt-0">Week of May 18 – 24</h3>
+        <ul class="agenda-list">
+          <li><span class="day">MON<br>5/18</span><div><div class="ev-title">PTA Coffee — Larkspur</div><div class="ev-time">8:00 AM · Cafetorium</div></div></li>
+          <li><span class="day athletics">TUE<br>5/19</span><div><div class="ev-title">Conference Track Meet</div><div class="ev-time">4:30 PM · Riverbend HS</div></div></li>
+          <li><span class="day board">WED<br>5/21</span><div><div class="ev-title">Board Work Session</div><div class="ev-time">6:30 PM · District Office Boardroom</div></div></li>
+          <li><span class="day arts">THU<br>5/22</span><div><div class="ev-title">Spring Choir Concert</div><div class="ev-time">7:00 PM · Middle School Auditorium</div></div></li>
+          <li><span class="day">FRI<br>5/23</span><div><div class="ev-title">Early Release Day</div><div class="ev-time">Dismissal 12:30 PM</div></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Agenda view -->
+    <div data-cal-view="agenda" style="display:none;">
+      <div class="card">
+        <h3 class="mt-0">May 2026 — Agenda View</h3>
+        <ul class="agenda-list">
+          <li><span class="day">FRI<br>5/01</span><div><div class="ev-title">District Spring Art Show</div><div class="ev-time">5–8 PM · Riverbend Commons</div></div></li>
+          <li><span class="day">MON<br>5/04</span><div><div class="ev-title">PTA Monthly Meeting</div><div class="ev-time">6:30 PM · Larkspur Library</div></div></li>
+          <li><span class="day arts">THU<br>5/07</span><div><div class="ev-title">Spring Band Concert</div><div class="ev-time">7:00 PM · MH Middle</div></div></li>
+          <li><span class="day board">MON<br>5/11</span><div><div class="ev-title">Regular Board Meeting</div><div class="ev-time">6:30 PM · District Office</div></div></li>
+          <li><span class="day">WED<br>5/13</span><div><div class="ev-title">Field Day K-2</div><div class="ev-time">All day · All elementaries</div></div></li>
+          <li><span class="day">THU<br>5/14</span><div><div class="ev-title">5th Grade Promotion</div><div class="ev-time">10:00 AM · Each elementary</div></div></li>
+          <li><span class="day holiday">MON<br>5/26</span><div><div class="ev-title">Holiday — No School District-Wide</div><div class="ev-time">All day</div></div></li>
+          <li><span class="day">SAT<br>5/30</span><div><div class="ev-title">Riverbend HS Commencement</div><div class="ev-time">11:00 AM · Riverbend Gym</div></div></li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <aside class="right-rail">
+
+    <div class="card tinted-lemon">
+      <span class="washi blue"></span>
+      <span class="dymo">Year at a glance</span>
+      <p>Download the printable 2025–26 calendar for the fridge.</p>
+      <a href="#" class="btn">📄 Download PDF</a>
+    </div>
+
+    <div class="card">
+      <span class="dymo">Subscribe</span>
+      <h3 class="mt-0">Add to your calendar</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;">
+        <a href="#" class="btn ghost">🔗 Google Calendar</a>
+        <a href="#" class="btn ghost">🍎 Apple Calendar</a>
+        <a href="#" class="btn ghost">📨 Outlook (ICS)</a>
+      </div>
+      <p class="muted" style="margin-top:10px;">You can filter by school and category before subscribing.</p>
+    </div>
+
+    <div class="card tinted-blush">
+      <span class="dymo">Selected Event</span>
+      <h3 class="mt-0">Spring Choir Concert</h3>
+      <p class="muted" style="font-family:'Courier New',monospace;">Thu May 22 · 7:00 – 8:30 PM</p>
+      <p><strong>Where:</strong> MH Middle Auditorium<br><strong>Audience:</strong> All families<br><strong>Category:</strong> Performing Arts</p>
+      <a href="#" class="btn">📄 Program (PDF)</a>
+    </div>
+
+    <div class="card tinted-paper">
+      <span class="dymo">Lunch this week</span>
+      <p>Monday: Pancake breakfast for lunch.<br>Wednesday: Garden veggie pasta.<br>Friday: Build-a-burrito bar.</p>
+      <a href="lunch.html" class="btn sage" style="width:100%;text-align:center;">See full menu</a>
+    </div>
+
+  </aside>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:12px;">
+        <div class="crest" style="width:42px;height:42px;font-size:1.2rem;">M</div>
+        <div class="brand-text"><span class="name" style="color:#fff;font-size:1.05rem;">Maple Hollow Schools</span><span class="tag" style="color:#fff7da;">Cheerful since 1957</span></div>
+      </div>
+      <p style="font-size:0.86rem;color:#fff7da;">1820 Sycamore Road<br>Maple Hollow, MN 55409</p>
+    </div>
+    <div><h5>Quick Tools</h5><ul><li><a href="portal.html">Portal</a></li><li><a href="lunch.html">Lunch</a></li><li><a href="our-schools.html">Schools</a></li></ul></div>
+    <div><h5>District</h5><ul><li><a href="board.html">Board</a></li><li><a href="academics.html">Academics</a></li><li><a href="news.html">News</a></li></ul></div>
+    <div><h5>Connect</h5><ul><li><a href="#">Contact</a></li><li><a href="#">Careers</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 Maple Hollow Community Schools</div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

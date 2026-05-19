@@ -1,0 +1,66 @@
+{
+  "id": "zen-center",
+  "candidate_id": "zen-center-pinetreehall",
+  "name": "Pine Tree Hall Zen Community",
+  "name_japanese": "松林堂 — Shōrin-dō",
+  "one_liner": "A working Sōtō Zen monastery presented as a hand-bound monastic broadsheet — off-white, sumi black, warm stone — with a contemplative landing scroll, lineage chart, schedule and retreats, dharma audio archive, visitor etiquette guide, and dana page.",
+  "domain": "Religious / spiritual institution — Zen Buddhist meditation center",
+  "site_goal": "Present Pine Tree Hall as a working monastery with public access — readable schedule, calendar-led retreats, deep dharma audio archive, transparent dana, etiquette/visitor primer — wrapped in a quietly editorial archival feel.",
+  "motif": "Hand-bound monastic broadsheet: hairline ledger rules, right-edge seasonal marker column, matte tonal photographs (SVG-illustrated), tall narrow serif headings.",
+  "palette": {
+    "paper":      "#efe9da (warm stone, paper-like off-white)",
+    "paper_deep": "#e6dfcc",
+    "paper_soft": "#f5f1e5",
+    "ink":        "#15140f (sumi black)",
+    "ink_soft":   "#3a362c",
+    "ink_faint":  "#6b6354",
+    "rule":       "#15140f33 (hairline)"
+  },
+  "typography": {
+    "display":  "Bodoni 72 / Bodoni Moda / Didot / Hoefler Text fallback — tall narrow serif",
+    "body":     "Hoefler Text / Cormorant Garamond / EB Garamond / Garamond / Georgia — old-style serif",
+    "japanese": "Hiragino Mincho ProN / Yu Mincho / Noto Serif JP",
+    "features": "old-style figures, italic kickers, hairline rules, tabular numerals for times"
+  },
+  "structure": {
+    "pages": [
+      { "id": "home",     "path": "index.html",                  "title": "Pine Tree Hall — Zen Community" },
+      { "id": "lineage",  "path": "teachers-and-lineage.html",   "title": "Lineage — Pine Tree Hall" },
+      { "id": "schedule", "path": "schedule.html",               "title": "Schedule & Retreats" },
+      { "id": "audio",    "path": "audio.html",                  "title": "Dharma talks audio archive" },
+      { "id": "visit",    "path": "visit.html",                  "title": "Visit & Etiquette" },
+      { "id": "dana",     "path": "dana.html",                   "title": "Dana — sustaining the hall" },
+      { "id": "apply",    "path": "apply.html",                  "title": "Retreat application — one question per screen" }
+    ],
+    "shared": {
+      "stylesheet": "css/style.css",
+      "javascript": "js/main.js"
+    }
+  },
+  "interactions_implemented": [
+    "Right-edge vertical seasonal marker (24 sekki) that resolves to the current sekki by JS using today's date; collapses to a small fixed tag on mobile.",
+    "Lineage page is a horizontal-scrolling genealogical chart with hairline branches; clicking a portrait node opens a sidebar biography card; Escape closes.",
+    "Audio archive is filterable by teacher, theme and year via the left rail; selecting a talk updates the right-column 'now playing' panel and the persistent slim player fixed at the bottom of the viewport.",
+    "Schedule page has a filter row (All / Open to public / Residential) that hides or reveals ledger rows; hovering or tapping a schedule row reveals a one-line note.",
+    "Dana page has three quiet giving forms with suggested bands and free-entry fields; selecting a band syncs to the free amount, typing clears the band.",
+    "Retreat application is a multi-step form on its own page, one question per screen, no progress bar; the dana page also lists capacity and dana band for each retreat."
+  ],
+  "content_model": {
+    "teacher_record":       ["dharma name", "given name", "years", "ordained year", "role", "lineage branch", "areas of teaching", "biography body"],
+    "lineage_node":         ["dharma", "given", "years", "role", "lineage", "body"],
+    "retreat_record":       ["date range", "title", "form (sesshin/zazenkai/zazen)", "residential or not", "capacity", "teacher(s)", "dana band"],
+    "talk_record":          ["title", "speaker", "speaker key", "date", "duration", "theme", "year", "description", "location/context"],
+    "schedule_row":         ["hour", "activity", "location", "note", "tags (residential / public)"],
+    "etiquette_zone":       ["zone name", "japanese title and gloss", "image", "short paragraph", "itemised guidelines"]
+  },
+  "required_text_present": [
+    "Pine Tree Hall Zen Community",
+    "A working monastery, open to visitors.",
+    "Bell at 4:50.",
+    "Dana sustains the hall.",
+    "Please observe silence past the second gate."
+  ],
+  "mobile_behavior": "Right-edge sekki column collapses to a small fixed tag in the upper right. Ledger rows stack to single-column blocks. Lineage tree retains horizontal scroll within its scroller but with reduced padding. The archive layout collapses to a single column with the now-playing block below the talk list. Player narrows and hides its bar. Multi-step form keeps one question per screen.",
+  "assets": "All imagery rendered as inline SVG to evoke matte tonal photographs (zafu, han, oryoki, gate, genkan, zendo, refectory, garden) plus an inked map. No external downloads.",
+  "no_external_dependencies": true
+}

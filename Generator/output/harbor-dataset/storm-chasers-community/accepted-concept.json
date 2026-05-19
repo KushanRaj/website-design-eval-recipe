@@ -1,0 +1,140 @@
+{
+  "candidate_id": "storm-chasers-community-a",
+  "domain": "amateur meteorology / storm-chasing community",
+  "site_goal": "Provide a dense, dashboard-style hub where amateur storm chasers can monitor live doppler, file chase logs, review gear, coordinate spotter networks, and connect via callsign-based identity.",
+  "audience": [
+    "amateur storm chasers",
+    "SKYWARN spotters",
+    "ham radio operators with weather interest",
+    "meteorology students",
+    "severe weather photographers"
+  ],
+  "description": "TORNADO ALLEY OPERATIONS NETWORK ('TAON-1') — an experimental utilitarian web app styled like a 1990s NOAA workstation crossed with a ham radio packet cluster. The entire UI runs in radar-green IBM Plex Mono on near-black (#050807), with amber alert orange used only for WATCH/WARNING states and clickable affordances. Layout is grid-heavy with thin 1px borders, ASCII separators, and live-updating numeric readouts. Every page header carries a 'PACKET' status line: UTC clock, current SPC outlook category, active chaser count, and last-strike timestamp. Multi-column information density is the point — sidebars, ticker bars, and inline mini-radars are everywhere. No hero images, no marketing fluff; instead, embedded GR2Analyst-style radar tiles, sparkline gauges, and tables of CAPE/Helicity/SRH values. Callsigns (e.g. 'KC5-WHIRL', 'N0-SCUD') are the primary identity throughout. The tone is field-operator: terse, abbreviation-heavy, with footer disclaimers about not interpreting outputs as official NWS guidance.",
+  "motif": "monospace dashboard with ASCII rules, radar sweeps, callsign tags, and amber WATCH/WARNING chips",
+  "pages": [
+    {
+      "id": "ops-dashboard",
+      "path": "/",
+      "layout_pattern": "four-quadrant operations console: top-left live CONUS doppler mosaic, top-right SPC convective outlook map with day-1/2/3 tabs, bottom-left ticker of recent member chase pings (callsign + lat/lon + time), bottom-right rolling LSR (Local Storm Reports) feed; persistent top status bar with UTC clock, sun/moon, and dewpoint readouts",
+      "sections": [
+        "packet status bar",
+        "live radar mosaic quadrant",
+        "SPC outlook quadrant",
+        "active chaser ping ticker",
+        "LSR rolling feed",
+        "system uptime + data source footer"
+      ]
+    },
+    {
+      "id": "chase-logs",
+      "path": "/logs",
+      "layout_pattern": "tabular log archive: filter rail (year, state, EF-rating, member callsign, storm mode), main table with sortable columns (date, location, intercept time, storm type, max hail, peak wind, distance driven), expandable row reveals embedded GPS track, hodograph snapshot, and narrative entry",
+      "sections": [
+        "filter rail",
+        "log table",
+        "expandable detail drawer",
+        "submit-new-log button (member-gated)",
+        "export to CSV control"
+      ]
+    },
+    {
+      "id": "gear-bench",
+      "path": "/gear",
+      "layout_pattern": "review database styled as a parts catalog: left nav by category (mobile mesonets, anemometers, hail guards, mesh radios, dashcams, laptops, lightning detectors), center grid of reviewed items with mini-spec readouts, right-rail comparison cart that holds up to four items for side-by-side spec diff",
+      "sections": [
+        "category nav",
+        "item grid with spec mini-cards",
+        "comparison cart rail",
+        "field-tested badge legend",
+        "submit-a-review CTA"
+      ]
+    },
+    {
+      "id": "spotter-net",
+      "path": "/spotters",
+      "layout_pattern": "regional forum index: collapsible accordion of NWS County Warning Areas (CWAs) as forum boards, each row shows post count, last-callsign-active, and a tiny activity sparkline; threaded discussion view uses monospace with quoted reply ancestry indented with '>' marks",
+      "sections": [
+        "CWA accordion list",
+        "pinned briefings",
+        "thread view with quote nesting",
+        "callsign hover-card",
+        "net-control rotation schedule"
+      ]
+    },
+    {
+      "id": "outlook-calendar",
+      "path": "/calendar",
+      "layout_pattern": "month grid where each day cell color-codes SPC categorical risk (MRGL/SLGT/ENH/MOD/HIGH) with amber escalation; clicking a day opens a side panel with hazard breakdown (tornado/wind/hail probabilities), participating chasers, and rendezvous waypoints",
+      "sections": [
+        "month grid with risk shading",
+        "day-detail side panel",
+        "chaser RSVP rail",
+        "historic outbreak anniversaries strip",
+        "ICS export link"
+      ]
+    },
+    {
+      "id": "supercell-gallery",
+      "path": "/gallery",
+      "layout_pattern": "dense masonry of supercell photographs on black with thin amber borders; each tile carries an EXIF strip (lens, focal length, GPS, time, callsign of photographer) and storm metadata (mesocyclone tag, RFD slot, lowering type); filter chips for 'wall cloud', 'inflow band', 'mammatus', 'LP', 'HP', 'classic'",
+      "sections": [
+        "filter chip rail",
+        "masonry photo grid with EXIF strips",
+        "photo lightbox with radar-at-time-of-shot overlay",
+        "photographer leaderboard"
+      ]
+    },
+    {
+      "id": "directory",
+      "path": "/roster",
+      "layout_pattern": "callsign-driven member directory: searchable table by callsign, real name (optional), home CWA, vehicle ID, certifications (SKYWARN, ARRL, HAM class), and last-active-on-net timestamp; profile detail view shows chase mileage total, storm-mode preferences, and rig schematic",
+      "sections": [
+        "callsign search bar",
+        "roster table",
+        "member profile detail",
+        "certifications legend",
+        "QSL-style printable card"
+      ]
+    }
+  ],
+  "message_intent": [
+    "signal operational seriousness and field credibility",
+    "make dense real-time data legible at a glance",
+    "foreground callsign identity over real-name social patterns",
+    "communicate that this is community-run, not an official NWS service"
+  ],
+  "required_text": [
+    "TORNADO ALLEY OPERATIONS NETWORK",
+    "TAON-1",
+    "NOT AN OFFICIAL NWS PRODUCT",
+    "PACKET STATUS"
+  ],
+  "content_model": [
+    "chase log entry",
+    "gear review",
+    "forum post",
+    "outlook day",
+    "supercell photo",
+    "member profile",
+    "LSR ping"
+  ],
+  "interactions": [
+    "live radar tile pan/zoom",
+    "expandable log rows",
+    "gear comparison cart up to four items",
+    "CWA accordion expand",
+    "day-cell click reveals side panel",
+    "photo lightbox with radar overlay toggle",
+    "callsign hover-card"
+  ],
+  "asset_needs": [
+    "radar mosaic still frames",
+    "SPC outlook map snapshots",
+    "hodograph diagrams",
+    "supercell photography",
+    "vehicle/rig schematic line art",
+    "callsign QSL-style card template"
+  ],
+  "mobile_behavior": "quadrants stack vertically into a single scrollable column; persistent packet status bar collapses to UTC clock + active chaser count; tables become horizontally scrollable with sticky callsign column; gear comparison cart becomes a bottom sheet",
+  "difficulty": "hard"
+}

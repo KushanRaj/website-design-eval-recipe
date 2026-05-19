@@ -1,0 +1,190 @@
+{
+  "candidate_id": "podcast-network-frequency-room",
+  "domain": "Independent podcast network / late-night talk collective",
+  "site_goal": "Make Frequency Room feel like a high-design listening lounge for night owls — a glossy magenta-lit broadcast booth where each show feels like its own intimate channel, the episode archive reads like a deep crate of liner-noted records, and the Inner Circle membership tier feels like getting handed an after-hours key.",
+  "audience": [
+    "Night-owl listeners who consume long-form audio",
+    "Editorially-inclined fans who read transcripts",
+    "Aspiring show hosts considering pitching",
+    "Brand sponsors seeking premium host-read placements",
+    "Live taping ticket buyers and superfans"
+  ],
+  "description": "Frequency Room leans editorial and atmospheric where Static Hum leans aggressive. The aesthetic is a late-night FM control room — near-black canvas, hairline lime dividers, magenta neon used sparingly as glow accents around hero portraits and CTA buttons, and a recurring concentric-ring waveform motif (think a vinyl groove crossed with a tuner dial) that animates subtly as audio plays. Typography pairs a tall geometric grotesk for display with a slab-leaning text serif for episode body copy and transcripts, giving the archive a 'liner notes' feeling. Density is medium-high: long scrolling pages with rich metadata, color-coded show channels (each show gets its own accent hue derived from the magenta-lime gradient range), and a global player that minimizes into a vertical waveform rail along the right edge on desktop. Imagery favors moody studio photography of hosts in low magenta light.",
+  "motif": "Concentric tuner-dial waveform rings that pulse with playback, paired with hairline lime dividers and soft magenta neon halos around portraits and primary CTAs",
+  "pages": [
+    {
+      "id": "home",
+      "path": "/",
+      "layout_pattern": "Editorial homepage — full-bleed hero with a single 'Tonight on Frequency Room' featured episode (large host portrait under magenta neon, concentric waveform behind), then a horizontal channel selector strip (one chip per show, each with its own accent hue), an editor's-picks two-column 'Crate' block, a member tier teaser card, and a tour dates strip",
+      "sections": [
+        "Tonight on Frequency Room hero (featured episode, neon-lit portrait)",
+        "Channel selector strip (one chip per show, accent-hued)",
+        "Editor's Crate two-column picks block",
+        "From the Archive deep-cut highlight",
+        "Inner Circle membership teaser card",
+        "Upcoming live broadcasts / tour dates strip",
+        "Network masthead with founding date and manifesto link"
+      ]
+    },
+    {
+      "id": "channels",
+      "path": "/channels",
+      "layout_pattern": "Roster as a 'channel guide' — vertical list of shows styled like an over-the-air TV grid; each row spans the page with channel number, show logotype, hosts, cadence, current-season episode count, latest-episode play button, and a small animated waveform ribbon",
+      "sections": [
+        "Channel-guide row list",
+        "Filter by genre, cadence, season state (active / archived / hiatus)",
+        "Sort by recently updated, alphabetical, channel number",
+        "'On Hiatus' and 'Coming Soon' sub-sections"
+      ]
+    },
+    {
+      "id": "show-channel",
+      "path": "/channels/03-the-late-signal",
+      "layout_pattern": "Per-show channel page — sticky left rail with show identity (logo, channel number, hosts, subscribe chips, accent color stripe), main column holds a featured-season hero, season selector tabs, and an episode list rendered as 'liner notes' rows with episode number, title, runtime, guest, one-line tease, and inline play/transcript controls",
+      "sections": [
+        "Sticky show identity rail with subscribe chips",
+        "Featured-season hero with art and synopsis",
+        "Season tab selector (S1, S2, S3...)",
+        "Liner-notes episode list (episode #, title, guests, runtime, tease)",
+        "Host duo bio block",
+        "Underwriter ribbon",
+        "Listener letters / mailbag teaser"
+      ]
+    },
+    {
+      "id": "archive",
+      "path": "/archive",
+      "layout_pattern": "Cross-network episode archive — top bar with full-text transcript search, faceted filters (show, host, guest, year, topic tag, length bucket), and results rendered as dense scannable rows with highlighted transcript snippets where the search term appears",
+      "sections": [
+        "Full-text transcript search bar with autosuggest",
+        "Faceted filter rail (show, host, guest, year, topic, length)",
+        "Search-result rows with highlighted transcript snippets",
+        "Saved searches for Inner Circle members",
+        "Topic tag cloud",
+        "'Random episode' lucky-dip button"
+      ]
+    },
+    {
+      "id": "episode-detail",
+      "path": "/channels/03-the-late-signal/s2e07-the-quiet-hour",
+      "layout_pattern": "Liner-notes episode page — masthead with episode artwork (concentric waveform rings centered), three-column metadata block (hosts / guests / chapters), full transcript rendered as long-form readable prose with speaker drop-caps, sidebar with 'Mentioned' links and 'If you liked this' recommendations",
+      "sections": [
+        "Episode masthead with concentric-ring artwork",
+        "Three-column metadata (hosts, guests, chapter timestamps)",
+        "Inline player with waveform scrubber and chapter jump",
+        "Long-form transcript with speaker drop-caps and timestamp gutter",
+        "Sidebar: Mentioned in this episode",
+        "If you liked this — recommendation list",
+        "Listener mailbag responses"
+      ]
+    },
+    {
+      "id": "voices",
+      "path": "/voices",
+      "layout_pattern": "Host directory styled like a 'staff roll' — large portraits in low magenta light arranged in a 4-column grid with handwritten-style signature beneath each name; clicking a portrait expands a full-bleed feature with bio, career timeline, shows hosted, and a curated 'self-selected episodes' list",
+      "sections": [
+        "Staff-roll portrait grid (4-column, low magenta light)",
+        "Search and filter by show",
+        "Expanded feature view with bio + career timeline",
+        "Self-selected episodes list per host",
+        "Guest appearances index"
+      ]
+    },
+    {
+      "id": "live-broadcasts",
+      "path": "/live",
+      "layout_pattern": "Live tour and broadcast calendar — month-grid calendar with neon-pin event dots, sidebar list of upcoming dates, each event card includes venue, city, doors/start time, supporting shows, ticket CTA, and a 'simulcast on Inner Circle' badge where the live tape will stream to members",
+      "sections": [
+        "Month-grid calendar with neon-pin event dots",
+        "Upcoming dates sidebar list",
+        "Event detail cards (venue, time, supporting shows, tickets)",
+        "Inner Circle simulcast badges",
+        "Photo gallery from past live tapings",
+        "Venue booking inquiry form"
+      ]
+    },
+    {
+      "id": "inner-circle",
+      "path": "/inner-circle",
+      "layout_pattern": "Membership lounge — atmospheric hero with looping concentric ring animation, two-tier pricing comparison (Late Pass / Skeleton Key) with lime accent on the recommended tier, perks lockup grid, gated 'after-hours feed' preview with a blurred episode list, member-only Discord ribbon, and an FAQ accordion",
+      "sections": [
+        "Atmospheric membership hero with concentric ring loop",
+        "Two-tier pricing comparison (Late Pass / Skeleton Key)",
+        "Perks lockup grid (ad-free, after-hours feed, simulcasts, merch, Discord)",
+        "Gated after-hours feed preview (blurred episode list)",
+        "Member Discord ribbon",
+        "Member quotes / testimonials",
+        "FAQ accordion",
+        "Sticky enroll CTA"
+      ]
+    },
+    {
+      "id": "partner-with-us",
+      "path": "/partner",
+      "layout_pattern": "Advertiser pitch page — scrollable narrative with animated audience counters, listener psychographic chart, host-read sample audio clips with play buttons, downloadable media kit PDF, partner logos wall, and a tiered inquiry form (sponsorship / brand partnership / live event underwriting)",
+      "sections": [
+        "Audience-by-the-numbers animated counters",
+        "Psychographic / interests chart block",
+        "Host-read sample clips with play buttons",
+        "Downloadable media kit PDF",
+        "Partner logo wall",
+        "Tiered inquiry form (sponsorship / brand partnership / live underwriting)",
+        "Press coverage clippings strip"
+      ]
+    },
+    {
+      "id": "about",
+      "path": "/about",
+      "layout_pattern": "Network manifesto and team — long-form editorial scroll opening with a typewritten-style mission statement, founding timeline rendered as a vertical waveform with year markers, staff portrait grid (operations, producers, sound engineers), and a careers / pitch-a-show sub-section",
+      "sections": [
+        "Mission statement masthead",
+        "Founding timeline as vertical waveform",
+        "Operations and production team portrait grid",
+        "Studio location and contact",
+        "Pitch-a-show submission form",
+        "Open roles / careers list"
+      ]
+    }
+  ],
+  "message_intent": [
+    "Convey curatorial prestige and editorial atmosphere",
+    "Make the archive feel like a deep, searchable crate",
+    "Tier the audience: casual ↔ Late Pass ↔ Skeleton Key",
+    "Position the network as a premium ad environment",
+    "Recruit new hosts via a credible pitch path"
+  ],
+  "required_text": [
+    "Frequency Room",
+    "Inner Circle",
+    "Tonight on Frequency Room"
+  ],
+  "content_model": [
+    "Channel / Show (channel number, accent color, hosts, cadence, seasons)",
+    "Season (number, run dates, episode count, art)",
+    "Episode (audio, chapters, transcript, guests, mentioned links, mailbag)",
+    "Voice / Host (portrait, bio, timeline, shows, self-selected episodes)",
+    "Live broadcast (venue, datetime, supporting shows, simulcast flag)",
+    "Membership tier (perks, gated feed)",
+    "Partner (logo, case study, sample clip)"
+  ],
+  "interactions": [
+    "Global persistent audio player with concentric-ring waveform and chapter jump",
+    "Vertical mini-player rail on desktop / docked bar on mobile",
+    "Full-text transcript search across the network with snippet highlighting",
+    "Faceted archive filtering",
+    "Channel-hop strip on the homepage to instantly preview each show",
+    "Random episode lucky-dip",
+    "Season tabs and self-selected host episode lists",
+    "Gated member feed preview with blur",
+    "Calendar pin hover for live broadcast detail"
+  ],
+  "asset_needs": [
+    "Low-light magenta-lit host portrait photography",
+    "Per-show logotypes and accent color tokens",
+    "Concentric tuner-dial waveform animation",
+    "Live taping venue photography",
+    "Partner logos and host-read sample clips"
+  ],
+  "mobile_behavior": "Vertical stack reflow; the desktop right-edge waveform rail collapses into a bottom-docked mini-player; archive filters become a slide-up sheet; calendar view defaults to list with a tap-to-open month grid.",
+  "difficulty": "hard"
+}

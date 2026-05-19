@@ -298,6 +298,7 @@ def run_manifest_capture(
     *,
     repo_root: str | Path | None = None,
     output_dir: str | Path | None = None,
+    prune_failed: bool = False,
     timeout_seconds: int = 120,
 ) -> subprocess.CompletedProcess[str]:
     root = Path(repo_root) if repo_root is not None else Path(__file__).resolve().parents[1]
@@ -307,6 +308,8 @@ def run_manifest_capture(
     command = ["node", str(script), str(Path(manifest_path))]
     if output_dir is not None:
         command.extend(["--out", str(output_dir)])
+    if prune_failed:
+        command.append("--prune-failed")
     return subprocess.run(
         command,
         cwd=root,

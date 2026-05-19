@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu — Meeple &amp; Mug</title>
+  <meta name="description" content="Bites, sweets, sips and spirits served at Meeple & Mug board game cafe. Allergen filters, staff picks, and private event catering.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/meeple-mark.svg">
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></span>
+      <span class="brand-text">Meeple &amp; Mug<small>Board Game Cafe</small></span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html" class="is-active">Menu</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="book.html">Book</a></li>
+        <li><a href="tavern-pass.html">Tavern Pass</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta"><a href="book.html" class="btn btn--purple btn--sm">Book a table</a></div>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div>
+      <span class="eyebrow">⬢ Eat, drink, deploy meeples</span>
+      <h1><span>The</span> <span class="alt">Menu</span></h1>
+      <p class="lede">Plates that survive a four-hour game of Terraforming Mars. Drinks that won't murder your spreadsheets. Most items can be made vegan, GF, or both — just flag it.</p>
+      <div class="hero-cta">
+        <a href="#bites" class="btn">Jump to food</a>
+        <a href="#sips" class="btn btn--purple">Jump to drinks</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 480">
+        <rect x="40" y="40" width="400" height="400" rx="30" fill="#1d1830" stroke="#1d1830" stroke-width="6"/>
+        <rect x="60" y="60" width="360" height="360" rx="20" fill="none" stroke="#5fe3c0" stroke-width="4" stroke-dasharray="8 6"/>
+        <text x="240" y="140" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="900" font-size="44" fill="#fff4dc">TONIGHT</text>
+        <text x="240" y="190" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="900" font-size="34" fill="#ff7a1f">SPICY HONEY</text>
+        <text x="240" y="225" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="900" font-size="34" fill="#ff7a1f">CHICKEN</text>
+        <text x="240" y="280" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="700" font-size="22" fill="#fff4dc">on a Hex Roll · $14</text>
+        <line x1="100" y1="320" x2="380" y2="320" stroke="#5fe3c0" stroke-width="3"/>
+        <text x="240" y="360" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="900" font-size="28" fill="#5fe3c0">+ Crit Cocktail $9</text>
+        <text x="240" y="395" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="700" font-size="18" fill="#fff4dc">Roll 20 → second one half off</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="allergen-bar">
+      <strong>Filter by need:</strong>
+      <button class="chip" data-allergen="vegan">🌱 Vegan</button>
+      <button class="chip" data-allergen="gf">🌾 Gluten-free</button>
+      <button class="chip" data-allergen="nf">🥜 Nut-free</button>
+      <button class="chip" data-allergen="df">🥛 Dairy-free</button>
+      <button class="chip" data-allergen="spicy">🌶 Spicy</button>
+    </div>
+
+    <div class="menu-board" id="bites">
+      <div class="section-head" style="margin-bottom:18px;">
+        <h2 style="margin:0;">Tonight's Diner Board</h2>
+        <p style="color:#fff4dc; opacity:0.8;">Posted fresh every Thursday by Chef Ren.</p>
+      </div>
+
+      <div class="menu-columns">
+        <!-- BITES -->
+        <div class="menu-col" id="bites-col">
+          <h3>Bites</h3>
+          <div class="menu-item" data-diet="vegan,gf,nf,df">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><circle cx="12" cy="12" r="9" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Roasted Beet Hummus</div>
+              <div class="desc">Sumac flatbread, dukkah dust, pickled red onion.</div>
+            </div>
+            <div class="price">$9</div>
+          </div>
+          <div class="menu-item" data-diet="nf,spicy">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><path d="M4 16 L12 6 L20 16 Z" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Spicy Honey Chicken</div>
+              <div class="desc">Sesame brioche, fermented chili honey, slaw.</div>
+            </div>
+            <div class="price">$14</div>
+          </div>
+          <div class="menu-item" data-diet="gf,nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><rect x="4" y="6" width="16" height="12" rx="2" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Hex Hall Cheese Plate</div>
+              <div class="desc">3 cheeses · honeycomb · candied walnut.</div>
+            </div>
+            <div class="price">$16</div>
+          </div>
+          <div class="menu-item" data-diet="vegan,nf,df">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><circle cx="8" cy="12" r="4" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/><circle cx="16" cy="12" r="4" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Falafel Meeples</div>
+              <div class="desc">Six per order, tahini tzatziki, sumac.</div>
+            </div>
+            <div class="price">$11</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><path d="M5 14 Q12 4 19 14 L17 18 L7 18 Z" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Triple-Cooked Hex Fries</div>
+              <div class="desc">Smoked paprika, parm, garlic aioli.</div>
+            </div>
+            <div class="price">$7</div>
+          </div>
+          <div class="menu-item" data-diet="nf,spicy">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><rect x="6" y="4" width="12" height="16" rx="2" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Buffalo Cauli Wings</div>
+              <div class="desc">Blue cheese · charred scallion.</div>
+            </div>
+            <div class="price">$10</div>
+          </div>
+        </div>
+
+        <!-- SWEETS -->
+        <div class="menu-col is-sweets">
+          <h3>Sweets</h3>
+          <div class="menu-item" data-diet="gf,nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><circle cx="12" cy="14" r="7" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Brown Butter Brownie</div>
+              <div class="desc">Maldon flake · whipped crème fraîche.</div>
+            </div>
+            <div class="price">$7</div>
+          </div>
+          <div class="menu-item" data-diet="vegan,nf,df">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><polygon points="12,4 20,20 4,20" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Olive Oil Citrus Cake</div>
+              <div class="desc">Blood orange · candied rosemary.</div>
+            </div>
+            <div class="price">$6</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><circle cx="12" cy="12" r="8" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Affogato Crit</div>
+              <div class="desc">Vanilla bean gelato, double espresso pour.</div>
+            </div>
+            <div class="price">$8</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><rect x="6" y="8" width="12" height="10" rx="2" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Cookie Flight (3)</div>
+              <div class="desc">Chocolate · oat-toffee · cardamom-pistachio.</div>
+            </div>
+            <div class="price">$9</div>
+          </div>
+        </div>
+
+        <!-- SIPS -->
+        <div class="menu-col is-sips" id="sips">
+          <h3>Sips</h3>
+          <div class="menu-item" data-diet="vegan,gf,nf,df">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><path d="M6 5 L18 5 L16 14 Q12 16 8 14 Z M11 14 L11 20 L13 20 L13 14" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Mana Potion</div>
+              <div class="desc">Butterfly pea, citrus, soda. Color shifts.</div>
+            </div>
+            <div class="price">$7</div>
+          </div>
+          <div class="menu-item" data-diet="vegan,nf,df">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><circle cx="12" cy="12" r="8" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Meeple Mocha</div>
+              <div class="desc">Espresso, brown butter syrup, oat foam.</div>
+            </div>
+            <div class="price">$6</div>
+          </div>
+          <div class="menu-item" data-diet="gf,nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><rect x="7" y="6" width="10" height="14" rx="2" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Catan Cold Brew</div>
+              <div class="desc">48-hour cold brew · maple foam · sea salt.</div>
+            </div>
+            <div class="price">$6</div>
+          </div>
+          <div class="menu-item" data-diet="vegan,nf,df">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><circle cx="12" cy="12" r="7" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Ginger Goblin</div>
+              <div class="desc">Fresh ginger, lime, turmeric, soda.</div>
+            </div>
+            <div class="price">$5</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><path d="M8 4 L16 4 L18 20 L6 20 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Honey Lavender Latte</div>
+              <div class="desc">Local honey · culinary lavender · cortado base.</div>
+            </div>
+            <div class="price">$6</div>
+          </div>
+        </div>
+
+        <!-- SPIRITS -->
+        <div class="menu-col is-spirits">
+          <h3>Spirits &amp; Beer</h3>
+          <div class="menu-item" data-diet="gf,nf,df">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><path d="M6 4 L18 4 L14 14 L14 20 L10 20 L10 14 Z" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">The Crit</div>
+              <div class="desc">Mezcal · blood orange · ancho. Roll a 20 → second is half off.</div>
+            </div>
+            <div class="price">$9</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><rect x="6" y="6" width="12" height="14" rx="6" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">D20 Old Fashioned</div>
+              <div class="desc">Bourbon · demerara · orange · brûléed cherry.</div>
+            </div>
+            <div class="price">$11</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><path d="M8 4 L16 4 L18 20 L6 20 Z" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Wingspan Spritz</div>
+              <div class="desc">Aperol · pear · prosecco · juniper smoke.</div>
+            </div>
+            <div class="price">$10</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><rect x="6" y="6" width="12" height="14" rx="3" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Local Pints (rotating)</div>
+              <div class="desc">3 from regional brewers. Ask your host.</div>
+            </div>
+            <div class="price">$7</div>
+          </div>
+          <div class="menu-item" data-diet="nf">
+            <div class="ill"><svg viewBox="0 0 24 24" width="20"><path d="M8 4 L16 4 L18 20 L6 20 Z" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/></svg></div>
+            <div>
+              <div class="name">Natural Wine Glass</div>
+              <div class="desc">Three reds, two whites, one funky orange.</div>
+            </div>
+            <div class="price">$10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAFF PICKS -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <span class="kicker">⬢ Staff says try this</span>
+        <h2>This week's picks</h2>
+      </div>
+    </div>
+    <div class="grid grid--3">
+      <div class="staff-pick">
+        <div class="portrait">
+          <svg viewBox="0 0 60 60" width="50"><circle cx="30" cy="22" r="10" fill="#fff4dc"/><path d="M14 50 Q14 36 30 36 Q46 36 46 50" fill="#fff4dc"/></svg>
+        </div>
+        <div>
+          <strong>Devon · Floor Lead</strong>
+          <p class="muted" style="margin:2px 0 0;">"The Spicy Honey Chicken with a Mana Potion. Trust me — the heat needs the cool."</p>
+        </div>
+      </div>
+      <div class="staff-pick" style="background:#ff7a1f;">
+        <div class="portrait" style="background:#5fe3c0;">
+          <svg viewBox="0 0 60 60" width="50"><circle cx="30" cy="22" r="10" fill="#fff4dc"/><path d="M14 50 Q14 36 30 36 Q46 36 46 50" fill="#fff4dc"/></svg>
+        </div>
+        <div>
+          <strong>Ren · Chef</strong>
+          <p class="muted" style="margin:2px 0 0; color:#1d1830;">"Beet hummus, brownie, and a D20 Old Fashioned. The whole evening, one tray."</p>
+        </div>
+      </div>
+      <div class="staff-pick" style="background:#fff4dc;">
+        <div class="portrait" style="background:#ff7a1f;">
+          <svg viewBox="0 0 60 60" width="50"><circle cx="30" cy="22" r="10" fill="#fff4dc"/><path d="M14 50 Q14 36 30 36 Q46 36 46 50" fill="#fff4dc"/></svg>
+        </div>
+        <div>
+          <strong>Mae · Librarian</strong>
+          <p class="muted" style="margin:2px 0 0;">"Cookie flight, Catan Cold Brew. Pairs with anything under 90 minutes."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="panel panel--purple">
+      <h2>Private event catering</h2>
+      <p>Booking the Dragon's Den for a birthday or company offsite? We'll put together a custom platter spread — tell us how many heroes are coming and any dietary needs. Minimum 6 guests.</p>
+      <a href="book.html" class="btn btn--mint">Start a booking →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="brand-mark" style="background:#5fe3c0;"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#1d1830"/></svg></span><span class="brand-text">Meeple &amp; Mug<small>Roll, Sip, Repeat.</small></span></a>
+      <p style="margin-top:14px; color:rgba(255,244,220,0.75);">A neighborhood board game cafe in a converted warehouse — and a tabletop publisher of two original card games.</p>
+    </div>
+    <div><h4>Visit</h4><ul><li>412 Linwood Mill Ln</li><li>Linwood, NC 27000</li><li>(555) 314-DICE</li><li><a href="book.html">Book a table</a></li></ul></div>
+    <div><h4>Explore</h4><ul><li><a href="library.html">Game library</a></li><li><a href="menu.html">Drinks &amp; bites</a></li><li><a href="events.html">Events</a></li><li><a href="reviews.html">Friday reviews</a></li></ul></div>
+    <div><h4>Tavern Pass</h4><ul><li><a href="tavern-pass.html">Join the club</a></li><li><a href="tavern-pass.html#tiers">Tier perks</a></li><li><a href="tavern-pass.html#calc">Points calculator</a></li></ul></div>
+  </div>
+  <div class="shell legal"><span>© 2026 Meeple &amp; Mug Cafe LLC. All meeples loved equally.</span><span>Drink responsibly. Roll fearlessly.</span></div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

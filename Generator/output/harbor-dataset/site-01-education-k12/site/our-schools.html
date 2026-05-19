@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Schools — Maple Hollow Community Schools</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="util-links">
+    <a href="portal.html">🔑 Portal Login</a>
+    <a href="index.html">🏠 Home</a>
+    <a href="board.html">🏛️ Board of Education</a>
+  </div>
+  <div class="util-links">
+    <label for="locale" style="font-size:0.82rem;">Language:</label>
+    <select id="locale" class="locale-select">
+      <option value="en">English</option><option value="es">Español</option><option value="vi">Tiếng Việt</option><option value="so">Soomaali</option>
+    </select>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <div class="crest">M</div>
+    <div class="brand-text">
+      <span class="name">Maple Hollow Community Schools</span>
+      <span class="tag">Seven campuses, one community</span>
+    </div>
+  </a>
+  <div class="header-tools">
+    <a href="portal.html" class="btn robin">Sign In to the Portal</a>
+  </div>
+</header>
+
+<main class="shell">
+
+  <aside class="binder-nav">
+    <h4>Academics</h4>
+    <ul>
+      <li><a href="academics.html">Curriculum</a></li>
+      <li><a href="academics.html">Programs & Pathways</a></li>
+    </ul>
+    <h4>Families</h4>
+    <ul>
+      <li><a href="our-schools.html" class="active">Our Schools</a></li>
+      <li><a href="lunch.html">Lunch Menus</a></li>
+      <li><a href="portal.html">Parent Portal</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+    </ul>
+    <h4>About</h4>
+    <ul>
+      <li><a href="board.html">Board of Education</a></li>
+      <li><a href="news.html">District News</a></li>
+    </ul>
+  </aside>
+
+  <section class="canvas" style="grid-column: 2 / span 2;">
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:6px;">
+      <div>
+        <span class="dymo">Our Schools</span>
+        <h1 style="margin-bottom:6px;">Seven campuses along the <span class="crayon">river valley</span></h1>
+        <p class="muted">From early learning at the Acorn Center to senior capstones at Riverbend High — every Maple Hollow student belongs to one of seven neighborhood schools.</p>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-group" data-toggle-group="data-view-panel">
+        <button class="active" data-view="grid">▦ Grid</button>
+        <button data-view="map">🗺️ Map</button>
+      </div>
+      <span class="pill lemon">All grades</span>
+      <span class="pill">Elementary K-5</span>
+      <span class="pill">Middle 6-8</span>
+      <span class="pill">High 9-12</span>
+      <span class="pill blush">Magnet</span>
+    </div>
+
+    <!-- Grid view -->
+    <div data-view-panel="grid">
+      <div class="school-grid">
+
+        <a href="#" class="school-card">
+          <div class="mascot">🌰</div>
+          <div>
+            <h3>Acorn Early Learning Center</h3>
+            <div class="grade">Pre-K · Mascot: The Squirrels</div>
+            <div class="meta">
+              140 Acorn Lane<br>
+              Principal: Ms. Tatum Cole<br>
+              (218) 555-0140 · Bell: 8:30 – 2:30
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+        <a href="#" class="school-card">
+          <div class="mascot">🐝</div>
+          <div>
+            <h3>Larkspur Elementary</h3>
+            <div class="grade">K – 5 · Mascot: The Honeybees</div>
+            <div class="meta">
+              218 Larkspur Court<br>
+              Principal: Mr. Idris Vance<br>
+              (218) 555-0212 · Bell: 8:00 – 2:45
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+        <a href="#" class="school-card">
+          <div class="mascot">🦊</div>
+          <div>
+            <h3>Birchwood Elementary</h3>
+            <div class="grade">K – 5 · Mascot: The Foxes</div>
+            <div class="meta">
+              515 Birch Avenue<br>
+              Principal: Dr. Soraya Patel<br>
+              (218) 555-0226 · Bell: 8:00 – 2:45
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+        <a href="#" class="school-card">
+          <div class="mascot">🦉</div>
+          <div>
+            <h3>Hollow Creek Elementary</h3>
+            <div class="grade">K – 5 · Mascot: The Owls</div>
+            <div class="meta">
+              4 Hollow Creek Road<br>
+              Principal: Mrs. Jane Otieno<br>
+              (218) 555-0309 · Bell: 8:15 – 3:00
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+        <a href="#" class="school-card">
+          <div class="mascot">🦌</div>
+          <div>
+            <h3>Maple Hollow Middle</h3>
+            <div class="grade">6 – 8 · Mascot: The Stags</div>
+            <div class="meta">
+              900 Cedar Drive<br>
+              Principal: Mr. Antoni Reyes-Lee<br>
+              (218) 555-0418 · Bell: 7:45 – 2:35
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+        <a href="#" class="school-card">
+          <div class="mascot">🐺</div>
+          <div>
+            <h3>Riverbend High School</h3>
+            <div class="grade">9 – 12 · Mascot: The Wolves</div>
+            <div class="meta">
+              1500 Riverbend Pkwy<br>
+              Principal: Dr. Helen Marchetti<br>
+              (218) 555-0500 · Bell: 7:35 – 2:25
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+        <a href="#" class="school-card">
+          <div class="mascot">🌱</div>
+          <div>
+            <h3>Sapling Alternative Academy</h3>
+            <div class="grade">9 – 12 + Adult · Mascot: The Saplings</div>
+            <div class="meta">
+              66 Riverbend Pkwy<br>
+              Principal: Ms. Wren Halloran<br>
+              (218) 555-0566 · Flexible hours
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Map view -->
+    <div data-view-panel="map" style="display:none;">
+      <div class="map-canvas">
+        <div class="map-pin" style="top:18%;left:22%;"><span>🌰</span></div>
+        <div class="map-pin" style="top:30%;left:42%;"><span>🐝</span></div>
+        <div class="map-pin" style="top:48%;left:18%;"><span>🦊</span></div>
+        <div class="map-pin" style="top:60%;left:55%;"><span>🦉</span></div>
+        <div class="map-pin" style="top:38%;left:68%;"><span>🦌</span></div>
+        <div class="map-pin" style="top:72%;left:78%;"><span>🐺</span></div>
+        <div class="map-pin" style="top:80%;left:42%;"><span>🌱</span></div>
+        <div class="map-legend">
+          <strong>Map overlays:</strong><br>
+          <label><input type="checkbox" checked> Boundary polygons</label><br>
+          <label><input type="checkbox" checked> Bus routes</label><br>
+          <label><input type="checkbox"> Walking zones</label>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:8px;">Tap a pin to view boundary lines, bus stops, and principal contact info.</p>
+    </div>
+
+    <div class="card tinted-lemon">
+      <span class="washi pink right"></span>
+      <span class="dymo">Address Lookup</span>
+      <h3>Which school serves my home?</h3>
+      <p>Type your home address — we'll tell you the assigned elementary, middle, and high school, plus your bus route number and pickup time.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input type="text" placeholder="e.g. 412 Sycamore Lane" style="flex:1;min-width:240px;border:2px solid var(--ink);border-radius:12px;padding:10px 14px;font-family:inherit;background:#fff;">
+        <button class="btn">Find my school</button>
+      </div>
+    </div>
+
+    <div class="two-grid">
+
+      <div class="card">
+        <span class="dymo">Magnet & Choice</span>
+        <h3>Special programs across the district</h3>
+        <ul class="bullet-list">
+          <li><strong>Dual Language Spanish</strong> (Birchwood K-5)</li>
+          <li><strong>STEAM Lab</strong> (Hollow Creek 3-5, Maple Hollow Middle)</li>
+          <li><strong>IB Diploma Programme</strong> (Riverbend High)</li>
+          <li><strong>CTE Pathways</strong> — Welding, Health, Coding, Culinary (Riverbend)</li>
+          <li><strong>Flex Online</strong> (Sapling Academy)</li>
+        </ul>
+        <a href="academics.html" class="btn ghost">All academic programs →</a>
+      </div>
+
+      <div class="card tinted-sage">
+        <span class="dymo">Open Houses</span>
+        <h3>Visit before you enroll</h3>
+        <ul class="bullet-list">
+          <li><strong>Acorn ELC</strong> — Thu May 22, 5:30 PM</li>
+          <li><strong>Larkspur Elementary</strong> — Tue May 27, 6:00 PM</li>
+          <li><strong>Birchwood Elementary</strong> — Wed May 28, 6:00 PM</li>
+          <li><strong>Hollow Creek Elementary</strong> — Thu May 29, 6:00 PM</li>
+          <li><strong>MH Middle</strong> — Tue Jun 3, 6:30 PM</li>
+          <li><strong>Riverbend HS</strong> — Thu Jun 5, 7:00 PM</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <span class="dymo">Enroll a Student</span>
+      <h3>New to Maple Hollow? Five quick steps.</h3>
+      <div class="stepper">
+        <div class="step"><span class="n">1</span><h4>Find your school</h4><p>Use the address lookup above.</p></div>
+        <div class="step"><span class="n">2</span><h4>Gather documents</h4><p>Proof of residence, birth certificate, immunizations.</p></div>
+        <div class="step"><span class="n">3</span><h4>Apply online</h4><p>Through the Parent Portal or in person at the Welcome Center.</p></div>
+        <div class="step"><span class="n">4</span><h4>Schedule a tour</h4><p>Meet the principal and walk the building.</p></div>
+      </div>
+      <p style="margin-top:20px;" class="muted">Welcome Center · 1820 Sycamore Road · Mon–Fri 7:30 AM – 4:30 PM · Walk-ins welcome.</p>
+    </div>
+
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:12px;">
+        <div class="crest" style="width:42px;height:42px;font-size:1.2rem;">M</div>
+        <div class="brand-text">
+          <span class="name" style="color:#fff;font-size:1.05rem;">Maple Hollow Schools</span>
+          <span class="tag" style="color:#fff7da;">Cheerful since 1957</span>
+        </div>
+      </div>
+      <p style="font-size:0.86rem;color:#fff7da;">1820 Sycamore Road<br>Maple Hollow, MN 55409</p>
+    </div>
+    <div><h5>Quick Tools</h5><ul><li><a href="portal.html">Parent Portal</a></li><li><a href="our-schools.html">Find My School</a></li><li><a href="lunch.html">Lunch Menus</a></li></ul></div>
+    <div><h5>District</h5><ul><li><a href="board.html">Board</a></li><li><a href="academics.html">Academics</a></li><li><a href="news.html">News</a></li><li><a href="calendar.html">Calendar</a></li></ul></div>
+    <div><h5>Connect</h5><ul><li><a href="#">Contact</a></li><li><a href="#">Careers</a></li><li><a href="#">Volunteer</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 Maple Hollow Community Schools · ADA & Title IX statement</div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

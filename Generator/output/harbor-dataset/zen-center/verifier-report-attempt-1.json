@@ -1,0 +1,33 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "layout_consistency_low",
+      "message": "Visit page (/visit) scores 25 on the layout-consistency heuristic, but visually this reflects the intentional zoned-article structure (image + caption + itemized list per zone) and is not a real defect.",
+      "severity": "info",
+      "path": "visit.html"
+    },
+    {
+      "type": "large_blank_region",
+      "message": "Dana page is tagged with a large blank region, but the concept explicitly calls for a 'single narrow column on warm stone field' so the empty right column is intentional and aesthetically correct.",
+      "severity": "info",
+      "path": "dana.html"
+    }
+  ],
+  "scores": {
+    "accessibility": 0.95,
+    "mobile_responsiveness": 0.85,
+    "component_consistency": 0.95,
+    "layout_alignment": 0.7,
+    "render_quality": 0.85,
+    "page_completeness": 1.0,
+    "concept_fidelity": 0.95
+  },
+  "repair_instructions": [],
+  "deterministic_checks": {
+    "html_page_count": 7,
+    "all_declared_pages_resolved": true,
+    "missing_required_text": [],
+    "placeholder_hits": []
+  }
+}

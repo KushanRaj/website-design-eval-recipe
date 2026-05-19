@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bloom Calendar — Fernwood Conservatory</title>
+<meta name="description" content="An interactive bloom wheel charting when each cultivar peaks across the year at Fernwood Conservatory." />
+<link rel="stylesheet" href="css/style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div class="topbar">
+  <span>Open Wed – Sun · 09.00 – 17.00 · Glasshouses to 19.00 Thursdays</span>
+  <span><a href="visit.html">Plan Your Visit ↗</a> &nbsp; <a href="membership.html">Become a Member ↗</a></span>
+</div>
+
+<header class="masthead">
+  <div class="brand-row">
+    <svg class="brand-mark" viewBox="0 0 60 60" aria-hidden="true"><g fill="none" stroke="#1f2a1d" stroke-width="1.2"><circle cx="30" cy="30" r="28"/><path d="M30 8 C 22 18, 22 30, 30 52 C 38 30, 38 18, 30 8 Z" fill="#647a4f"/></g></svg>
+    <h1 class="brand-name">Fernwood Conservatory<small>& Rare Plant Nursery · Est. 1924</small></h1>
+    <div class="brand-meta">14 Acres<br/><strong>Olympic Foothills, WA</strong><br/>Vol. CII · No. 5</div>
+  </div>
+</header>
+
+<nav class="mainnav">
+  <ul>
+    <li><a href="index.html">Garden</a></li>
+    <li><a href="encyclopedia.html">Encyclopedia</a></li>
+    <li><a href="bloom-calendar.html" aria-current="page">Bloom Calendar</a></li>
+    <li><a href="garden-map.html">Garden Map</a></li>
+    <li><a href="workshops.html">Workshops</a></li>
+    <li><a href="shop.html">Nursery Shop</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="field-notes.html">Field Notes</a></li>
+    <li><a href="visit.html">Visit</a></li>
+  </ul>
+</nav>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumb">Garden · Living Collection</div>
+    <h1>The Bloom Calendar — <em>mensis</em> <span id="current-month">Maio</span></h1>
+    <p class="deck">Twelve sections, one species at a time. Drag the slider, click a month, and watch the circular wheel recolour to the cultivars currently at peak across the fourteen acres.</p>
+  </div>
+</section>
+
+<section class="section paper">
+  <div class="wrap">
+    <div class="bloom-wheel-wrap">
+      <svg id="bloom-wheel" viewBox="0 0 600 600" aria-label="Circular bloom wheel">
+        <defs>
+          <radialGradient id="wheelBg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f7f1df"/>
+            <stop offset="100%" stop-color="#ebe2c6"/>
+          </radialGradient>
+        </defs>
+        <circle cx="300" cy="300" r="280" fill="url(#wheelBg)" stroke="#2c3a26" stroke-width="1.5"/>
+        <circle cx="300" cy="300" r="250" fill="none" stroke="#2c3a26" stroke-width="0.8" stroke-dasharray="2 4"/>
+        <circle cx="300" cy="300" r="180" fill="none" stroke="#2c3a26" stroke-width="0.6"/>
+        <circle cx="300" cy="300" r="110" fill="none" stroke="#2c3a26" stroke-width="0.6"/>
+        <circle cx="300" cy="300" r="40" fill="#2c3a26" stroke="none"/>
+        <text x="300" y="295" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="14" fill="#faf6ec">Fernwood</text>
+        <text x="300" y="312" text-anchor="middle" font-family="Inter" font-size="8" fill="#d4dbbf" letter-spacing="3">ANNUAL WHEEL</text>
+
+        <!-- 12 month spokes (30° each, top = January) -->
+        <g stroke="#2c3a26" stroke-width="0.6">
+          <line x1="300" y1="50" x2="300" y2="550"/>
+          <line x1="50" y1="300" x2="550" y2="300"/>
+          <line x1="125" y1="125" x2="475" y2="475"/>
+          <line x1="475" y1="125" x2="125" y2="475"/>
+          <line x1="208" y1="65" x2="392" y2="535"/>
+          <line x1="392" y1="65" x2="208" y2="535"/>
+          <line x1="65" y1="208" x2="535" y2="392"/>
+          <line x1="65" y1="392" x2="535" y2="208"/>
+        </g>
+
+        <!-- Month labels — 12 evenly placed at radius 270 -->
+        <g font-family="Cormorant Garamond" font-style="italic" font-size="16" fill="#2c3a26" text-anchor="middle">
+          <text x="300" y="40">Januario</text>
+          <text x="438" y="80">Februario</text>
+          <text x="540" y="180">Martio</text>
+          <text x="568" y="308">Aprile</text>
+          <text x="540" y="430">Maio</text>
+          <text x="438" y="530">Junio</text>
+          <text x="300" y="580">Julio</text>
+          <text x="162" y="530">Augusto</text>
+          <text x="60" y="430">Septembre</text>
+          <text x="30" y="308">Octobre</text>
+          <text x="60" y="180">Novembre</text>
+          <text x="162" y="80">Decembre</text>
+        </g>
+
+        <!-- Species arcs — each is a pie slice at varying radii, attached to months -->
+        <!-- pie slice helper: each month spans 30°. Pie slices use months: list -->
+        <!-- Galanthus reginae-olgae [0,1,10,11] - outer ring -->
+        <path data-species="Galanthus" data-months="0,1,10,11" d="M300 60 A 240 240 0 0 1 419 92 L 380 130 A 200 200 0 0 0 300 100 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Galanthus" data-months="0,1,10,11" d="M300 60 A 240 240 0 0 0 181 92 L 220 130 A 200 200 0 0 1 300 100 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Galanthus" data-months="0,1,10,11" d="M181 92 A 240 240 0 0 0 92 181 L 130 220 A 200 200 0 0 1 220 130 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Galanthus" data-months="0,1,10,11" d="M419 92 A 240 240 0 0 1 508 181 L 470 220 A 200 200 0 0 0 380 130 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Helleborus [1,2,3] mid ring -->
+        <path data-species="Helleborus" data-months="1,2,3" d="M419 92 A 200 200 0 0 1 508 181 L 470 220 A 160 160 0 0 0 419 132 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Helleborus" data-months="1,2,3" d="M508 181 A 200 200 0 0 1 540 300 L 500 300 A 160 160 0 0 0 470 220 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Helleborus" data-months="1,2,3" d="M540 300 A 200 200 0 0 1 508 419 L 470 380 A 160 160 0 0 0 500 300 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Magnolia [2,3] inner-mid -->
+        <path data-species="Magnolia" data-months="2,3" d="M508 181 A 160 160 0 0 1 540 300 L 500 300 A 120 120 0 0 0 470 220 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Magnolia" data-months="2,3" d="M540 300 A 160 160 0 0 1 508 419 L 470 380 A 120 120 0 0 0 500 300 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Erythronium [3,4] mid ring -->
+        <path data-species="Erythronium" data-months="3,4" d="M540 300 A 200 200 0 0 1 508 419 L 470 380 A 160 160 0 0 0 500 300 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Erythronium" data-months="3,4" d="M508 419 A 200 200 0 0 1 419 508 L 380 470 A 160 160 0 0 0 470 380 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Paphiopedilum [4,5,6] outer-mid -->
+        <path data-species="Paphiopedilum" data-months="4,5,6" d="M508 419 A 240 240 0 0 1 419 508 L 380 470 A 200 200 0 0 0 470 380 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Paphiopedilum" data-months="4,5,6" d="M419 508 A 240 240 0 0 1 300 540 L 300 500 A 200 200 0 0 0 380 470 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Paphiopedilum" data-months="4,5,6" d="M300 540 A 240 240 0 0 1 181 508 L 220 470 A 200 200 0 0 0 300 500 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Meconopsis [5,6] inner ring -->
+        <path data-species="Meconopsis" data-months="5,6" d="M419 508 A 160 160 0 0 1 300 540 L 300 500 A 120 120 0 0 0 380 470 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Meconopsis" data-months="5,6" d="M300 540 A 160 160 0 0 1 181 508 L 220 470 A 120 120 0 0 0 300 500 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Lilium [6,7] outer ring -->
+        <path data-species="Lilium" data-months="6,7" d="M300 540 A 240 240 0 0 1 181 508 L 220 470 A 200 200 0 0 0 300 500 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Lilium" data-months="6,7" d="M181 508 A 240 240 0 0 1 92 419 L 130 380 A 200 200 0 0 0 220 470 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Hydrangea [7,8] mid -->
+        <path data-species="Hydrangea" data-months="7,8" d="M181 508 A 200 200 0 0 1 92 419 L 130 380 A 160 160 0 0 0 181 468 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Hydrangea" data-months="7,8" d="M92 419 A 200 200 0 0 1 60 300 L 100 300 A 160 160 0 0 0 130 380 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Colchicum [8,9] inner -->
+        <path data-species="Colchicum" data-months="8,9" d="M92 419 A 160 160 0 0 1 60 300 L 100 300 A 120 120 0 0 0 130 380 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Colchicum" data-months="8,9" d="M60 300 A 160 160 0 0 1 92 181 L 130 220 A 120 120 0 0 0 100 300 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Camellia [9,10,11] outer-mid -->
+        <path data-species="Camellia" data-months="9,10,11" d="M92 419 A 240 240 0 0 1 60 300 L 100 300 A 200 200 0 0 0 130 380 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Camellia" data-months="9,10,11" d="M60 300 A 240 240 0 0 1 92 181 L 130 220 A 200 200 0 0 0 100 300 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Camellia" data-months="9,10,11" d="M92 181 A 240 240 0 0 1 181 92 L 220 130 A 200 200 0 0 0 130 220 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Hamamelis [0,1] inner -->
+        <path data-species="Hamamelis" data-months="0,1" d="M300 100 A 100 100 0 0 1 392 168 L 350 198 A 60 60 0 0 0 300 140 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Hamamelis" data-months="0,1" d="M300 100 A 100 100 0 0 0 208 168 L 250 198 A 60 60 0 0 1 300 140 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Rhododendron [3,4] -->
+        <path data-species="Rhodo" data-months="3,4" d="M540 300 A 100 100 0 0 1 500 380 L 470 360 A 60 60 0 0 0 500 300 Z" fill="#647a4f" opacity="0.32"/>
+        <path data-species="Rhodo" data-months="3,4" d="M500 380 A 100 100 0 0 1 419 432 L 400 400 A 60 60 0 0 0 470 360 Z" fill="#647a4f" opacity="0.32"/>
+
+        <!-- Ornamental compass rosette -->
+        <g transform="translate(300 300)" fill="#faf6ec" stroke="#221b10" stroke-width="0.8">
+          <circle cx="0" cy="0" r="14" fill="#3a4a30" stroke="#221b10"/>
+          <path d="M0 -30 L 4 -10 L 0 0 L -4 -10 Z" fill="#d36247" stroke="#b3492f"/>
+          <path d="M0 30 L 4 10 L 0 0 L -4 10 Z" fill="#d36247" stroke="#b3492f"/>
+          <path d="M-30 0 L -10 4 L 0 0 L -10 -4 Z" fill="#faf6ec"/>
+          <path d="M30 0 L 10 4 L 0 0 L 10 -4 Z" fill="#faf6ec"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="month-slider">
+      <input type="range" id="month-slider" min="0" max="11" step="1" value="4" />
+      <div class="month-strip">
+        <span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span>
+        <span>MAY</span><span>JUN</span><span>JUL</span><span>AUG</span>
+        <span>SEP</span><span>OCT</span><span>NOV</span><span>DEC</span>
+      </div>
+      <p class="caption" style="text-align:center; margin-top:1rem">Filter by zone: <a href="garden-map.html">All zones</a> · <em>Glasshouses</em> · <em>Woodland Walk</em> · <em>Alpine Bank</em> · <em>Camellia Glade</em></p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <header class="section-head">
+      <div class="num">II.</div>
+      <h2 style="font-style:italic">Currently Peaking</h2>
+      <div class="meta">Updated weekly by curatorial staff</div>
+    </header>
+
+    <div class="peak-list" id="peak-list">
+      <!-- JS will populate; placeholder so it renders without JS -->
+      <article class="peak-card">
+        <div class="peak-when">Peak — May</div>
+        <h3 class="binomial">Paphiopedilum fairrieanum</h3>
+        <div class="caption">Fairrie's Slipper</div>
+        <dl>
+          <dt>Zone</dt><dd>Glasshouse III</dd>
+          <dt>Light</dt><dd>Diffused</dd>
+          <dt>Map</dt><dd><a href="garden-map.html">View location ↗</a></dd>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div>
+      <div class="signature">
+        <svg class="sig-mark" viewBox="0 0 60 60" aria-hidden="true"><g fill="none" stroke="#e8ecd9" stroke-width="1.1"><circle cx="30" cy="30" r="28"/><path d="M30 8 C 22 18, 22 30, 30 52 C 38 30, 38 18, 30 8 Z" fill="#647a4f"/></g></svg>
+        <div class="name">Fernwood Conservatory<br/>& Rare Plant Nursery</div>
+      </div>
+      <p class="tag">A 14-acre destination garden and working nursery on the Olympic Peninsula. <em>Open to the public since 1924.</em></p>
+    </div>
+    <div><h4>The Garden</h4><ul>
+      <li><a href="index.html">Home</a></li><li><a href="visit.html">Plan Your Visit</a></li>
+      <li><a href="garden-map.html">Garden Map</a></li><li><a href="bloom-calendar.html">Bloom Calendar</a></li>
+      <li><a href="workshops.html">Workshops</a></li></ul></div>
+    <div><h4>Plants &amp; Print</h4><ul>
+      <li><a href="encyclopedia.html">Cultivar Encyclopedia</a></li>
+      <li><a href="shop.html">Nursery Shop</a></li>
+      <li><a href="field-notes.html">Field Notes</a></li></ul></div>
+    <div><h4>Patronage</h4><ul>
+      <li><a href="membership.html">Membership Tiers</a></li>
+      <li><a href="membership.html#honor">Patron Honor Roll</a></li></ul></div>
+  </div>
+  <div class="colophon">
+    <span>© 1924 – 2026 Fernwood Conservatory · A 501(c)(3) garden trust</span>
+    <span>Set in Cormorant Garamond &amp; Inter</span>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

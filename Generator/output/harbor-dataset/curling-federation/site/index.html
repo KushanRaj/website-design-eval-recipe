@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>National Curling Federation — Operational Portal</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-bar">
+    <div>Member Portal · Officials Login · Calendar</div>
+    <div><a href="#">EN</a> · <a href="#">FR</a> · Season 2025–26</div>
+  </div>
+  <div class="masthead-main">
+    <div class="crest" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#BCD7E6" stroke-width="1.2"/>
+        <circle cx="20" cy="20" r="13" fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="8"  fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="3"  fill="#BCD7E6"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#BCD7E6" stroke-width="0.6"/>
+        <line x1="20" y1="2" x2="20" y2="38" stroke="#BCD7E6" stroke-width="0.6"/>
+      </svg>
+    </div>
+    <div class="masthead-title">
+      <h1>National Curling Federation</h1>
+      <span class="tagline">Est. 1903 · Hammer · Sweep · Sport for All</span>
+    </div>
+    <div class="masthead-meta">
+      <strong>2025–26 Season</strong>
+      Week 21 · 19 May 2026
+    </div>
+  </div>
+  <nav class="primary-nav">
+    <a href="index.html" class="active">Home</a>
+    <a href="standings.html">Standings</a>
+    <a href="athletes.html">Athletes</a>
+    <a href="brackets.html">Tournaments</a>
+    <a href="clubs.html">Find a Club</a>
+    <a href="rules.html">Rules &amp; Officiating</a>
+    <a href="results.html">Results Archive</a>
+    <a href="news.html">News</a>
+  </nav>
+</header>
+
+<div class="ticker" aria-label="Live results ticker">
+  <div class="ticker-label">Live · Results</div>
+  <div class="ticker-track">
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span>
+    <span class="sep">◆</span>
+    <span><strong>WJC Q-RR</strong> · Hearthstone 8–4 Ironcliff <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span><strong>MX-2D Pool A</strong> · Carrington 6–6 Sable Lakes · End 7</span>
+    <span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span><strong>M-RR</strong> · Foreland 5–7 Greycap <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span class="live">LIVE · Glacier Park 4–4 Brookmoor · End 6 · Sheet C</span>
+    <span class="sep">◆</span>
+    <span><strong>U21-FINAL</strong> · Pine Hollow 8–2 Westbrook <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <!-- duplicate set for seamless scroll -->
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span>
+    <span class="sep">◆</span>
+    <span><strong>WJC Q-RR</strong> · Hearthstone 8–4 Ironcliff <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span><strong>MX-2D Pool A</strong> · Carrington 6–6 Sable Lakes · End 7</span>
+    <span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span><strong>M-RR</strong> · Foreland 5–7 Greycap <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span class="live">LIVE · Glacier Park 4–4 Brookmoor · End 6 · Sheet C</span>
+    <span class="sep">◆</span>
+    <span><strong>U21-FINAL</strong> · Pine Hollow 8–2 Westbrook <span class="win">W</span></span>
+    <span class="sep">◆</span>
+  </div>
+</div>
+
+<main>
+  <div class="dashboard">
+
+    <!-- ============ National rankings ============ -->
+    <section class="panel">
+      <div class="panel-head">
+        <h3><span class="house-bullet"></span>National Rankings</h3>
+        <span class="small-cap">Week 21</span>
+      </div>
+      <div data-tabs>
+        <div class="tab-row">
+          <div class="tab active" data-tab="men">Men</div>
+          <div class="tab" data-tab="women">Women</div>
+          <div class="tab" data-tab="mxd">Mixed Doubles</div>
+        </div>
+
+        <div class="tab-panel active" data-tab="men">
+          <table class="data sortable">
+            <thead>
+              <tr>
+                <th class="rank">#</th><th>Team / Skip</th><th class="num">Pts</th><th class="num">W–L</th><th class="num">H%</th><th>Δ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="rank">1</td><td class="team">Brennan · Whitestone</td><td class="num">214</td><td class="num">18–4</td><td class="num">62.1</td><td><span class="delta-up">▲2</span></td></tr>
+              <tr><td class="rank">2</td><td class="team">Halvorsen · Greycap</td><td class="num">208</td><td class="num">17–5</td><td class="num">59.4</td><td><span class="delta-eq">—</span></td></tr>
+              <tr><td class="rank">3</td><td class="team">Okafor · Foreland</td><td class="num">196</td><td class="num">16–6</td><td class="num">57.8</td><td><span class="delta-dn">▼1</span></td></tr>
+              <tr><td class="rank">4</td><td class="team">Tanaka · Pine Hollow</td><td class="num">188</td><td class="num">15–7</td><td class="num">56.0</td><td><span class="delta-up">▲1</span></td></tr>
+              <tr><td class="rank">5</td><td class="team">Lemieux · Brookmoor</td><td class="num">181</td><td class="num">14–8</td><td class="num">54.5</td><td><span class="delta-dn">▼2</span></td></tr>
+              <tr><td class="rank">6</td><td class="team">Ostlund · Glacier Park</td><td class="num">174</td><td class="num">13–9</td><td class="num">52.9</td><td><span class="delta-eq">—</span></td></tr>
+              <tr><td class="rank">7</td><td class="team">Reyes · Cape Verity</td><td class="num">169</td><td class="num">12–10</td><td class="num">51.2</td><td><span class="delta-up">▲3</span></td></tr>
+              <tr><td class="rank">8</td><td class="team">Saunders · Hearthstone</td><td class="num">162</td><td class="num">12–10</td><td class="num">49.8</td><td><span class="delta-dn">▼1</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-panel" data-tab="women">
+          <table class="data sortable">
+            <thead><tr><th class="rank">#</th><th>Team / Skip</th><th class="num">Pts</th><th class="num">W–L</th><th class="num">H%</th><th>Δ</th></tr></thead>
+            <tbody>
+              <tr><td class="rank">1</td><td class="team">McAllister · Northfield</td><td class="num">221</td><td class="num">19–3</td><td class="num">64.0</td><td><span class="delta-eq">—</span></td></tr>
+              <tr><td class="rank">2</td><td class="team">Aksoy · Carrington</td><td class="num">203</td><td class="num">17–5</td><td class="num">60.7</td><td><span class="delta-up">▲1</span></td></tr>
+              <tr><td class="rank">3</td><td class="team">Park · Ironcliff</td><td class="num">198</td><td class="num">16–6</td><td class="num">58.4</td><td><span class="delta-dn">▼1</span></td></tr>
+              <tr><td class="rank">4</td><td class="team">Vargas · Sable Lakes</td><td class="num">189</td><td class="num">15–7</td><td class="num">56.6</td><td><span class="delta-up">▲2</span></td></tr>
+              <tr><td class="rank">5</td><td class="team">Holloway · Granite Bay</td><td class="num">182</td><td class="num">14–8</td><td class="num">55.0</td><td><span class="delta-eq">—</span></td></tr>
+              <tr><td class="rank">6</td><td class="team">Beaumont · Westbrook</td><td class="num">175</td><td class="num">13–9</td><td class="num">53.3</td><td><span class="delta-dn">▼2</span></td></tr>
+              <tr><td class="rank">7</td><td class="team">Singh · Pine Hollow</td><td class="num">168</td><td class="num">13–9</td><td class="num">52.1</td><td><span class="delta-up">▲1</span></td></tr>
+              <tr><td class="rank">8</td><td class="team">Iversen · Whitestone</td><td class="num">160</td><td class="num">12–10</td><td class="num">50.0</td><td><span class="delta-dn">▼1</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-panel" data-tab="mxd">
+          <table class="data sortable">
+            <thead><tr><th class="rank">#</th><th>Pair</th><th class="num">Pts</th><th class="num">W–L</th><th class="num">H%</th><th>Δ</th></tr></thead>
+            <tbody>
+              <tr><td class="rank">1</td><td class="team">Brennan / Aksoy</td><td class="num">189</td><td class="num">14–2</td><td class="num">66.2</td><td><span class="delta-up">▲1</span></td></tr>
+              <tr><td class="rank">2</td><td class="team">Park / Halvorsen</td><td class="num">182</td><td class="num">13–3</td><td class="num">63.8</td><td><span class="delta-dn">▼1</span></td></tr>
+              <tr><td class="rank">3</td><td class="team">Holloway / Reyes</td><td class="num">170</td><td class="num">12–4</td><td class="num">60.1</td><td><span class="delta-eq">—</span></td></tr>
+              <tr><td class="rank">4</td><td class="team">Vargas / Lemieux</td><td class="num">163</td><td class="num">11–5</td><td class="num">58.0</td><td><span class="delta-up">▲2</span></td></tr>
+              <tr><td class="rank">5</td><td class="team">McAllister / Okafor</td><td class="num">156</td><td class="num">10–6</td><td class="num">55.4</td><td><span class="delta-eq">—</span></td></tr>
+              <tr><td class="rank">6</td><td class="team">Singh / Saunders</td><td class="num">148</td><td class="num">9–7</td><td class="num">52.9</td><td><span class="delta-dn">▼2</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-body" style="border-top:1px solid var(--hairline);">
+        <a href="standings.html" class="btn ghost">Full Standings →</a>
+      </div>
+    </section>
+
+    <!-- ============ Bracket teaser ============ -->
+    <section class="panel">
+      <div class="panel-head">
+        <h3><span class="house-bullet"></span>National Championship · Playoff Bracket</h3>
+        <span class="small-cap">Reykjavik Arena · 16–24 May</span>
+      </div>
+      <div class="bracket-teaser">
+        <div class="round">
+          <div>
+            <div class="small-cap" style="margin-bottom:4px;">Quarterfinals</div>
+            <div class="match-mini">
+              <div class="row winner"><span class="nm">Whitestone</span><span class="sc">8</span></div>
+              <div class="row"><span class="nm">Greycap</span><span class="sc">5</span></div>
+            </div>
+            <div class="match-mini" style="margin-top:6px;">
+              <div class="row"><span class="nm">Foreland</span><span class="sc">4</span></div>
+              <div class="row winner"><span class="nm">Pine Hollow</span><span class="sc">7</span></div>
+            </div>
+            <div class="match-mini" style="margin-top:6px;">
+              <div class="row winner"><span class="nm">Brookmoor</span><span class="sc">9</span></div>
+              <div class="row"><span class="nm">Glacier</span><span class="sc">3</span></div>
+            </div>
+            <div class="match-mini" style="margin-top:6px;">
+              <div class="row"><span class="nm">Cape Verity</span><span class="sc">5</span></div>
+              <div class="row winner"><span class="nm">Hearthstone</span><span class="sc">8</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="small-cap" style="margin-bottom:4px;">Semifinals</div>
+            <div class="match-mini">
+              <div class="row winner"><span class="nm">Whitestone</span><span class="sc">7</span></div>
+              <div class="row"><span class="nm">Pine Hollow</span><span class="sc">6</span></div>
+            </div>
+            <div class="match-mini" style="margin-top:6px;">
+              <div class="row winner"><span class="nm">Brookmoor</span><span class="sc">8</span></div>
+              <div class="row"><span class="nm">Hearthstone</span><span class="sc">5</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="small-cap" style="margin-bottom:4px;">Final · Live</div>
+            <div class="match-mini" style="border-color:var(--bad);">
+              <div class="row"><span class="nm">Whitestone</span><span class="sc">7</span></div>
+              <div class="row"><span class="nm">Brookmoor</span><span class="sc">5</span></div>
+            </div>
+            <div style="margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--bad);font-weight:700;">● LIVE · END 9 · SHEET A</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" style="border-top:1px solid var(--hairline);display:flex;gap:8px;">
+        <a href="brackets.html" class="btn">Open Bracket</a>
+        <a href="brackets.html" class="btn ghost">Draw Schedule</a>
+      </div>
+    </section>
+
+    <!-- ============ News & officiating column ============ -->
+    <section class="panel news-col">
+      <div class="panel-head"><h3><span class="house-bullet"></span>News &amp; Notices</h3><span class="small-cap">Updated 09:42</span></div>
+      <div class="panel-body" style="padding:10px 12px;">
+        <div class="notice">
+          <div class="label">Officiating · Notice 21-08</div>
+          Revised free-guard-zone interpretation for U18 events effective 01 June. Clinics scheduled in five regions.
+          <div style="margin-top:6px;"><a href="rules.html">Read full bulletin →</a></div>
+        </div>
+
+        <div class="bulletin">
+          <div class="meta"><span class="cat selection">Selection</span><span>17 May 2026</span></div>
+          <h4><a href="news.html">National Squad nominations announced for World Championship</a></h4>
+          <p>Eight teams confirmed across men's, women's, and mixed doubles disciplines. Trials wrap at Pine Hollow Arena.</p>
+        </div>
+        <div class="bulletin">
+          <div class="meta"><span class="cat">Results</span><span>16 May 2026</span></div>
+          <h4><a href="news.html">Northfield closes regular season unbeaten in women's league</a></h4>
+          <p>McAllister rink secures top seed with a 19–3 record; hammer percentage of 64.0 leads the discipline.</p>
+        </div>
+        <div class="bulletin">
+          <div class="meta"><span class="cat officiating">Officiating</span><span>15 May 2026</span></div>
+          <h4><a href="rules.html">Ice-technician certification windows posted for 2026–27</a></h4>
+          <p>Level 3 and Level 4 modules open for registration through 31 July; regional intensives in September.</p>
+        </div>
+        <div class="bulletin">
+          <div class="meta"><span class="cat">Sanctions</span><span>13 May 2026</span></div>
+          <h4><a href="news.html">Equipment review: brush head approvals updated</a></h4>
+          <p>Three new pad models added to the approved list; one withdrawn pending re-testing per NCF EQ-2026-04.</p>
+        </div>
+      </div>
+      <div class="panel-body" style="border-top:1px solid var(--hairline);">
+        <a href="news.html" class="btn ghost">All News →</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ Club of the week ============ -->
+  <section class="club-spot" aria-label="Club of the week">
+    <div class="body">
+      <div class="overline">Club of the Week · Region IV</div>
+      <h2>Brookmoor Curling Club</h2>
+      <p style="margin:0;color:var(--granite-70);max-width:540px;">
+        Founded 1924 on the shore of Lake Vesper, Brookmoor's six-sheet facility hosts a record 412 league members this season — including the country's largest junior development pipeline and a fully accessible wheelchair curling program.
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="v">6</div><div class="k">Sheets</div></div>
+        <div class="stat"><div class="v">412</div><div class="k">Members</div></div>
+        <div class="stat"><div class="v">11</div><div class="k">Leagues</div></div>
+        <div class="stat"><div class="v">1924</div><div class="k">Founded</div></div>
+      </div>
+      <div class="actions">
+        <a href="clubs.html" class="btn">Find a Club</a>
+        <a href="clubs.html" class="btn ghost">Visit Brookmoor</a>
+      </div>
+    </div>
+    <div class="diagram" aria-hidden="true">
+      <svg width="220" height="220" viewBox="0 0 220 220">
+        <defs>
+          <pattern id="ice-lines" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+            <path d="M 0 14 L 14 0" stroke="#BCD7E6" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect x="0" y="0" width="220" height="220" fill="url(#ice-lines)"/>
+        <circle cx="110" cy="110" r="78" fill="none" stroke="#3A3F45" stroke-width="1"/>
+        <circle cx="110" cy="110" r="56" fill="none" stroke="#1E5F86" stroke-width="1"/>
+        <circle cx="110" cy="110" r="34" fill="#FFFFFF" stroke="#3A3F45" stroke-width="0.8"/>
+        <circle cx="110" cy="110" r="12" fill="#8B2A2A" stroke="#3A3F45" stroke-width="0.5"/>
+        <line x1="10" y1="110" x2="210" y2="110" stroke="#3A3F45" stroke-width="0.8"/>
+        <line x1="110" y1="10" x2="110" y2="210" stroke="#3A3F45" stroke-width="0.8"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ Sponsor strip ============ -->
+  <section class="sponsor-strip" aria-label="Federation partners">
+    <span class="lbl">Official Partners</span>
+    <span class="sponsor">Cascadia Insurance</span>
+    <span class="sponsor">Northwind Bank</span>
+    <span class="sponsor">Granite Mutual</span>
+    <span class="sponsor">Boreal Energy</span>
+    <span class="sponsor">Ironclad Apparel</span>
+    <span class="sponsor">Sable Broadcasting</span>
+    <span class="sponsor">Frostline Hotels</span>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="cols">
+    <div>
+      <h5>National Curling Federation</h5>
+      <p style="margin:0 0 6px 0;">Federation House, 41 Granite Row, Capital District — recognised national governing body affiliated with the World Curling Federation since 1966.</p>
+      <p style="margin:0;font-family:var(--mono);font-size:11px;color:var(--ice-200);">contact@ncf.example · +1 (555) 010-0190</p>
+    </div>
+    <div>
+      <h5>Competition</h5>
+      <a href="standings.html">Standings</a>
+      <a href="brackets.html">Tournaments</a>
+      <a href="results.html">Results Archive</a>
+      <a href="athletes.html">Athletes</a>
+    </div>
+    <div>
+      <h5>Officiating</h5>
+      <a href="rules.html">Rules Handbook</a>
+      <a href="rules.html">Certification Ladder</a>
+      <a href="rules.html">Equipment Bulletins</a>
+      <a href="news.html">Sanctions &amp; Notices</a>
+    </div>
+    <div>
+      <h5>Membership</h5>
+      <a href="clubs.html">Find a Club</a>
+      <a href="clubs.html">Register a Club</a>
+      <a href="#">Member Portal</a>
+      <a href="#">Insurance Schemes</a>
+    </div>
+  </div>
+  <div class="colophon">
+    <span>© 2026 National Curling Federation · A registered not-for-profit</span>
+    <span>Document NCF-WEB-21 · 19 May 2026</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

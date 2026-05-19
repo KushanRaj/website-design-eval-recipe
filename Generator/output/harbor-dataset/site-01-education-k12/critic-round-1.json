@@ -1,0 +1,42 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "site-01-education-k12-A",
+      "score": 0.82,
+      "accept": true,
+      "strengths": [
+        "Concrete Sunridge USD identity with specific palette (butter yellow, sky blue, peach, mint, lavender) and Fraunhofer-style display type",
+        "Eight well-differentiated pages including a dedicated bus-routes utility page",
+        "Rich content model covering Schools, BusRoute, Trustee, Alert, LunchMenu with realistic fields like attendance zone polygons and ics links",
+        "Interactions are domain-specific: address-to-school finder, compare-up-to-3 schools tray, bilingual cookie persistence",
+        "Left-rail folder-tree motif clearly evokes a school binder and matches seed brief"
+      ],
+      "weaknesses": [
+        "Bilingual support limited to English/Español whereas many districts serve more languages",
+        "News page layout (featured + masonry) is a somewhat conventional editorial pattern",
+        "Sticker-book motif risks generic 'friendly school' aesthetic without the differentiating texture B adds"
+      ]
+    },
+    {
+      "candidate_id": "site-01-education-k12-B",
+      "score": 0.88,
+      "accept": true,
+      "strengths": [
+        "Strong, specific Maple Hollow identity with seven-campus mascot system and notebook/binder motif including washi tape, dymo labels, ruled lines",
+        "Eight distinct pages including a fully-developed weekly Lunch Menus page with grid layout",
+        "Multilingual support across English, Spanish, Vietnamese, Somali with Translation entity in content model",
+        "Calendar offers Month/Week/Agenda view switcher and rich filter taxonomy (PTA, Performing Arts, etc.)",
+        "Role-tabbed sign-in (Parent/Student/Staff) with Clever + Google SSO is realistic for K-12",
+        "Mobile behavior is specific per page (swipeable lunch carousel, bottom-sheet binder nav)"
+      ],
+      "weaknesses": [
+        "Some sections (community partners marquee, social feed embed) feel like filler",
+        "Board page policy library accordion could use more specific examples beyond series numbers",
+        "Two concepts overlap heavily in calendar and board layouts, but B differentiates with binder textures"
+      ]
+    }
+  ],
+  "best_candidate_id": "site-01-education-k12-B",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

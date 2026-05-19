@@ -1,0 +1,57 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "accessibility",
+      "message": "Several icon-only buttons (player controls, filter chips, cart toggle) lack discernible accessible names. Newsletter signup input has no associated label.",
+      "severity": "warning",
+      "path": "multiple pages"
+    },
+    {
+      "type": "component_consistency",
+      "message": "Roster card group flagged with hierarchy/tag mismatches across 10 of 16 cards. Visually the cards read as a single consistent system with intentional asymmetric column widths per the zine brief, but underlying markup differs enough to lower the heuristic score.",
+      "severity": "info",
+      "path": "/roster"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Layout consistency scores are mid-range on catalog (45) and roster (48). This is largely expected for a zine/brutalist motif with intentional misregistration, but a few alignment misses are real.",
+      "severity": "info",
+      "path": "/catalog, /roster"
+    }
+  ],
+  "scores": {
+    "accessibility": 0.78,
+    "mobile_responsiveness": 0.85,
+    "component_consistency": 0.78,
+    "layout_alignment": 0.72,
+    "render_quality": 0.99,
+    "page_completeness": 1.0,
+    "brand_fit": 0.96
+  },
+  "repair_instructions": [
+    "Add aria-label attributes to all icon-only buttons in the sticky audio player bar (play/pause, prev, next, queue, volume mute toggle) so screen readers announce them. Do the same for filter chip toggles that rely on visual state, the cart pill in the header, and the 'flip' button on catalog cards.",
+    "Wrap the newsletter email input in a <label> (or add an explicit for/id pair plus a visually-hidden label) on the home page tear-off strip so the field has an accessible name.",
+    "On the roster page, normalize the artist card markup so every card uses the same tag hierarchy (e.g. article > figure(img) > h3 > meta-row > tag-list > button). Keep the asymmetric column widths via CSS grid track sizing rather than by varying the inner HTML structure — that preserves the zine look while making the cards a real consistent component.",
+    "Audit the catalog page for stray vertical alignment misses: the left rail catalog index, filter row, and the first row of release cards should share a common top baseline. Visually-intended misregistration on sleeve mockups is fine and should be left alone.",
+    "Optional polish: the roster card art placeholders all show the same generic pink/cyan blob silhouette. Vary the halftone portraits per artist (even with deterministic SVG seeds) so the page reads as a roster of distinct people rather than 16 copies of the same shape."
+  ],
+  "deterministic_checks": {
+    "page_presence_resolved": {
+      "/": "index.html",
+      "/roster": "roster.html",
+      "/roster/sable-circuit": "artist.html (concrete instance)",
+      "/catalog": "catalog.html",
+      "/catalog/xrx-039": "release.html (concrete instance)",
+      "/tour": "tour.html",
+      "/shop": "shop.html",
+      "/history": "history.html"
+    },
+    "required_text_present": true,
+    "render_sanity_all_passed": true,
+    "accessibility_warnings": [
+      "missing_accessible_name on icon-only player controls",
+      "missing_form_label on newsletter input"
+    ]
+  }
+}

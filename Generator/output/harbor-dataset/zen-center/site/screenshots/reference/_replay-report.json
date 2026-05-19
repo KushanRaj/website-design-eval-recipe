@@ -1,0 +1,75 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/zen-center/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 11,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "lineage-full",
+      "status": "ok",
+      "required": true,
+      "file": "lineage-full.png"
+    },
+    {
+      "id": "lineage-node-selected",
+      "status": "ok",
+      "required": false,
+      "file": "lineage-node-selected.png"
+    },
+    {
+      "id": "schedule-full",
+      "status": "ok",
+      "required": true,
+      "file": "schedule-full.png"
+    },
+    {
+      "id": "schedule-filter-residential",
+      "status": "ok",
+      "required": false,
+      "file": "schedule-filter-residential.png"
+    },
+    {
+      "id": "audio-full",
+      "status": "ok",
+      "required": true,
+      "file": "audio-full.png"
+    },
+    {
+      "id": "visit-full",
+      "status": "ok",
+      "required": true,
+      "file": "visit-full.png"
+    },
+    {
+      "id": "dana-full",
+      "status": "ok",
+      "required": true,
+      "file": "dana-full.png"
+    },
+    {
+      "id": "dana-monthly-band-selected",
+      "status": "ok",
+      "required": false,
+      "file": "dana-monthly-band-selected.png"
+    },
+    {
+      "id": "apply-step-1",
+      "status": "ok",
+      "required": true,
+      "file": "apply-step-1.png"
+    },
+    {
+      "id": "apply-step-2",
+      "status": "ok",
+      "required": false,
+      "file": "apply-step-2.png"
+    }
+  ]
+}

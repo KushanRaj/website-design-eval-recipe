@@ -1,0 +1,286 @@
+{
+  "seed_id": "lutherie-guild",
+  "concepts": [
+    {
+      "candidate_id": "lutherie-guild-engraved-folio",
+      "domain": "craft guild / stringed-instrument lutherie",
+      "site_goal": "Present the centuries-old Worshipful Guild of Stringed-Instrument Luthiers as a living craft body — connecting prospective apprentices, member workshops, collectors, and the curious public to its members, materials lore, exhibitions, and technical journal.",
+      "audience": [
+        "prospective apprentices",
+        "collectors and patrons",
+        "professional luthiers seeking membership",
+        "musicians researching their instrument's provenance",
+        "academic researchers in organology"
+      ],
+      "description": "An ornate editorial heritage site rendered as a leather-bound folio brought to the screen. The home page opens like the frontispiece of an 18th-century treatise: a centered engraved viola d'amore framed by acanthus scrollwork, with the guild's full Latin-and-English name set in spaced caps above a date roundel reading 'ESTABLISHED MDCCXIV'. Body copy runs in two narrow justified columns with hanging drop caps, ligatures (ct, st, fi, fl), and small-caps for proper nouns. The walnut-brown chrome (#4A2E1F) sits against a parchment ground (#F2E6D0) with deep burgundy (#6B1E2A) reserved for rules, ornamental dividers, and link underlines. Hand-engraved spot illustrations — a coiled scroll, a chisel, a maple billet showing flame figure — sit in the margins like a Diderot plate. Navigation is a thin parchment ribbon with a wax-seal hover state. Pages feel like chapters: each has a hand-set chapter number ('CAP. III'), a foliate header rule, and footnotes in italic. The instrument-of-the-month is presented as a tipped-in plate with a copperplate caption and provenance notes. The journal page mimics an engraved scientific periodical with figure numbers and roman-numeraled sections.",
+      "motif": "engraved frontispiece with acanthus scrollwork, wax seals, foliate rules, and tipped-in plate illustrations",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "engraved frontispiece: centered title cartouche, large engraved instrument, date roundel, then a two-column 'preface from the Warden' with drop caps, followed by three plate-card teasers (Apprenticeship / Exhibition / Journal) and a footer with the guild oath",
+          "sections": [
+            "title cartouche with full guild name and MDCCXIV roundel",
+            "centered engraved hero instrument (viola d'amore) within acanthus frame",
+            "preface from the Warden — two justified columns with drop cap",
+            "three plate-card teasers linking to Apprenticeship, Exhibition, Journal",
+            "instrument-of-the-month teaser strip with tipped-in plate",
+            "footer with guild oath in small caps and arms of the guild"
+          ]
+        },
+        {
+          "id": "workshops",
+          "path": "/workshops",
+          "layout_pattern": "engraved directory: filter ribbon across the top, then a grid of workshop cards each shaped like a tradesman's sign with the workshop's house mark, master luthier, city, and specialties; a foldout map of Europe shows pin locations as small engraved instruments",
+          "sections": [
+            "directory intro paragraph in italic",
+            "filter ribbon (instrument family / region / accepting apprentices)",
+            "workshop card grid with engraved house marks",
+            "engraved foldout map of member locations",
+            "'Become a member workshop' call-to-action with application steps"
+          ]
+        },
+        {
+          "id": "apprenticeship",
+          "path": "/apprenticeship",
+          "layout_pattern": "chapter-style page: CAP. III header rule, opening paragraph with drop cap, then a three-tier vertical timeline (Apprentice → Journeyman → Master) with foliate dividers, expectations and stipend in side margins as footnotes, closing with an application form set as an engraved petition",
+          "sections": [
+            "chapter heading 'CAP. III — Of the Path to Mastery'",
+            "opening paragraph with drop cap",
+            "three-tier timeline of apprentice / journeyman / master",
+            "marginal footnotes on stipend, hours at the bench, examination",
+            "engraved petition-style application form"
+          ]
+        },
+        {
+          "id": "materials",
+          "path": "/materials",
+          "layout_pattern": "Diderot-plate inspired catalogue: top half a large labelled engraving of an instrument cross-section with callouts, bottom half a sortable table of woods, varnishes, and strings with grading and sourcing partner; a sidebar offers a sustainability note from the guild forester",
+          "sections": [
+            "labelled cross-section engraving with numbered callouts",
+            "sortable materials table (species, grading, sourcing partner, sustainability)",
+            "varnish recipe vignette with engraved bottles",
+            "forester's sidebar note in italic",
+            "interactive billet rotator (quarter-sawn / flat-sawn)"
+          ]
+        },
+        {
+          "id": "exhibition",
+          "path": "/exhibition",
+          "layout_pattern": "annual-exhibition gallery: top banner with year and host city in cartouche, hero plate of the Best-in-Show instrument, then a two-column gallery of juried instruments with copperplate captions; below, an archive carousel of past years' frontispieces",
+          "sections": [
+            "year and host city cartouche",
+            "Best-in-Show hero plate with juror citation",
+            "two-column gallery of juried instruments",
+            "list of attending workshops",
+            "archive carousel of past exhibition frontispieces"
+          ]
+        },
+        {
+          "id": "instrument-of-the-month",
+          "path": "/instrument-of-the-month",
+          "layout_pattern": "tipped-in plate spread: full-bleed engraved instrument on the verso, copperplate caption and detailed entry on the recto with maker, year, dimensions, varnish, tonal notes, and a provenance chain styled as a numbered lineage; audio sample plays from a phonograph-horn button",
+          "sections": [
+            "tipped-in plate of the instrument (verso)",
+            "copperplate caption and full entry (recto)",
+            "provenance chain as a numbered lineage",
+            "audio sample with phonograph-horn play control",
+            "'previous featured instruments' thumbnail strip"
+          ]
+        },
+        {
+          "id": "journal",
+          "path": "/journal",
+          "layout_pattern": "engraved periodical: masthead with roman-numeraled volume and issue, table of contents with article titles and authors, then the lead article rendered in two columns with figure numbers, footnotes, and an author colophon; sidebar lists past issues",
+          "sections": [
+            "masthead with volume / issue in Roman numerals",
+            "table of contents",
+            "lead article in two-column justified setting with figures and footnotes",
+            "author colophon with engraved portrait",
+            "past issues sidebar"
+          ]
+        }
+      ],
+      "message_intent": [
+        "convey institutional gravitas and continuous lineage since 1714",
+        "demystify the path into the craft",
+        "establish authority on materials, technique, and provenance",
+        "invite trade with member workshops",
+        "celebrate the current month's featured instrument"
+      ],
+      "required_text": [
+        "The Worshipful Guild of Stringed-Instrument Luthiers",
+        "ESTABLISHED MDCCXIV",
+        "Instrument of the Month",
+        "Journal of Techniques"
+      ],
+      "content_model": [
+        "member workshop entries with workshop name, master luthier, city, specialties (violin family / lute family / guitar family / historical reproductions), founded year, contact, and an engraved house mark",
+        "apprenticeship program entries with tier (apprentice / journeyman / master), duration, prerequisites, stipend, hosting workshop, and application window",
+        "material entries with species (European spruce, Bosnian maple, Madagascan ebony, etc.), grading, sourcing partner, sustainability note, and engraved cross-section figure",
+        "exhibition entries with year, host city, juried winners, attending workshops, and plate gallery",
+        "instrument-of-the-month entry with maker, year, dimensions, varnish recipe, tonal notes, and provenance chain",
+        "journal articles with chapter heading, figures (numbered), footnotes, and author colophon"
+      ],
+      "interactions": [
+        "wax-seal hover state on nav items that 'presses' a burgundy seal beneath the label",
+        "workshop directory filter chips (instrument family / region / accepting apprentices) styled as engraved tags",
+        "interactive maple-billet rotator on the materials page that flips between flat-sawn and quarter-sawn engravings",
+        "footnote pop-overs on journal articles that surface the cited reference in a parchment tooltip",
+        "page-turn transition with a soft paper crease between chapters"
+      ],
+      "asset_needs": [
+        "high-detail engraved illustrations of: violin, viola d'amore, theorbo, classical guitar, scroll, f-hole, chisel set, maple billet cross-section",
+        "ornamental rule and corner-piece set (foliate, acanthus)",
+        "wax-seal SVG with guild monogram",
+        "parchment paper texture (subtle, non-distracting)",
+        "engraved house marks for ~12 member workshops",
+        "copperplate-style portrait engravings of three featured master luthiers",
+        "tipped-in plate frame ornament for the instrument-of-the-month"
+      ],
+      "mobile_behavior": "Two-column folio collapses to a single justified column; chapter numerals shrink to inline kickers; margin engravings reflow above their related paragraph as half-width plates; the wax-seal nav becomes a hamburger that opens a parchment drawer.",
+      "difficulty": "hard"
+    },
+    {
+      "candidate_id": "lutherie-guild-atelier-ledger",
+      "domain": "craft guild / stringed-instrument lutherie",
+      "site_goal": "Position the Atelier Ledger of Luthiers as a working trade body — less a museum, more a current craft network — where bookings, commissions, course enrolment, and material orders happen alongside the heritage storytelling.",
+      "audience": [
+        "patrons commissioning a new instrument",
+        "musicians needing repairs or set-up",
+        "students enrolling in short courses",
+        "tonewood and string suppliers",
+        "guild members updating their own entries"
+      ],
+      "description": "Still ornate and heritage-coded, but pitched as a working ledger rather than a frontispiece. The site reads like a master luthier's open shop book: ruled with thin burgundy lines as if on accountant's paper, with hand-numbered entry rows, marginal annotations in burgundy ink, and tab dividers along the right edge labelled 'WORKSHOPS', 'COMMISSIONS', 'MATERIALS', 'COURSES', 'LEDGER'. Walnut brown for body, parchment for ground, deep burgundy for the ruled lines and the inked annotations; a secondary ink-blue (#1F3A4A) is used sparingly for stamped 'RECEIVED' / 'IN PROGRESS' / 'DELIVERED' marks. Typography pairs a heavy serif with strong ligatures for headings against a slightly worn typewriter serif for entries, giving the feel of pen-on-paper ledger keeping. Each page has a header strip reading 'FOLIO XII' or 'FOLIO XXIV' etc., a date line, and a 'signed' footer with the master's monogram. The instrument-of-the-month is treated as a 'currently on the bench' entry with progress stamps. Density is medium-high — every page has marginal notes — but it remains scannable because the ledger ruling acts as gentle grid.",
+      "motif": "open ledger book with ruled burgundy lines, inked annotations, edge tab dividers, and rubber-stamp status marks",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "open-ledger landing: top folio header with date and 'FOLIO I', a brief warden's note in the left margin, a hero entry titled 'Of Workshops, Commissions, & the Craft' with a large engraved cello scroll, and a four-row 'index of folios' linking to the main sections with lead-time and status snippets",
+          "sections": [
+            "folio header strip (FOLIO I · date · master's monogram)",
+            "warden's marginal note in burgundy ink",
+            "hero entry with engraved cello scroll and intro paragraph",
+            "index of folios: Workshops / Commissions / Materials / Courses / Journal",
+            "'on the bench this week' teaser row with progress stamps",
+            "footer with guild address and 'signed' monogram"
+          ]
+        },
+        {
+          "id": "workshops",
+          "path": "/workshops",
+          "layout_pattern": "ledger directory: ruled table of workshop entries with folio number, name, master, city, lead time, and accepting-commissions flag; a top filter row offers instrument family and lead-time slider; each row expands inline to reveal address, specialties, and a small engraved house mark",
+          "sections": [
+            "intro paragraph and filter row with lead-time slider",
+            "ruled table of workshop entries",
+            "expandable row detail with specialties and house mark",
+            "map plate showing pin locations as engraved instrument silhouettes",
+            "'register your workshop' application link"
+          ]
+        },
+        {
+          "id": "commissions",
+          "path": "/commissions",
+          "layout_pattern": "commission ledger: an explanatory entry at the top describing the commissioning process in five inked steps, followed by a live 'active commissions' ledger (anonymised by client initials) with rubber-stamp progress, and a 'begin a commission' form styled as a commissioning order with quill-signed submit",
+          "sections": [
+            "five-step inked process diagram (consult / deposit / build / varnish / delivery)",
+            "active commissions ledger with progress stamps",
+            "estimated lead times by instrument family",
+            "begin-a-commission form styled as a commissioning order",
+            "warranty and aftercare note in the right margin"
+          ]
+        },
+        {
+          "id": "materials",
+          "path": "/materials",
+          "layout_pattern": "materials ledger and sourcing guide: top half a ruled table of current stock with lot number, species, grading, supplier, and in-stock status; bottom half an essay 'On the Selection of Tonewoods' with engraved figures of grain patterns; sidebar lists sustainability certifications",
+          "sections": [
+            "ruled stock table (lot, species, grading, supplier, stock)",
+            "essay 'On the Selection of Tonewoods' with engraved grain figures",
+            "varnish and string sub-tables",
+            "sustainability certifications sidebar",
+            "'request a quote' link styled as a material order chit"
+          ]
+        },
+        {
+          "id": "courses",
+          "path": "/courses",
+          "layout_pattern": "course ledger: chronological list of upcoming short courses each shown as a ledger row with title, instructor, dates, host workshop, tuition, and seats remaining; a featured apprenticeship banner spans the top with three tiers (apprentice / journeyman / master)",
+          "sections": [
+            "featured apprenticeship banner with three tiers",
+            "chronological list of upcoming courses",
+            "seat counter and 'hold a seat' button per row",
+            "prerequisites and tools-required notes in the margin",
+            "scholarship and bursary information"
+          ]
+        },
+        {
+          "id": "on-the-bench",
+          "path": "/on-the-bench",
+          "layout_pattern": "currently-on-the-bench feature (the seed's instrument-of-the-month): large parchment-framed photographic plate of the current instrument, side-column entry with maker, model, week-by-week progress notes signed and dated, current stage stamp prominently placed, and an archive strip of past months",
+          "sections": [
+            "parchment-framed photo plate of current instrument",
+            "side-column entry with maker, model, varnish recipe",
+            "week-by-week progress notes (signed and dated)",
+            "current stage stamp (e.g. VARNISHING)",
+            "archive strip of past months' instruments"
+          ]
+        },
+        {
+          "id": "journal",
+          "path": "/journal",
+          "layout_pattern": "journal of techniques as a bound supplement: list of articles each presented as a ledger entry with title, author, date, and abstract; selecting one opens a long-form article view with two-column ruled setting, numbered figures, marginalia, and an author colophon",
+          "sections": [
+            "supplement masthead 'Journal of Techniques'",
+            "list of article entries with abstracts",
+            "long-form article view with figures and marginalia",
+            "author colophon with monogram",
+            "cross-references to related articles"
+          ]
+        }
+      ],
+      "message_intent": [
+        "show the guild as a working, bookable network — not a frozen archive",
+        "make commissioning a bespoke instrument feel transparent and traceable",
+        "surface availability and lead times for member workshops",
+        "promote upcoming hands-on courses",
+        "celebrate craft heritage without becoming a costume drama"
+      ],
+      "required_text": [
+        "Atelier Ledger of Luthiers",
+        "Of Workshops, Commissions, & the Craft",
+        "Currently on the Bench",
+        "Apprenticeship & Courses"
+      ],
+      "content_model": [
+        "workshop ledger entries: folio number, workshop name, master, address, accepts commissions (Y/N), current lead time in months, last inspected date",
+        "commission entries: client initials, instrument type, stage stamp (RECEIVED / IN PROGRESS / VARNISHING / DELIVERED), estimated completion, assigned workshop",
+        "material order entries: lot number, species, supplier, quantity, grading, price per board-foot, in-stock status",
+        "course entries: title, lead instructor, dates, location (host workshop), tuition, seats remaining, prerequisites",
+        "instrument-on-the-bench: maker, model, current stage, weekly progress note, photograph",
+        "journal entries: technique title, author, date, abstract, figures, references"
+      ],
+      "interactions": [
+        "edge tabs that flip the visible 'folio' (page) with a subtle paper-shuffle animation",
+        "marginalia tooltips: hovering a paragraph reveals a hand-inked burgundy comment in the right margin",
+        "commission progress tracker that animates rubber-stamp marks landing on a tracker row",
+        "lead-time slider on workshops page that filters to workshops able to take a commission within N months",
+        "course seat counter that decrements with a small inked tally mark when a seat is held",
+        "ink-quill cursor on call-to-action buttons that 'signs' a faint underline on click"
+      ],
+      "asset_needs": [
+        "ruled-ledger background SVG (subtle thin burgundy lines with red margin rule)",
+        "set of rubber-stamp marks: RECEIVED, IN PROGRESS, VARNISHING, DELIVERED, INSPECTED",
+        "edge-tab divider graphics labelled per section",
+        "engraved instrument vignettes used at smaller scale (violin, cello scroll, archtop guitar, baroque lute)",
+        "monogram stamps for ~10 member workshops",
+        "ink-blot and pen-stroke flourishes for emphasis",
+        "photographic plates of instruments-in-progress with parchment frames"
+      ],
+      "mobile_behavior": "Ledger ruling thins and the right-edge tabs slide into a sticky bottom tab bar; marginalia collapse beneath their related paragraph as indented italic notes; commission progress tracker becomes a vertical timeline; folio header remains but compacts to 'F.XII · 19 MAY'.",
+      "difficulty": "hard"
+    }
+  ]
+}

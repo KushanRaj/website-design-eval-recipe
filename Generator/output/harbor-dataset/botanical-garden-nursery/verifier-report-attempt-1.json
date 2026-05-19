@@ -1,0 +1,55 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "page_path_mismatch",
+      "message": "Concept declared the garden map at /visit/map, but the builder shipped it as garden-map.html at the root (with a separate visit.html for hours/admission). The intent — an interactive SVG garden map with right-rail zone detail, legend, and printed-map link — is fully satisfied by garden-map.html, so this is a route-naming difference rather than a missing page.",
+      "severity": "info",
+      "path": "/visit/map"
+    },
+    {
+      "type": "accessibility_missing_form_label",
+      "message": "Three pages (Encyclopedia index, Field Notes, Shop) have unlabeled form controls — the encyclopedia search box, the Field Notes 'subscribe to the printed almanac' email input, and the Shop waitlist email input lack associated <label> elements or aria-label attributes.",
+      "severity": "warning",
+      "path": "/encyclopedia, /field-notes, /shop"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "On the Encyclopedia index, the metric flagged each cultivar plate card as 'fewer_than_two_children'. Visually the 12 cards are highly consistent (illustration, binomial, common name, family, badges); this looks like a structural-detection artifact, not a real layout problem.",
+      "severity": "info",
+      "path": "/encyclopedia"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Layout-consistency scores dip on the cultivar entry (45) and membership (58) pages. Both are intentionally editorial — two-column herbarium plate vs. ruled prose, tier table with varying internal benefit lists — so the asymmetry is by design and reads well in the screenshots.",
+      "severity": "info",
+      "path": "/encyclopedia/paphiopedilum-fairrieanum, /membership"
+    }
+  ],
+  "scores": {
+    "accessibility": 0.85,
+    "mobile_responsiveness": 0.9,
+    "component_consistency": 0.85,
+    "layout_alignment": 0.75,
+    "render_quality": 0.93,
+    "page_completeness": 0.98,
+    "brand_fit": 0.97,
+    "overall": 0.92
+  },
+  "repair_instructions": [
+    "Add accessible labels to the three unlabeled form inputs: (1) in encyclopedia.html, give the cultivar search input either a visible <label> or an aria-label such as aria-label=\"Search the cultivar encyclopedia\"; (2) in field-notes.html, label the 'Printed Almanac' subscribe email input (aria-label=\"Email address for the printed almanac\"); (3) in shop.html, label the waitlist email input (aria-label=\"Email address for the nursery waitlist\"). Keep the visual design unchanged."
+  ],
+  "deterministic_checks": {
+    "html_page_count": 10,
+    "missing_required_text": [],
+    "page_presence_satisfied": true,
+    "placeholder_hits": 0,
+    "render_sanity_min": 0.909,
+    "render_sanity_max": 0.967,
+    "accessibility_issue_pages": [
+      "/encyclopedia",
+      "/field-notes",
+      "/shop"
+    ]
+  }
+}

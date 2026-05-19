@@ -1,0 +1,182 @@
+{
+  "id": "indie-record-label",
+  "candidate_id": "indie-record-label--xerox-pressing-co",
+  "site_name": "Xerox Pressing Co.",
+  "one_liner": "A gritty independent record label website with riso-print textures, oversized brutalist headlines, neon accent inks on newsprint cream, artist roster grid, release catalog with vinyl mockups, tour date list, merch shop, label history zine page, and a sticky audio player bar.",
+  "site_goal": "Position Xerox Pressing Co. as a fiercely independent riso-print record label, drive vinyl pre-orders, surface upcoming tour dates, and convert listeners into fans of specific roster artists through a zine-style browsing experience anchored by a persistent audio player bar.",
+  "metadata": {
+    "density": "medium-high",
+    "palette": "newsprint cream, riso pink, electric cyan, black",
+    "visual_feel": "gritty zine brutalist"
+  },
+  "palette": {
+    "cream": "#f3e9cf",
+    "ink": "#0a0908",
+    "pink": "#ff3d8a",
+    "pink_deep": "#e21f6c",
+    "cyan": "#19d4ff",
+    "cyan_deep": "#00a8d4",
+    "tape_yellow": "#f6dc7a"
+  },
+  "typography": {
+    "display": "Arial Black / Impact (oversized condensed grotesk)",
+    "body": "Times New Roman / Georgia",
+    "mono": "Courier New (typewriter, monospace columns)"
+  },
+  "motifs_implemented": [
+    "newsprint paper grain via layered radial gradients",
+    "riso pink + cyan misregistered overlays via mix-blend-mode multiply",
+    "halftone screen overlay over body and portraits",
+    "masking-tape corners on cards (.taped)",
+    "marker scrawl annotations on featured release",
+    "vinyl-with-sleeve CSS mockups with cyan/pink/marble center labels",
+    "torn-paper press clippings with tape strips",
+    "typewriter monospace blocks for booking + demo policy",
+    "scissor-line newsletter tear-off strip",
+    "sold-out rubber-stamp motif on tour rows"
+  ],
+  "pages": [
+    {
+      "id": "home",
+      "path": "index.html",
+      "sections": [
+        "masthead with cyan-over-pink smudged label name + 'Est. 2014 — Brooklyn / Glasgow' tag",
+        "oversized misregistered lead headline (Loud. Independent. We press our own records.) running off the right edge",
+        "featured release card: vinyl-out-of-sleeve XRX-047 Sable Circuit 'Concrete Lullaby' with pre-order pill",
+        "three news/zine teaser cards with date stamps and marker underlines",
+        "label sampler tracklist (10 tracks, click to load into player) with oversized track numbers",
+        "tear-off newsletter strip with scissor dashed line",
+        "sticky audio player bar"
+      ]
+    },
+    {
+      "id": "roster",
+      "path": "roster.html",
+      "sections": [
+        "'The Roster' headline with cyan strike-through",
+        "genre filter chips (all / noise / post-punk / ambient / dub / no-wave / electronic)",
+        "16 asymmetric trading-card artist cards with halftone portraits, hometowns, latest-release thumbnails, genre tags, and 'hear them' buttons that load tracks into the player",
+        "typewriter-styled demo/submissions footer"
+      ]
+    },
+    {
+      "id": "artist-detail",
+      "path": "artist.html",
+      "sections": [
+        "huge halftone hero portrait with riso pink + cyan blots and stencil-overlay artist name (Sable Circuit)",
+        "metadata strip: hometown, formed, members, tags, on-Xerox-since",
+        "three-column biography with footnote markers and two pink/cyan-bordered pull-quote callouts",
+        "discography rail of vinyl mockups across five releases",
+        "three torn-paper press clippings with masking-tape strips",
+        "artist's upcoming tour dates with sold-out stamps",
+        "booking + press contact block on black"
+      ]
+    },
+    {
+      "id": "catalog",
+      "path": "catalog.html",
+      "sections": [
+        "left rail catalog-number index (XRX-047 → XRX-036, with stub for the rest)",
+        "filter row: format select, year select, in-stock toggle",
+        "grid of 12 flippable release cards — each shows vinyl-sticking-out-of-sleeve with cyan/pink/marble variant swatches; click or 'flip ↻' to reveal B-side tracklist + liner note excerpt",
+        "stamped pre-order banner for XRX-048"
+      ]
+    },
+    {
+      "id": "release-detail",
+      "path": "release.html",
+      "sections": [
+        "release-hero: large vinyl-and-sleeve mockup for XRX-039 Riso Twins 'Pink Static'",
+        "metadata column with artist, catalog, release date, format, pressing, mastering",
+        "pressing variant selector (black / cyan splatter /250 / pink marble /150 / test press [sold out])",
+        "buy block with price + add-to-cart pill",
+        "side A / side B tracklist with per-track play cue buttons",
+        "credits ledger (performed by, produced by, engineered, mastered, plates, sleeve art, photography, lacquers, pressed at)",
+        "multi-column liner notes",
+        "'Also from Riso Twins' rail of prior releases"
+      ]
+    },
+    {
+      "id": "tour",
+      "path": "tour.html",
+      "sections": [
+        "'On The Road' header with riso-misregistered subtitle",
+        "filter chip bar by region (US East / US West / UK / EU) + 'hide sold-out' toggle",
+        "monospace typewriter-style table with 26 dated tour rows (date | city | venue | artist | support | tickets) and rotated sold-out rubber stamps",
+        "poster gallery of 6 tilted, taped tour posters",
+        "promoter contact block on black with typewriter brief"
+      ]
+    },
+    {
+      "id": "merch",
+      "path": "shop.html",
+      "sections": [
+        "category sidebar (Shirts / Hoodies / Totes / Posters / Pins / Bundles) with sticky shipping note",
+        "bundle promo banner (LP + Tee + Zine $52 with rotated SAVES $11 stamp)",
+        "contact-sheet grid of 18 products across six categories with frame numbers (FR-001 → FR-018), 'add to bag' pills that increment the header cart counter",
+        "typewriter shipping policy bar at the bottom"
+      ]
+    },
+    {
+      "id": "history",
+      "path": "history.html",
+      "sections": [
+        "Chapter 01 — 2014: a basement and a 4-track",
+        "Chapter 02 — 2017: the first sold-out pressing",
+        "Chapter 03 — 2020: pressing plants and pandemics",
+        "Chapter 04 — 2023: the Glasgow annex",
+        "Each chapter is a 3-column zine spread with stenciled chapter numbers, photo blocks with halftone treatment, pink/cyan pull-quote callouts, asterisk-referenced footnotes, and inkjet-streak dividers",
+        "Annotated horizontal catalog timeline (XRX-001 → XRX-047) with pink/cyan highlight cells on milestone records",
+        "Colophon: who runs the label, mailing addresses (Brooklyn + Glasgow), demo policy, press names (Doris + Audrey)"
+      ]
+    }
+  ],
+  "global_components": {
+    "header": "fixed-top masthead + brutalist nav with active state + cyan cart pill (counter updates from localStorage on add-to-cart)",
+    "footer": "ink-black footer with four columns (label blurb, browse, contact, follow) + colophon line",
+    "sticky_player": "ink-black bottom bar with cover, 'Now Spinning' label + marquee, prev/play/next controls, gradient scrubber (clickable + auto-progressing), volume bar, queue popout button revealing the full 10-track label sampler"
+  },
+  "interactions_implemented": [
+    "sticky audio player with play/pause toggle, prev/next, click-to-seek scrubber, auto-progress simulation, marquee, and queue popout",
+    "queue popout (click Q) lists all 10 sampler tracks; click any to load",
+    "click sampler row on homepage to load that track into the player",
+    "'Hear them' buttons on roster cards load that artist's track into the player",
+    "roster genre filter chips show/hide artist cards by tag",
+    "catalog format / year / in-stock filters update visible release cards",
+    "release-card click or 'flip ↻' button toggles 3D card flip to reveal B-side",
+    "tour region filter chips + 'hide sold-out' checkbox",
+    "release-detail variant swatch selector (toggles .on state, OOS variants disabled)",
+    "add-to-cart buttons increment a localStorage cart counter rendered in the header pill",
+    "newsletter forms intercept submit and confirm with a 'Stamped.' button state"
+  ],
+  "mobile_behavior": "below 980px the sticky player collapses to cover + marquee + 3 controls; nav wraps; roster, catalog, merch, and shop layouts stack into a single column; bio + liner notes + zine body collapse from 3-col to 1-col; tour rows hide venue + support; pull-quotes still register pink/cyan",
+  "required_text_present": [
+    "Xerox Pressing Co.",
+    "Now Spinning",
+    "Roster",
+    "Catalog",
+    "Tour",
+    "Merch",
+    "History",
+    "Est. 2014  —  Brooklyn / Glasgow"
+  ],
+  "files": [
+    "index.html",
+    "roster.html",
+    "artist.html",
+    "catalog.html",
+    "release.html",
+    "tour.html",
+    "shop.html",
+    "history.html",
+    "css/style.css",
+    "js/app.js",
+    "site_intent.json"
+  ],
+  "tech": {
+    "stack": "vanilla HTML5 + CSS3 + a single vanilla JS file",
+    "no_build": true,
+    "no_external_assets": true,
+    "imagery_strategy": "all artwork is generated in CSS — vinyl mockups via layered radial-gradient + box-shadow, sleeve art via gradient + dot-pattern fills, halftone portraits via radial silhouette + dot-screen overlays, riso textures via mix-blend-mode multiply layers, masking tape via solid yellow blocks with dashed borders"
+  }
+}

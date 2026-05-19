@@ -23,7 +23,8 @@ function parseArgs(argv) {
     manifestPath: null,
     baseUrl: process.env.CAPTURE_BASE_URL || null,
     outputDir: null,
-    headful: false
+    headful: false,
+    pruneFailed: false
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -34,6 +35,8 @@ function parseArgs(argv) {
       args.outputDir = argv[++i];
     } else if (arg === "--headful") {
       args.headful = true;
+    } else if (arg === "--prune-failed") {
+      args.pruneFailed = true;
     } else if (!args.manifestPath) {
       args.manifestPath = arg;
     } else {
@@ -153,17 +156,22 @@ async function removeEvaluatorAttributes(page) {
   });
 }
 
-async function runAction(page, action) {
+function actionTimeout(defaults, action) {
+  return action.timeoutMs ?? defaults.actionTimeoutMs ?? 5000;
+}
+
+async function runAction(page, action, defaults) {
   const settleMs = action.settleMs ?? 0;
+  const options = { timeout: actionTimeout(defaults, action) };
 
   if (action.type === "hover") {
-    await page.locator(action.selector).hover();
+    await page.locator(action.selector).hover(options);
   } else if (action.type === "click") {
-    await page.locator(action.selector).click();
+    await page.locator(action.selector).click(options);
   } else if (action.type === "focus") {
-    await page.locator(action.selector).focus();
+    await page.locator(action.selector).focus(options);
   } else if (action.type === "fill") {
-    await page.locator(action.selector).fill(action.value ?? "");
+    await page.locator(action.selector).fill(action.value ?? "", options);
   } else if (action.type === "press") {
     await page.keyboard.press(action.key);
   } else if (action.type === "wait") {
@@ -200,6 +208,68 @@ function screenshotOptions(defaults, capture, outputPath) {
   };
 }
 
+function compactError(error) {
+  return String(error?.message || error || "unknown error")
+    .replace(/\u001b\[[0-9;]*m/g, "")
+    .split("\n")
+    .slice(0, 12)
+    .join("\n");
+}
+
+function isRequiredCapture(capture) {
+  return (capture.actions ?? []).length === 0;
+}
+
+async function runCapture({ browser, baseUrl, defaults, capture, outputDir }) {
+  const page = await browser.newPage({
+    deviceScaleFactor: defaults.deviceScaleFactor ?? 1
+  });
+
+  try {
+    const viewport = capture.viewport ?? defaults.viewport;
+    if (!viewport) {
+      throw new Error(`Capture ${capture.id} is missing a viewport`);
+    }
+
+    await page.setViewportSize(viewport);
+
+    if (capture.colorScheme || defaults.colorScheme) {
+      await page.emulateMedia({ colorScheme: capture.colorScheme ?? defaults.colorScheme });
+    }
+
+    const capturePath = capture.path ?? capture.urlPath;
+    if (!capturePath) {
+      throw new Error(`Capture ${capture.id} is missing a path`);
+    }
+
+    const url = new URL(capturePath, baseUrl).toString();
+    await page.goto(url, {
+      waitUntil: capture.waitUntil ?? defaults.waitUntil ?? "networkidle",
+      timeout: capture.timeoutMs ?? defaults.timeoutMs ?? 30000
+    });
+
+    if (defaults.afterLoadWaitMs) {
+      await page.waitForTimeout(defaults.afterLoadWaitMs);
+    }
+
+    await stampManifestElements(page);
+
+    for (const action of capture.actions ?? []) {
+      await runAction(page, action, defaults);
+    }
+
+    const fileName = capture.file ?? `${capture.id}.png`;
+    const outputPath = path.join(outputDir, fileName);
+    await fs.mkdir(path.dirname(outputPath), { recursive: true });
+    await removeEvaluatorAttributes(page);
+    await page.screenshot(screenshotOptions(defaults, capture, outputPath));
+    console.log(`${capture.id} -> ${path.relative(process.cwd(), outputPath)}`);
+    return { id: capture.id, status: "ok", required: isRequiredCapture(capture), file: fileName };
+  } finally {
+    await page.close().catch(() => {});
+  }
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const manifestPath = path.resolve(args.manifestPath);
@@ -233,61 +303,70 @@ async function main() {
   }
 
   const browser = await chromium.launch(launchOptions);
-  const page = await browser.newPage({
-    deviceScaleFactor: defaults.deviceScaleFactor ?? 1
-  });
+  const results = [];
 
   try {
     for (const capture of manifest.captures) {
       if (capture.enabled === false) {
         console.log(`${capture.id} skipped`);
+        results.push({ id: capture.id, status: "skipped", required: false });
         continue;
       }
 
-      const viewport = capture.viewport ?? defaults.viewport;
-      if (!viewport) {
-        throw new Error(`Capture ${capture.id} is missing a viewport`);
+      try {
+        results.push(await runCapture({ browser, baseUrl, defaults, capture, outputDir }));
+      } catch (error) {
+        const required = isRequiredCapture(capture);
+        const failure = {
+          id: capture.id,
+          status: "failed",
+          required,
+          error: compactError(error)
+        };
+        results.push(failure);
+        console.error(`[capture failed] ${capture.id}${required ? " required" : " optional"}: ${failure.error}`);
       }
-
-      await page.setViewportSize(viewport);
-
-      if (capture.colorScheme || defaults.colorScheme) {
-        await page.emulateMedia({ colorScheme: capture.colorScheme ?? defaults.colorScheme });
-      }
-
-      const capturePath = capture.path ?? capture.urlPath;
-      if (!capturePath) {
-        throw new Error(`Capture ${capture.id} is missing a path`);
-      }
-
-      const url = new URL(capturePath, baseUrl).toString();
-      await page.goto(url, {
-        waitUntil: capture.waitUntil ?? defaults.waitUntil ?? "networkidle",
-        timeout: capture.timeoutMs ?? defaults.timeoutMs ?? 30000
-      });
-
-      if (defaults.afterLoadWaitMs) {
-        await page.waitForTimeout(defaults.afterLoadWaitMs);
-      }
-
-      await stampManifestElements(page);
-
-      for (const action of capture.actions ?? []) {
-        await runAction(page, action);
-      }
-
-      const fileName = capture.file ?? `${capture.id}.png`;
-      const outputPath = path.join(outputDir, fileName);
-      await fs.mkdir(path.dirname(outputPath), { recursive: true });
-      await removeEvaluatorAttributes(page);
-      await page.screenshot(screenshotOptions(defaults, capture, outputPath));
-      console.log(`${capture.id} -> ${path.relative(process.cwd(), outputPath)}`);
     }
   } finally {
     await browser.close();
     if (staticServer) {
       await staticServer.close();
     }
+  }
+
+  const failed = results.filter((result) => result.status === "failed");
+  const requiredFailures = failed.filter((result) => result.required);
+  const optionalFailures = failed.filter((result) => !result.required);
+  const droppedIds = new Set(optionalFailures.map((result) => result.id));
+
+  if (args.pruneFailed && droppedIds.size > 0) {
+    manifest.captures = manifest.captures.filter((capture) => !droppedIds.has(capture.id));
+    await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+    console.log(`Dropped ${droppedIds.size} failed optional capture(s) from ${path.relative(process.cwd(), manifestPath)}`);
+  }
+
+  const reportPath = path.join(outputDir, "_replay-report.json");
+  await fs.writeFile(
+    reportPath,
+    `${JSON.stringify({
+      manifestPath,
+      pruneFailed: args.pruneFailed,
+      ok: results.filter((result) => result.status === "ok").length,
+      failed: failed.length,
+      droppedCaptures: Array.from(droppedIds),
+      results
+    }, null, 2)}\n`,
+    "utf8"
+  );
+
+  if (requiredFailures.length > 0) {
+    throw new Error(`${requiredFailures.length} required capture(s) failed; see ${reportPath}`);
+  }
+  if (!args.pruneFailed && failed.length > 0) {
+    throw new Error(`${failed.length} capture(s) failed; see ${reportPath}`);
+  }
+  if (results.filter((result) => result.status === "ok").length === 0) {
+    throw new Error(`No captures succeeded; see ${reportPath}`);
   }
 }
 

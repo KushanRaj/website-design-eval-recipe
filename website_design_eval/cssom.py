@@ -666,6 +666,12 @@ def cssom_block_style_score_from_snapshots(
     resolution_score = weighted_resolved_area / matched_area if matched_area > 0 else 0.0
     coverage_score = float(visual_block["size"])
     coverage_adjusted_score = matched_cssom_score * resolution_score * coverage_score
+    if (
+        _round(matched_cssom_score) == 1.0
+        and _round(coverage_score) == 1.0
+        and _round(float(visual_block.get("score", 0.0))) == 1.0
+    ):
+        coverage_adjusted_score = 1.0
     group_scores = {
         group: _round(group_weighted_scores[group] / group_weighted_areas[group])
         if group_weighted_areas[group] > 0

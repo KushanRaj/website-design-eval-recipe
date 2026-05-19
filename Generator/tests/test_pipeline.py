@@ -64,6 +64,17 @@ class PipelineTests(unittest.IsolatedAsyncioTestCase):
             result = await pipeline.generate(request)
             self.assertEqual(result.packages[0].verifier_report.status, "approved")
 
+    async def test_validation_ignores_managed_screenshots(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            site_dir = Path(tmp) / "site"
+            screenshot_dir = site_dir / "screenshots" / "reference"
+            screenshot_dir.mkdir(parents=True)
+            (site_dir / "index.html").write_text("<html></html>", encoding="utf-8")
+            (screenshot_dir / "home-full.png").write_bytes(b"not a real png")
+
+            pipeline = GeneratorPipeline(FakeRuntime(), output_root=tmp, run_browser_checks=False)
+            pipeline._validate_written_files(site_dir)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,162 @@
+{
+  "id": "curling-federation",
+  "title": "National Curling Federation — Operational Portal",
+  "one_liner": "A dense, utilitarian institutional portal for a national curling federation, with icy-blue and granite palette, scoreboard ticker, league standings, athlete rosters, tournament brackets, club locator map, rules handbook, and a filterable results archive.",
+  "tagline": "Est. 1903 · Hammer · Sweep · Sport for All",
+  "palette": {
+    "ice_blue": "#BCD7E6",
+    "ice_50": "#E7F1F6",
+    "granite": "#3A3F45",
+    "granite_90": "#1F2226",
+    "paper": "#FFFFFF",
+    "accent_deep": "#1E5F86",
+    "warn": "#A24A1F",
+    "gold": "#B58A1A",
+    "good": "#2F6B3D",
+    "bad": "#8B2A2A"
+  },
+  "typography": {
+    "sans": "Helvetica Neue / Arial — workhorse grotesk, tight leading, small-caps metadata labels",
+    "mono": "SF Mono / Menlo — tabular numerals in standings, bracket scores, and end-by-end grids"
+  },
+  "motifs": [
+    "Concentric target-house rings used as bullet markers and footer accents",
+    "Granite-stone cross-section illustration on rules and home pages",
+    "Broom-stroke / hairline rules separating dense table rows",
+    "Topographic ice-rink line motif behind the club-of-the-week spotlight",
+    "Live results ticker scrolling along the top of every page"
+  ],
+  "pages": [
+    {
+      "id": "home",
+      "path": "index.html",
+      "sections": [
+        "Masthead with federation crest, primary nav, scrolling results ticker",
+        "Three-column dashboard: national rankings (men/women/mixed-doubles tabs), playoff bracket teaser with live final, news + officiating notice column",
+        "Club of the Week spotlight with stat block and topographic motif",
+        "Sponsor strip and full institutional footer"
+      ]
+    },
+    {
+      "id": "standings",
+      "path": "standings.html",
+      "sections": [
+        "Filter chip rail (season, discipline, region, view)",
+        "Division tabs (Premier / Challenger / Regional Conference)",
+        "Dense data table with sortable columns, inline sparklines, alternating shading",
+        "Legend / scoring glossary sidebar",
+        "CSV and printable PDF export actions"
+      ]
+    },
+    {
+      "id": "athletes",
+      "path": "athletes.html",
+      "sections": [
+        "Featured National Squad module",
+        "Left rail filters (discipline, position, region, hand, age category, documents)",
+        "Grid of athlete cards with silhouette portraits, position chip, caps, hammer% and medals",
+        "Pagination control with 412 athletes / 23 pages"
+      ]
+    },
+    {
+      "id": "brackets",
+      "path": "brackets.html",
+      "sections": [
+        "Tournament header (dates, venue, draw status, sheets)",
+        "Live scoring banner for current final",
+        "Toggle between round-robin pools and playoff bracket",
+        "Four-round playoff bracket with end-by-end score grids, hammer indicators, officials",
+        "Draw schedule sheet-assignment table",
+        "Assigned officials panel"
+      ]
+    },
+    {
+      "id": "clubs",
+      "path": "clubs.html",
+      "sections": [
+        "Filter chip rail (league, program, accessibility, sheets)",
+        "Two-pane locator: SVG national map (left ~60%) with 15 club markers shaded by sheet count, scrollable result list (right)",
+        "Click-through flyouts with sheet count, members, programs, accessibility",
+        "Submit-a-club link"
+      ]
+    },
+    {
+      "id": "rules",
+      "path": "rules.html",
+      "sections": [
+        "Sticky chapter table of contents with numbered chapters and sections",
+        "Documentation-style two-pane handbook (Edition 21)",
+        "Inline SVG diagrams: ice sheet, granite stone cross-section, free-guard-zone",
+        "Rule-change callouts, footnote citations to WCF references",
+        "Five-step officiating certification ladder",
+        "Subscribe-to-notices form and full handbook PDF download"
+      ]
+    },
+    {
+      "id": "results",
+      "path": "results.html",
+      "sections": [
+        "Filter chip rail (event, gender, region, medal toggles)",
+        "Season range slider 1976 → 2026",
+        "Grouped results tables with medal indicators and expandable end-by-end detail rows",
+        "Historical champions horizontal carousel",
+        "Right-side year facet sidebar",
+        "CSV / PDF export actions"
+      ]
+    },
+    {
+      "id": "news",
+      "path": "news.html",
+      "sections": [
+        "Category chip rail",
+        "Lead news hero (selection press release)",
+        "Two-column bulletin list (10 dated bulletins, paginated)",
+        "Officiating Notices sidebar with subscribe form",
+        "Athlete of the Month card with stat block",
+        "Partner sponsor strip"
+      ]
+    }
+  ],
+  "interactions_implemented": [
+    "Tab switching on rankings (men/women/mixed doubles) and standings divisions",
+    "Sortable standings columns (click any header)",
+    "Filter chips toggle active/inactive; exclusive chip groups behave like radios",
+    "Round-robin / playoff bracket view toggle",
+    "Club map markers and list rows are interlinked — click either to open the flyout and highlight the row",
+    "Expandable results rows reveal end-by-end scoring grids",
+    "Subscribe forms confirm inline without leaving the page",
+    "Live results ticker auto-scrolls across the page top"
+  ],
+  "assets_strategy": {
+    "logo": "Concentric-ring crest rendered as inline SVG (target-house motif)",
+    "athlete_portraits": "Silhouette SVGs used as placeholders per spec",
+    "map": "Stylised inline SVG country outline with five labelled regional polygons and 15 club marker dots sized by sheet count",
+    "diagrams": "Inline SVG for ice sheet, granite stone cross-section, free-guard-zone",
+    "sponsors": "Monospaced text placeholders styled as outlined logo plates"
+  },
+  "tech": {
+    "stack": "Vanilla HTML, shared CSS, small vanilla JS",
+    "files": [
+      "index.html",
+      "standings.html",
+      "athletes.html",
+      "brackets.html",
+      "clubs.html",
+      "rules.html",
+      "results.html",
+      "news.html",
+      "styles.css",
+      "app.js",
+      "site_intent.json"
+    ],
+    "no_build": true,
+    "no_external_deps": true
+  },
+  "required_text_present": [
+    "National Curling Federation",
+    "Standings",
+    "Find a Club",
+    "Rules & Officiating Handbook",
+    "Results Archive"
+  ]
+}

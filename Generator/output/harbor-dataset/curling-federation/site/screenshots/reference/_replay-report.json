@@ -1,0 +1,75 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/curling-federation/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 11,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": false,
+      "file": "home-full.png"
+    },
+    {
+      "id": "home-rankings-women-tab",
+      "status": "ok",
+      "required": false,
+      "file": "home-rankings-women-tab.png"
+    },
+    {
+      "id": "standings-full",
+      "status": "ok",
+      "required": false,
+      "file": "standings-full.png"
+    },
+    {
+      "id": "standings-challenger-tab",
+      "status": "ok",
+      "required": false,
+      "file": "standings-challenger-tab.png"
+    },
+    {
+      "id": "athletes-full",
+      "status": "ok",
+      "required": false,
+      "file": "athletes-full.png"
+    },
+    {
+      "id": "brackets-full",
+      "status": "ok",
+      "required": false,
+      "file": "brackets-full.png"
+    },
+    {
+      "id": "brackets-round-robin-toggle",
+      "status": "ok",
+      "required": false,
+      "file": "brackets-round-robin-toggle.png"
+    },
+    {
+      "id": "clubs-full",
+      "status": "ok",
+      "required": false,
+      "file": "clubs-full.png"
+    },
+    {
+      "id": "rules-full",
+      "status": "ok",
+      "required": false,
+      "file": "rules-full.png"
+    },
+    {
+      "id": "results-full",
+      "status": "ok",
+      "required": false,
+      "file": "results-full.png"
+    },
+    {
+      "id": "news-full",
+      "status": "ok",
+      "required": false,
+      "file": "news-full.png"
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dana — Pine Tree Hall</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <aside class="sekki" data-sekki>
+    <div class="sekki__text">
+      <span class="kanji" data-sekki-kanji>小満</span>
+      <span class="romaji" data-sekki-romaji>Shōman — Lesser fullness</span>
+    </div>
+    <span class="sekki__year" data-sekki-year>2026</span>
+  </aside>
+
+  <div class="frame">
+
+    <header class="masthead">
+      <div class="masthead__row">
+        <div class="brand">
+          <a href="index.html">Pine Tree Hall<small>松林堂 — A working monastery, open to visitors.</small></a>
+        </div>
+        <nav class="nav" aria-label="Primary">
+          <a href="index.html">Hall</a>
+          <a href="teachers-and-lineage.html">Lineage</a>
+          <a href="schedule.html">Schedule</a>
+          <a href="audio.html">Dharma talks</a>
+          <a href="visit.html">Visit</a>
+          <a href="dana.html" class="is-active">Dana</a>
+        </nav>
+      </div>
+      <div class="masthead__meta">
+        <span>布施 — Dana</span>
+        <span>The first of the six pāramitās</span>
+        <span>Tax-receipt available</span>
+      </div>
+    </header>
+
+    <div class="dana-col">
+
+      <h1>Dana sustains the hall.</h1>
+
+      <p class="lede">
+        We do not charge for teaching. The hall — the roof, the rice, the heat
+        in the bath, the stipends for the resident teachers — is held aloft
+        entirely by the gifts of those who find their practice nourished here.
+        The Japanese word <em>fuse</em> (布施), the Pali <em>dāna</em>, names
+        not a transaction but a way of being in the world: giving without
+        expectation, receiving without owing.
+      </p>
+
+      <p>
+        Below are three paths for sustaining the hall, with suggested bands.
+        Set whatever feels true for you. There is no minimum and no record kept
+        of who gives what.
+      </p>
+      <p style="font-style: italic; color: var(--ink-faint); margin-top: 1rem;">
+        — from a recent talk by Genshin
+      </p>
+
+      <!-- Rice and oil -->
+      <article class="gift">
+        <h2>Rice and oil <small>米油 — monthly recurring</small></h2>
+        <p>
+          Monthly giving is the most useful kind, because it lets the kitchen
+          plan. The fund covers food, utilities, and small repairs — the
+          daily, unremarkable expenses of a working monastery. Most lay
+          members choose this path.
+        </p>
+        <form onsubmit="event.preventDefault(); alert('Thank you. A confirmation will be sent by post.');">
+          <div class="bands" data-bands>
+            <button type="button" class="band" data-amount="15">$15<em>/ month</em></button>
+            <button type="button" class="band is-on" data-amount="35">$35<em>/ month</em></button>
+            <button type="button" class="band" data-amount="80">$80<em>/ month</em></button>
+            <button type="button" class="band" data-amount="150">$150<em>/ month</em></button>
+            <button type="button" class="band" data-amount="300">$300<em>/ month</em></button>
+          </div>
+          <div class="free-input">
+            <span>Or a free amount $</span>
+            <input type="number" min="1" value="35" aria-label="Monthly amount, free entry" />
+          </div>
+          <button class="btn" type="submit">Begin monthly giving</button>
+        </form>
+      </article>
+
+      <!-- Roof restoration -->
+      <article class="gift">
+        <h2>Roof restoration <small>屋根 — one-time capital gift</small></h2>
+        <p>
+          The cedar-shake roof of the Buddha Hall is forty-one years old and
+          letting in the rain. We are quietly raising the cost of its full
+          replacement over three years. Gifts to this fund are kept separate
+          and reported on at the end of each ango.
+        </p>
+        <p style="font-size: 0.92rem; color: var(--ink-faint); font-style: italic;">
+          Raised to date: $84,200 of $180,000.
+        </p>
+        <form onsubmit="event.preventDefault(); alert('Thank you. A confirmation will be sent by post.');">
+          <div class="bands" data-bands>
+            <button type="button" class="band" data-amount="100">$100</button>
+            <button type="button" class="band is-on" data-amount="500">$500</button>
+            <button type="button" class="band" data-amount="2000">$2,000</button>
+            <button type="button" class="band" data-amount="10000">$10,000</button>
+            <button type="button" class="band" data-amount="40000">A single bay — $40,000</button>
+          </div>
+          <div class="free-input">
+            <span>Or a free amount $</span>
+            <input type="number" min="1" value="500" aria-label="One-time roof amount, free entry" />
+          </div>
+          <button class="btn" type="submit">Give to the roof fund</button>
+        </form>
+      </article>
+
+      <!-- Retreatant scholarship -->
+      <article class="gift">
+        <h2>Retreatant scholarship <small>勧学 — for those who cannot pay full dana</small></h2>
+        <p>
+          This fund holds places in residential retreats for those who cannot
+          meet the suggested dana band. It is administered confidentially by
+          the tanto. Requests are received without explanation; the fund is
+          replenished by gifts here.
+        </p>
+        <form onsubmit="event.preventDefault(); alert('Thank you. A confirmation will be sent by post.');">
+          <div class="bands" data-bands>
+            <button type="button" class="band" data-amount="50">$50</button>
+            <button type="button" class="band is-on" data-amount="200">$200</button>
+            <button type="button" class="band" data-amount="800">$800 — one sesshin place</button>
+            <button type="button" class="band" data-amount="2000">$2,000</button>
+          </div>
+          <div class="free-input">
+            <span>Or a free amount $</span>
+            <input type="number" min="1" value="200" aria-label="Scholarship amount, free entry" />
+          </div>
+          <button class="btn" type="submit">Give to the scholarship fund</button>
+        </form>
+      </article>
+
+      <!-- Ledger of last year -->
+      <article class="ledger-card">
+        <h3>Last year, in plain figures.</h3>
+        <p style="font-size: 0.92rem; color: var(--ink-faint); font-style: italic; margin-bottom: 1.2rem;">
+          A summary of how the previous year's gifts were used. Audited by a small lay committee.
+        </p>
+        <table class="ledger-list">
+          <tbody>
+            <tr><td>Food (rice, vegetables, oil, miso)</td><td class="amt">$48,200</td><td class="pct">28%</td></tr>
+            <tr><td>Utilities (heat, water, light)</td><td class="amt">$26,400</td><td class="pct">15%</td></tr>
+            <tr><td>Resident teacher stipends (3)</td><td class="amt">$42,000</td><td class="pct">24%</td></tr>
+            <tr><td>Small repairs and grounds care</td><td class="amt">$18,700</td><td class="pct">11%</td></tr>
+            <tr><td>Roof restoration (capital fund only)</td><td class="amt">$22,800</td><td class="pct">13%</td></tr>
+            <tr><td>Retreatant scholarships granted (14)</td><td class="amt">$11,200</td><td class="pct">6%</td></tr>
+            <tr><td>Audio archive transcription</td><td class="amt">$3,600</td><td class="pct">2%</td></tr>
+            <tr><td>Administration and post</td><td class="amt">$1,100</td><td class="pct">1%</td></tr>
+            <tr style="font-style: italic;"><td>Total</td><td class="amt">$174,000</td><td class="pct">100%</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <!-- Tax note -->
+      <article style="margin-top: 3rem; padding-top: 1.6rem; border-top: 1px solid var(--rule); font-size: 0.92rem;">
+        <h3 style="font-style: italic; font-weight: 400; color: var(--ink-faint); letter-spacing: 0.06em;">A practical note.</h3>
+        <p>
+          Pine Tree Hall is a registered religious nonprofit (501(c)(3)). Gifts
+          are tax-deductible to the extent permitted by law. Receipts are sent
+          by post in January for the prior year, or on request to
+          treasurer@pinetreezen.org.
+        </p>
+        <p>
+          We do not accept cryptocurrency or in-kind gifts of stock without
+          prior conversation. If you wish to remember the hall in a will, the
+          treasurer can provide the appropriate language.
+        </p>
+      </article>
+
+      <p style="margin-top: 4rem; text-align: center; font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--ink-faint);">
+        合掌
+      </p>
+      <p style="text-align: center; font-style: italic; color: var(--ink-faint); margin-top: 0.4rem;">
+        Gasshō — palms together, in thanks.
+      </p>
+
+    </div>
+
+    <footer class="footer" style="margin-top: 6rem;">
+      <div class="footer__grid">
+        <div>
+          <h4>Pine Tree Hall</h4>
+          <p>松林堂 — Shōrin-dō<br>412 Hollowback Road<br>Eastern Hills, 02831</p>
+        </div>
+        <div>
+          <h4>Treasurer</h4>
+          <p>treasurer@pinetreezen.org<br>By post: c/o the office.</p>
+        </div>
+        <div>
+          <h4>The hall</h4>
+          <p>1,184 dharma talks since 1992.<br>184 transcribed.</p>
+        </div>
+        <div>
+          <h4>Reach</h4>
+          <p>hall@pinetreezen.org<br>Office: 9–11, Mon–Fri.</p>
+        </div>
+      </div>
+      <div class="colophon">
+        <span>© Pine Tree Hall Zen Community</span>
+        <span>Registered religious nonprofit</span>
+        <span>Please observe silence past the second gate.</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

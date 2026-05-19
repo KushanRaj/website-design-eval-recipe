@@ -63,7 +63,8 @@ def _write_text(path: Path, text: str, *, executable: bool = False) -> None:
         path.chmod(0o755)
 
 
-def _task_toml(task_name: str) -> str:
+def _task_toml(task_name: str, *, verifier_allow_internet: bool = False) -> str:
+    verifier_internet = "true" if verifier_allow_internet else "false"
     return f"""
 schema_version = "1.1"
 artifacts = ["/app"]
@@ -101,7 +102,7 @@ os = "linux"
 cpus = 2
 memory_mb = 8192
 storage_mb = 20480
-allow_internet = false
+allow_internet = {verifier_internet}
 workdir = "/app"
 """
 
@@ -120,7 +121,12 @@ created as separate HTML files when the screenshots imply multiple routes.
 """
 
 
-def _readme_md(task_name: str) -> str:
+def _readme_md(task_name: str, *, metric_profile: str, verifier_base_image: str | None) -> str:
+    verifier_line = (
+        f"`tests/Dockerfile` uses the reusable verifier image `{verifier_base_image}`."
+        if verifier_base_image
+        else "`tests/Dockerfile` installs the lightweight verifier dependencies directly."
+    )
     return f"""
 # {task_name}
 
@@ -132,11 +138,12 @@ oracle site.
 - The verifier writes `reward.json`, `metrics.json`, and Markdown diagnostics
   under `/logs/verifier`.
 
-This first package is intentionally conservative: the default metric config
-keeps API-backed VLM, DreamSim, and visual-block extraction disabled so the
-container smoke test is dependency-light. Those switches are in
-`tests/private/metric-config.json` and can be enabled when the verifier image has
-the corresponding model/API/runtime dependencies.
+Metric profile: `{metric_profile}`.
+
+{verifier_line}
+
+Metric switches are in `tests/private/metric-config.json` and can be overridden
+with `WDE_*` environment variables when running the verifier.
 """
 
 
@@ -151,7 +158,17 @@ RUN mkdir -p /app/site
 """
 
 
-def _tests_dockerfile() -> str:
+def _tests_dockerfile(verifier_base_image: str | None = None) -> str:
+    if verifier_base_image:
+        return f"""
+FROM {verifier_base_image}
+
+RUN mkdir -p /app /logs/verifier
+WORKDIR /app
+COPY . /tests
+RUN chmod +x /tests/test.sh
+"""
+
     return """
 FROM mcr.microsoft.com/playwright/python:v1.60.0-noble
 
@@ -203,6 +220,32 @@ def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def _capture_metric_value(metrics: dict[str, Any], capture_id: str, path: list[str]) -> Any:
+    capture = (metrics.get("captures") or {}).get(capture_id) or {}
+    current: Any = capture.get("metrics") or {}
+    for key in path:
+        if not isinstance(current, dict):
+            return None
+        current = current.get(key)
+    return current
+
+
+def _require_capture_metric(metrics: dict[str, Any], path: list[str], label: str) -> None:
+    missing: list[str] = []
+    for capture_id, capture in (metrics.get("captures") or {}).items():
+        coverage = ((capture.get("coverage") or {}).get("score") or 0)
+        if not isinstance(coverage, (int, float)) or coverage <= 0:
+            continue
+        capture_metrics = capture.get("metrics") or {}
+        if not isinstance(capture_metrics, dict) or capture_metrics.get("status") == "unsupported":
+            continue
+        value = _capture_metric_value(metrics, capture_id, path)
+        if not isinstance(value, (int, float)):
+            missing.append(capture_id)
+    if missing:
+        raise RuntimeError(f"Required metric {label} is missing for captures: {missing}")
+
+
 def _candidate_root(explicit: str | None) -> Path:
     if explicit:
         return Path(explicit).resolve()
@@ -224,7 +267,11 @@ def main(argv: list[str] | None = None) -> int:
     candidate_root = _candidate_root(args.candidate_root)
     private_dir = tests_dir / "private"
     vendor_dir = tests_dir / "vendor"
-    sys.path.insert(0, str(vendor_dir))
+    image_repo_root = Path(os.environ.get("WDE_REPO_ROOT", "/opt/wde"))
+    if vendor_dir.exists():
+        sys.path.insert(0, str(vendor_dir))
+    if image_repo_root.exists():
+        sys.path.insert(0, str(image_repo_root))
 
     from website_design_eval.evaluator import EvaluateConfig, evaluate
     from website_design_eval.reward import build_reward_markdown, compute_reward
@@ -245,6 +292,20 @@ def main(argv: list[str] | None = None) -> int:
         "WDE_INCLUDE_VISUAL_BLOCK",
         bool(metric_config.get("include_visual_block", False)),
     )
+    require_vlm = bool(metric_config.get("require_vlm", not skip_vlm))
+    require_dreamsim = bool(metric_config.get("require_dreamsim", not skip_dreamsim))
+    require_visual_block = bool(metric_config.get("require_visual_block", include_visual_block))
+
+    if require_vlm and skip_vlm:
+        raise RuntimeError("Full reward requires VLM, but WDE_SKIP_VLM/metric config disabled it.")
+    if require_vlm and not os.environ.get("OPENAI_API_KEY"):
+        raise RuntimeError("Full reward requires OPENAI_API_KEY in the verifier environment.")
+    if require_dreamsim and skip_dreamsim:
+        raise RuntimeError("Full reward requires DreamSim, but WDE_SKIP_DREAMSIM/metric config disabled it.")
+    if require_visual_block and not include_visual_block:
+        raise RuntimeError("Full reward requires visual block, but WDE_INCLUDE_VISUAL_BLOCK/metric config disabled it.")
+
+    repo_root = Path(os.environ.get("WDE_REPO_ROOT") or (image_repo_root if image_repo_root.exists() else vendor_dir)).resolve()
 
     metrics = evaluate(
         EvaluateConfig(
@@ -252,7 +313,7 @@ def main(argv: list[str] | None = None) -> int:
             reference_manifest=(private_dir / "screenshot-manifest.json").resolve(),
             candidate_root=candidate_root,
             output_dir=eval_dir,
-            repo_root=vendor_dir.resolve(),
+            repo_root=repo_root,
             skip_vlm=skip_vlm,
             skip_dreamsim=skip_dreamsim,
             vlm_model=os.environ.get("WDE_VLM_MODEL", metric_config.get("vlm_model", "gpt-5.4-mini")),
@@ -264,6 +325,13 @@ def main(argv: list[str] | None = None) -> int:
             capture_filter=capture_filter,
         )
     )
+
+    if require_vlm:
+        _require_capture_metric(metrics, ["vlm_judge", "overall"], "vlm_judge.overall")
+    if require_dreamsim:
+        _require_capture_metric(metrics, ["dreamsim", "score"], "dreamsim.score")
+    if require_visual_block:
+        _require_capture_metric(metrics, ["visual_block", "score"], "visual_block.score")
 
     weight_mode = os.environ.get("WDE_WEIGHT_MODE", metric_config.get("weight_mode", "manifest"))
     reward = compute_reward(metrics, weight_mode=weight_mode)
@@ -334,26 +402,92 @@ def _solve_sh() -> str:
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ORACLE_SITE="$SCRIPT_DIR/oracle-site"
+
+rm -rf /app/site
 mkdir -p /app/site
-cat > /app/site/index.html <<'HTML'
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Website replication placeholder</title>
-  </head>
-  <body>
-    <main>
-      <h1>Website replication placeholder</h1>
-      <p>Use the screenshots in /app/reference/screenshots to build the site.</p>
-    </main>
-  </body>
-</html>
-HTML
+
+cp "$ORACLE_SITE"/*.html /app/site/
+cp "$ORACLE_SITE"/*.css /app/site/
+if [[ -d "$ORACLE_SITE/assets" ]]; then
+  cp -R "$ORACLE_SITE/assets" /app/site/assets
+fi
 """
 
 
-def package_task(site_dir: Path, task_dir: Path, *, task_name: str, force: bool) -> None:
+def _metric_config(metric_profile: str) -> dict[str, Any]:
+    if metric_profile == "lite":
+        return {
+            "profile": "harbor-phase1-lite",
+            "skip_vlm": True,
+            "skip_dreamsim": True,
+            "include_visual_block": False,
+            "vlm_model": "gpt-5.4-mini",
+            "dreamsim_type": "ensemble",
+            "dreamsim_device": None,
+            "dreamsim_cache_dir": None,
+            "visual_block_device": "cpu",
+            "weight_mode": "manifest",
+            "notes": [
+                "Dependency-light development smoke mode only. Do not use for actual reward runs.",
+                "Use --metric-profile full-vlm with a reusable verifier image for actual reward runs.",
+            ],
+        }
+    if metric_profile == "full-local":
+        return {
+            "profile": "harbor-full-local",
+            "skip_vlm": True,
+            "skip_dreamsim": False,
+            "include_visual_block": True,
+            "require_vlm": False,
+            "require_dreamsim": True,
+            "require_visual_block": True,
+            "vlm_model": "gpt-5.4-mini",
+            "dreamsim_type": "ensemble",
+            "dreamsim_device": "cpu",
+            "dreamsim_cache_dir": "/opt/wde/models/dreamsim",
+            "visual_block_device": "cpu",
+            "weight_mode": "manifest",
+            "notes": [
+                "Local-only development profile. Do not use for actual reward runs.",
+                "Use --metric-profile full-vlm for the actual reward.",
+            ],
+        }
+    if metric_profile == "full-vlm":
+        return {
+            "profile": "harbor-full-vlm",
+            "skip_vlm": False,
+            "skip_dreamsim": False,
+            "include_visual_block": True,
+            "require_vlm": True,
+            "require_dreamsim": True,
+            "require_visual_block": True,
+            "vlm_model": "gpt-5.4-mini",
+            "dreamsim_type": "ensemble",
+            "dreamsim_device": "cpu",
+            "dreamsim_cache_dir": "/opt/wde/models/dreamsim",
+            "visual_block_device": "cpu",
+            "weight_mode": "manifest",
+            "notes": [
+                "Actual reward profile: API-backed VLM, DreamSim, and visual-block are all required.",
+                "Requires OPENAI_API_KEY and verifier network access.",
+            ],
+        }
+    raise ValueError(f"Unknown metric profile: {metric_profile}")
+
+
+def package_task(
+    site_dir: Path,
+    task_dir: Path,
+    *,
+    task_name: str,
+    force: bool,
+    verifier_base_image: str | None = None,
+    metric_profile: str = "lite",
+    vendor_evaluator: bool | None = None,
+    verifier_allow_internet: bool = False,
+) -> None:
     site_dir = site_dir.resolve()
     task_dir = task_dir.resolve()
     manifest_path = site_dir / "screenshot-manifest.json"
@@ -385,11 +519,14 @@ def package_task(site_dir: Path, task_dir: Path, *, task_name: str, force: bool)
             f"Re-replay the manifest at {manifest_path} or mark those captures enabled=false."
         )
 
-    _write_text(task_dir / "README.md", _readme_md(task_name))
+    if vendor_evaluator is None:
+        vendor_evaluator = verifier_base_image is None
+
+    _write_text(task_dir / "README.md", _readme_md(task_name, metric_profile=metric_profile, verifier_base_image=verifier_base_image))
     _write_text(task_dir / "instruction.md", _instruction_md())
-    _write_text(task_dir / "task.toml", _task_toml(task_name))
+    _write_text(task_dir / "task.toml", _task_toml(task_name, verifier_allow_internet=verifier_allow_internet))
     _write_text(task_dir / "environment" / "Dockerfile", _environment_dockerfile())
-    _write_text(task_dir / "tests" / "Dockerfile", _tests_dockerfile())
+    _write_text(task_dir / "tests" / "Dockerfile", _tests_dockerfile(verifier_base_image))
     _write_text(task_dir / "tests" / "run_eval.py", _run_eval_py())
     _write_text(task_dir / "tests" / "test.sh", _test_sh(), executable=True)
     _write_text(task_dir / "solution" / "solve.sh", _solve_sh(), executable=True)
@@ -402,28 +539,13 @@ def package_task(site_dir: Path, task_dir: Path, *, task_name: str, force: bool)
     private_dir = task_dir / "tests" / "private"
     _copytree(site_dir, private_dir / "oracle-site", ignore_extra={"screenshots"})
     shutil.copyfile(manifest_path, private_dir / "screenshot-manifest.json")
-    _write_json(
-        private_dir / "metric-config.json",
-        {
-            "profile": "harbor-phase1-lite",
-            "skip_vlm": True,
-            "skip_dreamsim": True,
-            "include_visual_block": False,
-            "vlm_model": "gpt-5.4-mini",
-            "dreamsim_type": "ensemble",
-            "dreamsim_device": None,
-            "dreamsim_cache_dir": None,
-            "visual_block_device": "cpu",
-            "weight_mode": "manifest",
-            "notes": [
-                "Default verifier smoke mode avoids API/model-heavy dependencies.",
-                "Set WDE_SKIP_DREAMSIM=0 and/or WDE_INCLUDE_VISUAL_BLOCK=1 when the verifier image vendors the required model/runtime assets.",
-            ],
-        },
-    )
+    _write_json(private_dir / "metric-config.json", _metric_config(metric_profile))
 
-    vendor_dir = task_dir / "tests" / "vendor"
-    _copytree(PROJECT_ROOT / "website_design_eval", vendor_dir / "website_design_eval")
+    _copytree(site_dir, task_dir / "solution" / "oracle-site", ignore_extra={"screenshots", "screenshot-manifest.json"})
+
+    if vendor_evaluator:
+        vendor_dir = task_dir / "tests" / "vendor"
+        _copytree(PROJECT_ROOT / "website_design_eval", vendor_dir / "website_design_eval")
 
 
 def main() -> int:
@@ -431,14 +553,52 @@ def main() -> int:
     parser.add_argument("--site-dir", default="test-site")
     parser.add_argument("--task-dir", default="harbor-tasks/brightpath-replication-001")
     parser.add_argument("--task-name", default="proximal/brightpath-replication-001")
+    parser.add_argument(
+        "--verifier-base-image",
+        default=None,
+        help="Reusable verifier Docker image to use as tests/Dockerfile base.",
+    )
+    parser.add_argument(
+        "--metric-profile",
+        choices=["lite", "full-local", "full-vlm"],
+        default="full-vlm",
+        help="Metric config to write into tests/private/metric-config.json.",
+    )
+    parser.add_argument(
+        "--vendor-evaluator",
+        action="store_true",
+        help="Copy website_design_eval into tests/vendor even when using a reusable verifier image.",
+    )
+    parser.add_argument(
+        "--no-vendor-evaluator",
+        action="store_true",
+        help="Do not copy website_design_eval into tests/vendor.",
+    )
+    parser.add_argument(
+        "--verifier-allow-internet",
+        action="store_true",
+        help="Set verifier.environment.allow_internet=true, required for API-backed VLM calls.",
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
+
+    vendor_evaluator: bool | None = None
+    if args.vendor_evaluator and args.no_vendor_evaluator:
+        parser.error("Pass only one of --vendor-evaluator or --no-vendor-evaluator.")
+    if args.vendor_evaluator:
+        vendor_evaluator = True
+    elif args.no_vendor_evaluator:
+        vendor_evaluator = False
 
     package_task(
         PROJECT_ROOT / args.site_dir,
         PROJECT_ROOT / args.task_dir,
         task_name=args.task_name,
         force=args.force,
+        verifier_base_image=args.verifier_base_image,
+        metric_profile=args.metric_profile,
+        vendor_evaluator=vendor_evaluator,
+        verifier_allow_internet=args.verifier_allow_internet,
     )
     print(json.dumps({"task_dir": str((PROJECT_ROOT / args.task_dir).resolve()), "task_name": args.task_name}, indent=2))
     return 0

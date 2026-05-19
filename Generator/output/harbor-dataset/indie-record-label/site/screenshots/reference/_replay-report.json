@@ -1,0 +1,75 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/indie-record-label/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 11,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "roster-full",
+      "status": "ok",
+      "required": true,
+      "file": "roster-full.png"
+    },
+    {
+      "id": "roster-filter-noise",
+      "status": "ok",
+      "required": false,
+      "file": "roster-filter-noise.png"
+    },
+    {
+      "id": "artist-full",
+      "status": "ok",
+      "required": true,
+      "file": "artist-full.png"
+    },
+    {
+      "id": "catalog-full",
+      "status": "ok",
+      "required": true,
+      "file": "catalog-full.png"
+    },
+    {
+      "id": "catalog-flip-xrx047",
+      "status": "ok",
+      "required": false,
+      "file": "catalog-flip-xrx047.png"
+    },
+    {
+      "id": "release-full",
+      "status": "ok",
+      "required": true,
+      "file": "release-full.png"
+    },
+    {
+      "id": "tour-full",
+      "status": "ok",
+      "required": true,
+      "file": "tour-full.png"
+    },
+    {
+      "id": "tour-filter-uk",
+      "status": "ok",
+      "required": false,
+      "file": "tour-filter-uk.png"
+    },
+    {
+      "id": "shop-full",
+      "status": "ok",
+      "required": true,
+      "file": "shop-full.png"
+    },
+    {
+      "id": "history-full",
+      "status": "ok",
+      "required": true,
+      "file": "history-full.png"
+    }
+  ]
+}

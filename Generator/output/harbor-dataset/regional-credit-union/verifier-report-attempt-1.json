@@ -1,0 +1,70 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "path_mismatch",
+      "message": "Concept declares the calculator suite at /tools/calculators but the builder wrote it as /calculators.html at site root. The page itself is fully implemented (six calculator cards, assumptions/disclosures sidebar, lender-call CTA) and is linked from the footer and TOOLS nav, so this is a routing nit rather than a missing page.",
+      "severity": "info",
+      "path": "/tools/calculators"
+    },
+    {
+      "type": "accessibility",
+      "message": "Governance page has 8 accessibility issues flagged (missing accessible names and form labels) on the RSVP form, the member-authenticated ballot form, and the member-proposal submission form.",
+      "severity": "warning",
+      "path": "/governance"
+    },
+    {
+      "type": "accessibility",
+      "message": "Sign-in form fields (member number, password) and the subscribe-by-mail toggle row are missing programmatic labels.",
+      "severity": "warning",
+      "path": "/sign-in"
+    },
+    {
+      "type": "accessibility",
+      "message": "Reading Room has a form input (mailing address for print subscription) without an associated label.",
+      "severity": "warning",
+      "path": "/reading-room"
+    },
+    {
+      "type": "component_consistency",
+      "message": "Component-style consistency dips on /services (51.5) and /reading-room (58.5) because some article/card siblings inside the same group use different inner element ordering or tag mix. Visually the broadsheet layout is intentional, but the cards inside repeating sections should share identical inner structure.",
+      "severity": "info",
+      "path": "/services"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Layout-alignment scores are middling on /services (51.8), /reading-room (57.2) and /governance (60.3). The asymmetric broadsheet grid is intentional, but a number of row groups have inconsistent bottom alignment that pulls the score down.",
+      "severity": "info",
+      "path": null
+    }
+  ],
+  "scores": {
+    "accessibility": 0.7,
+    "mobile_responsiveness": 0.85,
+    "component_consistency": 0.72,
+    "layout_alignment": 0.65,
+    "render_quality": 0.94,
+    "page_completeness": 0.95,
+    "brand_fit": 0.97
+  },
+  "repair_instructions": [
+    "On /governance, add explicit labels to the RSVP form (Member Name, Member Number, Guests including children, Dietary Accommodation), the member-authenticated ballot inputs (Member Number, Last Name), and every field in the Submit-a-Proposal form (Member Name, Member Number, Branch, Proposal Title, Proposal Text). Wrap each input in a <label> or use aria-label / aria-labelledby so screen readers announce each field. Also give the 'Up for Election' chip and the icon-only PDF buttons (Cooperative Bylaws, Lending Policy, Privacy Policy, etc.) accessible names.",
+    "On /sign-in, associate the Member Number and Password inputs with their visible labels (use <label for=...> or wrap them), give the 'Trust this device for 30 days' checkbox a programmatic label, and add accessible names to the Fraud-alert texts and Weekly security note toggles. Make sure the Begin Enrollment and 24/7 Fraud Hotline blocks expose an accessible name on any clickable element.",
+    "On /reading-room, add a <label> for the 'Mailing address — Street, town, ZIP' input in the Subscribe-by-Mail card, and give the Earlier / Later carousel arrow buttons accessible names (aria-label='Previous issues' / 'Next issues').",
+    "Either move calculators.html to /tools/calculators/index.html (or add a /tools/calculators/ route) so the URL matches the concept's declared path, or update site_intent.json / internal links so the 'Tools' nav target and the concept path agree. The page content is fine; this is just a path-alignment fix.",
+    "On /services, normalize the inner structure of the product rows inside each tier so every row uses the same tag sequence (e.g. h3 product name + p description + monospaced rate + arrow link), and on /reading-room match the inner structure of the two feature article cards in the bottom row to the lead article card. This will lift the component-style consistency score without changing the visual look.",
+    "Tighten row-bottom alignment on /services, /reading-room and /governance: ensure cards or articles that sit in the same horizontal row share the same baseline (e.g. give product-row containers a consistent min-height, align board-member cards on a shared baseline grid, and ensure the three Reading Room feature cards have matching internal padding so their bottoms line up)."
+  ],
+  "deterministic_checks": {
+    "page_presence_resolved": "6 of 7 declared paths resolved directly; /tools/calculators is implemented as calculators.html at site root and linked from footer/nav as 'Calculators' / 'TOOLS', so it satisfies the concept intent at a different path",
+    "required_text_present": true,
+    "accessibility_tag_pages": [
+      "/governance",
+      "/reading-room",
+      "/sign-in"
+    ],
+    "render_sanity_min": 0.92,
+    "component_style_min": 51.46,
+    "layout_consistency_min": 51.83
+  }
+}

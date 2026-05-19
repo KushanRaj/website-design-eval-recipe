@@ -1,0 +1,87 @@
+{
+  "id": "site-04-science-research-institute",
+  "candidate_id": "meridian-deep-sea-observatory",
+  "name": "Meridian Deep-Sea Observatory",
+  "tagline": "Continuous ocean observation since 1978",
+  "domain": "science-research",
+  "site_goal": "Present a coastal oceanographic observatory and research institute as a working scientific organization with transparent ongoing research, live sensor data, and an accessible publications and expeditions record for both expert and public audiences.",
+  "palette": {
+    "primary_teal": "#11434C",
+    "teal_deep": "#0A2C32",
+    "teal_mid": "#1F5E68",
+    "bone": "#EEE7D8",
+    "bone_deep": "#E0D7C2",
+    "paper": "#F7F2E6",
+    "rust_accent": "#B6532A",
+    "rust_soft": "#D88260",
+    "ink": "#1A1A1A"
+  },
+  "typography": {
+    "body_serif": "Crimson Pro",
+    "label_grotesk": "IBM Plex Sans Condensed",
+    "mono": "IBM Plex Mono",
+    "scale": "scientific-archival, medium-high density"
+  },
+  "motif": {
+    "section_headers": "Thin teal hairline above, dashed teal line below each section header (sonar-trace recall)",
+    "live_data": "Small rust-colored circles for live/active markers with pulse animation",
+    "figure_captions": "Italic Crimson Pro with bold 'Fig.' grotesk label in rust"
+  },
+  "layout": {
+    "navigation": "Left sidebar nav grouped by Observatory, Disciplines, Shared Facilities; persistent breadcrumb above content",
+    "density": "medium-high",
+    "mobile": "Sidebar collapses to slide-in panel via top-bar menu button; buoy strip becomes horizontally scrollable; map and timeline stack with scrubber pinned below map"
+  },
+  "required_text_present": [
+    "Meridian Deep-Sea Observatory",
+    "Continuous ocean observation since 1978",
+    "Live from the buoy network"
+  ],
+  "pages": [
+    { "id": "home", "path": "index.html", "title": "Overview", "layout": "Director hero quote, live buoy strip, three featured research threads, currently-at-sea and seminars rail, news rail" },
+    { "id": "labs", "path": "research.html", "title": "Research & Labs", "layout": "Discipline-grouped bands (5 disciplines + shared facilities) with two-column lab lists" },
+    { "id": "people", "path": "people.html", "title": "People", "layout": "Filter chips above 3-column card grids for PIs, Scientists, Postdocs/Grads, Emeritus; ORCID badges on PI cards" },
+    { "id": "person-detail", "path": "person.html", "title": "Dr. Yuki Okafor", "layout": "Two-column profile: portrait/identifiers/education on left; bio/projects/publications/field-sites/teaching on right" },
+    { "id": "publications", "path": "publications.html", "title": "Publications", "layout": "Search bar + faceted filter rail + reverse-chronological citation list with expandable abstracts and bulk export controls" },
+    { "id": "expeditions", "path": "expeditions.html", "title": "Expeditions", "layout": "Regional cruise-track map (SVG), sortable expedition table, detail drawer with science party, scrubber, and daily-log timeline" },
+    { "id": "data", "path": "data.html", "title": "Data & Tools", "layout": "Live buoy strip, catalog filter bar, dataset card list with inline sparkline/spectrogram previews, spectrogram audio player; access guidance and network status panel" },
+    { "id": "news", "path": "newsroom.html", "title": "Newsroom", "layout": "Lead feature, two-column secondary stories, chronological archive list, press-contacts and media-kit sidebar, field-dispatches feed" },
+    { "id": "careers", "path": "careers.html", "title": "Careers", "layout": "Category navigation, deadline-prominent job cards, fellowships section, culture/benefits/DEI bands" }
+  ],
+  "interactions_implemented": [
+    "Mobile slide-in sidebar from top-bar menu button",
+    "Sidebar discipline groups collapsible via section toggles",
+    "Currently-at-sea badge in sidebar",
+    "Live buoy strip with simulated tick updates (values + UTC timestamp) on home and data pages",
+    "Publication search filter (live text filter) and 'show only with open data' toggle",
+    "Publication actions: BibTeX, RIS, Copy DOI, linked dataset",
+    "People page filter chips by role and discipline",
+    "Expedition page with cruise-track SVG map, status pills, detail drawer with daily-log timeline and 62% timeline scrubber",
+    "Dataset cards with sparkline and bathymetric/spectrogram previews; bioacoustics spectrogram player with play/pause toggle",
+    "Section motif (sonar-trace hairline + dashed line) consistently applied"
+  ],
+  "content_model_coverage": {
+    "Lab/Group": "research.html — 17 labs across 5 disciplines + 4 shared facilities, each with PI, focus statement, instruments",
+    "Person": "people.html / person.html — directory cards and full PI profile (Dr. Yuki Okafor) with bio, education, ORCID, current projects, selected pubs, field-site map, teaching",
+    "Publication": "publications.html — 9 sample citations with DOI, authors, year, journal, abstract, open-data tag, linked dataset, BibTeX/RIS actions",
+    "Expedition": "expeditions.html — 9 cruises (3 at sea, 3 planned, 3 returned) with vessel, region, dates, status; one expanded with science party and daily log",
+    "Dataset": "data.html — 6 datasets covering time series, profile, imagery, and acoustic types with sensors, license, and download formats",
+    "Sensor station": "Home and data pages — buoy strip with station id, depth, variables, last reading timestamp",
+    "News story": "newsroom.html — lead feature, two secondaries, 10-entry archive, field dispatch rail"
+  },
+  "files": [
+    "index.html",
+    "research.html",
+    "people.html",
+    "person.html",
+    "publications.html",
+    "expeditions.html",
+    "data.html",
+    "newsroom.html",
+    "careers.html",
+    "css/style.css",
+    "js/main.js",
+    "site_intent.json"
+  ],
+  "framework": "vanilla HTML + CSS + small vanilla JS (no build, no external frameworks); Google Fonts via <link> only"
+}

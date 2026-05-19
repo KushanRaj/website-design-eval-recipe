@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retreat application — Pine Tree Hall</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <aside class="sekki" data-sekki>
+    <div class="sekki__text">
+      <span class="kanji" data-sekki-kanji>小満</span>
+      <span class="romaji" data-sekki-romaji>Shōman — Lesser fullness</span>
+    </div>
+    <span class="sekki__year" data-sekki-year>2026</span>
+  </aside>
+
+  <div class="frame">
+
+    <header class="masthead">
+      <div class="masthead__row">
+        <div class="brand">
+          <a href="index.html">Pine Tree Hall<small>松林堂 — A working monastery, open to visitors.</small></a>
+        </div>
+        <nav class="nav" aria-label="Primary">
+          <a href="index.html">Hall</a>
+          <a href="teachers-and-lineage.html">Lineage</a>
+          <a href="schedule.html">Schedule</a>
+          <a href="audio.html">Dharma talks</a>
+          <a href="visit.html">Visit</a>
+          <a href="dana.html">Dana</a>
+        </nav>
+      </div>
+      <div class="masthead__meta">
+        <span>Retreat application</span>
+        <span>Six questions</span>
+        <span>Replied within fourteen days</span>
+      </div>
+    </header>
+
+    <form class="steps-form" data-steps onsubmit="event.preventDefault(); alert('Thank you. We will reply by post or e-mail within fourteen days.');">
+
+      <section class="step is-on">
+        <p class="kicker">One of six — slowly.</p>
+        <h2>Which retreat are you applying for?</h2>
+        <p style="color: var(--ink-faint); font-style: italic; margin-bottom: 1.4rem;">If unsure, name the date range you have in mind. We will write back with suggestions.</p>
+        <div class="field">
+          <input type="text" placeholder="e.g. Summer sesshin — June 12 — 19, 2026" required />
+        </div>
+        <div class="step__nav">
+          <button class="btn" type="button" data-next>Continue</button>
+        </div>
+      </section>
+
+      <section class="step">
+        <p class="kicker">Two of six.</p>
+        <h2>What is your name, and how shall we reach you?</h2>
+        <div class="field">
+          <input type="text" placeholder="Name" required />
+        </div>
+        <div class="field">
+          <input type="email" placeholder="Email" required />
+        </div>
+        <div class="field">
+          <input type="text" placeholder="Postal address (we reply by post for residential retreats)" />
+        </div>
+        <div class="step__nav">
+          <button class="btn btn--ghost" type="button" data-prev>Back</button>
+          <button class="btn" type="button" data-next>Continue</button>
+        </div>
+      </section>
+
+      <section class="step">
+        <p class="kicker">Three of six.</p>
+        <h2>Briefly, what is the shape of your practice so far?</h2>
+        <p style="color: var(--ink-faint); font-style: italic; margin-bottom: 1.4rem;">Three or four sentences is plenty. There is no right answer; we read each application by hand.</p>
+        <div class="field">
+          <textarea placeholder="A teacher, a tradition, a number of years, a length of sitting — whatever feels honest."></textarea>
+        </div>
+        <div class="step__nav">
+          <button class="btn btn--ghost" type="button" data-prev>Back</button>
+          <button class="btn" type="button" data-next>Continue</button>
+        </div>
+      </section>
+
+      <section class="step">
+        <p class="kicker">Four of six.</p>
+        <h2>Have you sat through at least one half-day, anywhere?</h2>
+        <p style="color: var(--ink-faint); font-style: italic; margin-bottom: 1.4rem;">We ask this only of those signing on for residential retreats. If not yet, we recommend our Saturday open zazen first.</p>
+        <div class="field">
+          <input type="text" placeholder="Yes / no / where and when" />
+        </div>
+        <div class="step__nav">
+          <button class="btn btn--ghost" type="button" data-prev>Back</button>
+          <button class="btn" type="button" data-next>Continue</button>
+        </div>
+      </section>
+
+      <section class="step">
+        <p class="kicker">Five of six.</p>
+        <h2>Health, allergies, anything we should know.</h2>
+        <p style="color: var(--ink-faint); font-style: italic; margin-bottom: 1.4rem;">Held in confidence. Includes back injuries, dietary needs, medication schedules, recent surgeries.</p>
+        <div class="field">
+          <textarea placeholder="As much or as little as you wish to share."></textarea>
+        </div>
+        <div class="step__nav">
+          <button class="btn btn--ghost" type="button" data-prev>Back</button>
+          <button class="btn" type="button" data-next>Continue</button>
+        </div>
+      </section>
+
+      <section class="step">
+        <p class="kicker">Six of six. Last one.</p>
+        <h2>Dana — what feels right, and what is workable.</h2>
+        <p style="color: var(--ink-faint); font-style: italic; margin-bottom: 1.4rem;">The suggested band is a guide, not a price. If full dana is a barrier, please tell us; the scholarship fund exists for this.</p>
+        <div class="field">
+          <input type="text" placeholder="An amount, or a note (e.g. 'request scholarship')" />
+        </div>
+        <div class="step__nav">
+          <button class="btn btn--ghost" type="button" data-prev>Back</button>
+          <button class="btn" type="submit">Send application</button>
+        </div>
+      </section>
+
+    </form>
+
+    <hr class="hr-hair" />
+
+    <p style="text-align: center; font-style: italic; color: var(--ink-faint); max-width: 50ch; margin: 2rem auto 4rem;">
+      We read each application by hand. Replies arrive within fourteen days; sometimes by post,
+      always with care. If you have not heard from us in three weeks, please write again — letters do go astray.
+    </p>
+
+    <footer class="footer">
+      <div class="footer__grid">
+        <div>
+          <h4>Pine Tree Hall</h4>
+          <p>松林堂 — Shōrin-dō<br>412 Hollowback Road<br>Eastern Hills, 02831</p>
+        </div>
+        <div>
+          <h4>Registrar</h4>
+          <p>registrar@pinetreezen.org</p>
+        </div>
+        <div>
+          <h4>Sustain</h4>
+          <p><a href="dana.html">Dana sustains the hall.</a></p>
+        </div>
+        <div>
+          <h4>Reach</h4>
+          <p>hall@pinetreezen.org</p>
+        </div>
+      </div>
+      <div class="colophon">
+        <span>© Pine Tree Hall Zen Community</span>
+        <span>Registered religious nonprofit</span>
+        <span>Please observe silence past the second gate.</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

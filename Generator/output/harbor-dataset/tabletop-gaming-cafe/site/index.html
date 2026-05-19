@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meeple &amp; Mug — Roll, Sip, Repeat.</title>
+  <meta name="description" content="A multi-room board game cafe and tabletop brand. 800-game library, tournaments, signature drinks, private bookings, and the Tavern Pass loyalty club.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/meeple-mark.svg">
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+          <path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="brand-text">Meeple &amp; Mug<small>Board Game Cafe</small></span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html" class="is-active">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="book.html">Book</a></li>
+        <li><a href="tavern-pass.html">Tavern Pass</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="book.html" class="btn btn--purple btn--sm">Book a table</a>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <span class="eyebrow">⬢ Now open in the Old Linwood Warehouse</span>
+      <h1>
+        <span>Roll</span>,
+        <span class="alt">Sip</span>,
+        <span class="alt2">Repeat</span>.
+      </h1>
+      <p class="lede">
+        A multi-room board game cafe with 800+ titles, signature drinks, weekly tournaments, and two original
+        card games published in-house. Beginner-friendly. Loud-laugh approved.
+      </p>
+      <div class="hero-cta">
+        <a href="book.html" class="btn btn--lg">Book a table →</a>
+        <a href="library.html" class="btn btn--purple btn--lg">Browse 800 games</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 480">
+        <!-- background hex glow -->
+        <circle cx="240" cy="240" r="220" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/>
+        <!-- coffee mug -->
+        <g transform="translate(60,200)">
+          <path d="M0 30 Q0 0 30 0 L160 0 Q190 0 190 30 L190 130 Q190 170 150 170 L40 170 Q0 170 0 130 Z"
+                fill="#7a3fff" stroke="#1d1830" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M190 50 Q230 50 230 80 Q230 110 190 110" fill="none" stroke="#1d1830" stroke-width="6"/>
+          <path d="M50 -10 Q60 -30 80 -10 M100 -10 Q110 -40 130 -10 M140 -10 Q150 -30 165 -10"
+                fill="none" stroke="#fff4dc" stroke-width="5" stroke-linecap="round"/>
+          <text x="95" y="100" font-family="Fredoka, sans-serif" font-weight="900" font-size="38" fill="#fff4dc" text-anchor="middle">M&amp;M</text>
+        </g>
+        <!-- big meeple sitting on mug rim -->
+        <g transform="translate(280,80)">
+          <path d="M60 0 C80 0 95 14 95 32 C95 44 90 50 86 54 C108 54 140 60 142 90 L142 200 L100 200 L100 150 L40 150 L40 200 L-2 200 L-2 90 C0 60 32 54 54 54 C50 50 45 44 45 32 C45 14 40 0 60 0 Z"
+                fill="#ff7a1f" stroke="#1d1830" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="50" cy="30" r="3" fill="#1d1830"/>
+          <circle cx="70" cy="30" r="3" fill="#1d1830"/>
+          <path d="M52 42 Q60 48 68 42" fill="none" stroke="#1d1830" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- small purple meeple -->
+        <g transform="translate(330,260)">
+          <path d="M30 0 C40 0 47 7 47 17 C47 23 44 26 42 28 C54 28 70 32 70 48 L70 100 L50 100 L50 76 L20 76 L20 100 L0 100 L0 48 C0 32 16 28 28 28 C26 26 23 23 23 17 C23 7 20 0 30 0 Z"
+                fill="#7a3fff" stroke="#1d1830" stroke-width="4" stroke-linejoin="round"/>
+        </g>
+        <!-- dice d6 -->
+        <g transform="translate(70,80) rotate(-12)">
+          <rect x="0" y="0" width="80" height="80" rx="14" fill="#5fe3c0" stroke="#1d1830" stroke-width="5"/>
+          <circle cx="20" cy="20" r="6" fill="#1d1830"/>
+          <circle cx="40" cy="40" r="6" fill="#1d1830"/>
+          <circle cx="60" cy="60" r="6" fill="#1d1830"/>
+          <circle cx="60" cy="20" r="6" fill="#1d1830"/>
+          <circle cx="20" cy="60" r="6" fill="#1d1830"/>
+        </g>
+        <!-- floating d20 -->
+        <g transform="translate(380,380) rotate(15)">
+          <polygon points="40,0 80,30 70,75 10,75 0,30" fill="#ff7a1f" stroke="#1d1830" stroke-width="5"/>
+          <polygon points="40,0 80,30 40,40" fill="#e2620a" stroke="#1d1830" stroke-width="3"/>
+          <polygon points="10,75 70,75 40,40" fill="#e2620a" stroke="#1d1830" stroke-width="3"/>
+          <text x="40" y="48" font-family="Fredoka, sans-serif" font-weight="900" font-size="22" fill="#fff4dc" text-anchor="middle">20</text>
+        </g>
+        <!-- card -->
+        <g transform="translate(20,340) rotate(-8)">
+          <rect x="0" y="0" width="90" height="120" rx="12" fill="#fff4dc" stroke="#1d1830" stroke-width="5"/>
+          <rect x="10" y="10" width="70" height="46" rx="6" fill="#7a3fff"/>
+          <rect x="10" y="62" width="70" height="6" rx="3" fill="#1d1830"/>
+          <rect x="10" y="74" width="50" height="6" rx="3" fill="#1d1830" opacity="0.5"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- DICE DIVIDER -->
+  <div class="dice-divider" aria-hidden="true">
+    <svg class="dice" viewBox="0 0 60 60"><polygon points="30,4 56,52 4,52" fill="#ff7a1f" stroke="#1d1830" stroke-width="4"/><text x="30" y="44" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="20" fill="#fff4dc">4</text></svg>
+    <svg class="dice" viewBox="0 0 60 60"><rect x="6" y="6" width="48" height="48" rx="10" fill="#7a3fff" stroke="#1d1830" stroke-width="4"/><circle cx="20" cy="20" r="4" fill="#fff4dc"/><circle cx="40" cy="40" r="4" fill="#fff4dc"/><circle cx="40" cy="20" r="4" fill="#fff4dc"/><circle cx="20" cy="40" r="4" fill="#fff4dc"/></svg>
+    <svg class="dice" viewBox="0 0 60 60"><polygon points="30,4 54,22 54,38 30,56 6,38 6,22" fill="#5fe3c0" stroke="#1d1830" stroke-width="4"/><text x="30" y="38" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="20" fill="#1d1830">8</text></svg>
+    <svg class="dice" viewBox="0 0 60 60"><polygon points="30,2 56,30 30,58 4,30" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><text x="30" y="38" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="20" fill="#1d1830">10</text></svg>
+    <svg class="dice" viewBox="0 0 60 60"><polygon points="30,4 52,16 56,40 38,56 22,56 4,40 8,16" fill="#ff7a1f" stroke="#1d1830" stroke-width="4"/><text x="30" y="38" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="18" fill="#fff4dc">12</text></svg>
+    <svg class="dice" viewBox="0 0 60 60"><polygon points="30,2 56,18 50,48 30,58 10,48 4,18" fill="#7a3fff" stroke="#1d1830" stroke-width="4"/><text x="30" y="38" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="18" fill="#fff4dc">20</text></svg>
+  </div>
+
+  <!-- 3 FEATURE CARDS -->
+  <section class="section grid grid--3" aria-label="Quick links">
+    <article class="feature">
+      <div class="icon is-tangerine" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 32 32"><rect x="3" y="3" width="26" height="26" rx="6" fill="#fff4dc" stroke="#1d1830" stroke-width="3"/><circle cx="10" cy="10" r="2" fill="#1d1830"/><circle cx="22" cy="22" r="2" fill="#1d1830"/><circle cx="22" cy="10" r="2" fill="#1d1830"/><circle cx="10" cy="22" r="2" fill="#1d1830"/><circle cx="16" cy="16" r="2" fill="#1d1830"/></svg>
+      </div>
+      <h3>Tonight's Events</h3>
+      <p>Tuesday Wingspan League, Friday Magic Standard, and the Saturday Catan Open. Drop-in friendly.</p>
+      <a class="arrow" href="events.html">See the calendar →</a>
+    </article>
+
+    <article class="feature">
+      <div class="icon is-purple" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 32 32"><rect x="3" y="6" width="26" height="20" rx="4" fill="#fff4dc" stroke="#1d1830" stroke-width="3"/><line x1="3" y1="13" x2="29" y2="13" stroke="#1d1830" stroke-width="3"/><circle cx="9" cy="20" r="2" fill="#ff7a1f"/><circle cx="16" cy="20" r="2" fill="#5fe3c0"/><circle cx="23" cy="20" r="2" fill="#ff7a1f"/></svg>
+      </div>
+      <h3>New on the Shelf</h3>
+      <p>16 fresh titles landed this month, from solo puzzlers to 8-player chaos. The librarian's already opinionated.</p>
+      <a class="arrow" href="library.html">Browse the library →</a>
+    </article>
+
+    <article class="feature">
+      <div class="icon" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 32 32"><path d="M6 14 L16 6 L26 14 L26 26 L6 26 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="3" stroke-linejoin="round"/><rect x="13" y="18" width="6" height="8" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/></svg>
+      </div>
+      <h3>Book a Table</h3>
+      <p>Walk-ins welcome — reservations recommended Fri &amp; Sat. Private rooms from 6 to 18 players.</p>
+      <a class="arrow" href="book.html">Reserve a spot →</a>
+    </article>
+  </section>
+
+  <!-- TONIGHT STRIP -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <span class="kicker">⬢ At the cafe</span>
+        <h2>Tonight &amp; this week</h2>
+      </div>
+      <a href="events.html" class="btn btn--mint btn--sm">All events →</a>
+    </div>
+    <div class="event-strip">
+      <div class="event-chip">
+        <div class="when">TONIGHT · 7:00 PM</div>
+        <div class="what">Wingspan Drop-In League</div>
+        <div class="who">Host: Devon · $5 entry · 18 seats left</div>
+      </div>
+      <div class="event-chip">
+        <div class="when">THURSDAY · 6:30 PM</div>
+        <div class="what">Learn-to-Play: Wyrmspan</div>
+        <div class="who">Free · taught by the librarian</div>
+      </div>
+      <div class="event-chip">
+        <div class="when">FRIDAY · 7:30 PM</div>
+        <div class="what">Magic: Standard Showdown</div>
+        <div class="who">$10 · prize pool $200 in store credit</div>
+      </div>
+      <div class="event-chip">
+        <div class="when">SATURDAY · 2:00 PM</div>
+        <div class="what">Family Open Social</div>
+        <div class="who">Kids welcome · no entry fee</div>
+      </div>
+      <div class="event-chip">
+        <div class="when">SUNDAY · 1:00 PM</div>
+        <div class="what">Catan Open · 32-player bracket</div>
+        <div class="who">$20 · trophy + free play month</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED GAMES -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <span class="kicker">⬢ Pulled off the shelf</span>
+        <h2>Featured games of the month</h2>
+      </div>
+      <a href="library.html" class="btn btn--cream btn--sm">Browse all 800 →</a>
+    </div>
+    <div class="grid grid--4">
+      <article class="game-card">
+        <div class="game-cover" style="background:#5fe3c0;">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="48" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><path d="M30 70 Q45 40 60 60 Q75 80 90 50" fill="none" stroke="#7a3fff" stroke-width="5" stroke-linecap="round"/><circle cx="40" cy="50" r="6" fill="#ff7a1f" stroke="#1d1830" stroke-width="3"/></svg>
+        </div>
+        <div class="game-body">
+          <h3 class="game-title">Wingspan</h3>
+          <div class="game-meta">1–5 · 40–70 min · Medium</div>
+          <span class="badge is-onshelf">On shelf</span>
+        </div>
+      </article>
+      <article class="game-card">
+        <div class="game-cover" style="background:#ff7a1f;">
+          <svg viewBox="0 0 120 120"><rect x="20" y="20" width="80" height="80" rx="10" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><polygon points="60,30 75,55 60,55 60,90" fill="#7a3fff" stroke="#1d1830" stroke-width="3"/><polygon points="60,30 45,55 60,55" fill="#5fe3c0" stroke="#1d1830" stroke-width="3"/></svg>
+        </div>
+        <div class="game-body">
+          <h3 class="game-title">Splendor Duel</h3>
+          <div class="game-meta">2 · 30 min · Light</div>
+          <span class="badge is-inplay">In play</span>
+        </div>
+      </article>
+      <article class="game-card">
+        <div class="game-cover" style="background:#7a3fff;">
+          <svg viewBox="0 0 120 120"><polygon points="60,15 100,45 85,95 35,95 20,45" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><text x="60" y="70" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="32" fill="#1d1830">⚔</text></svg>
+        </div>
+        <div class="game-body">
+          <h3 class="game-title">Heat: Pedal to the Metal</h3>
+          <div class="game-meta">1–6 · 60 min · Medium</div>
+          <span class="badge is-onshelf">On shelf</span>
+        </div>
+      </article>
+      <article class="game-card">
+        <div class="game-cover" style="background:#fff4dc;">
+          <svg viewBox="0 0 120 120"><circle cx="40" cy="50" r="20" fill="#ff7a1f" stroke="#1d1830" stroke-width="4"/><circle cx="80" cy="50" r="20" fill="#5fe3c0" stroke="#1d1830" stroke-width="4"/><circle cx="60" cy="80" r="20" fill="#7a3fff" stroke="#1d1830" stroke-width="4"/></svg>
+        </div>
+        <div class="game-body">
+          <h3 class="game-title">Azul: Summer Pavilion</h3>
+          <div class="game-meta">2–4 · 45 min · Light</div>
+          <span class="badge is-reserved">Reserved</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- DRINKS TEASER STRIP -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <span class="kicker">⬢ Pour with intention</span>
+        <h2>Three from the bar</h2>
+      </div>
+      <a href="menu.html" class="btn btn--sm">See the full menu →</a>
+    </div>
+    <div class="grid grid--3">
+      <article class="panel panel--tangerine">
+        <span class="tag-price">$9</span>
+        <h3>The Crit</h3>
+        <p>Smoky mezcal, blood orange, ancho. Roll a 20 and the second one's half off.</p>
+      </article>
+      <article class="panel panel--mint">
+        <span class="tag-price">$7</span>
+        <h3>Mana Potion</h3>
+        <p>Butterfly-pea citrus fizz, color-shifting blue to pink. Caffeine-free. Tournament-legal.</p>
+      </article>
+      <article class="panel panel--cream">
+        <span class="tag-price">$6</span>
+        <h3>Meeple Mocha</h3>
+        <p>Double espresso, brown butter syrup, oat foam, dusted with cocoa &amp; cinnamon.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- LOYALTY BAND -->
+  <section class="section">
+    <div class="loyalty-band">
+      <div>
+        <span class="kicker" style="color:#5fe3c0;">⬢ Tavern Pass</span>
+        <h2>Earn points every visit. Climb from Pawn to Queen.</h2>
+        <p>Free play credits, bring-a-friend perks, designer signings, early access to in-house releases. It's free to join — bring your appetite for cardboard.</p>
+        <a href="tavern-pass.html" class="btn btn--mint btn--lg">Join the Tavern Pass →</a>
+      </div>
+      <div>
+        <svg viewBox="0 0 280 220" width="100%">
+          <circle cx="60" cy="160" r="40" fill="#5fe3c0" stroke="#1d1830" stroke-width="5"/>
+          <text x="60" y="170" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="20" fill="#1d1830">Pawn</text>
+          <circle cx="140" cy="130" r="48" fill="#ff7a1f" stroke="#1d1830" stroke-width="5"/>
+          <text x="140" y="140" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="20" fill="#1d1830">Knight</text>
+          <circle cx="225" cy="95" r="56" fill="#fff4dc" stroke="#1d1830" stroke-width="5"/>
+          <text x="225" y="105" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="22" fill="#1d1830">Queen</text>
+          <polygon points="225,30 215,55 235,55" fill="#ff7a1f" stroke="#1d1830" stroke-width="3"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST REVIEWS -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <span class="kicker">⬢ Friday Reviews</span>
+        <h2>Latest from the blog</h2>
+      </div>
+      <a href="reviews.html" class="btn btn--purple btn--sm">All reviews →</a>
+    </div>
+    <div class="grid grid--3">
+      <article class="review-card">
+        <div class="meta">Strategy · 12 min read</div>
+        <h3>Heat: Pedal to the Metal</h3>
+        <p>A racing game that finally gets the curve. Tense, snappy, mean — and the modules age beautifully.</p>
+        <div class="score-row">
+          <span class="chip chip--mint">Strategy 8.7</span>
+          <span class="chip">Replay 9.0</span>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="meta">Party · 6 min read</div>
+        <h3>That's Not a Hat</h3>
+        <p>A memory party game that's somehow also a roast. We tested it on the late shift. Verdict: dangerous.</p>
+        <div class="score-row">
+          <span class="chip chip--tangerine">Party 9.4</span>
+          <span class="chip">Laughs 10</span>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="meta">Heavy · 18 min read</div>
+        <h3>Arcs (Leder Games)</h3>
+        <p>A trick-taking space opera that punishes politeness. Best played with a friend group on its third drink.</p>
+        <div class="score-row">
+          <span class="chip chip--purple">Heavy 9.1</span>
+          <span class="chip">Theme 9.5</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- HOURS CLUSTER -->
+  <section class="section">
+    <div class="hours-cluster">
+      <div>
+        <span class="kicker">⬢ Visit us</span>
+        <h2 style="margin:6px 0 12px;">Hours</h2>
+        <ul>
+          <li><span>Mon</span><span>Closed</span></li>
+          <li><span>Tue – Thu</span><span>4pm – 11pm</span></li>
+          <li><span>Fri</span><span>4pm – 1am</span></li>
+          <li><span>Sat</span><span>11am – 1am</span></li>
+          <li><span>Sun</span><span>11am – 10pm</span></li>
+        </ul>
+      </div>
+      <div>
+        <span class="kicker">⬢ Address</span>
+        <h2 style="margin:6px 0 12px;">Find us</h2>
+        <p><strong>412 Linwood Mill Lane</strong><br>Building C, Suite 3<br>Linwood, NC 27000</p>
+        <p>📞 (555) 314-DICE<br>✉ hello@meepleandmug.cafe</p>
+      </div>
+      <div class="map-art" aria-label="Stylized neighborhood map">
+        <svg viewBox="0 0 280 180" width="100%" height="100%">
+          <rect width="280" height="180" fill="#fff4dc"/>
+          <path d="M-10 60 L290 80" stroke="#7a3fff" stroke-width="6" fill="none"/>
+          <path d="M40 -10 L60 200" stroke="#1d1830" stroke-width="4" fill="none" stroke-dasharray="6 6"/>
+          <path d="M180 -10 L220 200" stroke="#1d1830" stroke-width="4" fill="none" stroke-dasharray="6 6"/>
+          <rect x="80" y="90" width="60" height="40" fill="#5fe3c0" stroke="#1d1830" stroke-width="3"/>
+          <polygon points="140,90 175,75 175,90" fill="#ff7a1f" stroke="#1d1830" stroke-width="3"/>
+          <circle cx="110" cy="110" r="10" fill="#ff7a1f" stroke="#1d1830" stroke-width="3"/>
+          <text x="110" y="114" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="12" fill="#fff4dc">M&amp;M</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand" href="index.html">
+        <span class="brand-mark" style="background:#5fe3c0;">
+          <svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#1d1830"/></svg>
+        </span>
+        <span class="brand-text">Meeple &amp; Mug<small>Roll, Sip, Repeat.</small></span>
+      </a>
+      <p style="margin-top:14px; color:rgba(255,244,220,0.75);">A neighborhood board game cafe in a converted warehouse — and a tabletop publisher of two original card games.</p>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <ul>
+        <li>412 Linwood Mill Ln</li>
+        <li>Linwood, NC 27000</li>
+        <li>(555) 314-DICE</li>
+        <li><a href="book.html">Book a table</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="library.html">Game library</a></li>
+        <li><a href="menu.html">Drinks &amp; bites</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="reviews.html">Friday reviews</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Tavern Pass</h4>
+      <ul>
+        <li><a href="tavern-pass.html">Join the club</a></li>
+        <li><a href="tavern-pass.html#tiers">Tier perks</a></li>
+        <li><a href="tavern-pass.html#calc">Points calculator</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="shell legal">
+    <span>© 2026 Meeple &amp; Mug Cafe LLC. All meeples loved equally.</span>
+    <span>Drink responsibly. Roll fearlessly.</span>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

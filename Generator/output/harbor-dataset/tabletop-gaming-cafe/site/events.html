@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events &amp; Tournaments — Meeple &amp; Mug</title>
+  <meta name="description" content="Weekly leagues, tournaments, learn-to-play sessions and open socials. Calendar grid with bracket viewer and meetup submission.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/meeple-mark.svg">
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></span>
+      <span class="brand-text">Meeple &amp; Mug<small>Board Game Cafe</small></span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false">☰ Menu</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="events.html" class="is-active">Events</a></li>
+        <li><a href="book.html">Book</a></li>
+        <li><a href="tavern-pass.html">Tavern Pass</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta"><a href="book.html" class="btn btn--purple btn--sm">Book a table</a></div>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero" style="padding:48px 0 24px;">
+    <div>
+      <span class="eyebrow">⬢ May 2026</span>
+      <h1><span class="alt">Events</span> &amp; <span>Tournaments</span></h1>
+      <p class="lede">Weekly leagues, learn-to-plays, tournament weekends, and just-show-up open socials. Most are drop-in friendly — registration is only needed when there's a bracket.</p>
+      <div class="hero-cta">
+        <button class="btn btn--purple is-active" data-view="month">Month</button>
+        <button class="btn" data-view="list">List</button>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 480">
+        <rect x="40" y="60" width="400" height="380" rx="20" fill="#fff4dc" stroke="#1d1830" stroke-width="5"/>
+        <rect x="40" y="60" width="400" height="60" fill="#7a3fff" stroke="#1d1830" stroke-width="5"/>
+        <text x="240" y="100" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="32" fill="#fff4dc">MAY</text>
+        <g fill="#1d1830" font-family="Fredoka" font-weight="700" font-size="16" text-anchor="middle">
+          <text x="80" y="150">M</text><text x="135" y="150">T</text><text x="190" y="150">W</text><text x="245" y="150">T</text><text x="300" y="150">F</text><text x="355" y="150">S</text><text x="410" y="150">S</text>
+        </g>
+        <g stroke="#1d1830" stroke-width="3" fill="#fff4dc">
+          <rect x="55" y="170" width="50" height="50" rx="6"/><rect x="110" y="170" width="50" height="50" rx="6"/><rect x="165" y="170" width="50" height="50" rx="6"/><rect x="220" y="170" width="50" height="50" rx="6"/><rect x="275" y="170" width="50" height="50" rx="6" fill="#ff7a1f"/><rect x="330" y="170" width="50" height="50" rx="6"/><rect x="385" y="170" width="50" height="50" rx="6" fill="#5fe3c0"/>
+          <rect x="55" y="225" width="50" height="50" rx="6"/><rect x="110" y="225" width="50" height="50" rx="6" fill="#7a3fff"/><rect x="165" y="225" width="50" height="50" rx="6"/><rect x="220" y="225" width="50" height="50" rx="6" fill="#ff7a1f"/><rect x="275" y="225" width="50" height="50" rx="6"/><rect x="330" y="225" width="50" height="50" rx="6"/><rect x="385" y="225" width="50" height="50" rx="6" fill="#5fe3c0"/>
+        </g>
+        <g transform="translate(360, 350) rotate(15)">
+          <rect x="0" y="0" width="60" height="60" rx="10" fill="#ff7a1f" stroke="#1d1830" stroke-width="4"/>
+          <text x="30" y="40" text-anchor="middle" font-family="Fredoka" font-weight="900" font-size="24" fill="#fff4dc">⚔</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="event-legend">
+      <span class="legend-swatch"><i style="background:#ff7a1f;"></i> Tournament</span>
+      <span class="legend-swatch"><i style="background:#5fe3c0;"></i> League</span>
+      <span class="legend-swatch"><i style="background:#fff4dc;"></i> Learn-to-Play</span>
+      <span class="legend-swatch"><i style="background:#7a3fff;"></i> Open Social</span>
+    </div>
+
+    <!-- CALENDAR GRID -->
+    <div class="calendar" data-cal-grid>
+      <div class="calendar-head">
+        <h2 style="margin:0;">May 2026</h2>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn--sm">← April</button>
+          <button class="btn btn--sm">June →</button>
+        </div>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-dayname">Mon</div><div class="cal-dayname">Tue</div><div class="cal-dayname">Wed</div><div class="cal-dayname">Thu</div><div class="cal-dayname">Fri</div><div class="cal-dayname">Sat</div><div class="cal-dayname">Sun</div>
+
+        <div class="cal-day is-out"><span class="num">28</span></div>
+        <div class="cal-day is-out"><span class="num">29</span></div>
+        <div class="cal-day is-out"><span class="num">30</span></div>
+        <div class="cal-day"><span class="num">1</span><span class="cal-event">Learn: Wyrmspan</span></div>
+        <div class="cal-day"><span class="num">2</span><span class="cal-event">Magic Friday</span></div>
+        <div class="cal-day"><span class="num">3</span><span class="cal-event is-social">Family Social</span></div>
+        <div class="cal-day"><span class="num">4</span><span class="cal-event">Catan Open</span></div>
+
+        <div class="cal-day"><span class="num">5</span></div>
+        <div class="cal-day"><span class="num">6</span><span class="cal-event is-league">Wingspan Lg</span></div>
+        <div class="cal-day"><span class="num">7</span><span class="cal-event is-learn">Learn: Heat</span></div>
+        <div class="cal-day"><span class="num">8</span><span class="cal-event is-learn">Drop-in Co-op</span></div>
+        <div class="cal-day"><span class="num">9</span><span class="cal-event">Magic Friday</span></div>
+        <div class="cal-day"><span class="num">10</span><span class="cal-event">Splendor Duel Tour</span></div>
+        <div class="cal-day"><span class="num">11</span><span class="cal-event is-social">Mother's Day</span></div>
+
+        <div class="cal-day"><span class="num">12</span></div>
+        <div class="cal-day"><span class="num">13</span><span class="cal-event is-league">Wingspan Lg</span></div>
+        <div class="cal-day"><span class="num">14</span><span class="cal-event is-learn">Learn: Cascadia</span></div>
+        <div class="cal-day"><span class="num">15</span><span class="cal-event is-league">7 Wonders Lg</span></div>
+        <div class="cal-day"><span class="num">16</span><span class="cal-event">Magic Friday</span></div>
+        <div class="cal-day"><span class="num">17</span><span class="cal-event">Heat Grand Prix</span></div>
+        <div class="cal-day"><span class="num">18</span><span class="cal-event is-social">Family Social</span></div>
+
+        <div class="cal-day"><span class="num">19</span></div>
+        <div class="cal-day"><span class="num">20</span><span class="cal-event is-league">Wingspan Lg</span></div>
+        <div class="cal-day"><span class="num">21</span><span class="cal-event is-learn">Learn: Spirit Isl</span></div>
+        <div class="cal-day"><span class="num">22</span><span class="cal-event is-league">7 Wonders Lg</span></div>
+        <div class="cal-day"><span class="num">23</span><span class="cal-event">Magic Friday</span></div>
+        <div class="cal-day"><span class="num">24</span><span class="cal-event">Hex Hall Invite</span></div>
+        <div class="cal-day"><span class="num">25</span><span class="cal-event is-social">Memorial BBQ</span></div>
+
+        <div class="cal-day"><span class="num">26</span></div>
+        <div class="cal-day"><span class="num">27</span><span class="cal-event is-league">Wingspan Lg</span></div>
+        <div class="cal-day"><span class="num">28</span><span class="cal-event is-learn">Learn: Arcs</span></div>
+        <div class="cal-day"><span class="num">29</span><span class="cal-event is-league">7 Wonders Lg</span></div>
+        <div class="cal-day"><span class="num">30</span><span class="cal-event">Magic Friday</span></div>
+        <div class="cal-day"><span class="num">31</span><span class="cal-event">League Finals</span></div>
+        <div class="cal-day is-out"><span class="num">1</span></div>
+      </div>
+    </div>
+
+    <!-- LIST VIEW -->
+    <div data-cal-list style="display:none;">
+      <div class="grid grid--2">
+        <div class="event-chip" style="min-width:0;"><div class="when">FRI MAY 2 · 7:30PM</div><div class="what">Magic: Standard Showdown</div><div class="who">$10 · 24 seats</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">SAT MAY 3 · 2PM</div><div class="what">Family Open Social</div><div class="who">Free · all ages</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">SUN MAY 4 · 1PM</div><div class="what">Catan Open Tournament</div><div class="who">$20 · 32 seats · prize: free play month</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">TUE MAY 6 · 7PM</div><div class="what">Wingspan Drop-In League</div><div class="who">$5 · weekly · season standings</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">WED MAY 7 · 6:30PM</div><div class="what">Learn-to-Play: Heat</div><div class="who">Free · taught by Devon</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">SAT MAY 10 · 12PM</div><div class="what">Splendor Duel Tournament</div><div class="who">$15 · 16 seats · trophy + store credit</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">SAT MAY 17 · 11AM</div><div class="what">Heat Grand Prix · all-day</div><div class="who">$30 · 24 seats · 3 heats + final</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">SAT MAY 24 · 12PM</div><div class="what">Hex Hall Invitational</div><div class="who">$25 · 16 seats · invite or qualifier</div></div>
+        <div class="event-chip" style="min-width:0;"><div class="when">SAT MAY 31 · 12PM</div><div class="what">League Finals (Wingspan + 7 Wonders)</div><div class="who">$0 entry, qualifying required</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED TOURNAMENT WITH BRACKET -->
+  <section class="section">
+    <div class="bracket">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px;">
+        <div>
+          <span class="kicker">⬢ Featured tournament</span>
+          <h2 style="margin:6px 0;">Heat: Grand Prix · Saturday May 17</h2>
+          <p class="muted">8 drivers · 3 qualifying heats · single-elim final. Entry $30 · seats $150 winner-take-all in store credit.</p>
+        </div>
+        <button class="btn btn--purple btn--sm" data-bracket-toggle="#bracket-1">Hide bracket</button>
+      </div>
+
+      <div id="bracket-1">
+        <div class="bracket-grid">
+          <div class="round">
+            <h4>Quarter-finals</h4>
+            <div class="match"><div class="winner">Devon S.</div><div class="vs">vs</div><div>Priya M.</div></div>
+            <div class="match"><div>Tomo K.</div><div class="vs">vs</div><div class="winner">Imani O.</div></div>
+            <div class="match"><div class="winner">Rafe L.</div><div class="vs">vs</div><div>Sue Y.</div></div>
+            <div class="match"><div>Marco V.</div><div class="vs">vs</div><div class="winner">Lin H.</div></div>
+          </div>
+          <div class="round">
+            <h4>Semi-finals</h4>
+            <div class="match" style="margin-top:30px;"><div class="winner">Devon S.</div><div class="vs">vs</div><div>Imani O.</div></div>
+            <div class="match" style="margin-top:60px;"><div>Rafe L.</div><div class="vs">vs</div><div class="winner">Lin H.</div></div>
+          </div>
+          <div class="round">
+            <h4>Final</h4>
+            <div class="match is-final" style="margin-top:120px;"><div class="winner">Devon S.</div><div class="vs">vs</div><div>Lin H.</div><div style="margin-top:6px; font-weight:900; color:#7a3fff;">🏆 Devon S.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEEKLY LEAGUES SIDEBAR -->
+  <section class="section">
+    <div class="section-head"><div><span class="kicker">⬢ Weekly leagues</span><h2>Show up. Earn standings.</h2></div></div>
+    <div class="grid grid--3">
+      <article class="panel panel--mint">
+        <h3>Wingspan League</h3>
+        <p><strong>Tuesdays · 7pm.</strong> Best of 12 sessions counts. Top 8 advance to the May 31 finals. $5 drop-in / $40 season pass.</p>
+        <span class="chip">14 active players</span>
+      </article>
+      <article class="panel panel--tangerine">
+        <h3>7 Wonders Duel League</h3>
+        <p><strong>Thursdays · 7pm.</strong> Swiss pairings, three rounds per night. Coffee included. $5 drop-in.</p>
+        <span class="chip">22 active players</span>
+      </article>
+      <article class="panel panel--purple">
+        <h3>Magic: Standard Friday</h3>
+        <p><strong>Fridays · 7:30pm.</strong> Casual standard with proxy-friendly side pods. $10 entry · prize wall gift cards.</p>
+        <span class="chip chip--mint">Sold out 4 of last 6</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- SUBMIT MEETUP -->
+  <section class="section">
+    <div class="panel">
+      <h2>Hosting a community meetup?</h2>
+      <p>Local groups can reserve a table or back room for free if you're running a recurring open meetup. We're picky about scheduling but generous with snacks.</p>
+      <form class="form-row" onsubmit="event.preventDefault(); alert('Submitted — Mae will email within 3 business days.');">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div><label for="m-name">Organizer name</label><input id="m-name" type="text" placeholder="Ada Lovelace"></div>
+          <div><label for="m-email">Email</label><input id="m-email" type="email" placeholder="ada@example.com"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:14px;">
+          <div><label for="m-group">Group name</label><input id="m-group" type="text" placeholder="Linwood RPG Collective"></div>
+          <div><label for="m-size">Avg group size</label><input id="m-size" type="number" placeholder="12"></div>
+        </div>
+        <div><label for="m-pitch">Pitch your meetup</label><textarea id="m-pitch" rows="3" placeholder="What you play, how often, why it'd be great here."></textarea></div>
+        <div><button type="submit" class="btn btn--purple">Submit meetup</button></div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="brand-mark" style="background:#5fe3c0;"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#1d1830"/></svg></span><span class="brand-text">Meeple &amp; Mug<small>Roll, Sip, Repeat.</small></span></a>
+      <p style="margin-top:14px; color:rgba(255,244,220,0.75);">A neighborhood board game cafe in a converted warehouse — and a tabletop publisher of two original card games.</p>
+    </div>
+    <div><h4>Visit</h4><ul><li>412 Linwood Mill Ln</li><li>Linwood, NC 27000</li><li>(555) 314-DICE</li><li><a href="book.html">Book a table</a></li></ul></div>
+    <div><h4>Explore</h4><ul><li><a href="library.html">Game library</a></li><li><a href="menu.html">Drinks &amp; bites</a></li><li><a href="events.html">Events</a></li><li><a href="reviews.html">Friday reviews</a></li></ul></div>
+    <div><h4>Tavern Pass</h4><ul><li><a href="tavern-pass.html">Join the club</a></li><li><a href="tavern-pass.html#tiers">Tier perks</a></li><li><a href="tavern-pass.html#calc">Points calculator</a></li></ul></div>
+  </div>
+  <div class="shell legal"><span>© 2026 Meeple &amp; Mug Cafe LLC. All meeples loved equally.</span><span>Drink responsibly. Roll fearlessly.</span></div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

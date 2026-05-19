@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TAON-1 :: CHASE LOGS</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="packet">
+  <span class="pid">TAON-1</span>
+  <span><span class="pulse"></span><span class="lbl">PACKET STATUS</span> <span class="val">NOMINAL</span></span>
+  <span class="hide-sm"><span class="lbl">UTC</span> <span class="val" data-utc>—</span></span>
+  <span class="hide-sm"><span class="lbl">SPC D1</span> <span class="val warn">ENH</span></span>
+  <span><span class="lbl">CHASERS</span> <span class="val" data-chasers>—</span></span>
+  <span class="hide-sm"><span class="lbl">LAST STRIKE</span> <span class="val warn" data-lastStrike>—</span></span>
+  <span class="hide-sm"><span class="lbl">RECORDS</span> <span class="val">11,418</span></span>
+</div>
+
+<nav class="nav">
+  <a href="index.html">OPS</a>
+  <a href="logs.html" class="active">LOGS</a>
+  <a href="gear.html">GEAR</a>
+  <a href="spotters.html">SPOTTERS</a>
+  <a href="calendar.html">OUTLOOK</a>
+  <a href="gallery.html">GALLERY</a>
+  <a href="roster.html">ROSTER</a>
+  <span class="spacer"></span>
+  <span class="pill">NOT AN OFFICIAL NWS PRODUCT</span>
+</nav>
+
+<main class="page">
+
+  <div class="page-head">
+    <div>
+      <div class="crumb">/ LOGS / ARCHIVE</div>
+      <h1>CHASE LOG ARCHIVE</h1>
+    </div>
+    <div></div>
+    <div class="meta">11,418 entries &middot; <span class="amber">274 since 01-MAY</span><br/>export window: 2010-2026</div>
+  </div>
+
+  <div class="layout-rail-main">
+
+    <aside class="rail">
+      <h4>YEAR</h4>
+      <label><input type="checkbox" checked/> 2026</label>
+      <label><input type="checkbox"/> 2025</label>
+      <label><input type="checkbox"/> 2024</label>
+      <label><input type="checkbox"/> 2023</label>
+      <label><input type="checkbox"/> 2022</label>
+      <label><input type="checkbox"/> 2011-2021</label>
+
+      <h4>STATE / CWA</h4>
+      <label><input type="checkbox" checked/> OK / OUN</label>
+      <label><input type="checkbox" checked/> TX / FWD-AMA-LUB</label>
+      <label><input type="checkbox" checked/> KS / TOP-DDC-ICT</label>
+      <label><input type="checkbox"/> NE / OAX-GID</label>
+      <label><input type="checkbox"/> CO / GLD-BOU</label>
+      <label><input type="checkbox"/> IA / DMX</label>
+      <label><input type="checkbox"/> MO / EAX-SGF</label>
+
+      <h4>EF-RATING</h4>
+      <label><input type="checkbox"/> EF-0</label>
+      <label><input type="checkbox" checked/> EF-1</label>
+      <label><input type="checkbox" checked/> EF-2</label>
+      <label><input type="checkbox" checked/> EF-3</label>
+      <label><input type="checkbox"/> EF-4</label>
+      <label><input type="checkbox"/> EF-5</label>
+      <label><input type="checkbox"/> n/a (no tor)</label>
+
+      <h4>STORM MODE</h4>
+      <label><input type="checkbox" checked/> discrete supercell</label>
+      <label><input type="checkbox" checked/> embedded supercell</label>
+      <label><input type="checkbox"/> QLCS</label>
+      <label><input type="checkbox"/> multicell cluster</label>
+      <label><input type="checkbox"/> LP / mini-supercell</label>
+      <label><input type="checkbox"/> bow echo</label>
+
+      <h4>CALLSIGN</h4>
+      <input class="input" placeholder="e.g. KC5-WHIRL"/>
+
+      <hr class="ascii"/>
+      <button class="btn">APPLY 1,418</button>
+      <button class="btn amber" style="margin-top:6px;width:100%;">RESET</button>
+    </aside>
+
+    <section>
+      <div class="row-flex" style="justify-content:space-between;margin-bottom:6px;">
+        <div class="dim">Showing <span class="amber">1,418</span> records &middot; sort: <strong>date desc</strong></div>
+        <div>
+          <button class="btn sm">+ SUBMIT NEW LOG</button>
+          <button class="btn sm amber">⇩ CSV EXPORT</button>
+        </div>
+      </div>
+
+      <table class="grid" id="log-table">
+        <thead>
+          <tr>
+            <th style="width:24px;"></th>
+            <th>DATE (UTC)</th>
+            <th>CALLSIGN</th>
+            <th>LOCATION</th>
+            <th>INTERCEPT</th>
+            <th>STORM TYPE</th>
+            <th>EF</th>
+            <th>MAX HAIL</th>
+            <th>PEAK WIND</th>
+            <th>DRIVE (mi)</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><button class="expander" aria-label="expand">+</button></td>
+            <td>2026-05-18 22:14Z</td>
+            <td><span class="cs">KC5-WHIRL</span></td>
+            <td>3 NW Sayre, OK</td>
+            <td>22:11Z</td>
+            <td>discrete supercell</td>
+            <td class="amber">EF-2</td>
+            <td class="num">2.75"</td>
+            <td class="num">82 kt</td>
+            <td class="num">418</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10">
+              <div style="display:grid;grid-template-columns:1fr 1fr 320px;gap:12px;">
+                <div>
+                  <div class="dim">GPS TRACK :: KC5-WHIRL — 2026-05-18</div>
+                  <svg viewBox="0 0 200 120" width="100%" height="120">
+                    <rect width="200" height="120" fill="#02080a" stroke="#1a3025"/>
+                    <g class="axis"><line x1="0" y1="60" x2="200" y2="60"/><line x1="100" y1="0" x2="100" y2="120"/></g>
+                    <path class="trace" d="M20,100 C40,90 60,80 70,68 S90,55 110,42 S130,40 150,32 S175,25 188,18"/>
+                    <circle cx="188" cy="18" r="3" fill="#ffae28"/>
+                    <text x="6" y="14" class="axis-lbl">START 16:02Z &mdash; OKC</text>
+                    <text x="120" y="14" class="axis-lbl">END 22:14Z &mdash; SAYRE</text>
+                  </svg>
+                </div>
+                <div>
+                  <div class="dim">HODOGRAPH :: 22Z KOUN sounding</div>
+                  <svg viewBox="-60 -60 120 120" width="100%" height="120">
+                    <circle cx="0" cy="0" r="50" class="axis"/>
+                    <circle cx="0" cy="0" r="35" class="axis"/>
+                    <circle cx="0" cy="0" r="20" class="axis"/>
+                    <line x1="-55" y1="0" x2="55" y2="0" class="axis"/>
+                    <line x1="0" y1="-55" x2="0" y2="55" class="axis"/>
+                    <path class="trace green" d="M -2,12 C 6,5 15,-2 22,-8 S 38,-22 44,-30"/>
+                    <circle cx="22" cy="-8" r="2" fill="#4cff8f"/>
+                    <circle cx="44" cy="-30" r="2" fill="#ffae28"/>
+                    <text x="-55" y="-50" class="axis-lbl">U/V kt</text>
+                  </svg>
+                </div>
+                <div>
+                  <div class="dim">FIELD NOTE</div>
+                  <pre style="white-space:pre-wrap;color:var(--text);">
+&gt; intercepted right-mover near SAYRE @ 22:11Z.
+&gt; striated barber-pole structure, classic
+  forward-flank precip cascade. RFD surge
+  produced rapid cone tornado, ~3 min on
+  ground, no observed damage to structures.
+&gt; broke off pursuit at 22:21Z due to road
+  network limitation. Returned via I-40.
+                  </pre>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-18 21:58Z</td>
+            <td><span class="cs">KE9-HAIL</span></td>
+            <td>SW Savoy, TX</td>
+            <td>21:39Z</td>
+            <td>discrete supercell</td>
+            <td>—</td>
+            <td class="num amber">3.50"</td>
+            <td class="num">61 kt</td>
+            <td class="num">312</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Core punch attempt aborted at 21:44Z; vehicle rear-quarter window cracked by 3" stone. No tornado witnessed. Storm motion 220° @ 35kt. Drove south on US-69, broke off near Sherman.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-18 21:55Z</td>
+            <td><span class="cs">N0-SCUD</span></td>
+            <td>4 W Meade, KS</td>
+            <td>21:30Z</td>
+            <td>discrete supercell</td>
+            <td class="amber">EF-3</td>
+            <td class="num">1.50"</td>
+            <td class="num">114 kt</td>
+            <td class="num">542</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Long-track multi-vortex tornado, ~14mi path, peak width ~600yd. Damage path traced through unimproved land mostly; one outbuilding destroyed. Reported to NWS DDC at 21:32Z.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-17 23:08Z</td>
+            <td><span class="cs">W5-HOOK</span></td>
+            <td>5 NW Childress, TX</td>
+            <td>22:54Z</td>
+            <td>HP supercell</td>
+            <td>EF-1</td>
+            <td class="num">2.00"</td>
+            <td class="num">88 kt</td>
+            <td class="num">288</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Rain-wrapped tornado in HP storm, observed via brief power flash and ground swirl on dashcam playback. Notes: do not attempt visual confirm from north flank in HP mode.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-17 02:11Z</td>
+            <td><span class="cs">KB7-FUNNEL</span></td>
+            <td>2 NW Pine Ridge, SD</td>
+            <td>01:46Z</td>
+            <td>LP supercell</td>
+            <td>—</td>
+            <td class="num">0.75"</td>
+            <td class="num">42 kt</td>
+            <td class="num">198</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Photogenic LP, no precip core, well-defined corkscrew updraft. No surface wx of consequence. Sunset shot logged in /gallery as 2026-05-17-LP-PR.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-15 23:42Z</td>
+            <td><span class="cs">KD0-RFD</span></td>
+            <td>10 ENE Goodland, KS</td>
+            <td>23:14Z</td>
+            <td>cyclic supercell</td>
+            <td class="amber">EF-2</td>
+            <td class="num">2.50"</td>
+            <td class="num">98 kt</td>
+            <td class="num">488</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Three-cycle supercell with successive meso development. First tornado: 4 min cone, F1 equivalent. Second: brief multi-vortex. Documented RFD slot occlusion sequence on stills 0142-0167.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-14 22:33Z</td>
+            <td><span class="cs">AC9-MAMMA</span></td>
+            <td>S Liberal, KS</td>
+            <td>22:08Z</td>
+            <td>multicell cluster</td>
+            <td>—</td>
+            <td class="num">1.25"</td>
+            <td class="num">52 kt</td>
+            <td class="num">252</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">No tornado; spectacular mammatus display at sunset. Vehicle anemometer pegged briefly at 52kt under outflow boundary passage.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-12 00:21Z</td>
+            <td><span class="cs">N5-INFLOW</span></td>
+            <td>NE Mooreland, OK</td>
+            <td>23:58Z</td>
+            <td>discrete supercell</td>
+            <td>EF-1</td>
+            <td class="num">2.25"</td>
+            <td class="num">76 kt</td>
+            <td class="num">386</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Brief tornado at base of wall cloud; tail cloud feeding meso clearly visible. Inflow sustained 35kt on handheld Kestrel.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-09 21:14Z</td>
+            <td><span class="cs">KG4-LP</span></td>
+            <td>SW Big Spring, TX</td>
+            <td>20:55Z</td>
+            <td>LP supercell</td>
+            <td>—</td>
+            <td class="num">0.50"</td>
+            <td class="num">38 kt</td>
+            <td class="num">344</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Classic plains LP, isolated, no warnings issued. Photographed for ~2 hours from single vantage. No interception necessary; storm visible at &gt;25mi.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-08 22:50Z</td>
+            <td><span class="cs">KD5-MESO</span></td>
+            <td>4 W McCook, NE</td>
+            <td>22:28Z</td>
+            <td>discrete supercell</td>
+            <td class="amber">EF-2</td>
+            <td class="num">3.00"</td>
+            <td class="num">92 kt</td>
+            <td class="num">462</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Cyclic supercell; tornado #2 was stovepipe, ~7 min on ground. Storm-relative motion 240°/30. Hodograph showed 0-3km SRH near 400. Logged with rotation video clips.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-05 19:30Z</td>
+            <td><span class="cs">W0-SHELF</span></td>
+            <td>NE Dodge City, KS</td>
+            <td>19:12Z</td>
+            <td>bow echo</td>
+            <td>—</td>
+            <td class="num">1.75"</td>
+            <td class="num">79 kt</td>
+            <td class="num">220</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Severe outflow event; gust front timelapse captured. Damage limited to tree limbs along US-50. No rotation.</pre></td>
+          </tr>
+
+          <tr>
+            <td><button class="expander">+</button></td>
+            <td>2026-05-03 23:55Z</td>
+            <td><span class="cs">KX1-CAPE</span></td>
+            <td>1 N Hammon, OK</td>
+            <td>23:33Z</td>
+            <td>discrete supercell</td>
+            <td>EF-1</td>
+            <td class="num">2.00"</td>
+            <td class="num">68 kt</td>
+            <td class="num">298</td>
+          </tr>
+          <tr class="expand-row" style="display:none;">
+            <td colspan="10"><pre style="white-space:pre-wrap;">Storm cycled rapidly; brief landspout-style tornado near base. Local CAPE measured 3800 J/kg from VAD-derived profile.</pre></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="row-flex" style="margin-top:8px; justify-content:space-between;">
+        <div class="dim">Showing 1-12 of 1,418</div>
+        <div>
+          <button class="btn sm">« PREV</button>
+          <button class="btn sm">NEXT »</button>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="disclaimer">NOT AN OFFICIAL NWS PRODUCT. Chase logs are submitted by members and may contain personal interpretation. Treat as community record, not authoritative storm data.</div>
+  <div>
+    <strong>TORNADO ALLEY OPERATIONS NETWORK</strong><br/>
+    Log submission requires PACKET STATUS = VERIFIED and SKYWARN/HAM certification on file.<br/>
+    Submission form: <a href="#">/logs/submit</a>
+  </div>
+  <div>
+    Schema v3.2 :: log entries normalized against SPC severe weather DB<br/>
+    CSV exports timestamped UTC, GPS in WGS-84 decimal degrees.<br/>
+    Field abbreviation reference: <a href="spotters.html">spotter-net glossary</a>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

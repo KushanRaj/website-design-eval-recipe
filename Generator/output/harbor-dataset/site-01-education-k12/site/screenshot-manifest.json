@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "site-01-education-k12",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full home page with alert strip, hero, quick tools, news mosaic, This Week agenda and bell schedule",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "home-absence-modal",
+      "weight": 0.5,
+      "page": "home",
+      "state": "absence-modal-open",
+      "intent": "Report an Absence modal opened from the quick tools sticker, revealing the absence form",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-98-a-report-absence\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "waitForSelector",
+          "selector": "#absence-modal",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "our-schools-full",
+      "weight": 1.0,
+      "page": "our-schools",
+      "state": "default",
+      "intent": "Schools directory grid view with seven campus cards, address lookup, magnet programs, open houses, and enrollment stepper",
+      "path": "/our-schools.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "our-schools-map-view",
+      "weight": 0.5,
+      "page": "our-schools",
+      "state": "map-view-toggled",
+      "intent": "Map view toggled on the schools directory to reveal boundary map layout instead of card grid",
+      "path": "/our-schools.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-view=\"map\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "portal-full",
+      "weight": 1.0,
+      "page": "portal",
+      "state": "default",
+      "intent": "Parent portal sign-in page with role tabs, SSO buttons, feature showcase, help desk, and FERPA notice",
+      "path": "/portal.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "portal-student-tab",
+      "weight": 0.25,
+      "page": "portal",
+      "state": "student-role-tab-active",
+      "intent": "Role-tabbed sign-in switched to Student tab to verify tab interaction and label change",
+      "path": "/portal.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-role=\"student\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "academics-full",
+      "weight": 1.0,
+      "page": "academics",
+      "state": "default",
+      "intent": "Academics curriculum page with grade-band tabs, subject accordion, program spotlights, graduation pathways, testing calendar, and counselor directory",
+      "path": "/academics.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "academics-elementary-band",
+      "weight": 0.25,
+      "page": "academics",
+      "state": "elementary-band-tab-active",
+      "intent": "Grade-band tab switched to Elementary K-5 to reveal alternate subject content for that band",
+      "path": "/academics.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-band=\"el\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "academics-ela-expanded",
+      "weight": 0.25,
+      "page": "academics",
+      "state": "ela-accordion-open",
+      "intent": "English Language Arts subject accordion expanded to confirm details-summary expansion pattern (representative accordion state)",
+      "path": "/academics.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-70-summary-english-language-arts\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "calendar-full",
+      "weight": 1.0,
+      "page": "calendar",
+      "state": "default",
+      "intent": "District calendar with Month grid, category filters, subscribe buttons, selected event flyout, and lunch teaser",
+      "path": "/calendar.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "calendar-agenda-view",
+      "weight": 0.5,
+      "page": "calendar",
+      "state": "agenda-view-active",
+      "intent": "Calendar view switcher set to Agenda to reveal alternate stacked event layout",
+      "path": "/calendar.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-view=\"agenda\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "calendar-week-view",
+      "weight": 0.5,
+      "page": "calendar",
+      "state": "week-view-active",
+      "intent": "Calendar view switcher set to Week to reveal the week-of layout",
+      "path": "/calendar.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-view=\"week\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "board-full",
+      "weight": 1.0,
+      "page": "board",
+      "state": "default",
+      "intent": "Board of Education page with member roster, next meeting hero, past meetings table, public comment guidelines, strategic plan, policy library, and budget docs",
+      "path": "/board.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "board-comment-modal",
+      "weight": 0.5,
+      "page": "board",
+      "state": "comment-modal-open",
+      "intent": "Public comment sign-up modal opened from the Sign up to speak CTA, revealing the sign-up form fields",
+      "path": "/board.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-103-a-sign-up-to-speak\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "waitForSelector",
+          "selector": "#comment-modal",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": "visible",
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "board-policy-expanded",
+      "weight": 0.25,
+      "page": "board",
+      "state": "policy-1000-open",
+      "intent": "Policy library 1000 Series Governance accordion expanded as a representative policy section state",
+      "path": "/board.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-211-summary-1000-series-governance\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "news-full",
+      "weight": 1.0,
+      "page": "news",
+      "state": "default",
+      "intent": "News bulletin board with featured story, category sticker filters, dated post list, newsletter signup, press kit, and social embeds",
+      "path": "/news.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "lunch-full",
+      "weight": 1.0,
+      "page": "lunch",
+      "state": "default",
+      "intent": "Lunch menu weekly grid for Elementary with allergen legend, free meals CTA, lunch balance reload, farm-to-school, and wellness feedback",
+      "path": "/lunch.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "lunch-middle-tab",
+      "weight": 0.25,
+      "page": "lunch",
+      "state": "middle-tab-active",
+      "intent": "School-level tab switched to Middle to confirm the lunch menu reflows for a different campus level",
+      "path": "/lunch.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-57-button-middle\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    }
+  ]
+}

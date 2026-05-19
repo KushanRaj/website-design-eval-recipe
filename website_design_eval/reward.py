@@ -7,6 +7,12 @@ from typing import Any
 
 
 PathLike = str | Path
+PASS_THRESHOLD = 0.40
+PASS_WEIGHTS = {
+    "foundation": 0.05,
+    "content": 0.15,
+    "specifics": 0.80,
+}
 
 
 def _number(value: Any, default: float = 0.0) -> float:
@@ -20,6 +26,23 @@ def _metric(payload: dict[str, Any], path: list[str], default: float = 0.0) -> f
             return default
         current = current.get(key)
     return _number(current, default)
+
+
+def _optional_metric(payload: dict[str, Any], path: list[str]) -> float | None:
+    current: Any = payload
+    for key in path:
+        if not isinstance(current, dict):
+            return None
+        current = current.get(key)
+    return float(current) if isinstance(current, int | float) else None
+
+
+def _weighted_available(components: list[tuple[float, float | None]]) -> float:
+    available = [(weight, value) for weight, value in components if value is not None]
+    denominator = sum(weight for weight, _value in available)
+    if denominator <= 0:
+        return 0.0
+    return sum(weight * value for weight, value in available) / denominator
 
 
 def _suggested_capture_weight(capture_id: str) -> float:
@@ -46,34 +69,41 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
     metrics = capture_payload.get("metrics") or {}
     if not isinstance(metrics, dict) or metrics.get("status") == "unsupported":
         foundation = 0.25 * coverage
+        foundation_passed = foundation >= PASS_THRESHOLD
         return {
             "coverage": coverage,
             "foundation": foundation,
+            "foundation_passed": foundation_passed,
             "content": 0.0,
+            "content_passed": False,
             "visual_block_core": 0.0,
             "local_layout_style": 0.0,
             "pixel_precision": None,
             "specifics": 0.0,
-            "foundation_contribution": coverage * 0.05 * foundation,
+            "specifics_eligible": False,
+            "foundation_contribution": coverage * PASS_WEIGHTS["foundation"] * foundation,
             "content_contribution": 0.0,
             "specifics_contribution": 0.0,
-            "score": 0.0,
+            "score": round(coverage * PASS_WEIGHTS["foundation"] * foundation, 6),
             "status": "unsupported",
             "reason": metrics.get("reason") or capture_payload.get("missing_reason"),
         }
 
     screenshot_size = _metric(metrics, ["screenshot_size_match", "score"])
-    vlm = _metric(metrics, ["vlm_judge", "overall"])
-    visual_block_size = _metric(metrics, ["visual_block", "size"])
+    vlm = _optional_metric(metrics, ["vlm_judge", "overall"])
+    visual_block_size_metric = _optional_metric(metrics, ["visual_block", "size"])
+    visual_block_size = visual_block_size_metric or 0.0
     foundation = 0.50 * coverage + 0.50 * screenshot_size
 
-    text_bleu = _metric(metrics, ["html_text", "bleu_1"])
-    text_rouge = _metric(metrics, ["html_text", "rouge_1_recall"])
-    content = (
-        0.35 * text_bleu
-        + 0.35 * text_rouge
-        + 0.15 * vlm
-        + 0.15 * visual_block_size
+    text_bleu = _optional_metric(metrics, ["html_text", "bleu_1"])
+    text_rouge = _optional_metric(metrics, ["html_text", "rouge_1_recall"])
+    content = _weighted_available(
+        [
+            (0.35, text_bleu),
+            (0.35, text_rouge),
+            (0.15, vlm),
+            (0.15, visual_block_size_metric),
+        ]
     )
 
     visual_block_text = _metric(metrics, ["visual_block", "text"])
@@ -108,20 +138,34 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
         specifics = (0.35 * visual_block_core + 0.30 * local_layout_style + 0.15 * dreamsim_visual) / 0.80
         specifics_mode = "without_pixel_precision"
 
-    foundation_contribution = coverage * 0.05 * foundation
-    content_contribution = coverage * 0.15 * content
-    specifics_contribution = coverage * 0.80 * specifics
+    foundation_passed = foundation >= PASS_THRESHOLD
+    content_passed = content >= PASS_THRESHOLD
+    specifics_eligible = foundation_passed and content_passed
+
+    foundation_contribution = coverage * PASS_WEIGHTS["foundation"] * foundation
+    content_contribution = (
+        coverage * PASS_WEIGHTS["content"] * content
+        if foundation_passed
+        else 0.0
+    )
+    specifics_contribution = (
+        coverage * PASS_WEIGHTS["specifics"] * specifics
+        if specifics_eligible
+        else 0.0
+    )
     score = foundation_contribution + content_contribution + specifics_contribution
 
     return {
         "coverage": round(coverage, 6),
         "screenshot_size_match": round(screenshot_size, 6),
-        "vlm": round(vlm, 6),
+        "vlm": round(vlm, 6) if vlm is not None else None,
         "visual_block_size": round(visual_block_size, 6),
         "foundation": round(foundation, 6),
-        "text_bleu": round(text_bleu, 6),
-        "text_rouge": round(text_rouge, 6),
+        "foundation_passed": foundation_passed,
+        "text_bleu": round(text_bleu, 6) if text_bleu is not None else None,
+        "text_rouge": round(text_rouge, 6) if text_rouge is not None else None,
         "content": round(content, 6),
+        "content_passed": content_passed,
         "visual_block_core": round(visual_block_core, 6),
         "local_layout_style": round(local_layout_style, 6),
         "dreamsim_score": round(dreamsim_score, 6),
@@ -129,6 +173,7 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
         "raw_pixelmatch": round(raw_pixelmatch, 6) if raw_pixelmatch is not None else None,
         "pixel_precision": round(pixel_precision, 6) if pixel_precision is not None else None,
         "specifics": round(specifics, 6),
+        "specifics_eligible": specifics_eligible,
         "specifics_mode": specifics_mode,
         "foundation_contribution": round(foundation_contribution, 6),
         "content_contribution": round(content_contribution, 6),
@@ -163,6 +208,10 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
         "specifics_contribution": round(_weighted_mean(rows, "specifics_contribution"), 6),
         "capture_count": len(rows),
         "scored_capture_count": sum(1 for row in rows if row["status"] == "scored"),
+        "foundation_pass_count": sum(1 for row in rows if row.get("foundation_passed")),
+        "content_pass_count": sum(1 for row in rows if row.get("content_passed")),
+        "specifics_eligible_count": sum(1 for row in rows if row.get("specifics_eligible")),
+        "pass_threshold": PASS_THRESHOLD,
         "weight_mode": weight_mode,
         "pixel_precision_included": any(row.get("pixel_precision") is not None for row in rows),
     }
@@ -208,8 +257,11 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
             row["weight"],
             row["coverage"],
             row["foundation"],
+            row.get("foundation_passed"),
             row["content"],
+            row.get("content_passed"),
             row["specifics"],
+            row.get("specifics_eligible"),
             row.get("raw_pixelmatch"),
             row.get("pixel_precision"),
             row.get("dreamsim_visual"),
@@ -237,6 +289,10 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
                     ["foundation_contribution", summary["foundation_contribution"]],
                     ["content_contribution", summary["content_contribution"]],
                     ["specifics_contribution", summary["specifics_contribution"]],
+                    ["pass_threshold", summary["pass_threshold"]],
+                    ["foundation_pass_count", summary["foundation_pass_count"]],
+                    ["content_pass_count", summary["content_pass_count"]],
+                    ["specifics_eligible_count", summary["specifics_eligible_count"]],
                     ["weight_mode", summary["weight_mode"]],
                     ["pixel_precision_included", summary["pixel_precision_included"]],
                 ],
@@ -250,8 +306,11 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
                     "Weight",
                     "Coverage",
                     "Pass 1",
+                    "P1 Pass",
                     "Pass 2",
+                    "P2 Pass",
                     "Pass 3",
+                    "P3 Eligible",
                     "Pixelmatch",
                     "Pixel Precision",
                     "DreamSim Visual",

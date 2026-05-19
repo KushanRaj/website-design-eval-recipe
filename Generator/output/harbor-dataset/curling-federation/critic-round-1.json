@@ -1,0 +1,44 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "curling-federation-a",
+      "score": 0.86,
+      "accept": true,
+      "strengths": [
+        "Eight concrete pages fully aligned with the seed (standings, athletes, brackets, clubs, rules handbook, results archive, news, home)",
+        "Palette adheres strictly to seed: icy blue, granite gray, white — no off-spec accents",
+        "Motif is specific and curling-native: granite cross-sections, broom-stroke underlines, concentric house rings as section bullets",
+        "Interactions are dense and useful: chip filters, expandable end-by-end rows, season range slider, bracket view toggle",
+        "Content model captures real curling primitives (hammer_pct, end_scores, sheet assignment, officials levels)",
+        "Layout patterns are concrete with column counts, sticky headers, sparklines, and sidebar legends",
+        "Mobile behavior is reasoned per page (tables→stacked cards, bracket minimap, list-first club view)"
+      ],
+      "weaknesses": [
+        "Home dashboard could specify more numerical density (explicit column/row counts)",
+        "Athlete profile sub-page is implied but not enumerated as its own page entry",
+        "Sponsor strip risks looking generic if not handled with restraint"
+      ]
+    },
+    {
+      "candidate_id": "curling-federation-b",
+      "score": 0.78,
+      "accept": true,
+      "strengths": [
+        "Eight pages with strong domain specificity (LiveMatch entity, advanced stats columns DSC/ENDS±/HAM%/DPI, head-to-head matrix)",
+        "Left-rail function taxonomy (Compete/Officiate/Develop/Watch/Records) reads like a real federation IA",
+        "Champions wall, sanctions & eligibility sidebar, and broadcast embed slot add realism",
+        "Pebbled-ice halftone and scoreboard segmented digits are distinctive motifs",
+        "Mobile behavior handles left-rail collapse and bracket swipe explicitly"
+      ],
+      "weaknesses": [
+        "Introduces a hot brick-red accent outside the seed palette (cool icy blue, granite gray, white only)",
+        "'Broadcast control room' framing slightly undercuts the seed's 'utilitarian institutional' tone",
+        "Some redundancy between league-table and results-archive faceting",
+        "Live broadcast embed slot may be ambitious for a static concept render"
+      ]
+    }
+  ],
+  "best_candidate_id": "curling-federation-a",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

@@ -1,0 +1,9 @@
+{
+  "id": "curling-federation",
+  "one_liner": "A niche-sport governing body website for a national curling federation with icy blue-and-granite palette, utilitarian sans typography, dense league standings tables, athlete roster pages, tournament brackets, club locator map, rules/officiating handbook section, news ticker, and a results archive with filter chips.",
+  "metadata": {
+    "visual_feel": "utilitarian institutional",
+    "palette": "cool icy blue, granite gray, white",
+    "density": "high"
+  }
+}

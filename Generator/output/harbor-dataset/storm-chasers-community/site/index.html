@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TAON-1 :: OPS DASHBOARD</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="packet">
+  <span class="pid">TAON-1</span>
+  <span><span class="pulse"></span><span class="lbl">PACKET STATUS</span> <span class="val">NOMINAL</span></span>
+  <span class="hide-sm"><span class="lbl">UTC</span> <span class="val" data-utc>—</span></span>
+  <span class="hide-sm"><span class="lbl">SPC D1</span> <span class="val warn">ENH</span></span>
+  <span><span class="lbl">CHASERS</span> <span class="val" data-chasers>—</span></span>
+  <span class="hide-sm"><span class="lbl">LAST STRIKE</span> <span class="val warn" data-lastStrike>—</span></span>
+  <span class="hide-sm"><span class="lbl">PORT</span> <span class="val">147.555 MHz</span></span>
+</div>
+
+<nav class="nav">
+  <a href="index.html" class="active">OPS</a>
+  <a href="logs.html">LOGS</a>
+  <a href="gear.html">GEAR</a>
+  <a href="spotters.html">SPOTTERS</a>
+  <a href="calendar.html">OUTLOOK</a>
+  <a href="gallery.html">GALLERY</a>
+  <a href="roster.html">ROSTER</a>
+  <span class="spacer"></span>
+  <span class="pill">NOT AN OFFICIAL NWS PRODUCT</span>
+</nav>
+
+<main class="page">
+
+  <div class="page-head">
+    <div>
+      <div class="crumb">/ OPS / DASHBOARD &mdash; CONUS</div>
+      <h1>TORNADO ALLEY OPERATIONS NETWORK</h1>
+    </div>
+    <div></div>
+    <div class="meta">
+      NET CONTROL :: <span class="amber">KC5-WHIRL</span><br/>
+      UPLINK :: <span class="dim">tcp/14580 aprs-is</span>
+    </div>
+  </div>
+
+  <div class="readout">
+    <div class="cell"><div class="k">CAPE J/KG</div><div class="v">3214</div></div>
+    <div class="cell"><div class="k">SBCIN</div><div class="v">-52</div></div>
+    <div class="cell"><div class="k">0-1 SRH</div><div class="v amber">312</div></div>
+    <div class="cell"><div class="k">0-6 SHEAR KT</div><div class="v amber">58</div></div>
+    <div class="cell"><div class="k">LCL m</div><div class="v">720</div></div>
+    <div class="cell"><div class="k">EHI</div><div class="v red">4.8</div></div>
+    <div class="cell"><div class="k">PWAT in</div><div class="v">1.62</div></div>
+    <div class="cell"><div class="k">SCP</div><div class="v amber">11.2</div></div>
+  </div>
+
+  <div class="quad-grid">
+
+    <!-- QUAD TL: live radar mosaic -->
+    <div class="quad">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="lhs">
+            <span>QUAD-TL // CONUS DOPPLER MOSAIC</span>
+            <span class="tag">REFL 0.5°</span>
+            <span class="tag amber">PDS-TOR WATCH 0445</span>
+          </div>
+          <div class="rhs">LVL3 // 5-MIN CHUNK</div>
+        </div>
+        <div class="panel-body flush">
+          <div class="radar" id="radar-mosaic">
+            <div class="grid"></div>
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="ring r3"></div>
+            <div class="ring r4"></div>
+            <div class="crosshair"></div>
+            <div class="echo e1"></div>
+            <div class="echo e2"></div>
+            <div class="echo e3"></div>
+            <div class="echo e4"></div>
+            <div class="echo e5"></div>
+            <div class="echo e6"></div>
+            <div class="sweep"></div>
+            <div class="pin" data-cs="KC5-WHIRL" style="left:42%;top:46%;"></div>
+            <div class="pin" data-cs="N0-SCUD"   style="left:60%;top:38%;"></div>
+            <div class="pin" data-cs="W5-HOOK"   style="left:68%;top:60%;"></div>
+            <div class="pin" data-cs="KD0-RFD"   style="left:24%;top:68%;"></div>
+            <div class="legend">
+              <span><i class="sw" style="background:#5cff8a"></i>&lt;30 dBZ</span>
+              <span><i class="sw" style="background:#ffae28"></i>30-45</span>
+              <span><i class="sw" style="background:#ff3a3a"></i>45-60</span>
+              <span><i class="sw" style="background:#d048ff"></i>&gt;60</span>
+            </div>
+            <div class="stamp">
+              SOURCE: KTLX KICT KFDR KDDC<br/>
+              TILT: 0.5° &mdash; PROD: N0Q<br/>
+              VCP-212 &mdash; AGE 00:00:42
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUAD TR: SPC outlook -->
+    <div class="quad">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="lhs">
+            <span>QUAD-TR // SPC CONVECTIVE OUTLOOK</span>
+            <span class="tag amber">ENH RISK D1</span>
+          </div>
+          <div class="rhs">ISSUED 1630Z</div>
+        </div>
+        <div class="panel-body flush">
+          <div class="spc">
+            <div class="tabs">
+              <button class="active" data-tab="d1">DAY 1</button>
+              <button data-tab="d2">DAY 2</button>
+              <button data-tab="d3">DAY 3</button>
+            </div>
+            <div class="map">
+              <svg viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet" aria-label="SPC outlook">
+                <!-- CONUS outline (stylized) -->
+                <path d="M20,80 L60,55 L120,40 L200,38 L260,46 L320,60 L340,90 L335,140 L300,180 L240,205 L180,210 L120,200 L70,180 L40,150 Z"
+                      fill="#06120a" stroke="#244836" stroke-width="1"/>
+                <!-- internal state stippling -->
+                <g stroke="#1a3025" stroke-width="0.6" fill="none">
+                  <line x1="60" y1="55"  x2="70"  y2="180"/>
+                  <line x1="120" y1="40" x2="120" y2="200"/>
+                  <line x1="200" y1="38" x2="180" y2="210"/>
+                  <line x1="260" y1="46" x2="240" y2="205"/>
+                  <line x1="20" y1="120" x2="340" y2="115"/>
+                  <line x1="40" y1="150" x2="335" y2="140"/>
+                </g>
+
+                <!-- DAY 1 RISKS -->
+                <g data-day="d1">
+                  <path d="M120,80 Q170,60 230,80 Q260,110 240,150 Q190,170 140,150 Q105,120 120,80 Z" fill="#1f6b3a" opacity="0.55"/>
+                  <path d="M150,90 Q190,80 220,95 Q235,120 215,145 Q180,155 155,140 Q140,115 150,90 Z" fill="#ffae28" opacity="0.55"/>
+                  <path d="M170,100 Q195,95 210,108 Q220,125 205,140 Q180,148 165,135 Q155,118 170,100 Z" fill="#ff7a18" opacity="0.65"/>
+                  <path d="M180,110 Q195,108 200,118 Q205,128 195,135 Q183,138 178,128 Q173,118 180,110 Z" fill="#ff3a3a" opacity="0.75"/>
+                  <text x="185" y="125" fill="#fff" font-size="7" font-family="monospace" text-anchor="middle">MOD</text>
+                  <circle cx="185" cy="125" r="2" fill="#ffae28"/>
+                  <text x="120" y="220" class="axis-lbl">D1 // 12Z 19 MAY → 12Z 20 MAY</text>
+                </g>
+
+                <!-- DAY 2 RISKS -->
+                <g data-day="d2" style="display:none;">
+                  <path d="M100,90 Q170,70 250,90 Q290,120 260,160 Q190,180 130,160 Q90,130 100,90 Z" fill="#1f6b3a" opacity="0.45"/>
+                  <path d="M140,100 Q190,90 230,105 Q255,130 225,155 Q180,165 145,150 Q125,125 140,100 Z" fill="#ffae28" opacity="0.55"/>
+                  <text x="120" y="220" class="axis-lbl">D2 // 12Z 20 MAY → 12Z 21 MAY</text>
+                </g>
+
+                <!-- DAY 3 RISKS -->
+                <g data-day="d3" style="display:none;">
+                  <path d="M90,110 Q180,95 290,115 Q310,150 270,180 Q170,195 110,180 Q70,145 90,110 Z" fill="#1f6b3a" opacity="0.35"/>
+                  <text x="120" y="220" class="axis-lbl">D3 // 12Z 21 MAY → 12Z 22 MAY</text>
+                </g>
+              </svg>
+            </div>
+            <div class="key">
+              <span class="mrgl">MRGL</span>
+              <span class="slgt">SLGT</span>
+              <span class="enh">ENH</span>
+              <span class="mod">MOD</span>
+              <span class="high">HIGH</span>
+              <span class="dim" style="margin-left:auto;">SRC: SPC NORMAN, OK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUAD BL: ping ticker -->
+    <div class="quad">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="lhs"><span>QUAD-BL // ACTIVE CHASER PINGS</span><span class="tag">APRS-IS</span></div>
+          <div class="rhs">10-MIN BUFFER</div>
+        </div>
+        <div class="panel-body flush">
+          <div class="ticker">
+            <div class="row"><span class="cs">KC5-WHIRL</span><span class="latlon">35.21,-98.40</span><span class="time">22:14:08Z</span><span>repositioning S of WX warn poly KFDR-22</span></div>
+            <div class="row"><span class="cs">N0-SCUD</span><span class="latlon">36.78,-97.10</span><span class="time">22:13:55Z</span><span>core punch declined; backing off 5W of TONK</span></div>
+            <div class="row"><span class="cs">W5-HOOK</span><span class="latlon">34.10,-99.20</span><span class="time">22:13:41Z</span><span>visual on wall cloud, rotation tightening</span></div>
+            <div class="row"><span class="cs">KD0-RFD</span><span class="latlon">38.94,-100.83</span><span class="time">22:12:30Z</span><span>RFD surge observed; pulling east</span></div>
+            <div class="row"><span class="cs">AC9-MAMMA</span><span class="latlon">37.65,-101.20</span><span class="time">22:11:58Z</span><span>anvil shelf; mammatus dense overhead</span></div>
+            <div class="row"><span class="cs">KB7-FUNNEL</span><span class="latlon">42.10,-103.45</span><span class="time">22:10:12Z</span><span>cone tornado on ground 2mi NW of pos.</span></div>
+            <div class="row"><span class="cs">KE9-HAIL</span><span class="latlon">33.40,-96.55</span><span class="time">22:09:48Z</span><span>2.25" hail, vehicle window cracked</span></div>
+            <div class="row"><span class="cs">N5-INFLOW</span><span class="latlon">35.88,-95.20</span><span class="time">22:08:22Z</span><span>tail cloud feeding meso, 35kt sustained inflow</span></div>
+            <div class="row"><span class="cs">KG4-LP</span><span class="latlon">31.55,-99.85</span><span class="time">22:07:01Z</span><span>LP storm, anvil-only precip, photogenic</span></div>
+            <div class="row"><span class="cs">KD5-MESO</span><span class="latlon">40.10,-100.10</span><span class="time">22:05:44Z</span><span>cycling supercell, second meso initiating</span></div>
+            <div class="row"><span class="cs">W0-SHELF</span><span class="latlon">39.22,-101.99</span><span class="time">22:04:18Z</span><span>linear gust front; outflow dominant</span></div>
+            <div class="row"><span class="cs">KX1-CAPE</span><span class="latlon">36.30,-94.10</span><span class="time">22:03:09Z</span><span>local CAPE 3800, capping concern eroding</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUAD BR: LSR feed -->
+    <div class="quad">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="lhs"><span>QUAD-BR // LOCAL STORM REPORTS</span><span class="tag amber">14 NEW</span></div>
+          <div class="rhs">XMIT &lt; 5MIN</div>
+        </div>
+        <div class="panel-body flush">
+          <div class="lsr-feed">
+            <div class="row warn"><span class="type">TOR</span><span class="ts">22:14Z</span><span>NW of SAYRE, OK :: cone, brief, no damage observed <span class="src">SRC: KC5-WHIRL (chaser)</span></span></div>
+            <div class="row warn"><span class="type">WIND</span><span class="ts">22:12Z</span><span>EST 78 MPH gust @ HOLLIS, OK ASOS <span class="src">SRC: NWS NORMAN</span></span></div>
+            <div class="row"><span class="type">HAIL</span><span class="ts">22:11Z</span><span>2.25" hail near SAVOY, TX <span class="src">SRC: KE9-HAIL (chaser)</span></span></div>
+            <div class="row"><span class="type">HAIL</span><span class="ts">22:08Z</span><span>1.50" hail S of QUANAH, TX <span class="src">SRC: trained spotter</span></span></div>
+            <div class="row warn"><span class="type">FUNNEL</span><span class="ts">22:06Z</span><span>Funnel reported aloft 4 mi N of KELLERVILLE, TX <span class="src">SRC: SKYWARN net</span></span></div>
+            <div class="row"><span class="type">WIND</span><span class="ts">22:03Z</span><span>62 mph measured at AWOS, SHATTUCK <span class="src">SRC: NWS AMA</span></span></div>
+            <div class="row"><span class="type">FLOOD</span><span class="ts">22:01Z</span><span>Low-water crossing impassable, 2 mi E of CHILDRESS <span class="src">SRC: county EM</span></span></div>
+            <div class="row"><span class="type">HAIL</span><span class="ts">21:58Z</span><span>1.00" hail accumulation on US-83 <span class="src">SRC: KB7-FUNNEL (chaser)</span></span></div>
+            <div class="row warn"><span class="type">TOR</span><span class="ts">21:55Z</span><span>Multi-vortex on ground; west of MEADE, KS <span class="src">SRC: trained spotter</span></span></div>
+            <div class="row"><span class="type">RAIN</span><span class="ts">21:52Z</span><span>2.10" in 30 min, urban st-flooding <span class="src">SRC: CoCoRaHS</span></span></div>
+            <div class="row"><span class="type">WIND</span><span class="ts">21:50Z</span><span>Trees down on Hwy 60 near SEILING <span class="src">SRC: OHP</span></span></div>
+            <div class="row"><span class="type">HAIL</span><span class="ts">21:47Z</span><span>3.00" hail (egg-size) — SHEPHERD, TX <span class="src">SRC: trained spotter</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /quad-grid -->
+
+  <!-- bottom strip -->
+  <div class="panel" style="margin-top:10px;">
+    <div class="panel-head">
+      <div class="lhs"><span>SYSTEM // UPTIME &amp; DATA SOURCES</span></div>
+      <div class="rhs">HOSTNAME: <span class="amber">taon1.ops.network</span></div>
+    </div>
+    <div class="panel-body">
+      <pre class="dim" style="white-space:pre-wrap;">
++--------------------------------------------------------------------+
+| svc            | source                       | age      | status  |
++----------------+------------------------------+----------+---------+
+| radar.mosaic   | Iowa State / NOAA NEXRAD     | 00:00:42 | NOMINAL |
+| spc.outlook    | NWS SPC text + GeoJSON       | 00:13:11 | NOMINAL |
+| lsr.feed       | NWS LSR XML (county-rolled)  | 00:01:08 | NOMINAL |
+| aprs.is        | aprs-is :: rotate.aprs2.net  | 00:00:03 | NOMINAL |
+| asos.metar     | NOAA TGFTP                   | 00:04:51 | DEGRADE |
+| chase.net      | TAON-1 internal              | 00:00:01 | NOMINAL |
++----------------+------------------------------+----------+---------+
+      </pre>
+      <hr class="ascii"/>
+      <div class="row-flex dim" style="justify-content:space-between;">
+        <span>uptime 41d 02h 17m</span>
+        <span>commit <span class="amber">8c2f4ae</span></span>
+        <span>build TAON-1.r142</span>
+        <span>last cold start: 2026-04-08 03:14Z</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="disclaimer">NOT AN OFFICIAL NWS PRODUCT. TAON-1 outputs are community-curated and must not be used as the sole basis for life-safety decisions. Always refer to official NWS warnings.</div>
+  <div>
+    <strong>TORNADO ALLEY OPERATIONS NETWORK</strong><br/>
+    Community-run packet cluster &amp; situational dashboard for amateur storm chasers, SKYWARN spotters, and ham radio operators.<br/>
+    Operating since: 2014 :: Build TAON-1.r142
+  </div>
+  <div>
+    <a href="logs.html">CHASE LOGS</a> &middot;
+    <a href="gear.html">GEAR BENCH</a> &middot;
+    <a href="spotters.html">SPOTTERS</a> &middot;
+    <a href="calendar.html">OUTLOOK</a> &middot;
+    <a href="gallery.html">GALLERY</a> &middot;
+    <a href="roster.html">ROSTER</a><br/>
+    Echolink :: <span class="dim">*TAON-1*</span> :: APRS port 14580 :: IRC ##taon-net
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

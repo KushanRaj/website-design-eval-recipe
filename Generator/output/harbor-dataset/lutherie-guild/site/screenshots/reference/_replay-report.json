@@ -1,0 +1,63 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/lutherie-guild/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 9,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "workshops-full",
+      "status": "ok",
+      "required": true,
+      "file": "workshops-full.png"
+    },
+    {
+      "id": "workshops-filter-violin",
+      "status": "ok",
+      "required": false,
+      "file": "workshops-filter-violin.png"
+    },
+    {
+      "id": "apprenticeship-full",
+      "status": "ok",
+      "required": true,
+      "file": "apprenticeship-full.png"
+    },
+    {
+      "id": "materials-full",
+      "status": "ok",
+      "required": true,
+      "file": "materials-full.png"
+    },
+    {
+      "id": "materials-billet-flat",
+      "status": "ok",
+      "required": false,
+      "file": "materials-billet-flat.png"
+    },
+    {
+      "id": "exhibition-full",
+      "status": "ok",
+      "required": true,
+      "file": "exhibition-full.png"
+    },
+    {
+      "id": "instrument-of-the-month-full",
+      "status": "ok",
+      "required": true,
+      "file": "instrument-of-the-month-full.png"
+    },
+    {
+      "id": "journal-full",
+      "status": "ok",
+      "required": true,
+      "file": "journal-full.png"
+    }
+  ]
+}

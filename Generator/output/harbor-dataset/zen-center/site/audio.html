@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dharma talks — Pine Tree Hall</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <aside class="sekki" data-sekki>
+    <div class="sekki__text">
+      <span class="kanji" data-sekki-kanji>小満</span>
+      <span class="romaji" data-sekki-romaji>Shōman — Lesser fullness</span>
+    </div>
+    <span class="sekki__year" data-sekki-year>2026</span>
+  </aside>
+
+  <div class="frame" style="padding-bottom: 100px;">
+
+    <header class="masthead">
+      <div class="masthead__row">
+        <div class="brand">
+          <a href="index.html">Pine Tree Hall<small>松林堂 — A working monastery, open to visitors.</small></a>
+        </div>
+        <nav class="nav" aria-label="Primary">
+          <a href="index.html">Hall</a>
+          <a href="teachers-and-lineage.html">Lineage</a>
+          <a href="schedule.html">Schedule</a>
+          <a href="audio.html" class="is-active">Dharma talks</a>
+          <a href="visit.html">Visit</a>
+          <a href="dana.html">Dana</a>
+        </nav>
+      </div>
+      <div class="masthead__meta">
+        <span>Audio archive — 1992 onward</span>
+        <span>1,184 recordings</span>
+        <span>184 transcribed</span>
+      </div>
+    </header>
+
+    <section class="page-head">
+      <h1>An archive of dharma talks, kept plainly.</h1>
+      <p class="lede">
+        Sunday teisho, sesshin talks, and Wednesday introductions, kept since
+        1992. Recorded simply — one microphone, the room as it sounded.
+        Browse by teacher, theme, or year; a slim player follows you down the
+        page.
+      </p>
+    </section>
+
+    <!-- Featured -->
+    <section style="margin-top: 3rem;">
+      <h2 style="font-style: italic; font-weight: 400; font-family: 'Hoefler Text', Georgia, serif; font-size: 0.84rem; letter-spacing: 0.14em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: 1.4rem;">Featured this month</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; border-top: 1px solid var(--ink); padding-top: 1.6rem;">
+        <div>
+          <p class="kicker">2026 — Apr 12 — Sun teisho</p>
+          <h3 style="font-family: 'Bodoni 72','Didot',Georgia,serif; font-size: 1.25rem; line-height: 1.15;">"The wheat is filling out, slowly."</h3>
+          <p style="font-size: 0.9rem; color: var(--ink-faint); margin: 0.4rem 0;">Genshin Akers — 41 min</p>
+          <p style="font-size: 0.92rem;">A short teisho on Dōgen's Genjōkōan in the season of Shōman, taking the slow filling of the rice ear as a figure for practice itself.</p>
+        </div>
+        <div>
+          <p class="kicker">2026 — Feb 04 — Rohatsu series</p>
+          <h3 style="font-family: 'Bodoni 72','Didot',Georgia,serif; font-size: 1.25rem; line-height: 1.15;">"Sitting upright in the great matter."</h3>
+          <p style="font-size: 0.9rem; color: var(--ink-faint); margin: 0.4rem 0;">Mokurin Sato — 52 min</p>
+          <p style="font-size: 0.92rem;">Day five of Rohatsu sesshin. The tanto on posture as inheritance, not technique. Transcript available.</p>
+        </div>
+        <div>
+          <p class="kicker">2026 — Jan 21 — Wed intro</p>
+          <h3 style="font-family: 'Bodoni 72','Didot',Georgia,serif; font-size: 1.25rem; line-height: 1.15;">"What zazen is not."</h3>
+          <p style="font-size: 0.9rem; color: var(--ink-faint); margin: 0.4rem 0;">Anjō Cruz — 28 min</p>
+          <p style="font-size: 0.92rem;">For first-time visitors. A clearing-away of misconceptions before sitting.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Listening notes -->
+    <section style="margin-top: 3rem; max-width: 56ch;">
+      <h2 style="font-size: 1.2rem;">Listening notes — how to receive a dharma talk.</h2>
+      <p>
+        A teisho is not a lecture. It is the teacher's reading of an old text or
+        story, given to the room that is sitting. There is no need to take notes;
+        the talk is meant to enter sideways. If a passage strikes you, return to
+        the recording the next morning at the time you would otherwise sit. The
+        weather of the talk often changes a second time.
+      </p>
+    </section>
+
+    <hr class="hr-hair" />
+
+    <!-- Archive layout -->
+    <div class="archive">
+
+      <aside class="archive__rail">
+        <h4>Teacher</h4>
+        <ul data-rail="teacher">
+          <li class="is-on" data-val="all">All</li>
+          <li data-val="daiun">Daiun Soshin</li>
+          <li data-val="genshin">Genshin Akers</li>
+          <li data-val="mokurin">Mokurin Sato</li>
+          <li data-val="genjo">Genjō Park</li>
+          <li data-val="hoko">Hōkō Reidl</li>
+          <li data-val="anjo">Anjō Cruz</li>
+        </ul>
+        <h4>Theme</h4>
+        <ul data-rail="theme">
+          <li class="is-on" data-val="all">All</li>
+          <li data-val="dogen">Dōgen</li>
+          <li data-val="koan">Koan</li>
+          <li data-val="ceremony">Ceremony</li>
+          <li data-val="posture">Posture</li>
+          <li data-val="seasons">Seasons</li>
+          <li data-val="death">Illness & death</li>
+          <li data-val="intro">Introduction</li>
+        </ul>
+        <h4>Year</h4>
+        <ul data-rail="year">
+          <li class="is-on" data-val="all">All</li>
+          <li data-val="2026">2026</li>
+          <li data-val="2025">2025</li>
+          <li data-val="2024">2024</li>
+          <li data-val="2023">2023</li>
+          <li data-val="2014">2014 (Daiun final year)</li>
+        </ul>
+      </aside>
+
+      <section class="talks" data-talks aria-label="Full index of talks">
+        <div class="ledger-row is-head" style="grid-template-columns: 12ch 1fr 6ch;">
+          <span>Date</span><span>Title / speaker / theme</span><span style="text-align:right;">Length</span>
+        </div>
+
+        <article class="talk is-selected"
+          data-title="The wheat is filling out, slowly."
+          data-teacher="genshin" data-teacher_name="Genshin Akers"
+          data-theme="dogen" data-year="2026"
+          data-date="2026 — Apr 12" data-dur="41:08"
+          data-desc="A short teisho on Dōgen's Genjōkōan in the season of Shōman, taking the slow filling of the rice ear as a figure for practice itself. Recorded in the zendo on a damp Sunday morning.">
+          <span class="talk__date">2026 — Apr 12</span>
+          <div class="talk__title">The wheat is filling out, slowly.
+            <small>Genshin Akers — Sunday teisho <span class="talk__theme">Dōgen</span></small>
+          </div>
+          <span class="talk__dur">41:08</span>
+        </article>
+
+        <article class="talk"
+          data-title="Sitting upright in the great matter."
+          data-teacher="mokurin" data-teacher_name="Mokurin Sato"
+          data-theme="posture" data-year="2026"
+          data-date="2026 — Feb 04" data-dur="52:14"
+          data-desc="Day five of Rohatsu sesshin. The tanto on posture as inheritance, not technique. Transcript available.">
+          <span class="talk__date">2026 — Feb 04</span>
+          <div class="talk__title">Sitting upright in the great matter.
+            <small>Mokurin Sato — Rohatsu day 5 <span class="talk__theme">Posture</span></small>
+          </div>
+          <span class="talk__dur">52:14</span>
+        </article>
+
+        <article class="talk"
+          data-title="What zazen is not."
+          data-teacher="anjo" data-teacher_name="Anjō Cruz"
+          data-theme="intro" data-year="2026"
+          data-date="2026 — Jan 21" data-dur="28:02"
+          data-desc="Introductory talk for first-time visitors. A clearing-away of misconceptions before sitting.">
+          <span class="talk__date">2026 — Jan 21</span>
+          <div class="talk__title">What zazen is not.
+            <small>Anjō Cruz — Wednesday intro <span class="talk__theme">Intro</span></small>
+          </div>
+          <span class="talk__dur">28:02</span>
+        </article>
+
+        <article class="talk"
+          data-title="Mu — the dog and the field."
+          data-teacher="genshin" data-teacher_name="Genshin Akers"
+          data-theme="koan" data-year="2025"
+          data-date="2025 — Nov 09" data-dur="44:30"
+          data-desc="Case one of the Mumonkan, given on the threshold of winter ango.">
+          <span class="talk__date">2025 — Nov 09</span>
+          <div class="talk__title">Mu — the dog and the field.
+            <small>Genshin Akers — Sunday teisho <span class="talk__theme">Koan</span></small>
+          </div>
+          <span class="talk__dur">44:30</span>
+        </article>
+
+        <article class="talk"
+          data-title="Sitting with the dying."
+          data-teacher="hoko" data-teacher_name="Hōkō Reidl"
+          data-theme="death" data-year="2025"
+          data-date="2025 — Sep 28" data-dur="36:48"
+          data-desc="A senior dharma holder, long active in hospice, on practice at the bedside.">
+          <span class="talk__date">2025 — Sep 28</span>
+          <div class="talk__title">Sitting with the dying.
+            <small>Hōkō Reidl — Sunday teisho <span class="talk__theme">Illness & death</span></small>
+          </div>
+          <span class="talk__dur">36:48</span>
+        </article>
+
+        <article class="talk"
+          data-title="Robes, raked gravel, the lit candle."
+          data-teacher="genjo" data-teacher_name="Genjō Park"
+          data-theme="ceremony" data-year="2025"
+          data-date="2025 — Jun 22" data-dur="48:11"
+          data-desc="On the small ceremonial gestures of monastic life and what they ask of attention.">
+          <span class="talk__date">2025 — Jun 22</span>
+          <div class="talk__title">Robes, raked gravel, the lit candle.
+            <small>Genjō Park — Sunday teisho <span class="talk__theme">Ceremony</span></small>
+          </div>
+          <span class="talk__dur">48:11</span>
+        </article>
+
+        <article class="talk"
+          data-title="The ten thousand things come forth."
+          data-teacher="genshin" data-teacher_name="Genshin Akers"
+          data-theme="dogen" data-year="2024"
+          data-date="2024 — Dec 12" data-dur="50:07"
+          data-desc="Genjōkōan, central paragraph. Recorded at Rohatsu, late afternoon.">
+          <span class="talk__date">2024 — Dec 12</span>
+          <div class="talk__title">The ten thousand things come forth.
+            <small>Genshin Akers — Rohatsu day 6 <span class="talk__theme">Dōgen</span></small>
+          </div>
+          <span class="talk__dur">50:07</span>
+        </article>
+
+        <article class="talk"
+          data-title="The wind from the north."
+          data-teacher="mokurin" data-teacher_name="Mokurin Sato"
+          data-theme="seasons" data-year="2024"
+          data-date="2024 — Oct 27" data-dur="33:54"
+          data-desc="A teisho given the morning after the first frost, on attention to the season.">
+          <span class="talk__date">2024 — Oct 27</span>
+          <div class="talk__title">The wind from the north.
+            <small>Mokurin Sato — Sunday teisho <span class="talk__theme">Seasons</span></small>
+          </div>
+          <span class="talk__dur">33:54</span>
+        </article>
+
+        <article class="talk"
+          data-title="What we keep when we keep the schedule."
+          data-teacher="genshin" data-teacher_name="Genshin Akers"
+          data-theme="ceremony" data-year="2024"
+          data-date="2024 — Mar 17" data-dur="39:22"
+          data-desc="On the daily forms of the hall as a form of remembering.">
+          <span class="talk__date">2024 — Mar 17</span>
+          <div class="talk__title">What we keep when we keep the schedule.
+            <small>Genshin Akers — Sunday teisho <span class="talk__theme">Ceremony</span></small>
+          </div>
+          <span class="talk__dur">39:22</span>
+        </article>
+
+        <article class="talk"
+          data-title="The mountain is the mountain."
+          data-teacher="genjo" data-teacher_name="Genjō Park"
+          data-theme="koan" data-year="2023"
+          data-date="2023 — Aug 04" data-dur="46:18"
+          data-desc="Blue Cliff Record case 43. Given as the opening teisho of summer sesshin.">
+          <span class="talk__date">2023 — Aug 04</span>
+          <div class="talk__title">The mountain is the mountain.
+            <small>Genjō Park — Summer sesshin <span class="talk__theme">Koan</span></small>
+          </div>
+          <span class="talk__dur">46:18</span>
+        </article>
+
+        <article class="talk"
+          data-title="On the last seat in the zendo. (Final teisho.)"
+          data-teacher="daiun" data-teacher_name="Daiun Soshin"
+          data-theme="posture" data-year="2014"
+          data-date="2014 — May 04" data-dur="22:40"
+          data-desc="The founding teacher's last formal talk, given five months before his death, on what it means to sit at the back of the hall.">
+          <span class="talk__date">2014 — May 04</span>
+          <div class="talk__title">On the last seat in the zendo.
+            <small>Daiun Soshin — Sunday teisho <span class="talk__theme">Posture</span></small>
+          </div>
+          <span class="talk__dur">22:40</span>
+        </article>
+
+      </section>
+
+      <!-- Now playing / selected -->
+      <aside class="now-playing" data-now>
+        <h4>Selected talk</h4>
+        <h3 data-now-title>The wheat is filling out, slowly.</h3>
+        <p class="meta" data-now-meta>Genshin Akers — 2026 — Apr 12 — 41:08</p>
+        <p data-now-desc>A short teisho on Dōgen's Genjōkōan in the season of Shōman, taking the slow filling of the rice ear as a figure for practice itself. Recorded in the zendo on a damp Sunday morning.</p>
+        <hr class="hr-hair--soft" />
+        <p style="font-size: 0.86rem;"><a href="#">Read transcript</a> &nbsp;·&nbsp; <a href="#">Download mp3 (38 MB)</a></p>
+        <hr class="hr-hair--soft" />
+        <h4>Series</h4>
+        <p style="font-size: 0.88rem;">Genjōkōan — eight talks across 2023–2026. <a href="#">Browse series →</a></p>
+      </aside>
+
+    </div>
+
+    <!-- Series -->
+    <section style="margin-top: 4rem; padding-top: 1.6rem; border-top: 1px solid var(--rule);">
+      <h2 style="font-style: italic; font-weight: 400; font-family: 'Hoefler Text', Georgia, serif; font-size: 0.84rem; letter-spacing: 0.14em; color: var(--ink-faint); text-transform: uppercase;">Series — multi-part teisho</h2>
+      <div class="ledger" style="margin-top: 1rem;">
+        <div class="ledger-row is-head"><span>Span</span><span>Title</span><span>Teacher</span><span>Parts</span></div>
+        <div class="ledger-row"><span>2023 — 2026</span><span>Genjōkōan, read slowly</span><span class="loc">Genshin Akers</span><span>8</span></div>
+        <div class="ledger-row"><span>2022 — 2023</span><span>The Sandōkai and the Hōkyō Zammai</span><span class="loc">Mokurin Sato</span><span>6</span></div>
+        <div class="ledger-row"><span>2020</span><span>Plague season talks</span><span class="loc">Genshin Akers</span><span>11</span></div>
+        <div class="ledger-row"><span>2018 — 2019</span><span>The first ten cases of the Mumonkan</span><span class="loc">Genjō Park</span><span>10</span></div>
+        <div class="ledger-row"><span>1994 — 2001</span><span>Eihei Kōroku — Daiun's reading</span><span class="loc">Daiun Soshin</span><span>72</span></div>
+      </div>
+    </section>
+
+    <!-- Transcripts -->
+    <section style="margin-top: 3rem; max-width: 60ch;">
+      <h2 style="font-size: 1.2rem;">On transcripts.</h2>
+      <p>
+        One hundred and eighty-four of the talks have been transcribed by hand,
+        most of them since 2018, by a small group of lay members. Transcribed
+        talks are marked. The rest are audio only; we add to this slowly and do
+        not use machine transcription.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__grid">
+        <div>
+          <h4>Pine Tree Hall</h4>
+          <p>松林堂 — Shōrin-dō<br>412 Hollowback Road<br>Eastern Hills, 02831</p>
+        </div>
+        <div>
+          <h4>Audio archive</h4>
+          <p>1,184 recordings since 1992.<br>Free to listen and download.</p>
+        </div>
+        <div>
+          <h4>Sustain</h4>
+          <p>Archive transcription is a dana project. <a href="dana.html">Contribute</a>.</p>
+        </div>
+        <div>
+          <h4>Reach</h4>
+          <p>archive@pinetreezen.org</p>
+        </div>
+      </div>
+      <div class="colophon">
+        <span>© Pine Tree Hall Zen Community</span>
+        <span>Registered religious nonprofit</span>
+        <span>Please observe silence past the second gate.</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Persistent player -->
+  <div class="player" data-player aria-label="Audio player">
+    <button class="player__btn" aria-label="Play">▷</button>
+    <div class="player__title">
+      <span data-player-title>The wheat is filling out, slowly.</span>
+      <em data-player-by>Genshin Akers</em>
+    </div>
+    <div class="player__bar" aria-hidden="true"></div>
+    <span class="player__time" data-player-time>11:24 / 41:08</span>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

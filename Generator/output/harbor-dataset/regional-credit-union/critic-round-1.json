@@ -1,0 +1,44 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "regional-credit-union-a",
+      "score": 0.82,
+      "accept": true,
+      "strengths": [
+        "Strong domain fit with concrete cooperative/credit-union specifics (NCUA, routing #, SEGs, shared branching)",
+        "Clear recurring motif: concentric rounded membership-card frames used structurally across testimonials, rate cards, branch tiles",
+        "Seven well-differentiated pages with distinct layout patterns (split-view locator, calculator-led borrow page, editorial Money Garden, timeline Belong)",
+        "Highly concrete interactions: loan calc with credit-tier slider + amortization sparkline, pin-bar account comparison, eligibility quick-check, lock-my-card from utility bar",
+        "Content model fields are realistic (lobby wait, life-stage tag, leaf-count difficulty meter, scholarship recipient)",
+        "Voice and copy specifics ('Your money. Your neighbors. Your call.', 'Front Porch Mortgage') avoid generic templating"
+      ],
+      "weaknesses": [
+        "Money Garden + Belong + home blog teaser slightly overlap in editorial function",
+        "Some patterns (sticky compare bar, ZIP-search locator) are conventional fintech moves rather than surprising",
+        "'Bank · Borrow · Belong' alliteration risks feeling marketing-deck rather than institutional"
+      ]
+    },
+    {
+      "candidate_id": "regional-credit-union-b",
+      "score": 0.89,
+      "accept": true,
+      "strengths": [
+        "Distinctive almanac/broadsheet aesthetic with ledger stripes, Roman-numeral chapter markers, and monospace figures is genuinely fresh and far from generic credit-union template output",
+        "Governance-and-voting page is a sharp differentiator that leans into the cooperative seed and few competitors execute (board ballot, annual meeting RSVP, Rochdale Principles, member proposals)",
+        "Calculator 'workshop' as a 2×3 engraved-tool grid with print-to-PDF is a concrete, layout-specific idea, not a vague widget",
+        "River-basin grouping of branches ties brand name (Three Rivers) into the locator's information architecture — motif-driven IA, not just decoration",
+        "Content model is unusually rich (board candidate statements, annual report PDFs by year with total assets, marginalia footnotes, Loans-at-Work profiles)",
+        "Engraved scratchboard motif + horizontal ledger banding is a unified, page-spanning visual system that justifies the 'warm community institutional' brief in a non-cliched way",
+        "Seven pages, each with a distinct layout pattern and purpose; no near-duplicates"
+      ],
+      "weaknesses": [
+        "Risk that monospace figures + engraved illustrations skew cold/archival rather than warm — tension with seed's 'warm' palette intent",
+        "Marginalia and broadsheet two-column may be heavy at mobile breakpoints despite the stated reflow plan",
+        "Member-authenticated ballot is ambitious for a marketing-site concept and may bleed into authenticated-app scope"
+      ]
+    }
+  ],
+  "best_candidate_id": "regional-credit-union-b",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

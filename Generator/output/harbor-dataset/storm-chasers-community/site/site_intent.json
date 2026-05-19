@@ -1,0 +1,168 @@
+{
+  "id": "storm-chasers-community",
+  "candidate_id": "storm-chasers-community-a",
+  "site_name": "TORNADO ALLEY OPERATIONS NETWORK (TAON-1)",
+  "one_liner": "Experimental utilitarian dashboard for amateur storm chasers — radar-green monospace UI, callsign-driven identity, dense live-data quadrants.",
+  "domain": "amateur meteorology / storm-chasing community",
+  "audience": [
+    "amateur storm chasers",
+    "SKYWARN spotters",
+    "ham radio operators with weather interest",
+    "meteorology students",
+    "severe weather photographers"
+  ],
+  "site_goal": "Provide a dense, dashboard-style hub where amateur storm chasers can monitor live doppler, file chase logs, review gear, coordinate spotter networks, and connect via callsign-based identity.",
+  "visual_language": {
+    "palette": {
+      "bg": "#050807",
+      "primary": "radar green (#4cff8f)",
+      "warn": "amber alert orange (#ffae28) — reserved for WATCH/WARNING + clickable affordances",
+      "crit": "red (#ff3a3a)",
+      "accent_cyan_magenta": "used only for radar dBZ legend"
+    },
+    "typography": "IBM Plex Mono fallback chain (Menlo, Consolas, DejaVu Sans Mono, Courier)",
+    "density": "very high — multi-column grids, sidebars, ticker bars, mini-radars",
+    "motifs": [
+      "ASCII rules and tabular pre-formatted blocks",
+      "1px borders, faux radar sweeps with conic gradient",
+      "PACKET STATUS bar persistent on every page",
+      "callsign tags (KC5-WHIRL style) as primary identity",
+      "amber WATCH/WARNING chips and field-tested badges",
+      "QSL-style card template on member profile"
+    ],
+    "no_hero_images": true
+  },
+  "required_text_present": [
+    "TORNADO ALLEY OPERATIONS NETWORK",
+    "TAON-1",
+    "NOT AN OFFICIAL NWS PRODUCT",
+    "PACKET STATUS"
+  ],
+  "pages": [
+    {
+      "id": "ops-dashboard",
+      "path": "index.html",
+      "layout_pattern": "four-quadrant ops console (radar mosaic / SPC outlook tabs / chaser ping ticker / LSR rolling feed) + persistent packet status bar + readout strip of CAPE/SRH/EHI etc.",
+      "sections": [
+        "packet status bar",
+        "live radar mosaic quadrant (CSS-rendered with sweep + echoes + chaser pins)",
+        "SPC outlook quadrant with D1/D2/D3 tabs (inline SVG CONUS)",
+        "active chaser ping ticker",
+        "LSR rolling feed",
+        "system uptime + data source footer"
+      ]
+    },
+    {
+      "id": "chase-logs",
+      "path": "logs.html",
+      "layout_pattern": "filter rail + sortable log table with expandable rows revealing GPS track, hodograph SVG, and narrative",
+      "sections": [
+        "filter rail (year, state/CWA, EF, storm mode, callsign)",
+        "log table with sortable columns",
+        "expandable detail drawer with hodograph + GPS track",
+        "submit-new-log button (member-gated)",
+        "export to CSV control"
+      ]
+    },
+    {
+      "id": "gear-bench",
+      "path": "gear.html",
+      "layout_pattern": "left category nav + center mini-card grid + right comparison cart (max 4, persisted in localStorage)",
+      "sections": [
+        "category nav",
+        "item grid with spec mini-cards and SVG icons",
+        "comparison cart rail",
+        "field-tested badge legend",
+        "submit-a-review CTA"
+      ]
+    },
+    {
+      "id": "spotter-net",
+      "path": "spotters.html",
+      "layout_pattern": "pinned briefings + collapsible CWA accordion of forum boards + threaded discussion view with >-quoted ancestry + net-control rotation table",
+      "sections": [
+        "pinned standing briefings",
+        "CWA accordion list (OUN, DDC, AMA, FWD, ICT, OAX, GLD, UNR)",
+        "thread view with quote nesting",
+        "callsign hover-card",
+        "net-control rotation schedule"
+      ]
+    },
+    {
+      "id": "outlook-calendar",
+      "path": "calendar.html",
+      "layout_pattern": "month grid with categorical risk shading (MRGL/SLGT/ENH/MOD/HIGH amber escalation), click-to-load side panel with hazard matrix + RSVPs + rendezvous + historic anniversaries strip + ICS export",
+      "sections": [
+        "month grid with risk shading",
+        "day-detail side panel (JS-driven)",
+        "chaser RSVP rail",
+        "historic outbreak anniversaries strip",
+        "ICS export link"
+      ]
+    },
+    {
+      "id": "supercell-gallery",
+      "path": "gallery.html",
+      "layout_pattern": "filter chip rail + masonry of SVG-rendered supercell stand-ins on black with amber borders, each tile carrying EXIF strip, photographer callsign, and storm metadata; lightbox with radar overlay toggle",
+      "sections": [
+        "filter chip rail (wall, inflow, mammatus, LP, HP, classic, tornado, lightning)",
+        "masonry grid with EXIF strip per tile",
+        "lightbox with radar-at-time-of-shot overlay toggle",
+        "photographer leaderboard"
+      ]
+    },
+    {
+      "id": "directory",
+      "path": "roster.html",
+      "layout_pattern": "searchable callsign table + QSL-style printable card + rig schematic (top-down SVG) for highlighted operator",
+      "sections": [
+        "callsign search bar",
+        "roster table (callsign, optional name, CWA, vehicle, certs, last-on-net, miles YTD)",
+        "QSL printable card",
+        "rig schematic + equipment manifest",
+        "certifications legend"
+      ]
+    }
+  ],
+  "content_model_coverage": {
+    "chase log entry": "logs.html — table rows + expandable detail",
+    "gear review": "gear.html — mini-spec cards",
+    "forum post": "spotters.html — thread view + accordion",
+    "outlook day": "calendar.html — day cells with JS-loaded side panel",
+    "supercell photo": "gallery.html — masonry tiles + EXIF",
+    "member profile": "roster.html — roster row + QSL card + rig schematic",
+    "LSR ping": "index.html — LSR rolling feed quadrant"
+  },
+  "interactions_implemented": [
+    "live UTC clock + chaser count + last-strike counter (JS, every 1s)",
+    "expandable log rows (+/− toggle)",
+    "gear comparison cart with localStorage persistence (max 4)",
+    "CWA accordion expand/collapse",
+    "calendar day click → renders hazard matrix + RSVPs in side panel",
+    "gallery filter chips (all / wall / inflow / mammatus / LP / HP / classic / tornado / lightning)",
+    "lightbox with radar-at-time-of-shot overlay toggle",
+    "callsign hover-card (data-cs-card attribute → floating tooltip)",
+    "SPC outlook tabs (D1/D2/D3) swap inline SVG groups",
+    "roster live search filter"
+  ],
+  "mobile_behavior": "Quadrants stack into single column; packet status bar drops to UTC + chaser count + warn chips; tables become horizontally scrollable with sticky first column; masonry collapses 4→2→1 columns; lightbox becomes single column; nav wraps.",
+  "disclaimer_strategy": "Every page footer contains an amber-bordered 'NOT AN OFFICIAL NWS PRODUCT' disclaimer plus contextual page-specific caveats. Nav bar always carries an amber pill repeating the disclaimer.",
+  "tech": {
+    "stack": "vanilla HTML + CSS + ES5 JS, no frameworks, no build, no external assets",
+    "images": "all visuals rendered as inline SVG or CSS (radar mosaic, SPC outlook, hodographs, supercell stand-ins, rig schematic, QSL card)",
+    "fonts": "system monospace stack; no remote font load",
+    "state": "localStorage for gear comparison cart; everything else stateless"
+  },
+  "files": [
+    "index.html",
+    "logs.html",
+    "gear.html",
+    "spotters.html",
+    "calendar.html",
+    "gallery.html",
+    "roster.html",
+    "css/style.css",
+    "js/app.js",
+    "site_intent.json"
+  ]
+}

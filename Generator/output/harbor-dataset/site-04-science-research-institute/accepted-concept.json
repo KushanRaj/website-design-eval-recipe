@@ -1,0 +1,163 @@
+{
+  "candidate_id": "meridian-deep-sea-observatory",
+  "domain": "science-research",
+  "site_goal": "Present a coastal oceanographic observatory and research institute as a working scientific organization with transparent ongoing research, live sensor data, and an accessible publications and expeditions record for both expert and public audiences.",
+  "audience": [
+    "working oceanographers and marine biologists",
+    "regional press and environmental reporters",
+    "fishery and coastal management agencies",
+    "teachers and informed public"
+  ],
+  "description": "An institutional oceanography site using deep teal (#11434C) and bone-white (#EEE7D8) with warm rust (#B6532A) accents reserved for live-data indicators and CTAs. The body type is a sturdy scientific serif (Crimson Pro) paired with a condensed grotesk for metadata labels. A left-sidebar navigation groups disciplines under headers (Coastal Dynamics, Benthic Ecology, Acoustics & Bioacoustics, Ocean Chemistry, Climate & Cryosphere) with persistent breadcrumb above content. Pages run at medium-high density with calm, archival typography, scientific figures with formal captions, and a recurring sensor-readings sidebar widget on most pages pulling from the institute's live buoy network.",
+  "motif": "A recurring two-line motif: a thin teal hairline above and a dashed teal line below every section header, evoking sonar traces; small rust-colored circles used as live-data dots and active-state markers; figure captions set in italic with a leading 'Fig.' label.",
+  "pages": [
+    {
+      "id": "home",
+      "path": "/",
+      "layout_pattern": "Left sidebar nav, central column with a hero quote from the director over a coastal photograph, live buoy strip, three featured research threads, and a news rail; right rail with currently-at-sea cruises and upcoming seminars",
+      "sections": [
+        "director's hero statement with coastal photograph",
+        "live buoy strip (SST, salinity, wave height, dissolved O2)",
+        "three featured research threads with discipline tags",
+        "currently-at-sea cruises rail",
+        "upcoming seminars and public lectures",
+        "latest news rail"
+      ]
+    },
+    {
+      "id": "labs",
+      "path": "/research",
+      "layout_pattern": "Discipline-grouped index where each discipline gets a band with a short framing paragraph followed by a 2-column list of labs and shared facilities",
+      "sections": [
+        "discipline band: Coastal Dynamics",
+        "discipline band: Benthic Ecology",
+        "discipline band: Acoustics & Bioacoustics",
+        "discipline band: Ocean Chemistry",
+        "discipline band: Climate & Cryosphere",
+        "shared facilities (Mooring Lab, Isotope Facility, ROV Operations)"
+      ]
+    },
+    {
+      "id": "people",
+      "path": "/people",
+      "layout_pattern": "Directory with filter chips above a 3-column card grid; cards show portrait, name, role, lab affiliation, and a one-line research focus; PI cards include an ORCID badge",
+      "sections": [
+        "role and discipline filter chips",
+        "principal investigators grid",
+        "research scientists and technicians grid",
+        "postdocs and graduate students grid",
+        "emeritus and affiliated researchers"
+      ]
+    },
+    {
+      "id": "person-detail",
+      "path": "/people/dr-yuki-okafor",
+      "layout_pattern": "Two-column profile: left has portrait, contact, ORCID, lab affiliation, education; right has bio, current projects, selected publications with toggle for full list, and a small map of field sites",
+      "sections": [
+        "profile sidebar with portrait and identifiers",
+        "biography",
+        "current projects",
+        "selected publications",
+        "field sites map",
+        "teaching and advising"
+      ]
+    },
+    {
+      "id": "publications",
+      "path": "/publications",
+      "layout_pattern": "Search-first page with prominent query bar, faceted filter rail, reverse-chronological citation list with expandable abstracts, and bulk export controls at the top of results",
+      "sections": [
+        "search bar with year and author filters",
+        "faceted filters (discipline, lab, journal, has dataset, open access)",
+        "citation results list",
+        "bulk export and saved-search panel",
+        "recently cited by external press callout"
+      ]
+    },
+    {
+      "id": "expeditions",
+      "path": "/expeditions",
+      "layout_pattern": "Top half is a regional map showing past and active cruise tracks with status pills; bottom half is a sortable expedition table; a detail drawer slides in when a row or pin is selected",
+      "sections": [
+        "regional map with cruise tracks",
+        "filter: status (planned, at sea, returned), year, region, vessel",
+        "expedition table",
+        "detail drawer: science party, daily log timeline, dataset links",
+        "request berth-on-cruise program info"
+      ]
+    },
+    {
+      "id": "data",
+      "path": "/data",
+      "layout_pattern": "Catalog page with left discipline sidebar, top variable and platform filters, and a card list with sparkline or spectrogram previews and a preview drawer",
+      "sections": [
+        "catalog filters (variable, platform, time range, region)",
+        "dataset card list with inline previews",
+        "preview drawer with quick plot",
+        "data access guidance (licensing, citation, API endpoints)",
+        "live buoy network status panel"
+      ]
+    },
+    {
+      "id": "news",
+      "path": "/newsroom",
+      "layout_pattern": "Editorial layout with a lead feature, a two-column secondary story strip, and a chronological archive list below; sidebar contains press contacts and download links for the media kit",
+      "sections": [
+        "lead feature story",
+        "secondary stories two-column strip",
+        "chronological news archive list",
+        "press contacts and media kit sidebar",
+        "field dispatches feed"
+      ]
+    },
+    {
+      "id": "careers",
+      "path": "/about/careers",
+      "layout_pattern": "Single-column listing under role categories with deadline-prominent posting cards, plus an institutional culture section and benefits summary",
+      "sections": [
+        "role category navigation (faculty, postdoc, technical, marine ops, admin)",
+        "open positions cards with deadlines and locations",
+        "fellowships and visiting scientist programs",
+        "working at the observatory (culture, housing, location)",
+        "diversity, equity, and accessibility statement"
+      ]
+    }
+  ],
+  "message_intent": [
+    "communicate that the observatory runs continuous, sensor-driven research, not occasional studies",
+    "make publications and datasets easy to cite and reuse",
+    "humanize the scientists through detailed PI pages and field dispatches",
+    "support press with a clear newsroom and contacts"
+  ],
+  "required_text": [
+    "Meridian Deep-Sea Observatory",
+    "Continuous ocean observation since 1978",
+    "Live from the buoy network"
+  ],
+  "content_model": [
+    "Lab/Group (discipline, lead, focus statement, instruments, partners)",
+    "Person (name, role, lab, bio, education, selected pubs, ORCID, field photo)",
+    "Publication (DOI, authors, year, journal, abstract, related dataset, related cruise)",
+    "Expedition (name, vessel, region, leg dates, science party, status, daily log entries, track)",
+    "Dataset (id, type: timeseries/profile/imagery/acoustic, sensors, license, files)",
+    "Sensor station (station id, location, depth, variables, last reading timestamp)",
+    "News story (date, category, byline, body, related links)"
+  ],
+  "interactions": [
+    "Left sidebar with collapsible discipline groups and a 'currently at sea' badge that updates from the expeditions API",
+    "Live buoy strip across the home and data pages showing SST, salinity, wave height with a 'last updated' timestamp",
+    "Publication search with faceted filters and a 'show only with open data' toggle; results have inline BibTeX, RIS, and copy-DOI buttons",
+    "Expedition page with an interactive cruise track map, a daily log timeline scrubber, and a science-party roster popover",
+    "Dataset preview drawer that opens a small plot (timeseries line or depth profile) without leaving the catalog",
+    "Sonar-style audio player on bioacoustics dataset entries with a scrubbable spectrogram"
+  ],
+  "asset_needs": [
+    "Sonar trace and waveform SVG patterns",
+    "Photographs of buoys, gliders, and research vessels at sea",
+    "Spectrogram images for bioacoustics samples",
+    "Coastal basemap tiles with bathymetric overlay",
+    "Portraits of PIs in field settings"
+  ],
+  "mobile_behavior": "Left sidebar collapses into a slide-in panel triggered from a top bar that retains the discipline-group structure; live buoy strip becomes a horizontally scrollable row of sensor cards; expedition map and timeline stack vertically with the scrubber pinned below the map.",
+  "difficulty": "hard"
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This Week's Menu — Maple Hollow Community Schools</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="util-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="portal.html">🔑 Portal</a>
+    <a href="calendar.html">📆 Calendar</a>
+  </div>
+  <div class="util-links">
+    <label for="locale" style="font-size:0.82rem;">Language:</label>
+    <select id="locale" class="locale-select">
+      <option value="en">English</option><option value="es">Español</option><option value="vi">Tiếng Việt</option><option value="so">Soomaali</option>
+    </select>
+  </div>
+</div>
+
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <div class="crest">M</div>
+    <div class="brand-text">
+      <span class="name">Maple Hollow Community Schools</span>
+      <span class="tag">Lunch Menus & Nutrition</span>
+    </div>
+  </a>
+  <div class="header-tools">
+    <a href="portal.html" class="btn blush">💳 Reload Lunch Balance</a>
+  </div>
+</header>
+
+<main class="shell two-col">
+
+  <aside class="binder-nav">
+    <h4>Academics</h4>
+    <ul><li><a href="academics.html">Curriculum</a></li></ul>
+    <h4>Families</h4>
+    <ul>
+      <li><a href="portal.html">Parent Portal</a></li>
+      <li><a href="lunch.html" class="active">Lunch Menus</a></li>
+      <li><a href="our-schools.html">Bus Routes</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+    </ul>
+    <h4>About</h4>
+    <ul>
+      <li><a href="board.html">Board of Education</a></li>
+      <li><a href="news.html">News</a></li>
+    </ul>
+  </aside>
+
+  <section>
+    <span class="dymo">Families</span>
+    <h1><span class="crayon">This Week's Menu</span></h1>
+    <p class="muted">Locally-sourced where we can, school-friendly always. Every meal meets USDA standards and offers a vegetarian alternative.</p>
+
+    <div class="lunch-tabs toggle-row" style="margin-top:18px;">
+      <div class="toggle-group">
+        <button class="active">🐝 Elementary</button>
+        <button>🦌 Middle</button>
+        <button>🐺 High</button>
+      </div>
+      <div class="week-nav" style="display:flex;gap:6px;margin-left:auto;align-items:center;">
+        <button class="btn ghost" data-dir="prev" style="padding:6px 10px;">◀</button>
+        <span id="week-label" data-idx="1" style="font-weight:800;font-family:'Recoleta',serif;font-size:1.1rem;min-width:160px;text-align:center;">May 18 – May 22</span>
+        <button class="btn ghost" data-dir="next" style="padding:6px 10px;">▶</button>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;">
+    <table class="menu-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Monday<br><span style="font-size:0.8rem;font-family:'Courier New',monospace;font-weight:600;">May 18</span></th>
+          <th>Tuesday<br><span style="font-size:0.8rem;font-family:'Courier New',monospace;font-weight:600;">May 19</span></th>
+          <th>Wednesday<br><span style="font-size:0.8rem;font-family:'Courier New',monospace;font-weight:600;">May 20</span></th>
+          <th>Thursday<br><span style="font-size:0.8rem;font-family:'Courier New',monospace;font-weight:600;">May 21</span></th>
+          <th>Friday<br><span style="font-size:0.8rem;font-family:'Courier New',monospace;font-weight:600;">May 22</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Breakfast</td>
+          <td><span class="photo">🥞</span><span class="entree">Pancake stacks</span><br>Banana · Milk</td>
+          <td><span class="photo">🥯</span><span class="entree">Bagel + cream cheese</span><br>Apple · Milk</td>
+          <td><span class="photo">🍳</span><span class="entree">Egg & cheese muffin</span><br>Orange · Milk</td>
+          <td><span class="photo">🥣</span><span class="entree">Cinnamon oatmeal</span><br>Berries · Milk</td>
+          <td><span class="photo">🧇</span><span class="entree">Mini waffles</span><br>Yogurt · Milk</td>
+        </tr>
+        <tr>
+          <td>Lunch</td>
+          <td><span class="photo">🍕</span><span class="entree">Cheese pizza</span><br>Garden salad · Pear · Milk<br><em class="muted">v: bean burrito</em></td>
+          <td><span class="photo">🌮</span><span class="entree">Soft taco bar</span><br>Black beans · Mango · Milk<br><em class="muted">v: lentil taco</em></td>
+          <td><span class="photo">🍝</span><span class="entree">Garden veggie pasta</span><br>Garlic bread · Apple · Milk</td>
+          <td><span class="photo">🍗</span><span class="entree">Chicken & rice bowl</span><br>Steamed broccoli · Orange · Milk<br><em class="muted">v: tofu bowl</em></td>
+          <td><span class="photo">🌯</span><span class="entree">Build-a-burrito bar</span><br>Salsa · Pineapple · Milk</td>
+        </tr>
+        <tr>
+          <td>Snack</td>
+          <td><span class="photo">🥕</span>Carrots & hummus</td>
+          <td><span class="photo">🍎</span>Apple slices</td>
+          <td><span class="photo">🧀</span>Cheese stick</td>
+          <td><span class="photo">🥨</span>Pretzel rods</td>
+          <td><span class="photo">🍓</span>Strawberry cup</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="card">
+      <span class="dymo">Allergens & Nutrition</span>
+      <h3 class="mt-0">Allergen legend</h3>
+      <div class="allergen-legend">
+        <span class="allergen-pictogram">🥛 Milk</span>
+        <span class="allergen-pictogram">🌾 Gluten</span>
+        <span class="allergen-pictogram">🥜 Peanut</span>
+        <span class="allergen-pictogram">🌰 Tree Nut</span>
+        <span class="allergen-pictogram">🐟 Fish</span>
+        <span class="allergen-pictogram">🦐 Shellfish</span>
+        <span class="allergen-pictogram">🥚 Egg</span>
+        <span class="allergen-pictogram">🌽 Soy</span>
+      </div>
+      <p class="muted" style="margin-top:10px;">All Maple Hollow kitchens are peanut and tree-nut free. Students with documented allergies receive a custom plate plan in coordination with the school nurse.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+        <a href="#" class="btn ghost">📄 Nutrition facts (PDF)</a>
+        <a href="#" class="btn ghost">📄 Allergen matrix (PDF)</a>
+        <a href="#" class="btn ghost">🖨️ Print this menu</a>
+      </div>
+    </div>
+
+    <div class="two-grid">
+
+      <div class="card tinted-blush">
+        <span class="washi"></span>
+        <span class="dymo">Free & Reduced Meals</span>
+        <h3 class="mt-0">No family pays for hunger.</h3>
+        <p>Maple Hollow offers free and reduced-price meals to qualifying families. Applications open in August, and we accept them year-round. All information is confidential.</p>
+        <a href="#" class="btn">Start an application →</a>
+      </div>
+
+      <div class="card tinted-sage">
+        <span class="dymo">Lunch Balance</span>
+        <h3 class="mt-0">Top up in the portal</h3>
+        <p>Your current balance shows in the Parent Portal. Reload by credit card, ACH, or at any school office. Toggle daily meal participation to save money.</p>
+        <a href="portal.html" class="btn">Open the portal →</a>
+      </div>
+
+    </div>
+
+    <div class="card tinted-lemon">
+      <span class="dymo">Farm to School</span>
+      <h3 class="mt-0">From the river valley to the cafeteria tray</h3>
+      <p>40% of our produce comes from within 60 miles. This season's stars: Larson Family Farm strawberries (June), Riverside Co-op spinach (May), and our own Hollow Creek school garden.</p>
+      <div class="tag-row">
+        <span class="pill sage">🌱 Garden-grown</span>
+        <span class="pill lemon">🌽 Local farm</span>
+        <span class="pill blush">🍳 Scratch-made</span>
+        <span class="pill robin">🌎 Plant-forward Wednesdays</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="dymo">Wellness Policy</span>
+      <h3 class="mt-0">Feedback welcome</h3>
+      <p>The District Wellness Policy is reviewed every two years with a parent + student panel. Share a suggestion, allergy concern, or rave review with our food service director.</p>
+      <label style="font-weight:700;display:block;margin-top:8px;">Your feedback</label>
+      <textarea style="width:100%;border:2px solid var(--ink);border-radius:10px;padding:8px;font-family:inherit;min-height:80px;background:#fff;" placeholder="Tell us what worked, what didn't, or what your kid won't stop talking about…"></textarea>
+      <button class="btn" style="margin-top:8px;">Send feedback</button>
+    </div>
+
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:12px;">
+        <div class="crest" style="width:42px;height:42px;font-size:1.2rem;">M</div>
+        <div class="brand-text"><span class="name" style="color:#fff;font-size:1.05rem;">Maple Hollow Schools</span><span class="tag" style="color:#fff7da;">Cheerful since 1957</span></div>
+      </div>
+      <p style="font-size:0.86rem;color:#fff7da;">1820 Sycamore Road<br>Maple Hollow, MN 55409</p>
+    </div>
+    <div><h5>Quick Tools</h5><ul><li><a href="portal.html">Portal</a></li><li><a href="lunch.html">Lunch</a></li><li><a href="our-schools.html">Schools</a></li></ul></div>
+    <div><h5>District</h5><ul><li><a href="board.html">Board</a></li><li><a href="academics.html">Academics</a></li><li><a href="news.html">News</a></li></ul></div>
+    <div><h5>Connect</h5><ul><li><a href="#">Contact</a></li><li><a href="#">Careers</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 Maple Hollow Community Schools</div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

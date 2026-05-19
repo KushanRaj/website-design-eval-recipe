@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>National Championship Bracket — National Curling Federation</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-bar">
+    <div>Member Portal · Officials Login · Calendar</div>
+    <div><a href="#">EN</a> · <a href="#">FR</a> · Season 2025–26</div>
+  </div>
+  <div class="masthead-main">
+    <div class="crest" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#BCD7E6" stroke-width="1.2"/>
+        <circle cx="20" cy="20" r="13" fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="8"  fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="3"  fill="#BCD7E6"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#BCD7E6" stroke-width="0.6"/>
+        <line x1="20" y1="2" x2="20" y2="38" stroke="#BCD7E6" stroke-width="0.6"/>
+      </svg>
+    </div>
+    <div class="masthead-title">
+      <h1>National Curling Federation</h1>
+      <span class="tagline">Est. 1903 · Hammer · Sweep · Sport for All</span>
+    </div>
+    <div class="masthead-meta">
+      <strong>2025–26 Season</strong>
+      Week 21 · 19 May 2026
+    </div>
+  </div>
+  <nav class="primary-nav">
+    <a href="index.html">Home</a>
+    <a href="standings.html">Standings</a>
+    <a href="athletes.html">Athletes</a>
+    <a href="brackets.html" class="active">Tournaments</a>
+    <a href="clubs.html">Find a Club</a>
+    <a href="rules.html">Rules &amp; Officiating</a>
+    <a href="results.html">Results Archive</a>
+    <a href="news.html">News</a>
+  </nav>
+</header>
+
+<div class="ticker" aria-label="Live results ticker">
+  <div class="ticker-label">Live · Results</div>
+  <div class="ticker-track">
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span><span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>U21-FINAL</strong> · Pine Hollow 8–2 Westbrook <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>MX-2D</strong> · Carrington 6–6 Sable Lakes · End 7</span><span class="sep">◆</span>
+    <span class="live">LIVE · Glacier Park 4–4 Brookmoor · End 6 · Sheet C</span><span class="sep">◆</span>
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span><span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>U21-FINAL</strong> · Pine Hollow 8–2 Westbrook <span class="win">W</span></span><span class="sep">◆</span>
+    <span><strong>MX-2D</strong> · Carrington 6–6 Sable Lakes · End 7</span><span class="sep">◆</span>
+    <span class="live">LIVE · Glacier Park 4–4 Brookmoor · End 6 · Sheet C</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<main>
+  <div class="breadcrumbs"><a href="index.html">Home</a><span class="sep">/</span>Tournaments<span class="sep">/</span>National Championship 2026<span class="sep">/</span>Bracket</div>
+
+  <!-- Tournament header -->
+  <section class="tourney-head">
+    <div class="ttl">
+      <h2>National Championship · Men's Premier</h2>
+      <div class="sub">88th edition · Reykjavik Arena, Capital District</div>
+    </div>
+    <div class="kv"><div class="k">Dates</div><div class="v">16 → 24 MAY 2026</div></div>
+    <div class="kv"><div class="k">Draw Status</div><div class="v">FINAL · LIVE</div></div>
+    <div class="kv"><div class="k">Sheets</div><div class="v">A · B · C · D</div></div>
+  </section>
+
+  <!-- Live banner -->
+  <div class="notice" style="margin-bottom:14px;">
+    <div class="label"><span class="live-badge" style="background:var(--bad);color:#fff;padding:2px 6px;font-family:var(--mono);">● LIVE</span> Final · Draw 18 · Sheet A</div>
+    <span style="font-family:var(--mono);">Whitestone CC <strong>7</strong> — <strong>5</strong> Brookmoor CC · End 9 of 10 · Hammer: Brookmoor · Ice tech: J. Hägg</span>
+  </div>
+
+  <!-- Mode toggles -->
+  <div class="bracket-mode">
+    <span class="lbl">View</span>
+    <button class="toggle-btn" data-bracket-mode="rr">Round-Robin Pools</button>
+    <button class="toggle-btn active" data-bracket-mode="po">Playoff Bracket</button>
+  </div>
+
+  <!-- Round robin pools -->
+  <div id="round-robin-view" style="display:none;">
+    <div class="pool-tables">
+      <section class="panel">
+        <div class="panel-head"><h3>Pool A · Standings</h3><span class="small-cap">Concluded 21 May</span></div>
+        <table class="data">
+          <thead><tr><th class="rank">#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">F</th><th class="num">A</th><th class="num">DSC</th></tr></thead>
+          <tbody>
+            <tr><td class="rank">1</td><td class="team">Whitestone (Brennan)</td><td class="num">5</td><td class="num">0</td><td class="num">48</td><td class="num">22</td><td class="num">14.2</td></tr>
+            <tr><td class="rank">2</td><td class="team">Pine Hollow (Tanaka)</td><td class="num">4</td><td class="num">1</td><td class="num">41</td><td class="num">28</td><td class="num">19.5</td></tr>
+            <tr><td class="rank">3</td><td class="team">Cape Verity (Reyes)</td><td class="num">3</td><td class="num">2</td><td class="num">36</td><td class="num">34</td><td class="num">28.4</td></tr>
+            <tr><td class="rank">4</td><td class="team">Sable Lakes (Bouchard)</td><td class="num">2</td><td class="num">3</td><td class="num">31</td><td class="num">39</td><td class="num">36.7</td></tr>
+            <tr><td class="rank">5</td><td class="team">Glenmoor (Holm)</td><td class="num">1</td><td class="num">4</td><td class="num">28</td><td class="num">42</td><td class="num">42.1</td></tr>
+            <tr><td class="rank">6</td><td class="team">Quill River (Lindgren)</td><td class="num">0</td><td class="num">5</td><td class="num">24</td><td class="num">43</td><td class="num">51.0</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h3>Pool B · Standings</h3><span class="small-cap">Concluded 21 May</span></div>
+        <table class="data">
+          <thead><tr><th class="rank">#</th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num">F</th><th class="num">A</th><th class="num">DSC</th></tr></thead>
+          <tbody>
+            <tr><td class="rank">1</td><td class="team">Brookmoor (Lemieux)</td><td class="num">5</td><td class="num">0</td><td class="num">49</td><td class="num">24</td><td class="num">12.8</td></tr>
+            <tr><td class="rank">2</td><td class="team">Hearthstone (Saunders)</td><td class="num">4</td><td class="num">1</td><td class="num">42</td><td class="num">29</td><td class="num">17.9</td></tr>
+            <tr><td class="rank">3</td><td class="team">Greycap (Halvorsen)</td><td class="num">3</td><td class="num">2</td><td class="num">38</td><td class="num">33</td><td class="num">24.6</td></tr>
+            <tr><td class="rank">4</td><td class="team">Foreland (Okafor)</td><td class="num">2</td><td class="num">3</td><td class="num">30</td><td class="num">37</td><td class="num">31.8</td></tr>
+            <tr><td class="rank">5</td><td class="team">Glacier Park (Östlund)</td><td class="num">1</td><td class="num">4</td><td class="num">29</td><td class="num">40</td><td class="num">39.5</td></tr>
+            <tr><td class="rank">6</td><td class="team">Driftpine (Marchetti)</td><td class="num">0</td><td class="num">5</td><td class="num">22</td><td class="num">47</td><td class="num">47.2</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
+  <!-- Playoff bracket -->
+  <div id="playoff-view">
+    <section class="bracket-canvas" aria-label="Playoff bracket">
+      <div class="bracket">
+
+        <div class="round">
+          <div class="round-label">Quarterfinals · 22 May</div>
+
+          <div class="match">
+            <div class="ttl"><span>QF-1 · Sheet A · 13:00</span><span>Off. R. Owens</span></div>
+            <div class="team-row win"><span class="seed">A1</span><span class="nm">Whitestone</span><span class="hammer"></span><span class="sc">8</span></div>
+            <div class="team-row"><span class="seed">B4</span><span class="nm">Foreland</span><span class="hammer away"></span><span class="sc">4</span></div>
+            <div class="ends">
+              <div class="cell hd">END</div><div class="cell hd">1</div><div class="cell hd">2</div><div class="cell hd">3</div><div class="cell hd">4</div><div class="cell hd">5</div><div class="cell hd">6</div><div class="cell hd">7</div><div class="cell hd">8</div><div class="cell hd">9</div><div class="cell hd">10</div>
+              <div class="cell">W</div><div class="cell">0</div><div class="cell">2</div><div class="cell">1</div><div class="cell">0</div><div class="cell">3</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">—</div>
+              <div class="cell">F</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">—</div>
+            </div>
+          </div>
+
+          <div class="match">
+            <div class="ttl"><span>QF-2 · Sheet B · 13:00</span><span>Off. A. Patel</span></div>
+            <div class="team-row win"><span class="seed">A2</span><span class="nm">Pine Hollow</span><span class="hammer"></span><span class="sc">7</span></div>
+            <div class="team-row"><span class="seed">B3</span><span class="nm">Greycap</span><span class="hammer away"></span><span class="sc">5</span></div>
+            <div class="ends">
+              <div class="cell hd">END</div><div class="cell hd">1</div><div class="cell hd">2</div><div class="cell hd">3</div><div class="cell hd">4</div><div class="cell hd">5</div><div class="cell hd">6</div><div class="cell hd">7</div><div class="cell hd">8</div><div class="cell hd">9</div><div class="cell hd">10</div>
+              <div class="cell">PH</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">—</div><div class="cell">—</div>
+              <div class="cell">GC</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div><div class="cell">—</div>
+            </div>
+          </div>
+
+          <div class="match">
+            <div class="ttl"><span>QF-3 · Sheet C · 17:30</span><span>Off. M. Carrasco</span></div>
+            <div class="team-row win"><span class="seed">B1</span><span class="nm">Brookmoor</span><span class="hammer"></span><span class="sc">9</span></div>
+            <div class="team-row"><span class="seed">A4</span><span class="nm">Sable Lakes</span><span class="hammer away"></span><span class="sc">3</span></div>
+            <div class="ends">
+              <div class="cell hd">END</div><div class="cell hd">1</div><div class="cell hd">2</div><div class="cell hd">3</div><div class="cell hd">4</div><div class="cell hd">5</div><div class="cell hd">6</div><div class="cell hd">7</div><div class="cell hd">8</div><div class="cell hd">9</div><div class="cell hd">10</div>
+              <div class="cell">BM</div><div class="cell">0</div><div class="cell">3</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">2</div><div class="cell">1</div><div class="cell">—</div><div class="cell">—</div>
+              <div class="cell">SL</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">—</div><div class="cell">—</div>
+            </div>
+          </div>
+
+          <div class="match">
+            <div class="ttl"><span>QF-4 · Sheet D · 17:30</span><span>Off. L. Eriksson</span></div>
+            <div class="team-row win"><span class="seed">B2</span><span class="nm">Hearthstone</span><span class="hammer"></span><span class="sc">8</span></div>
+            <div class="team-row"><span class="seed">A3</span><span class="nm">Cape Verity</span><span class="hammer away"></span><span class="sc">5</span></div>
+            <div class="ends">
+              <div class="cell hd">END</div><div class="cell hd">1</div><div class="cell hd">2</div><div class="cell hd">3</div><div class="cell hd">4</div><div class="cell hd">5</div><div class="cell hd">6</div><div class="cell hd">7</div><div class="cell hd">8</div><div class="cell hd">9</div><div class="cell hd">10</div>
+              <div class="cell">HS</div><div class="cell">1</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">—</div>
+              <div class="cell">CV</div><div class="cell">0</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="round">
+          <div class="round-label">Semifinals · 23 May</div>
+
+          <div class="match">
+            <div class="ttl"><span>SF-1 · Sheet A · 14:00</span><span>Off. R. Owens</span></div>
+            <div class="team-row win"><span class="seed">QF-1</span><span class="nm">Whitestone</span><span class="hammer"></span><span class="sc">7</span></div>
+            <div class="team-row"><span class="seed">QF-2</span><span class="nm">Pine Hollow</span><span class="hammer away"></span><span class="sc">6</span></div>
+            <div class="ends">
+              <div class="cell hd">END</div><div class="cell hd">1</div><div class="cell hd">2</div><div class="cell hd">3</div><div class="cell hd">4</div><div class="cell hd">5</div><div class="cell hd">6</div><div class="cell hd">7</div><div class="cell hd">8</div><div class="cell hd">9</div><div class="cell hd">10</div>
+              <div class="cell">W</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">—</div>
+              <div class="cell">P</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">—</div>
+            </div>
+          </div>
+
+          <div class="match">
+            <div class="ttl"><span>SF-2 · Sheet B · 14:00</span><span>Off. A. Patel</span></div>
+            <div class="team-row win"><span class="seed">QF-3</span><span class="nm">Brookmoor</span><span class="hammer"></span><span class="sc">8</span></div>
+            <div class="team-row"><span class="seed">QF-4</span><span class="nm">Hearthstone</span><span class="hammer away"></span><span class="sc">5</span></div>
+            <div class="ends">
+              <div class="cell hd">END</div><div class="cell hd">1</div><div class="cell hd">2</div><div class="cell hd">3</div><div class="cell hd">4</div><div class="cell hd">5</div><div class="cell hd">6</div><div class="cell hd">7</div><div class="cell hd">8</div><div class="cell hd">9</div><div class="cell hd">10</div>
+              <div class="cell">BM</div><div class="cell">0</div><div class="cell">3</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">2</div><div class="cell">—</div><div class="cell">—</div>
+              <div class="cell">HS</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">—</div><div class="cell">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="round">
+          <div class="round-label">Final · 24 May · LIVE</div>
+          <div class="match" style="border-color:var(--bad);">
+            <div class="ttl" style="background:var(--bad);color:#fff;"><span>● LIVE · Sheet A · 15:00</span><span>Off. R. Owens · J. Hägg (Tech)</span></div>
+            <div class="team-row"><span class="seed">SF-1</span><span class="nm">Whitestone</span><span class="hammer away"></span><span class="sc">7</span></div>
+            <div class="team-row"><span class="seed">SF-2</span><span class="nm">Brookmoor</span><span class="hammer"></span><span class="sc">5</span></div>
+            <div class="ends">
+              <div class="cell hd">END</div><div class="cell hd">1</div><div class="cell hd">2</div><div class="cell hd">3</div><div class="cell hd">4</div><div class="cell hd">5</div><div class="cell hd">6</div><div class="cell hd">7</div><div class="cell hd">8</div><div class="cell hd">9</div><div class="cell hd">10</div>
+              <div class="cell">W</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">·</div><div class="cell">—</div>
+              <div class="cell">BM</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">·</div><div class="cell">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="round">
+          <div class="round-label">Champion</div>
+          <div class="match" style="border-color:var(--gold);background:var(--paper-50);">
+            <div class="ttl" style="background:var(--gold);color:var(--paper);"><span>National Title</span><span>TBD</span></div>
+            <div class="team-row"><span class="seed">—</span><span class="nm">Awaiting Final</span><span></span><span class="sc">—</span></div>
+            <div class="team-row"><span class="seed">3rd</span><span class="nm">Pine Hollow (Bronze)</span><span></span><span class="sc">—</span></div>
+            <div style="padding:8px 10px;font-size:11px;color:var(--granite-70);">
+              Trophy presentation immediately following final. Medal ceremony 17:00 main pavilion.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- Draw schedule -->
+  <section class="draw-sheet">
+    <div class="panel-head" style="border-bottom:1px solid var(--hairline);">
+      <h3>Draw Schedule · Sheet Assignments</h3>
+      <span class="small-cap">22 → 24 May</span>
+    </div>
+    <table class="data">
+      <thead>
+        <tr><th>Draw</th><th>Date</th><th>Time</th><th>Sheet</th><th>Match</th><th>Hammer</th><th>Officials</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>D-17</td><td>22 May</td><td>13:00</td><td>A</td><td>Whitestone vs Foreland</td><td>Whitestone</td><td>R. Owens</td><td><span class="badge" style="border-color:var(--good);color:var(--good);">FINAL</span></td></tr>
+        <tr><td>D-17</td><td>22 May</td><td>13:00</td><td>B</td><td>Pine Hollow vs Greycap</td><td>Pine Hollow</td><td>A. Patel</td><td><span class="badge" style="border-color:var(--good);color:var(--good);">FINAL</span></td></tr>
+        <tr><td>D-17</td><td>22 May</td><td>17:30</td><td>C</td><td>Brookmoor vs Sable Lakes</td><td>Brookmoor</td><td>M. Carrasco</td><td><span class="badge" style="border-color:var(--good);color:var(--good);">FINAL</span></td></tr>
+        <tr><td>D-17</td><td>22 May</td><td>17:30</td><td>D</td><td>Hearthstone vs Cape Verity</td><td>Hearthstone</td><td>L. Eriksson</td><td><span class="badge" style="border-color:var(--good);color:var(--good);">FINAL</span></td></tr>
+        <tr><td>D-18</td><td>23 May</td><td>14:00</td><td>A</td><td>Whitestone vs Pine Hollow</td><td>Whitestone</td><td>R. Owens</td><td><span class="badge" style="border-color:var(--good);color:var(--good);">FINAL</span></td></tr>
+        <tr><td>D-18</td><td>23 May</td><td>14:00</td><td>B</td><td>Brookmoor vs Hearthstone</td><td>Brookmoor</td><td>A. Patel</td><td><span class="badge" style="border-color:var(--good);color:var(--good);">FINAL</span></td></tr>
+        <tr><td>D-19</td><td>24 May</td><td>11:00</td><td>A</td><td>Bronze · Pine Hollow vs Hearthstone</td><td>Pine Hollow</td><td>L. Eriksson</td><td><span class="badge" style="border-color:var(--good);color:var(--good);">FINAL</span></td></tr>
+        <tr><td>D-20</td><td>24 May</td><td>15:00</td><td>A</td><td>Gold · Whitestone vs Brookmoor</td><td>Brookmoor</td><td>R. Owens</td><td><span class="badge" style="border-color:var(--bad);color:var(--bad);">● LIVE</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Officials -->
+  <section class="panel" style="margin-top:18px;">
+    <div class="panel-head"><h3>Officials Assigned</h3><span class="small-cap">Per §6.2 of handbook</span></div>
+    <div class="panel-body" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div><div class="small-cap">Chief Umpire</div><div style="font-weight:700;">Rina Owens</div><div style="font-size:11px;color:var(--granite-70);">Lvl 5 · Capital Region</div></div>
+      <div><div class="small-cap">Deputy Umpire</div><div style="font-weight:700;">Anil Patel</div><div style="font-size:11px;color:var(--granite-70);">Lvl 4 · Coastal Region</div></div>
+      <div><div class="small-cap">Timer</div><div style="font-weight:700;">Marisol Carrasco</div><div style="font-size:11px;color:var(--granite-70);">Lvl 3 · Central Region</div></div>
+      <div><div class="small-cap">Floor Official</div><div style="font-weight:700;">Linnea Eriksson</div><div style="font-size:11px;color:var(--granite-70);">Lvl 3 · North Region</div></div>
+      <div><div class="small-cap">Chief Ice Technician</div><div style="font-weight:700;">Johan Hägg</div><div style="font-size:11px;color:var(--granite-70);">Lvl 4 · Highlands Region</div></div>
+      <div><div class="small-cap">Statistician</div><div style="font-weight:700;">Priya Coelho</div><div style="font-size:11px;color:var(--granite-70);">Capital Region</div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="cols">
+    <div>
+      <h5>National Curling Federation</h5>
+      <p style="margin:0 0 6px 0;">Federation House, 41 Granite Row, Capital District — recognised national governing body affiliated with the World Curling Federation since 1966.</p>
+      <p style="margin:0;font-family:var(--mono);font-size:11px;color:var(--ice-200);">contact@ncf.example · +1 (555) 010-0190</p>
+    </div>
+    <div><h5>Competition</h5><a href="standings.html">Standings</a><a href="brackets.html">Tournaments</a><a href="results.html">Results Archive</a><a href="athletes.html">Athletes</a></div>
+    <div><h5>Officiating</h5><a href="rules.html">Rules Handbook</a><a href="rules.html">Certification Ladder</a><a href="rules.html">Equipment Bulletins</a><a href="news.html">Sanctions &amp; Notices</a></div>
+    <div><h5>Membership</h5><a href="clubs.html">Find a Club</a><a href="clubs.html">Register a Club</a><a href="#">Member Portal</a><a href="#">Insurance Schemes</a></div>
+  </div>
+  <div class="colophon"><span>© 2026 National Curling Federation · A registered not-for-profit</span><span>Document NCF-WEB-21 · 19 May 2026</span></div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

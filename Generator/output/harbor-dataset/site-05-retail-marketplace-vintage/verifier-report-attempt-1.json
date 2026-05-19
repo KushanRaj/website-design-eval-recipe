@@ -1,0 +1,42 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "accessibility",
+      "message": "Several form controls (search inputs, ZIP/postcode input, promo code, gift card, newsletter email, tip-submission fields) lack associated <label> elements or aria-label attributes. Extractor flagged missing_accessible_name and missing_form_label on every page.",
+      "severity": "warning",
+      "path": null
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Cart page layout_consistency score is 39.5 and browse is 53.7 — the intentional masonry/asymmetric grid drives these down. Visually the screenshots read as deliberate editorial chaos consistent with the 'clustered, eclectic flea-market' concept, so this is a measurement artifact rather than a real defect.",
+      "severity": "info",
+      "path": null
+    },
+    {
+      "type": "component_consistency",
+      "message": "Account page component_style score is 51 due to two stat-card nodes with mismatched hierarchy. Visually negligible but worth tightening.",
+      "severity": "info",
+      "path": null
+    }
+  ],
+  "scores": {
+    "accessibility": 0.75,
+    "mobile_responsiveness": 0.85,
+    "component_consistency": 0.88,
+    "layout_alignment": 0.7,
+    "render_quality": 0.98,
+    "page_completeness": 1.0,
+    "concept_fidelity": 0.96
+  },
+  "repair_instructions": [
+    "Add accessible names to all form controls: the browse search input, the freight-quote ZIP/postcode input on the lot page, the promo code and gift card inputs on the cart page, the newsletter email inputs in the footer, and every field on the 'Point a Picker at an Estate' tip form on the journal page. Either attach a visible <label for=...> or add an aria-label that mirrors the placeholder text.",
+    "On the account page, audit the stat cards under the Watchlist Board section (the 'Drops Soon / Price Reduced / About to Expire' columns). Two card variants use a different tag hierarchy than the majority (h3 vs span ordering); normalize them so every card uses the same DOM structure and heading level.",
+    "Optional polish on browse: the right-hand 'Related Searches / Recently Sold Comps' rail leaves a tall blank column when the masonry on the left runs short. Consider letting the rail items reflow or adding one more module so the column doesn't end in ~1400px of empty space."
+  ],
+  "deterministic_checks": {
+    "html_page_count": 7,
+    "required_text_present": true,
+    "page_presence_resolved": "5/7 literal, 2 satisfied by concrete instances (lot.html, picker.html)"
+  }
+}

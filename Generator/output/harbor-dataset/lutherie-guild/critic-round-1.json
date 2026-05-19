@@ -1,0 +1,41 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "lutherie-guild-engraved-folio",
+      "score": 0.9,
+      "accept": true,
+      "strengths": [
+        "Maps directly onto every element named in the seed one-liner (apprenticeship, materials, exhibition, instrument-of-the-month, journal, workshop directory)",
+        "Motif is exceptionally concrete: frontispiece, acanthus cartouche, MDCCXIV roundel, tipped-in plate, wax-seal nav, CAP. III chapter headers",
+        "Layout patterns are richly specified per page (two-column justified, drop caps, ligatures, foliate rules, copperplate captions)",
+        "Interactions are domain-specific and useful (wax-seal hover, maple-billet rotator quarter/flat-sawn, footnote pop-overs, page-turn transition)",
+        "Palette mapping is precise with hex values reserved for chrome, ground, and rules",
+        "Seven pages, well-differentiated, none feel like filler"
+      ],
+      "weaknesses": [
+        "Risk of veering into pastiche if engravings are weak; relies heavily on illustration quality",
+        "Two-column justified body with drop caps is technically demanding to render cleanly at all breakpoints"
+      ]
+    },
+    {
+      "candidate_id": "lutherie-guild-atelier-ledger",
+      "score": 0.78,
+      "accept": true,
+      "strengths": [
+        "Fresh angle on heritage as a living working network rather than a museum",
+        "Motif of ledger ruling, edge tabs, rubber-stamp progress marks, marginalia is original and concrete",
+        "Commission ledger and on-the-bench pages give genuinely useful interactive utility",
+        "Strong content models with real fields (folio number, lot number, lead time, seats remaining)"
+      ],
+      "weaknesses": [
+        "Drops the seed's explicit 'annual exhibition gallery' page entirely, weakening alignment",
+        "Renames apprenticeship into a courses page, slightly diluting the seed's apprenticeship-program emphasis",
+        "Less ornate than the seed's 'ornate editorial heritage' visual feel calls for; feels more workshop than guild-frontispiece",
+        "Typewriter-serif body and ledger ruling could read as bookkeeping rather than the lush walnut/parchment register"
+      ]
+    }
+  ],
+  "best_candidate_id": "lutherie-guild-engraved-folio",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

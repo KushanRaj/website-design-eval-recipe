@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "zen-center",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 150,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Editorial broadsheet landing with masthead, three vignettes, and bell-times table",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "lineage-full",
+      "weight": 1.0,
+      "page": "teachers-and-lineage",
+      "state": "default",
+      "intent": "Lineage page with horizontal ancestral chart and current teachers table",
+      "path": "/teachers-and-lineage.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "lineage-node-selected",
+      "weight": 0.5,
+      "page": "teachers-and-lineage",
+      "state": "node-clicked",
+      "intent": "Clicking a lineage node reveals the biography sidebar card",
+      "path": "/teachers-and-lineage.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-dharma=\"Daiun Soshin\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 400,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "schedule-full",
+      "weight": 1.0,
+      "page": "schedule",
+      "state": "default",
+      "intent": "Daily rhythm table, weekly variations, upcoming retreats list, and apply CTA",
+      "path": "/schedule.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "schedule-filter-residential",
+      "weight": 0.5,
+      "page": "schedule",
+      "state": "filter-residential",
+      "intent": "Retreat list filtered to residential entries",
+      "path": "/schedule.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-filter=\"residential\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 400,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "audio-full",
+      "weight": 1.0,
+      "page": "audio",
+      "state": "default",
+      "intent": "Dharma talks archive: filter rail, featured this month, full index, selected talk panel, series table, slim player",
+      "path": "/audio.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "visit-full",
+      "weight": 1.0,
+      "page": "visit",
+      "state": "default",
+      "intent": "Visit and etiquette page with zoned sections (Sanmon, Genkan, Zendo, Refectory, Garden) and hand-inked map",
+      "path": "/visit.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "dana-full",
+      "weight": 1.0,
+      "page": "dana",
+      "state": "default",
+      "intent": "Dana page with three giving paths (rice & oil, roof, scholarship), last-year ledger, and tax note",
+      "path": "/dana.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "dana-monthly-band-selected",
+      "weight": 0.25,
+      "page": "dana",
+      "state": "monthly-band-150",
+      "intent": "Selecting a different monthly giving band updates the active band state",
+      "path": "/dana.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-amount=\"150\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "apply-step-1",
+      "weight": 1.0,
+      "page": "apply",
+      "state": "default",
+      "intent": "Multi-step retreat application — first of six questions visible",
+      "path": "/apply.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "apply-step-2",
+      "weight": 0.5,
+      "page": "apply",
+      "state": "step-2",
+      "intent": "Advancing to the second question reveals the next screen of the one-question-per-screen application",
+      "path": "/apply.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-37-button-continue\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 500,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    }
+  ]
+}

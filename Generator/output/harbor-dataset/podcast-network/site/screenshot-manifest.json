@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "podcast-network",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": null,
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "channels-full",
+      "weight": 1.0,
+      "page": "channels",
+      "state": "default",
+      "intent": null,
+      "path": "/channels.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "channels-filter-music",
+      "weight": 0.4,
+      "page": "channels",
+      "state": "filter-music",
+      "intent": "Apply the MUSIC genre filter to show the active filter chip state on the channel guide",
+      "path": "/channels.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-33-button-music\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-33-button-music\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "show-channel-late-signal-full",
+      "weight": 1.0,
+      "page": "the-late-signal",
+      "state": "default",
+      "intent": null,
+      "path": "/channels/the-late-signal.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "show-channel-season-s1",
+      "weight": 0.4,
+      "page": "the-late-signal",
+      "state": "season-tab-s1",
+      "intent": "Select Season 1 tab to show alternate season episode list state on the show channel page",
+      "path": "/channels/the-late-signal.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-53-button-s1\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-53-button-s1\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "archive-full",
+      "weight": 1.0,
+      "page": "archive",
+      "state": "default",
+      "intent": null,
+      "path": "/archive.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "archive-lucky-dip",
+      "weight": 0.25,
+      "page": "archive",
+      "state": "lucky-dip-result",
+      "intent": "Click LUCKY DIP to surface a random episode result in the lucky-dip strong text region",
+      "path": "/archive.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "#lucky-btn",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "#lucky-btn",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "episode-detail-full",
+      "weight": 1.0,
+      "page": "episode",
+      "state": "default",
+      "intent": null,
+      "path": "/episode.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "voices-full",
+      "weight": 1.0,
+      "page": "voices",
+      "state": "default",
+      "intent": null,
+      "path": "/voices.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "voices-filter-the-late-signal",
+      "weight": 0.4,
+      "page": "voices",
+      "state": "filter-the-late-signal",
+      "intent": "Filter the host directory by THE LATE SIGNAL to show only that show's hosts in the staff-roll grid",
+      "path": "/voices.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-34-button-the-late-signal\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-34-button-the-late-signal\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "live-full",
+      "weight": 1.0,
+      "page": "live",
+      "state": "default",
+      "intent": null,
+      "path": "/live.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "live-show-filter-late-signal",
+      "weight": 0.4,
+      "page": "live",
+      "state": "show-filter-the-late-signal",
+      "intent": "Filter the live broadcast calendar by THE LATE SIGNAL to show the show-specific filter chip active state",
+      "path": "/live.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-37-button-the-late-signal\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-37-button-the-late-signal\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "live-view-list",
+      "weight": 0.4,
+      "page": "live",
+      "state": "view-list",
+      "intent": "Switch from calendar to LIST view to capture alternate layout for live broadcast dates",
+      "path": "/live.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-33-button-list\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-33-button-list\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "inner-circle-full",
+      "weight": 1.0,
+      "page": "inner-circle",
+      "state": "default",
+      "intent": null,
+      "path": "/inner-circle.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "inner-circle-faq-open",
+      "weight": 0.3,
+      "page": "inner-circle",
+      "state": "faq-accordion-open",
+      "intent": "Expand a FAQ accordion item to reveal the answer body and show the open accordion state",
+      "path": "/inner-circle.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "[data-wde-manifest-id=\"wde-180-summary-what-happens-to-my-feeds-if-i-cancel\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-180-summary-what-happens-to-my-feeds-if-i-cancel\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "partner-full",
+      "weight": 1.0,
+      "page": "partner",
+      "state": "default",
+      "intent": null,
+      "path": "/partner.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "about-full",
+      "weight": 1.0,
+      "page": "about",
+      "state": "default",
+      "intent": null,
+      "path": "/about.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ]
+}

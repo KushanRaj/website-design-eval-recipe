@@ -1,0 +1,41 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "storm-chasers-community-a",
+      "score": 0.88,
+      "accept": true,
+      "strengths": [
+        "Tight fit with seed's 'experimental utilitarian dashboard' framing — four-quadrant ops console reads as a genuine NOAA-workstation pastiche, not generic template",
+        "Seven distinct, concrete pages with differentiated layout patterns (quadrant dashboard, tabular log archive, parts catalog, CWA accordion, risk-shaded calendar, masonry+EXIF, callsign roster)",
+        "Specific motif vocabulary: packet status bar, ASCII separators, '>' quote nesting, callsign tags like KC5-WHIRL, amber WATCH/WARNING chips — avoids vagueness",
+        "Interactions are useful and motivated: comparison cart up to four items, day-cell side panel, photo lightbox with radar overlay, callsign hover-card",
+        "Required text and disclaimers ('NOT AN OFFICIAL NWS PRODUCT') reinforce community-run framing realistically",
+        "Content model is domain-true: LSR pings, hodograph snapshots, CAPE/Helicity/SRH tables, CWAs"
+      ],
+      "weaknesses": [
+        "Tone is uniformly terse across all pages; could risk monotony without the longer-form variation candidate B introduces",
+        "Gear comparison and directory pages, while concrete, are the more conventional pieces of the set"
+      ]
+    },
+    {
+      "candidate_id": "storm-chasers-community-b",
+      "score": 0.82,
+      "accept": true,
+      "strengths": [
+        "Split-rail console + reading column is a genuinely experimental layout invention that still honors the dashboard palette",
+        "Distinct motif assets (hodograph spiral dividers, isobar contour pattern, ASCII compass roses, bracketed callsign tags) give the site a recognizable signature",
+        "Seven concrete pages with meaningfully different patterns (bulletin split, masonry+full reading view, test-rig two-column, CB-net roster with check-in queue, seasonal timeline, curated portfolio, guild ledger)",
+        "Adds storytelling depth (narrative field logs, briefer bios, photo portfolio) the seed allows without diluting domain credibility",
+        "Net check-in queue and 'tonight's net control callsign + frequency' is a sharp, realistic detail"
+      ],
+      "weaknesses": [
+        "Leans slightly away from the 'very high density' seed metadata by giving real estate to a reading column",
+        "Some page goals overlap conceptually with A (calendar/briefings, directory/guild) but execution is differentiated enough to stand",
+        "'EST. 2011' required text feels arbitrary versus A's more operational required strings"
+      ]
+    }
+  ],
+  "best_candidate_id": "storm-chasers-community-a",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

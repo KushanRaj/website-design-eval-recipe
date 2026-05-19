@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "lutherie-guild",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full frontispiece home page with title cartouche, engraved instrument, preface, plate cards, instrument-of-the-month teaser, and footer oath.",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "workshops-full",
+      "weight": 1.0,
+      "page": "workshops",
+      "state": "default",
+      "intent": "Workshops directory with filter ribbons, workshop cards grid, foldout map, and CTA.",
+      "path": "/workshops.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "workshops-filter-violin",
+      "weight": 0.5,
+      "page": "workshops",
+      "state": "filter-violin-family",
+      "intent": "Workshops directory after selecting Violin Family filter chip - shows filter chip active state and filtered grid.",
+      "path": "/workshops.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-value=\"violin\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "apprenticeship-full",
+      "weight": 1.0,
+      "page": "apprenticeship",
+      "state": "default",
+      "intent": "Apprenticeship chapter with three-tier timeline (Apprentice, Journeyman, Master), footnotes, and petition application form.",
+      "path": "/apprenticeship.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "materials-full",
+      "weight": 1.0,
+      "page": "materials",
+      "state": "default",
+      "intent": "Materials chapter with labelled cross-section, materials index table, varnish vignette, forester sidebar, and billet rotator (quarter-sawn default).",
+      "path": "/materials.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "materials-billet-flat",
+      "weight": 0.5,
+      "page": "materials",
+      "state": "billet-flat-sawn",
+      "intent": "Materials billet rotator switched to flat-sawn view - alternate engraving and toggle state.",
+      "path": "/materials.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-face=\"flat\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "exhibition-full",
+      "weight": 1.0,
+      "page": "exhibition",
+      "state": "default",
+      "intent": "Annual exhibition page with cartouche, Best-in-Show hero plate, juried gallery, and archive carousel.",
+      "path": "/exhibition.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "instrument-of-the-month-full",
+      "weight": 1.0,
+      "page": "instrument-of-the-month",
+      "state": "default",
+      "intent": "Instrument of the Month tipped-in plate with copperplate caption, specifications, provenance chain, phonograph play control, and previously featured strip.",
+      "path": "/instrument-of-the-month.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "journal-full",
+      "weight": 1.0,
+      "page": "journal",
+      "state": "default",
+      "intent": "Journal of Techniques with masthead, table of contents, two-column lead article with figures and footnote references, and author colophon.",
+      "path": "/journal.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+{
+  "seed_id": "regional-credit-union",
+  "concepts": [
+    {
+      "candidate_id": "regional-credit-union-a",
+      "domain": "regional credit union (member-owned community bank)",
+      "site_goal": "Convert prospective members in a multi-county service area into account-holders while reassuring existing members with self-service tools, transparent rates, and visible community impact.",
+      "audience": [
+        "Long-time members in the five-county service area",
+        "First-time account openers (teens, young adults)",
+        "Small business and farm owners seeking local lending",
+        "First-time homebuyers shopping mortgage rates",
+        "Members of partner SEGs (select employee groups)",
+        "Spanish-speaking households in the service area"
+      ],
+      "description": "Heartwood Federal Credit Union — a member-owned cooperative serving five rural and exurban counties since 1953. The site leans into a 'warm community institutional' feel: olive green primary, terracotta accent for CTAs and rate highlights, cream background fields, rounded humanist sans (e.g. a Recoleta-adjacent display paired with a friendly grotesque). Photography is candid, slightly grainy portraiture of actual members on porches, in small-business storefronts, and at branch openings — never stock. Iconography uses soft 2px rounded line glyphs (leaf, key, house, tractor, mortarboard). Layout uses a generous 12-column grid with chunky rounded cards, dashed underline links, and pull-quotes set in a contrasting serif. The brand voice is plainspoken, second-person, occasionally folksy ('Your money. Your neighbors. Your call.'). Rate tables are first-class citizens — never buried — and every product page shows the equivalent at-a-glance at a megabank to anchor the value prop. A persistent slim top utility bar carries the Online Banking login launcher, Routing # copy-to-clipboard, and a 'Report card lost' phone link.",
+      "motif": "Concentric rounded-rectangle 'membership card' frames recur as a structural device — used for testimonials, rate cards, branch tiles, and product summaries — echoing the physical member card.",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Stacked hero band with a single member portrait + handwritten-style overlay quote, followed by a tiered three-column 'Bank · Borrow · Belong' service tile row, an animated current-rates ticker strip, a community impact counter band ($ kept local, scholarships funded, branches), and a closing 'Become a Member in 7 minutes' enrollment CTA.",
+          "sections": [
+            "Hero with rotating member portrait and 12-word testimonial",
+            "Three-pillar service navigation tiles (Bank, Borrow, Belong)",
+            "Live rates strip (Share savings, 12-mo CD, 30-yr fixed, used auto)",
+            "Featured product callout: 'Front Porch Mortgage' with terracotta badge",
+            "Community impact counter band",
+            "Branch + ATM proximity teaser with ZIP input",
+            "Latest from the Money Garden blog (3 cards)",
+            "Membership eligibility quick-check",
+            "Footer with NCUA insured badge, Equal Housing Lender mark, routing #"
+          ]
+        },
+        {
+          "id": "products-checking-savings",
+          "path": "/accounts/checking-and-savings",
+          "layout_pattern": "Tabbed product family page with a sticky left-rail account comparison nav and right-side detail pane. Each account is a long-form card with rate, fees, perks, and a 'who this fits' vignette. A floating compare bar lets users pin up to three accounts side-by-side at the bottom.",
+          "sections": [
+            "Family overview header with 'Find your fit in 30 seconds' quiz launcher",
+            "Account cards: Everyday Checking, Harvest Savings, Sprout (youth), Acorn (teen), Steady CD ladder",
+            "Side-by-side compare drawer",
+            "Fee schedule disclosure table (collapsible)",
+            "Switch kit: 'Bring your direct deposit over in 3 steps'",
+            "FAQ accordion",
+            "Open-an-account sticky CTA"
+          ]
+        },
+        {
+          "id": "loans-and-calculators",
+          "path": "/borrow",
+          "layout_pattern": "Calculator-led page: a large terracotta-bordered interactive widget sits above the fold with tabs for Auto, Home, Personal, Home Equity, and Small Business loans. Sliders for amount, term, and credit tier update an APR estimate and amortization sparkline in real time. Below, each loan type has a deep-link section with eligibility, docs needed, and a 'talk to a real lender' callout with a named loan officer photo.",
+          "sections": [
+            "Hero loan calculator widget (multi-tab)",
+            "Auto loan deep section with refi promo",
+            "Mortgage deep section linking to Front Porch program",
+            "Personal loan section",
+            "HELOC section with draw period explainer",
+            "Small business / agricultural loan section",
+            "Pre-qualify (soft pull) form",
+            "Meet your local lenders gallery"
+          ]
+        },
+        {
+          "id": "branches-atms",
+          "path": "/locations",
+          "layout_pattern": "Split-view locator: left 40% scrollable list of branches with hours, services, and a 'Today's lobby wait' chip; right 60% interactive map with olive pin clusters and a cream basemap. Filters above: 'Open now', 'Drive-thru', 'Notary', 'Coin counter', 'Spanish-speaking staff', 'Shared branching'. Below the fold, an ATM-only mode toggles a denser pin layer including the CO-OP shared network.",
+          "sections": [
+            "ZIP / city search bar with geolocation prompt",
+            "Filter chip row",
+            "Branch list with photo, hours, services",
+            "Interactive map",
+            "ATM network mode toggle",
+            "Branch detail drawer (selected pin)",
+            "Holiday hours notice band"
+          ]
+        },
+        {
+          "id": "financial-literacy",
+          "path": "/money-garden",
+          "layout_pattern": "Editorial blog index titled 'The Money Garden' — magazine-style with a featured lead article (full-width terracotta band, large serif headline, member-author byline), followed by a three-column article grid filterable by life stage (First Job, First Home, Growing a Family, Small Business, Retiring Local). Each card has reading time, topic tag, and a small leaf-count difficulty meter.",
+          "sections": [
+            "Featured lead article band",
+            "Life-stage filter chips",
+            "Article grid with tags and reading time",
+            "Free workshops calendar strip (in-branch + virtual)",
+            "Downloadable workbook library",
+            "Kids' section: Sprout Savers comic strip archive",
+            "Newsletter signup with terracotta CTA"
+          ]
+        },
+        {
+          "id": "community-and-membership",
+          "path": "/belong",
+          "layout_pattern": "Long-scroll narrative page combining cooperative origin story, sponsorship grants, scholarships, and volunteer hours. Uses a vertical timeline with year markers from 1953 to today, photo collage bands, and a member testimonial carousel rendered as a stack of physical-looking membership cards that flip on hover.",
+          "sections": [
+            "Origin story timeline (1953 → today)",
+            "Annual community impact report download",
+            "Sponsorship grant program with current grantee list",
+            "Heartwood Scholars program (high school scholarships)",
+            "Volunteer hours counter and team photo grid",
+            "Member testimonial card stack",
+            "Eligibility & 'How to join' membership checklist",
+            "Board of directors with bios"
+          ]
+        },
+        {
+          "id": "secure-login",
+          "path": "/login",
+          "layout_pattern": "Focused single-column auth panel centered on a cream field with subtle olive-leaf watermark. Left side carries security messaging (FDIC/NCUA distinction explainer, anti-phishing tips, fraud hotline). Right side has the credentials form with username, password, 'Remember this device' checkbox, biometric prompt for mobile, and a Spanish/English toggle. Below, a row of common authenticated tasks links (Pay a person, Deposit a check, Lock my card) deep-link into the post-login app.",
+          "sections": [
+            "Login form with username/password",
+            "MFA / biometric path",
+            "Trouble signing in helper (reset, unlock, enroll)",
+            "Security & anti-phishing reassurance column",
+            "Quick links to common tasks",
+            "First-time enrollment CTA",
+            "Fraud hotline phone band"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Establish member-owned, not-for-profit identity distinct from megabanks",
+        "Reassure on deposit safety (NCUA) without legal jargon",
+        "Make rates and fees radically transparent",
+        "Convert curiosity into a started membership application",
+        "Reinforce local community reinvestment as the differentiator",
+        "Reduce anxiety around digital banking for older members"
+      ],
+      "required_text": [
+        "Federally insured by NCUA",
+        "Equal Housing Lender",
+        "Routing #: 291480379",
+        "Your money. Your neighbors. Your call."
+      ],
+      "content_model": [
+        "Account product (name, APY, fees, min balance, perks, fit vignette)",
+        "Loan product (type, APR range, term range, max amount, docs required, lender contact)",
+        "Branch (name, address, hours by day, services list, lobby wait, photo, manager)",
+        "ATM (address, network, deposit-capable, 24hr)",
+        "Article (title, author, life-stage tag, difficulty, body, reading time)",
+        "Testimonial (member name, town, years as member, quote, photo)",
+        "Sponsorship grantee (org, year, amount, photo, story)",
+        "Scholarship recipient (name, school, year, intended major)",
+        "Rate snapshot (product, rate, effective date)"
+      ],
+      "interactions": [
+        "Loan calculator with sliders for amount, term, and credit tier producing APR + monthly payment + amortization sparkline",
+        "Account-comparison pin bar (up to 3 deposit products)",
+        "Branch/ATM map with filter chips and geolocation",
+        "Membership eligibility quick-check form (county dropdown + employer search)",
+        "Rates ticker auto-updating from rate table data",
+        "Spanish / English language toggle",
+        "Testimonial card stack flip-on-hover",
+        "Newsletter signup with double opt-in",
+        "Lock-my-card and report-lost shortcuts from utility bar"
+      ],
+      "asset_needs": [
+        "8–12 candid member portraits (porch, storefront, branch lobby)",
+        "Branch exterior photography for 11 locations",
+        "Loan officer headshots (named, regional)",
+        "Olive-leaf watermark vector",
+        "Rounded humanist icon set (leaf, key, house, tractor, mortarboard, card-lock)",
+        "Sprout Savers kids comic strip illustrations",
+        "Community impact report PDF assets"
+      ],
+      "mobile_behavior": "Single-column responsive layout; utility bar collapses into a hamburger with phone + login pinned. Calculator widget retains sliders but stacks inputs above the result card. Locator collapses to a list-first view with a 'Map' toggle button. Rate ticker becomes a vertical marquee. Login screen uses native biometric prompts where available.",
+      "difficulty": "medium"
+    },
+    {
+      "candidate_id": "regional-credit-union-b",
+      "domain": "regional credit union (cooperative bank with co-op heritage emphasis)",
+      "site_goal": "Differentiate a 90-year-old credit union from regional commercial banks by foregrounding cooperative governance, member voting, and tangible community lending stories — while delivering modern self-service banking tools.",
+      "audience": [
+        "Multi-generational members across the three-state region",
+        "Worker-owned cooperatives seeking lending partners",
+        "Small farmers and ag businesses in succession planning",
+        "Civic-minded depositors choosing values-aligned banking",
+        "Business members needing commercial accounts",
+        "Long-time members participating in board elections"
+      ],
+      "description": "Three Rivers Cooperative Credit Union — founded 1936 by mill workers, today serving 84,000 members across a riverine three-state region. The visual feel diverges sharply from concept A: instead of leading with member portraits, the site uses an editorial almanac aesthetic borrowed from old farmers' co-op annual reports. Olive green dominates as wide horizontal banding (think ledger-paper stripes), terracotta is reserved as a chapter-marker accent and for percentage figures (rates, voting turnout, dividend returns), and cream forms the body background with a faint engraved-line texture. Type pairing: a rounded humanist serif (e.g. Cooper-adjacent) for headlines, paired with a workhorse rounded sans for body, and a monospace for figures so rate tables and ledgers read as 'honest accounting.' The grid is asymmetric — articles run in two unequal columns like a broadsheet, and inline marginalia (footnotes, definitions, historical asides) sits in the narrow column. Decorative motifs: scratchboard-style engraved spot illustrations of a hydroelectric dam, wheat sheaves, a hand-shake, and a bridge — referencing the cooperative's mill-town origins. The tone is earnest, occasionally archival, and quietly proud. Every page footer carries the cooperative's seven Rochdale Principles in tiny caps.",
+      "motif": "Engraved scratchboard spot illustrations + horizontal ledger-stripe banding that visually divides every page into 'chapters,' echoing a cooperative's annual report.",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Almanac-style cover: a centered cream panel with a large engraved bridge motif, the cooperative's founding year ('Est. 1936') in terracotta numerals, and a one-sentence mission. Below, an olive ledger stripe holds the current dividend rate and member count. The page then unfolds into chapters: 'What We Offer,' 'Where We Lend,' 'How We're Governed,' 'What Members Are Reading.' Each chapter is announced by a terracotta Roman numeral.",
+          "sections": [
+            "Almanac-cover hero with founding year and mission",
+            "Ledger stripe: current 12-month dividend, member count, branches",
+            "Chapter I: Services overview (tiered nav preview)",
+            "Chapter II: Community lending map (recent loans funded, anonymized)",
+            "Chapter III: Governance — annual meeting countdown, board election banner",
+            "Chapter IV: Reading room — three featured literacy articles",
+            "Member voices: rotating long-form testimonial (200+ words, byline, photo)",
+            "Footer with Rochdale Principles, NCUA badge, equal housing mark"
+          ]
+        },
+        {
+          "id": "services-tiered-nav",
+          "path": "/services",
+          "layout_pattern": "A tiered services index page acting as a wayfinding hub. Three primary tiers — Personal, Business, Cooperative Lending — each rendered as a wide horizontal ledger-stripe band. Within each band, sub-products are listed as a typographic table with name, one-line description, current rate (monospaced), and a rightward arrow. A persistent left-rail outline mirrors the tiered structure as the user scrolls.",
+          "sections": [
+            "Personal banking tier (checking, savings, CDs, money market, IRA, youth)",
+            "Borrowing tier (auto, mortgage, HELOC, personal, credit-builder)",
+            "Business tier (operating accounts, SBA, commercial real estate, ag loans)",
+            "Cooperative lending tier (co-op startup loans, worker-owned conversion financing, community solar loans)",
+            "Glossary marginalia (APR vs APY, share vs deposit, etc.)",
+            "Sticky left-rail outline navigation",
+            "'Not sure where to start?' guided-help launcher"
+          ]
+        },
+        {
+          "id": "loan-calculator-suite",
+          "path": "/tools/calculators",
+          "layout_pattern": "Tools page presented as a 'workshop' with six discrete calculator widgets laid out in a 2×3 grid, each in its own bordered card with a small engraved tool icon (plane = mortgage, gear = auto refi, scale = debt consolidation, sprout = savings goal, bridge = HELOC, ledger = amortization). Selecting a card expands it inline to full width with input fields, a result panel, and a 'Print this estimate' option that produces a clean PDF.",
+          "sections": [
+            "Mortgage payment calculator (P&I, taxes, insurance, PMI)",
+            "Auto loan + refi-savings calculator",
+            "Debt consolidation calculator",
+            "Savings goal projector",
+            "HELOC draw-period calculator",
+            "Amortization schedule generator",
+            "Assumptions and disclosures sidebar",
+            "Schedule-a-lender-call CTA"
+          ]
+        },
+        {
+          "id": "branches-and-atms",
+          "path": "/find-us",
+          "layout_pattern": "Locator with a regional vector map of the three-state service area drawn in olive linework on cream, dotted with terracotta pins. A right-side panel lists branches grouped by river basin (Upper, Middle, Lower) — reinforcing the 'Three Rivers' brand. Each branch entry expands to show hours, services, branch manager name, and a small archive note ('opened 1962, in the former Grange hall'). A separate tab swaps to ATM-only view including 30,000+ shared-network ATMs as a heatmap.",
+          "sections": [
+            "Regional vector map with river-basin grouping",
+            "Branch list by basin with archive notes",
+            "ATM heatmap toggle (shared CO-OP network)",
+            "Drive-thru-only filter",
+            "Notary and safe-deposit availability filter",
+            "Holiday hours and weather closure banner",
+            "Shared branching explainer card"
+          ]
+        },
+        {
+          "id": "governance-and-voting",
+          "path": "/governance",
+          "layout_pattern": "Civic-style page foregrounding the cooperative's one-member-one-vote structure. Top band: annual meeting date with an RSVP form and live countdown. Middle: board of directors gallery with candidate statements during election season (terracotta 'BALLOT OPEN' chip when active). Bottom: archive of past annual reports rendered as a year-grid of downloadable PDFs styled as little ledger spines.",
+          "sections": [
+            "Annual meeting RSVP and countdown",
+            "Current board of directors (photos, terms, committees)",
+            "Board election ballot panel (member-authenticated)",
+            "Bylaws and policies library",
+            "Member proposals submission form",
+            "Annual report archive grid (1996 → present)",
+            "Rochdale Principles long-form explainer"
+          ]
+        },
+        {
+          "id": "community-impact-blog",
+          "path": "/reading-room",
+          "layout_pattern": "Editorial blog called 'The Reading Room' presented as a periodical with issue numbers and monthly cover illustrations. The index shows the current issue's three feature articles in a broadsheet two-column layout, with a sidebar carrying community sponsorship news, scholarship recipients, and a 'Loans at work' column profiling a recent borrower's project (a worker co-op, a farm transition, a first-time homebuyer).",
+          "sections": [
+            "Current issue cover and table of contents",
+            "Feature articles in broadsheet two-column",
+            "Loans at Work column (member project profile)",
+            "Sponsorship news ticker",
+            "Scholarship recipients gallery",
+            "Past issues archive carousel",
+            "Subscribe-by-mail print newsletter option"
+          ]
+        },
+        {
+          "id": "secure-member-login",
+          "path": "/sign-in",
+          "layout_pattern": "Two-column auth screen: left column carries the login form in a bordered cream card, right column carries a rotating 'security note of the week' authored by the credit union's fraud team (with byline). Below the form sits a subtle row of trust marks (NCUA, MULTI-FACTOR, ENCRYPTED) rendered as engraved-style badges rather than glossy logos. A separate 'Business banking' tab routes commercial members to a distinct portal.",
+          "sections": [
+            "Personal login form",
+            "Business banking login tab",
+            "MFA prompt path",
+            "Forgot username / password recovery",
+            "First-time enrollment flow launcher",
+            "Security note of the week column",
+            "Engraved trust-mark row",
+            "24/7 fraud hotline call-out"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Foreground cooperative governance and member voice",
+        "Establish 90-year institutional continuity and trust",
+        "Show, with specifics, where deposits get re-lent locally",
+        "Differentiate from commercial regional banks via Rochdale Principles",
+        "Make rates and fees legible through ledger-styled typography",
+        "Invite member participation beyond transactional banking"
+      ],
+      "required_text": [
+        "Three Rivers Cooperative Credit Union",
+        "Est. 1936",
+        "One member, one vote.",
+        "Federally insured by NCUA",
+        "Equal Housing Lender"
+      ],
+      "content_model": [
+        "Service tier (name, description, products[])",
+        "Product (name, rate, term, fees, eligibility, related products)",
+        "Branch (basin grouping, address, hours, services, manager, archive note, opened year)",
+        "Board member (name, photo, term start, term end, committees, candidate statement)",
+        "Annual report (year, PDF, total assets, member count, dividends returned)",
+        "Article (issue number, byline, dek, body, marginalia footnotes, illustration)",
+        "Loan-at-work profile (borrower, loan type, amount, story, photo, year)",
+        "Calculator config (type, inputs, output formulas, disclosures)",
+        "Rate snapshot (product, rate, effective date, prior rate)"
+      ],
+      "interactions": [
+        "Six calculator widgets with print-to-PDF",
+        "Member-authenticated board election ballot",
+        "Annual meeting RSVP with guest count",
+        "Regional map with basin filter and pin clustering",
+        "Tiered service index with sticky outline nav",
+        "Issue-by-issue blog archive carousel",
+        "Member proposal submission form",
+        "Print newsletter mail-subscribe form",
+        "Fraud-alert subscription toggle"
+      ],
+      "asset_needs": [
+        "Scratchboard-style engraved spot illustrations (bridge, dam, wheat, handshake, ledger)",
+        "Regional vector map of three-state service area with river basins",
+        "Board member portraits in consistent lighting",
+        "Annual report PDF spine renderings (1996 → present)",
+        "Monthly 'Reading Room' cover illustrations",
+        "Loan-at-work member project photography",
+        "Engraved-badge trust marks (NCUA, MFA, ENCRYPTED)",
+        "Cooper-adjacent rounded humanist display serif license"
+      ],
+      "mobile_behavior": "Ledger stripes compress into stacked chapter cards with terracotta Roman numerals retained as section headers. Tiered services collapse into accordion bands. Locator map becomes list-first grouped by basin with a 'View map' toggle. Calculator workshop reflows to a single vertical stack with one widget expanded at a time. Login two-column collapses to form-first, with security note moving below. Marginalia footnotes become tap-to-expand inline glosses.",
+      "difficulty": "medium"
+    }
+  ]
+}

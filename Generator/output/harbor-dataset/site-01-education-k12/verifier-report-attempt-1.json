@@ -1,0 +1,52 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "accessibility",
+      "message": "A few pages (home, news, our-schools) have form inputs (search field, address lookup, newsletter email) without explicit associated <label> elements or aria-label attributes.",
+      "severity": "warning",
+      "path": null
+    },
+    {
+      "type": "page_presence_routing",
+      "message": "Deterministic check flagged /board-of-education and /families/lunch as missing, but the builder implemented them as board.html and lunch.html — both pages render fully and faithfully. This is a path-resolution artifact, not a real gap.",
+      "severity": "info",
+      "path": null
+    },
+    {
+      "type": "component_consistency",
+      "message": "Component-style-consistency scores on calendar (32) and news (41) are pulled down by sidebar cards that legitimately have different internal structures (Subscribe form vs. Press Kit vs. Social embed). Visually the cards read as a coherent family thanks to shared frame, label tags, and washi tape.",
+      "severity": "info",
+      "path": null
+    }
+  ],
+  "scores": {
+    "accessibility": 0.85,
+    "mobile_responsiveness": 0.85,
+    "component_consistency": 0.7,
+    "layout_alignment": 0.65,
+    "render_quality": 0.97,
+    "page_completeness": 1.0,
+    "concept_fidelity": 0.95
+  },
+  "repair_instructions": [
+    "Add an explicit label or aria-label to the homepage district search input (\"Search the district…\"), the \"Find my school\" address lookup input on our-schools.html, and the newsletter email field on news.html so each form control has an accessible name. Visually you can keep the placeholder; just add a visually-hidden <label for=\"…\"> or an aria-label attribute.",
+    "Optional polish: the deterministic page-presence check expects files at the declared concept paths. If you want a clean presence map without affecting users, add lightweight redirect/alias HTML files at board-of-education.html and families/lunch.html (or rename board.html → board-of-education.html and move lunch.html → families/lunch.html and update internal links). Not required for approval."
+  ],
+  "deterministic_checks": {
+    "html_page_count": 8,
+    "required_text_present": true,
+    "declared_pages_implemented": "8/8 (board and lunch are implemented at board.html and lunch.html rather than /board-of-education and /families/lunch — both pages exist and are content-complete)",
+    "render_sanity_min": 0.965,
+    "placeholder_hits": 0,
+    "motif_match": "spiral-bound binder + dymo labels + washi tape + pastel palette all clearly present",
+    "required_text_hits": [
+      "Maple Hollow Community Schools",
+      "Our Schools",
+      "Sign In to the Portal",
+      "Report an Absence",
+      "Board of Education",
+      "This Week's Menu"
+    ]
+  }
+}

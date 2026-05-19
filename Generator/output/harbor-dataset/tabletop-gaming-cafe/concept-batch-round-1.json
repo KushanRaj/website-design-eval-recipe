@@ -1,0 +1,313 @@
+{
+  "seed_id": "tabletop-gaming-cafe",
+  "concepts": [
+    {
+      "candidate_id": "meeple-and-mug-cafe",
+      "domain": "Board game cafe and tabletop retail brand (neighborhood storefront with online presence)",
+      "site_goal": "Drive in-cafe reservations, event/tournament signups, and loyalty club registrations while letting visitors browse the 800-game library and menu before they arrive.",
+      "audience": [
+        "Casual cafe-goers looking for a Friday night activity",
+        "Hobby-grade board gamers searching for rare titles in the library",
+        "Group organizers booking birthday parties or company offsites",
+        "Tournament regulars tracking weekly leagues",
+        "Loyalty members redeeming free-play credits"
+      ],
+      "description": "Meeple & Mug is a multi-room board game cafe in a converted warehouse that doubles as a tabletop brand publishing two original card games. The website pairs a chunky illustrated style — hex-tile background patterns, meeple mascots in tangerine and electric purple, scribbled drop-shadows on buttons — with a confident utility layer: a searchable game library with filters for player count / play time / complexity / mood, a live event calendar with tournament brackets, a private room booking flow with deposit, a drinks-and-snacks menu styled like a vintage diner board with playful illustrations, and a loyalty Tavern Pass tier ladder. The blog reviews new releases each Friday with a rubric scorecard. The visual feel is candy-bright and tactile, like opening a colorful box of dice.",
+      "motif": "Hex-tile background grids, chunky bordered illustration cards, meeple silhouettes used as bullet markers, dice-face section dividers, sticker-style price tags",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Hero with oversized illustrated cafe scene, three feature cards (Tonight's Events / New on the Shelf / Book a Table), inline drinks teaser strip, loyalty signup band, latest blog reviews row, footer with hours and map",
+          "sections": [
+            "Hero illustration with tagline Roll Sip Repeat",
+            "Tonight at the cafe — live event chips",
+            "Featured games of the month — 4-up card row",
+            "Drinks teaser with three signature cocktails",
+            "Tavern Pass loyalty band",
+            "Latest reviews from the blog",
+            "Hours, address, map cluster"
+          ]
+        },
+        {
+          "id": "menu",
+          "path": "/menu",
+          "layout_pattern": "Diner-board-styled menu with four columns (Bites, Sweets, Sips, Spirits), each item as an illustrated chip-card with price tag sticker; allergen filter strip at top; staff pick callouts",
+          "sections": [
+            "Menu hero with chalkboard treatment",
+            "Allergen and dietary filter chips",
+            "Bites column",
+            "Sweets column",
+            "Sips (non-alcoholic) column",
+            "Spirits and beer column",
+            "Staff pick spotlight cards",
+            "Private event catering note"
+          ]
+        },
+        {
+          "id": "library",
+          "path": "/library",
+          "layout_pattern": "Two-pane layout: left filter rail (player count slider, play time chips, complexity dots, mood tags, availability toggle), right card grid of game tiles with availability badge; sort dropdown; pagination",
+          "sections": [
+            "Library hero with search bar What are you in the mood to play",
+            "Filter rail",
+            "Sort and view toggle",
+            "Game card grid",
+            "Featured shelf carousel (Cafe Staff Favorites)",
+            "Request-a-game form"
+          ]
+        },
+        {
+          "id": "events",
+          "path": "/events",
+          "layout_pattern": "Calendar grid with month/list toggle, event type legend, expandable tournament bracket modules below the calendar; featured weekly leagues sidebar",
+          "sections": [
+            "Events hero with current month banner",
+            "Event type legend (Tournament / League / Learn-to-Play / Open Social)",
+            "Calendar grid",
+            "Featured tournament with bracket viewer",
+            "Weekly leagues sidebar",
+            "Submit-a-meetup form for community groups"
+          ]
+        },
+        {
+          "id": "book",
+          "path": "/book",
+          "layout_pattern": "Stepper-style booking flow: room selection card grid then date/time picker then add-ons then contact and deposit; sticky summary sidebar showing total",
+          "sections": [
+            "Booking intro with three room illustrations (The Dragon's Den / The Hex Hall / The Quiet Corner)",
+            "Step 1: Pick a room",
+            "Step 2: Pick date and party size",
+            "Step 3: Add-ons (snack platter, dedicated host, themed setup)",
+            "Step 4: Contact info and deposit",
+            "Sticky summary sidebar",
+            "FAQ accordion (cancellation, outside food, kids)"
+          ]
+        },
+        {
+          "id": "loyalty",
+          "path": "/tavern-pass",
+          "layout_pattern": "Tier ladder with three illustrated chunky tier cards (Pawn / Knight / Queen), perks comparison table, signup form, points-to-perks calculator",
+          "sections": [
+            "Tavern Pass hero",
+            "How it works — three steps",
+            "Tier ladder cards",
+            "Perks comparison table",
+            "Points calculator (visits times dollars)",
+            "Signup form",
+            "Member testimonials"
+          ]
+        },
+        {
+          "id": "blog",
+          "path": "/reviews",
+          "layout_pattern": "Editorial grid with large lead review card on top, three secondary cards below, rubric category filters, archive list at bottom",
+          "sections": [
+            "Reviews hero Friday Reviews",
+            "Lead review card with rubric scorecard",
+            "Three secondary review cards",
+            "Filter by rubric category (Strategy / Party / Solo / Family / Heavy)",
+            "Reviewer roster strip",
+            "Archive list with year jump"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Communicate that the cafe is warm, social, and beginner-friendly — not a hushed hobby shop",
+        "Make the 800-game library feel browsable instead of overwhelming",
+        "Reduce friction on booking a table or private room",
+        "Position the in-house published games as part of a legitimate tabletop brand",
+        "Build a sense of repeat-visit ritual through the loyalty program"
+      ],
+      "required_text": [
+        "Meeple & Mug",
+        "Tavern Pass",
+        "Roll, Sip, Repeat."
+      ],
+      "content_model": [
+        "Game (title, designer, players, play time, complexity 1-5, mood tags, shelf location, currently checked out?)",
+        "Event (name, date, type: tournament/league/learn-to-play/open social, host, capacity, entry fee, prize pool)",
+        "Menu item (name, category: bites/sweets/drinks/booze, price, dietary tags, illustration)",
+        "Private room (capacity, hourly rate, included games, deposit amount, availability calendar)",
+        "Loyalty tier (name: Pawn/Knight/Queen, points threshold, perks list)",
+        "Blog review (game reviewed, rubric scores, reviewer, verdict, related games)",
+        "Staff guide (name, favorite game, signature drink, photo)"
+      ],
+      "interactions": [
+        "Filter game library by player count slider, play time chips, complexity dots, and mood tag pills",
+        "Live availability badge on each game card (On Shelf / In Play / Reserved)",
+        "Calendar grid toggle between Month and List view for events",
+        "Tournament bracket viewer that expands inline",
+        "Private booking flow: pick room then date/time then add-ons then deposit",
+        "Loyalty signup with progress meter and tier preview",
+        "Blog reviews filterable by rubric category and player count"
+      ],
+      "asset_needs": [
+        "Chunky illustrated meeple mascot family in tangerine and purple",
+        "Hex-tile repeating SVG background",
+        "Dice-face section divider set (d4, d6, d8, d10, d12, d20)",
+        "Sticker-style price tag shapes",
+        "Photo or illustration treatment for staff portraits framed in hex tiles",
+        "Cover thumbnails for about 12 sample games in the library"
+      ],
+      "mobile_behavior": "Hex-tile backgrounds switch to a softer two-tone wash on mobile to avoid pattern noise; game library filters collapse into a bottom-sheet drawer; event calendar defaults to list view; booking flow becomes a step-by-step single-column wizard with sticky CTA",
+      "difficulty": "medium"
+    },
+    {
+      "candidate_id": "hex-and-hops-tavern-collective",
+      "domain": "Tabletop gaming brand with attached game tavern and tournament league (publisher-first identity, cafe as flagship)",
+      "site_goal": "Sell the Hex & Hops original game line, drive league registrations and tournament tickets, and convert visitors into Hex Crew loyalty members who book recurring tavern nights.",
+      "audience": [
+        "Strategy gamers tracking league standings",
+        "Casual party-game buyers shopping the catalog",
+        "Parents booking the kids table on weekend afternoons",
+        "Friend groups reserving a private tavern booth",
+        "Designers and reviewers following the studio blog"
+      ],
+      "description": "Hex & Hops is a tabletop publisher with a single flagship tavern in the back of an old brewery. The brand publishes four signature games (a heavy strategy hex-builder, a party word game, a co-op dungeon crawler, a kids dice game) and runs the regional Hex League tournament circuit. The website leans into the brand's playful illustrated chunky aesthetic with a candy-bright palette — tangerine button fills, electric purple shadows, mint accents on hex-tile backgrounds, cream paper textures behind type. Sections feel like opening a game box: cards have die-cut chunky borders, icons look hand-carved, headers use a bold display sans with extra ink trapping. The site supports a game catalog with retailer locator, a tavern menu/booking page, a league/tournament calendar with brackets and standings, a private group booking flow, a Hex Crew loyalty signup with stamp-card UI, and a designer's blog with new release reviews and behind-the-scenes notes.",
+      "motif": "Die-cut hex tiles with thick chunky borders, illustrated meeple-and-mug icon set, stamp-card visual for loyalty, brewery-style chalkboard menu rendering, league standings tables styled like scorecards",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Hero with chunky illustrated game box stack and headline Pull up a chair, three-up feature row (Shop the Games / Visit the Tavern / Join the League), seasonal release spotlight, league standings teaser, Hex Crew stamp-card invite, blog row, footer with brewery address",
+          "sections": [
+            "Hero illustration with stacked game boxes",
+            "Three pillars feature row",
+            "Seasonal release spotlight card",
+            "League standings teaser",
+            "Hex Crew loyalty band with stamp-card visual",
+            "Latest from the designer's blog",
+            "Tavern hours and map"
+          ]
+        },
+        {
+          "id": "games",
+          "path": "/games",
+          "layout_pattern": "Catalog grid of four flagship games with filter chips at top, each card opens into a detailed product page; sidebar showing retailer locator entry",
+          "sections": [
+            "Catalog hero",
+            "Filter chips (players, age, complexity, mood)",
+            "Flagship four card grid",
+            "Detail spotlight (rotating)",
+            "Where to buy — retailer locator",
+            "Rulebook download links",
+            "Coming-soon teaser"
+          ]
+        },
+        {
+          "id": "tavern",
+          "path": "/tavern",
+          "layout_pattern": "Tavern menu and booking page combined: chalkboard-styled menu columns, illustrated floor plan with bookable booths, hours strip, booking CTA leading to flow",
+          "sections": [
+            "Tavern hero with brewery photo treatment",
+            "Chalkboard menu — Bites / Pints / Pours / Sweets",
+            "Pairing-with-games toggle",
+            "Illustrated floor plan with bookable booths",
+            "Hours and house rules",
+            "Book-a-booth CTA",
+            "Group catering note"
+          ]
+        },
+        {
+          "id": "league",
+          "path": "/league",
+          "layout_pattern": "Tournament hub: upcoming events calendar at top, current season standings table in the middle, expandable bracket viewer below, sign-up flow at bottom",
+          "sections": [
+            "Hex League hero with season banner",
+            "Upcoming tournaments calendar",
+            "Current standings sortable table with season switcher",
+            "Featured bracket viewer",
+            "Rules and format accordion",
+            "Player signup form",
+            "Hall of Champions strip"
+          ]
+        },
+        {
+          "id": "book",
+          "path": "/book-a-booth",
+          "layout_pattern": "Stepper booking flow with illustrated floor-plan booth picker, date/time picker, add-ons, deposit; right-side summary card",
+          "sections": [
+            "Booking intro",
+            "Step 1: Pick a booth (floor plan)",
+            "Step 2: Date, time, party size",
+            "Step 3: Add-ons (game host, snack platter, themed decor)",
+            "Step 4: Contact and deposit",
+            "Summary sidebar",
+            "Cancellation policy"
+          ]
+        },
+        {
+          "id": "hex-crew",
+          "path": "/hex-crew",
+          "layout_pattern": "Loyalty page with full-width stamp-card hero, how-it-works steps, perks ladder, signup form, member spotlights",
+          "sections": [
+            "Hex Crew hero with stamp-card visual",
+            "How it works — three illustrated steps",
+            "Perks ladder",
+            "Signup form",
+            "Member spotlight quotes",
+            "FAQ accordion"
+          ]
+        },
+        {
+          "id": "blog",
+          "path": "/dispatch",
+          "layout_pattern": "Editorial layout with category tabs (Reviews / Designer Diaries / Release News), lead post hero, secondary cards, author roster strip",
+          "sections": [
+            "Dispatch hero",
+            "Category tabs",
+            "Lead post hero",
+            "Secondary post cards",
+            "Designer roster strip",
+            "Inline newsletter signup",
+            "Archive list"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Establish Hex & Hops as a credible publisher, not just a cafe",
+        "Make the tavern feel like a community clubhouse for the league",
+        "Lower the barrier to learning the four signature games",
+        "Drive recurring visits via the stamp-card loyalty motif",
+        "Showcase upcoming releases through designer-led storytelling"
+      ],
+      "required_text": [
+        "Hex & Hops",
+        "Hex Crew",
+        "Hex League",
+        "Pull up a chair."
+      ],
+      "content_model": [
+        "Game title (cover art, players, age, play time, complexity, designer, price, retailer links, rulebook PDF)",
+        "Tavern menu item (name, type, price, illustration, pairing suggestion: best with [game])",
+        "League event (date, format, buy-in, prize, venue, registered players list, bracket)",
+        "Standing (player handle, season points, wins, current rank)",
+        "Private booking (booth or room, capacity, hourly rate, included games, deposit)",
+        "Loyalty stamp (visit type: tournament/booking/purchase, points value, perk unlocks)",
+        "Blog post (type: review/designer diary/release news, author, related game)",
+        "Designer (name, portrait, games credited, short bio)"
+      ],
+      "interactions": [
+        "Game catalog filter by player count, age, complexity, and good-for mood",
+        "Retailer locator with zip search and map",
+        "League standings sortable table with season switcher",
+        "Bracket viewer with expandable matches and final-score reveal",
+        "Tavern booking flow with booth picker on illustrated floor plan",
+        "Loyalty stamp-card visualization that fills as a member earns visits",
+        "Newsletter inline signup at the end of every blog post",
+        "Menu pairing toggle that highlights items recommended with a chosen game"
+      ],
+      "asset_needs": [
+        "Four chunky illustrated game box covers",
+        "Hex-tile section dividers with mint outline",
+        "Stamp-card SVG with twelve hex slots",
+        "Illustrated floor plan of the tavern showing booths and bar",
+        "Designer portrait illustrations (4)",
+        "Icon set: dice, mug, meeple, scroll, sword, crown"
+      ],
+      "mobile_behavior": "Hex-tile decorative patterns simplify to flat fills below 600px; the catalog filter rail collapses into a sheet; league standings tables become a card stack with rank, name, points; bracket viewer becomes a horizontally scrollable strip; the tavern floor plan switches to a list of booth cards",
+      "difficulty": "medium"
+    }
+  ]
+}

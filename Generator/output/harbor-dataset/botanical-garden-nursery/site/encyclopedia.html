@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cultivar Encyclopedia — Fernwood Conservatory</title>
+<meta name="description" content="A working encyclopedia of cultivars grown at Fernwood Conservatory and supplied through the rare-plant nursery." />
+<link rel="stylesheet" href="css/style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div class="topbar">
+  <span>Open Wed – Sun · 09.00 – 17.00 · Glasshouses to 19.00 Thursdays</span>
+  <span><a href="visit.html">Plan Your Visit ↗</a> &nbsp; <a href="membership.html">Become a Member ↗</a></span>
+</div>
+
+<header class="masthead">
+  <div class="brand-row">
+    <svg class="brand-mark" viewBox="0 0 60 60" aria-hidden="true">
+      <g fill="none" stroke="#1f2a1d" stroke-width="1.2">
+        <circle cx="30" cy="30" r="28"/>
+        <path d="M30 8 C 22 18, 22 30, 30 52 C 38 30, 38 18, 30 8 Z" fill="#647a4f"/>
+        <path d="M30 8 L 30 52"/>
+      </g>
+    </svg>
+    <h1 class="brand-name">Fernwood Conservatory<small>& Rare Plant Nursery · Est. 1924</small></h1>
+    <div class="brand-meta">14 Acres<br/><strong>Olympic Foothills, WA</strong><br/>Vol. CII · No. 5</div>
+  </div>
+</header>
+
+<nav class="mainnav">
+  <ul>
+    <li><a href="index.html">Garden</a></li>
+    <li><a href="encyclopedia.html" aria-current="page">Encyclopedia</a></li>
+    <li><a href="bloom-calendar.html">Bloom Calendar</a></li>
+    <li><a href="garden-map.html">Garden Map</a></li>
+    <li><a href="workshops.html">Workshops</a></li>
+    <li><a href="shop.html">Nursery Shop</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="field-notes.html">Field Notes</a></li>
+    <li><a href="visit.html">Visit</a></li>
+  </ul>
+</nav>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumb">Garden · Living Collection</div>
+    <h1>The Cultivar Encyclopedia</h1>
+    <p class="deck">An indexed folio of the 1,840 species and named cultivars currently grown at Fernwood — under glass, in the open beds, or held in the propagation nursery. Each entry edited and verified by our curatorial staff.</p>
+
+    <div class="search-row" style="margin-top:2rem">
+      <input id="enc-search" type="search" placeholder="Search — by binomial, common name, or family..." />
+      <button class="btn">Search</button>
+    </div>
+
+    <div class="alpha-strip" aria-label="Jump to letter">
+      <a href="#A" class="is-active">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a>
+      <a href="#E">E</a><a href="#F">F</a><a href="#G">G</a><a href="#H">H</a>
+      <a href="#I">I</a><a href="#J">J</a><a href="#K">K</a><a href="#L">L</a>
+      <a href="#M">M</a><a href="#N">N</a><a href="#O">O</a><a href="#P">P</a>
+      <a href="#Q">Q</a><a href="#R">R</a><a href="#S">S</a><a href="#T">T</a>
+      <a href="#U">U</a><a href="#V">V</a><a href="#W">W</a><a href="#X">X</a>
+      <a href="#Y">Y</a><a href="#Z">Z</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="enc-layout">
+      <aside class="facet-rail">
+        <h4>Family</h4>
+        <label><input type="checkbox" checked /> Orchidaceae <span class="count">214</span></label>
+        <label><input type="checkbox" /> Ericaceae <span class="count">186</span></label>
+        <label><input type="checkbox" /> Magnoliaceae <span class="count">42</span></label>
+        <label><input type="checkbox" /> Theaceae <span class="count">61</span></label>
+        <label><input type="checkbox" /> Papaveraceae <span class="count">38</span></label>
+        <label><input type="checkbox" /> Ranunculaceae <span class="count">72</span></label>
+
+        <h4>Hardiness Zone (USDA)</h4>
+        <label><input type="checkbox" /> Zone 5 — to −20 °F <span class="count">112</span></label>
+        <label><input type="checkbox" checked /> Zone 6 — to −10 °F <span class="count">348</span></label>
+        <label><input type="checkbox" checked /> Zone 7 — to  0 °F <span class="count">512</span></label>
+        <label><input type="checkbox" /> Zone 8 — to 10 °F <span class="count">298</span></label>
+        <label><input type="checkbox" /> Glasshouse only <span class="count">214</span></label>
+
+        <h4>Light</h4>
+        <label><input type="checkbox" /> Full sun <span class="count">372</span></label>
+        <label><input type="checkbox" checked /> Part shade <span class="count">681</span></label>
+        <label><input type="checkbox" /> Dappled <span class="count">412</span></label>
+        <label><input type="checkbox" /> Cool diffused <span class="count">189</span></label>
+
+        <h4>Conservation</h4>
+        <label><input type="checkbox" /> Least Concern <span class="count">912</span></label>
+        <label><input type="checkbox" /> Near Threatened <span class="count">187</span></label>
+        <label><input type="checkbox" checked /> Vulnerable <span class="count">118</span></label>
+        <label><input type="checkbox" /> Endangered <span class="count">62</span></label>
+        <label><input type="checkbox" /> Cr. Endangered <span class="count">19</span></label>
+
+        <hr class="rule"/>
+        <p class="caption">Pair the encyclopedia with the <a href="bloom-calendar.html">Bloom Calendar</a> to see when a species peaks.</p>
+      </aside>
+
+      <div>
+        <div class="plate-grid">
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 110"/>
+                    <ellipse cx="100" cy="80" rx="35" ry="32" fill="#f3eddb" stroke="#3a4a30"/>
+                    <path d="M100 50 C 80 60 75 95 100 110 C 125 95 120 60 100 50 Z" fill="#faf6ec" stroke="#2c3a26"/>
+                    <path d="M100 50 L 100 110" stroke-dasharray="1 2"/>
+                    <path d="M100 80 C 70 75 50 90 40 110 C 65 95 85 90 100 92" />
+                    <path d="M100 80 C 130 75 150 90 160 110 C 135 95 115 90 100 92" />
+                    <ellipse cx="100" cy="110" rx="12" ry="14" fill="#f9d9cd" stroke="#b3492f"/>
+                    <path d="M100 185 C 70 180 55 170 50 155 C 75 165 92 165 100 165 Z" fill="#899b6f" fill-opacity="0.6"/>
+                    <path d="M100 185 C 130 180 145 170 150 155 C 125 165 108 165 100 165 Z" fill="#899b6f" fill-opacity="0.6"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Paphiopedilum fairrieanum</h3>
+                <span class="common">Fairrie's Slipper Orchid · Orchidaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone GH</span>
+                  <span class="badge">Diffused</span>
+                  <span class="badge con">Vulnerable</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html#related">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 80" stroke-width="1.4"/>
+                    <ellipse cx="100" cy="55" rx="48" ry="38" fill="#f9d9cd" stroke="#b3492f"/>
+                    <ellipse cx="100" cy="55" rx="32" ry="26" fill="#ee8870"/>
+                    <ellipse cx="100" cy="55" rx="14" ry="14" fill="#a07827"/>
+                    <line x1="100" y1="55" x2="100" y2="20"/>
+                    <line x1="100" y1="55" x2="70" y2="40"/>
+                    <line x1="100" y1="55" x2="130" y2="40"/>
+                    <path d="M100 190 C 60 185 40 165 30 145 C 70 160 90 165 100 165 Z" fill="#899b6f" fill-opacity="0.6"/>
+                    <path d="M100 190 C 140 185 160 165 170 145 C 130 160 110 165 100 165 Z" fill="#899b6f" fill-opacity="0.6"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Magnolia campbellii</h3>
+                <span class="common">Himalayan Magnolia · Magnoliaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 7</span>
+                  <span class="badge">Full sun</span>
+                  <span class="badge con">Vulnerable</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 110"/>
+                    <ellipse cx="100" cy="80" rx="55" ry="36" fill="#d4dbbf" fill-opacity="0.7" stroke="#3a4a30"/>
+                    <ellipse cx="100" cy="80" rx="38" ry="24" fill="#e8ecd9"/>
+                    <circle cx="100" cy="80" r="7" fill="#a07827"/>
+                    <line x1="60" y1="75" x2="140" y2="75" stroke-dasharray="1 2"/>
+                    <line x1="60" y1="85" x2="140" y2="85" stroke-dasharray="1 2"/>
+                    <path d="M100 185 C 65 180 50 165 45 145 C 75 160 92 165 100 165 Z" fill="#899b6f" fill-opacity="0.55"/>
+                    <path d="M100 185 C 135 180 150 165 155 145 C 125 160 108 165 100 165 Z" fill="#899b6f" fill-opacity="0.55"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Helleborus × hybridus</h3>
+                <span class="common">Lenten Rose · Ranunculaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 6</span>
+                  <span class="badge">Part shade</span>
+                  <span class="badge">LC</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 70" stroke-width="1.4"/>
+                    <path d="M100 70 L 70 40"/>
+                    <path d="M70 40 C 50 55 50 75 65 85 C 75 80 80 60 75 45 Z" fill="#f9d9cd" stroke="#b3492f"/>
+                    <path d="M70 40 C 90 55 90 75 75 85 C 65 80 60 60 65 45 Z" fill="#ee8870" fill-opacity="0.4" stroke="#b3492f"/>
+                    <ellipse cx="65" cy="180" rx="32" ry="10" fill="#b3bf9a" fill-opacity="0.55"/>
+                    <ellipse cx="135" cy="195" rx="32" ry="10" fill="#899b6f" fill-opacity="0.55"/>
+                    <ellipse cx="65" cy="180" rx="18" ry="6" fill="#647a4f" fill-opacity="0.45"/>
+                    <ellipse cx="135" cy="195" rx="18" ry="6" fill="#647a4f" fill-opacity="0.45"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Erythronium revolutum</h3>
+                <span class="common">Pink Fawn Lily · Liliaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 6</span>
+                  <span class="badge">Dappled</span>
+                  <span class="badge con">Near Thr.</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 110"/>
+                    <ellipse cx="100" cy="80" rx="42" ry="30" fill="#d4dbbf" fill-opacity="0.4"/>
+                    <path d="M100 50 C 70 60 60 100 95 115 C 100 95 92 80 100 65 Z" fill="#899b6f" fill-opacity="0.5"/>
+                    <path d="M100 50 C 130 60 140 100 105 115 C 100 95 108 80 100 65 Z" fill="#899b6f" fill-opacity="0.5"/>
+                    <circle cx="100" cy="85" r="8" fill="#a07827"/>
+                    <line x1="100" y1="85" x2="100" y2="62" stroke="#221b10"/>
+                    <line x1="100" y1="85" x2="85" y2="78" stroke="#221b10"/>
+                    <line x1="100" y1="85" x2="115" y2="78" stroke="#221b10"/>
+                    <path d="M100 185 C 65 180 50 165 45 145 C 75 160 92 165 100 165 Z" fill="#647a4f" fill-opacity="0.55"/>
+                    <path d="M100 185 C 135 180 150 165 155 145 C 125 160 108 165 100 165 Z" fill="#647a4f" fill-opacity="0.55"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Meconopsis betonicifolia</h3>
+                <span class="common">Himalayan Blue Poppy · Papaveraceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 7</span>
+                  <span class="badge">Cool morning</span>
+                  <span class="badge con">Vulnerable</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 110"/>
+                    <g transform="translate(100 75)">
+                      <path d="M0 -25 L -30 22 L 30 22 Z" fill="#faf6ec" stroke="#3a4a30"/>
+                      <path d="M0 -25 L 0 22" stroke="#a07827"/>
+                      <line x1="-25" y1="15" x2="25" y2="15" stroke="#a07827"/>
+                      <circle cx="-12" cy="5" r="2" fill="#b3492f"/>
+                      <circle cx="12" cy="5" r="2" fill="#b3492f"/>
+                      <circle cx="0" cy="-8" r="2" fill="#b3492f"/>
+                    </g>
+                    <path d="M100 175 L 60 200" stroke-width="1.2"/>
+                    <path d="M100 175 L 140 200" stroke-width="1.2"/>
+                    <ellipse cx="80" cy="195" rx="20" ry="5" fill="#647a4f" fill-opacity="0.55"/>
+                    <ellipse cx="120" cy="195" rx="20" ry="5" fill="#647a4f" fill-opacity="0.55"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Lilium auratum</h3>
+                <span class="common">Goldband Lily · Liliaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 6</span>
+                  <span class="badge">Full sun</span>
+                  <span class="badge">LC</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 100"/>
+                    <g transform="translate(100 75)">
+                      <ellipse cx="0" cy="0" rx="48" ry="40" fill="#d4dbbf" fill-opacity="0.3"/>
+                      <path d="M0 -38 C -20 -32 -28 -18 -28 0 C -15 -7 -7 -18 0 -28 Z" fill="#f9d9cd" stroke="#b3492f"/>
+                      <path d="M0 -38 C 20 -32 28 -18 28 0 C 15 -7 7 -18 0 -28 Z" fill="#f9d9cd" stroke="#b3492f"/>
+                      <path d="M-35 -8 C -38 12 -25 28 -8 28 C -18 15 -25 5 -28 -10 Z" fill="#ee8870" stroke="#b3492f"/>
+                      <path d="M35 -8 C 38 12 25 28 8 28 C 18 15 25 5 28 -10 Z" fill="#ee8870" stroke="#b3492f"/>
+                      <circle cx="0" cy="0" r="10" fill="#a07827"/>
+                    </g>
+                    <path d="M100 175 C 65 175 50 160 45 140 C 75 155 92 160 100 160 Z" fill="#899b6f" fill-opacity="0.55"/>
+                    <path d="M100 175 C 135 175 150 160 155 140 C 125 155 108 160 100 160 Z" fill="#899b6f" fill-opacity="0.55"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Camellia japonica 'Ostuyama'</h3>
+                <span class="common">Heritage Camellia · Theaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 7</span>
+                  <span class="badge">Part shade</span>
+                  <span class="badge">LC</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 100"/>
+                    <circle cx="100" cy="75" r="34" fill="#f9d9cd" stroke="#b3492f"/>
+                    <circle cx="85" cy="65" r="10" fill="#ee8870" stroke="#b3492f" stroke-width="0.6"/>
+                    <circle cx="115" cy="65" r="10" fill="#ee8870" stroke="#b3492f" stroke-width="0.6"/>
+                    <circle cx="85" cy="85" r="10" fill="#d36247" stroke="#b3492f" stroke-width="0.6"/>
+                    <circle cx="115" cy="85" r="10" fill="#d36247" stroke="#b3492f" stroke-width="0.6"/>
+                    <circle cx="100" cy="55" r="10" fill="#ee8870" stroke="#b3492f" stroke-width="0.6"/>
+                    <circle cx="100" cy="95" r="10" fill="#d36247" stroke="#b3492f" stroke-width="0.6"/>
+                    <circle cx="100" cy="75" r="9" fill="#b3492f"/>
+                    <path d="M100 185 C 60 180 45 165 40 145 C 75 160 92 165 100 165 Z" fill="#647a4f" fill-opacity="0.55"/>
+                    <path d="M100 185 C 140 180 155 165 160 145 C 125 160 108 165 100 165 Z" fill="#647a4f" fill-opacity="0.55"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Rhododendron sinogrande</h3>
+                <span class="common">Giant-Leaved Rhodo. · Ericaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 7</span>
+                  <span class="badge">Dappled</span>
+                  <span class="badge con">Near Thr.</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 70"/>
+                    <ellipse cx="100" cy="50" rx="8" ry="14" fill="#faf6ec" stroke="#3a4a30"/>
+                    <path d="M100 70 C 90 75 90 95 100 100 C 110 95 110 75 100 70 Z" fill="#faf6ec" stroke="#3a4a30"/>
+                    <ellipse cx="100" cy="50" rx="3" ry="6" fill="#647a4f"/>
+                    <path d="M70 200 C 65 170 75 155 95 150" stroke-width="1.2"/>
+                    <path d="M130 200 C 135 170 125 155 105 150" stroke-width="1.2"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Galanthus reginae-olgae</h3>
+                <span class="common">Autumn Snowdrop · Amaryllidaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 6</span>
+                  <span class="badge">Dappled</span>
+                  <span class="badge con">Near Thr.</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 90"/>
+                    <g transform="translate(100 65)">
+                      <path d="M-25 -10 Q -20 -30 0 -25 Q 20 -30 25 -10 Q 30 5 0 10 Q -30 5 -25 -10 Z" fill="#a07827" stroke="#221b10"/>
+                      <path d="M-22 -8 Q -18 -28 0 -23 Q 18 -28 22 -8 Q 26 4 0 8 Q -26 4 -22 -8 Z" fill="#d36247" fill-opacity="0.4"/>
+                      <path d="M-25 -10 Q -10 0 0 5 Q 10 0 25 -10" stroke="#221b10"/>
+                    </g>
+                    <path d="M70 200 C 65 170 75 150 95 145" stroke-width="1.2"/>
+                    <path d="M130 200 C 135 170 125 150 105 145" stroke-width="1.2"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Hamamelis × intermedia</h3>
+                <span class="common">Witch Hazel 'Diane' · Hamamelidaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 5</span>
+                  <span class="badge">Full sun</span>
+                  <span class="badge">LC</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 95"/>
+                    <g transform="translate(100 80)">
+                      <path d="M0 -25 C -15 -25 -22 -10 -15 5 C -5 0 5 0 15 5 C 22 -10 15 -25 0 -25 Z" fill="#f9d9cd" stroke="#b3492f"/>
+                      <path d="M0 -20 C -10 -20 -15 -8 -10 4 C 0 0 10 4 10 4 C 15 -8 10 -20 0 -20 Z" fill="#ee8870" fill-opacity="0.5"/>
+                      <ellipse cx="0" cy="-10" rx="5" ry="8" fill="#a07827"/>
+                    </g>
+                    <ellipse cx="70" cy="195" rx="22" ry="6" fill="#647a4f" fill-opacity="0.6"/>
+                    <ellipse cx="130" cy="195" rx="22" ry="6" fill="#647a4f" fill-opacity="0.6"/>
+                    <ellipse cx="100" cy="180" rx="20" ry="5" fill="#899b6f" fill-opacity="0.6"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Colchicum speciosum</h3>
+                <span class="common">Autumn Crocus · Colchicaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 6</span>
+                  <span class="badge">Full sun</span>
+                  <span class="badge">LC</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="plate-card">
+            <a href="encyclopedia/paphiopedilum-fairrieanum.html">
+              <div class="plate-img">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
+                  <g fill="none" stroke="#2c3a26" stroke-width="1">
+                    <path d="M100 210 L 100 100"/>
+                    <g transform="translate(100 75)">
+                      <ellipse cx="0" cy="0" rx="35" ry="30" fill="#d4dbbf" fill-opacity="0.4"/>
+                      <ellipse cx="-15" cy="-10" rx="12" ry="10" fill="#f9d9cd" stroke="#b3492f"/>
+                      <ellipse cx="15" cy="-10" rx="12" ry="10" fill="#f9d9cd" stroke="#b3492f"/>
+                      <ellipse cx="0" cy="15" rx="12" ry="10" fill="#ee8870" stroke="#b3492f"/>
+                      <ellipse cx="-15" cy="10" rx="12" ry="10" fill="#ee8870" stroke="#b3492f"/>
+                      <ellipse cx="15" cy="10" rx="12" ry="10" fill="#ee8870" stroke="#b3492f"/>
+                      <ellipse cx="0" cy="-15" rx="12" ry="10" fill="#f9d9cd" stroke="#b3492f"/>
+                    </g>
+                    <path d="M100 185 C 60 180 45 165 40 145 C 75 160 92 165 100 165 Z" fill="#899b6f" fill-opacity="0.55"/>
+                    <path d="M100 185 C 140 180 155 165 160 145 C 125 160 108 165 100 165 Z" fill="#899b6f" fill-opacity="0.55"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="plate-body">
+                <h3>Hydrangea aspera</h3>
+                <span class="common">Rough Hydrangea · Hydrangeaceae</span>
+                <div class="badges">
+                  <span class="badge">Zone 7</span>
+                  <span class="badge">Part shade</span>
+                  <span class="badge">LC</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        </div>
+
+        <div class="pagination">
+          <span>Showing 12 of <strong>1,840</strong> cultivars</span>
+          <div class="pages">
+            <a class="is-active">1</a><a>2</a><a>3</a><a>4</a><a>…</a><a>154</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div>
+      <div class="signature">
+        <svg class="sig-mark" viewBox="0 0 60 60" aria-hidden="true">
+          <g fill="none" stroke="#e8ecd9" stroke-width="1.1"><circle cx="30" cy="30" r="28"/><path d="M30 8 C 22 18, 22 30, 30 52 C 38 30, 38 18, 30 8 Z" fill="#647a4f"/></g>
+        </svg>
+        <div class="name">Fernwood Conservatory<br/>& Rare Plant Nursery</div>
+      </div>
+      <p class="tag">A 14-acre destination garden and working nursery on the Olympic Peninsula. <em>Open to the public since 1924.</em></p>
+    </div>
+    <div><h4>The Garden</h4><ul>
+      <li><a href="index.html">Home</a></li><li><a href="visit.html">Plan Your Visit</a></li>
+      <li><a href="garden-map.html">Garden Map</a></li><li><a href="bloom-calendar.html">Bloom Calendar</a></li>
+      <li><a href="workshops.html">Workshops</a></li></ul></div>
+    <div><h4>Plants &amp; Print</h4><ul>
+      <li><a href="encyclopedia.html">Cultivar Encyclopedia</a></li>
+      <li><a href="encyclopedia/paphiopedilum-fairrieanum.html">Featured Entry</a></li>
+      <li><a href="shop.html">Nursery Shop</a></li>
+      <li><a href="field-notes.html">Field Notes</a></li></ul></div>
+    <div><h4>Patronage</h4><ul>
+      <li><a href="membership.html">Membership Tiers</a></li>
+      <li><a href="membership.html#honor">Patron Honor Roll</a></li>
+      <li><a href="membership.html#conservation">Conservation Fund</a></li>
+      <li><a href="membership.html#legacy">Legacy Giving</a></li></ul></div>
+  </div>
+  <div class="colophon">
+    <span>© 1924 – 2026 Fernwood Conservatory · A 501(c)(3) garden trust</span>
+    <span>Set in Cormorant Garamond &amp; Inter</span>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

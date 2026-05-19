@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Data &amp; Tools — Meridian Deep-Sea Observatory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <span class="live-pill"><span class="live-dot"></span>Live from the buoy network · 14 stations reporting</span>
+    <div class="util-right">
+      <a href="data.html">Data Access</a>
+      <a href="newsroom.html">Press</a>
+      <a href="careers.html">Careers</a>
+      <a href="#">Library</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="lockup">
+        <span class="name">Meridian Deep-Sea Observatory</span>
+        <span class="tagline">Continuous ocean observation since 1978</span>
+      </span>
+    </a>
+    <div class="masthead-meta">
+      <button class="menu-btn">☰ Menu</button>
+      <span>Cape Holloway, Maine · 44.0°N 67.8°W</span>
+      <button class="search-pop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        Search
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <h3 class="toggle">Observatory</h3>
+    <ul>
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="research.html">Research &amp; Labs</a></li>
+      <li><a href="people.html">People</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="expeditions.html">Expeditions</a></li>
+      <li class="active"><a href="data.html">Data &amp; Tools <span class="count">412</span></a></li>
+      <li><a href="newsroom.html">Newsroom</a></li>
+      <li><a href="careers.html">Careers</a></li>
+    </ul>
+
+    <h3 class="toggle">Catalog by discipline</h3>
+    <ul>
+      <li><a href="#">Coastal Dynamics <span class="count">84</span></a></li>
+      <li><a href="#">Benthic Ecology <span class="count">66</span></a></li>
+      <li><a href="#">Acoustics <span class="count">102</span></a></li>
+      <li><a href="#">Chemistry <span class="count">93</span></a></li>
+      <li><a href="#">Cryosphere <span class="count">67</span></a></li>
+    </ul>
+
+    <h3 class="toggle">Access tools</h3>
+    <ul>
+      <li><a href="#">ERDDAP endpoint</a></li>
+      <li><a href="#">Open API v3</a></li>
+      <li><a href="#">Python client (pip)</a></li>
+      <li><a href="#">R package (CRAN)</a></li>
+      <li><a href="#">THREDDS catalog</a></li>
+    </ul>
+
+    <div class="at-sea">
+      <span class="label"><span class="live-dot"></span>Currently at sea · 3</span>
+      <h4>R/V Bartholomew Strait</h4>
+      <p>Leg 24-B · Gulf of Maine benthic mapping · day 9 of 14</p>
+      <a href="expeditions.html">Track all cruises →</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <nav class="breadcrumb">
+      <a href="index.html">Observatory</a><span class="sep">/</span><span>Data &amp; Tools</span>
+    </nav>
+
+    <header class="sonar-head">
+      <div class="eyebrow">Data Catalog</div>
+      <h2>412 publicly licensed datasets, 1978 – present</h2>
+      <div class="meta">CC-BY-4.0 by default · DOI-assigned · ERDDAP / THREDDS / Open API access</div>
+    </header>
+
+    <section aria-label="Buoy network live status">
+      <div class="buoy-strip">
+        <div class="buoy-label">
+          <span class="live"><span class="live-dot"></span>Buoy network · live</span>
+          <h4>14 stations reporting</h4>
+        </div>
+        <div class="buoy-cell" data-base="11.8" data-jitter="0.15" data-decimals="1">
+          <span class="station">MDB-04 · Holloway</span>
+          <span class="var">SST</span>
+          <span class="val"><span class="num">11.8</span><span class="unit">°C</span></span>
+        </div>
+        <div class="buoy-cell" data-base="9.4" data-jitter="0.18" data-decimals="1">
+          <span class="station">MDB-07 · Jordan B.</span>
+          <span class="var">SST</span>
+          <span class="val"><span class="num">9.4</span><span class="unit">°C</span></span>
+        </div>
+        <div class="buoy-cell" data-base="32.41" data-jitter="0.08" data-decimals="2">
+          <span class="station">MDB-04 · 5 m</span>
+          <span class="var">Salinity</span>
+          <span class="val"><span class="num">32.41</span><span class="unit">PSU</span></span>
+        </div>
+        <div class="buoy-cell" data-base="7.62" data-jitter="0.07" data-decimals="2">
+          <span class="station">MDB-04 · 8 m</span>
+          <span class="var">Diss. O₂</span>
+          <span class="val"><span class="num">7.62</span><span class="unit">mg/L</span></span>
+        </div>
+        <div class="buoy-timestamp">
+          <span class="label">Last updated</span>
+          <span class="time">17:42:00 UTC</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="catalog-bar" style="margin-top:24px">
+      <select><option>All variables</option><option>Temperature</option><option>Salinity</option><option>Dissolved O₂</option><option>pH / DIC</option><option>Acoustic</option><option>Bathymetry</option></select>
+      <select><option>All platforms</option><option>Moored buoy</option><option>Glider</option><option>Ship CTD</option><option>Hydrophone array</option><option>ROV imagery</option></select>
+      <select><option>All time ranges</option><option>Last 30 days</option><option>2023 – 2026</option><option>Multidecadal</option></select>
+      <select><option>All regions</option><option>Gulf of Maine</option><option>Labrador Sea</option><option>Georges Bank</option><option>Slope Sea</option></select>
+      <input type="search" placeholder="Search datasets…" style="flex:1;min-width:200px" />
+    </div>
+
+    <article class="dataset">
+      <div>
+        <span class="id">MDSO-LMB-2003-2025</span>
+        <h3>Labrador Mooring Line · daily transport, 2003 – 2025</h3>
+        <div class="meta"><span>Time series</span><span>Mooring (×8)</span><span>22 years</span><span>CC-BY-4.0</span></div>
+        <p>Daily-resolved boundary-current transport from the eight-mooring Labrador line, with provenance for every sensor swap and intercalibration since deployment.</p>
+      </div>
+      <div class="preview" aria-hidden="true">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+          <rect width="300" height="80" fill="#0a2c32"/>
+          <path d="M0,50 C40,40 70,55 100,48 S160,38 200,42 S260,55 300,46" stroke="#B6532A" stroke-width="1.6" fill="none"/>
+          <path d="M0,52 L300,46" stroke="#EEE7D8" stroke-opacity="0.4" stroke-dasharray="2 3" fill="none"/>
+        </svg>
+      </div>
+      <div class="actions">
+        <a class="primary" href="#">Preview</a>
+        <a href="#">NetCDF</a>
+        <a href="#">CSV</a>
+        <a href="#">Cite (DOI)</a>
+      </div>
+    </article>
+
+    <article class="dataset">
+      <div>
+        <span class="id">MDSO-HOLLOWAY-TS</span>
+        <h3>Holloway Station hydrography · monthly, 1978 – present</h3>
+        <div class="meta"><span>Profile time series</span><span>Ship CTD</span><span>48 years</span><span>CC-BY-4.0</span></div>
+        <p>Monthly CTD casts at Holloway Station, calibrated and quality-controlled to a single standard since 1991. The institute's longest continuous in-water record.</p>
+      </div>
+      <div class="preview">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+          <rect width="300" height="80" fill="#0a2c32"/>
+          <g stroke="#EEE7D8" stroke-opacity="0.6" fill="none">
+            <path d="M0,30 C40,25 80,40 120,28 S200,50 240,30 S290,18 300,22"/>
+            <path d="M0,55 C40,52 80,60 120,55 S200,68 240,58 S290,48 300,52"/>
+          </g>
+        </svg>
+      </div>
+      <div class="actions">
+        <a class="primary" href="#">Preview</a>
+        <a href="#">NetCDF</a>
+        <a href="#">CSV</a>
+        <a href="#">Cite (DOI)</a>
+      </div>
+    </article>
+
+    <article class="dataset">
+      <div>
+        <span class="id">MDSO-STELLW-ACO</span>
+        <h3>Stellwagen passive acoustic array · 10 Hz – 1 kHz</h3>
+        <div class="meta"><span>Acoustic</span><span>Hydrophone array (×12)</span><span>2014 – present</span><span>CC-BY-4.0</span></div>
+        <p>Continuous low-frequency hydrophone records with detection products for North Atlantic right whale upcalls, sei whale downsweeps, and shipping noise indices.</p>
+        <div class="spectro-player">
+          <div class="head"><span>Bioacoustics player · 00:00:14 / 00:02:38</span><span>Right whale upcall · 2024-02-18</span></div>
+          <div class="canvas">
+            <svg viewBox="0 0 600 90" preserveAspectRatio="none" class="svg-spec">
+              <rect width="600" height="90" fill="#0A2C32"/>
+              <g>
+                <rect x="0" y="20" width="50" height="60" fill="#1f5e68"/>
+                <rect x="50" y="10" width="60" height="70" fill="#2a7884"/>
+                <rect x="110" y="20" width="80" height="60" fill="#3a8a96"/>
+                <rect x="190" y="5" width="50" height="80" fill="#4ca3b0"/>
+                <rect x="240" y="0" width="50" height="90" fill="#5fbac6"/>
+                <rect x="290" y="10" width="60" height="70" fill="#3a8a96"/>
+                <rect x="350" y="15" width="60" height="65" fill="#2a7884"/>
+                <rect x="410" y="20" width="50" height="60" fill="#1f5e68"/>
+                <rect x="460" y="25" width="40" height="55" fill="#155965"/>
+                <rect x="500" y="35" width="100" height="45" fill="#11434C"/>
+              </g>
+              <line x1="240" y1="0" x2="240" y2="90" stroke="#B6532A" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="controls">
+            <button class="play" aria-label="Play">▶</button>
+            <span style="font-family:var(--mono);font-size:11px;opacity:0.8">f: 50 – 250 Hz · sr: 2 kHz</span>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="primary" href="#">Preview</a>
+        <a href="#">FLAC</a>
+        <a href="#">JSON detections</a>
+        <a href="#">Cite (DOI)</a>
+      </div>
+    </article>
+
+    <article class="dataset">
+      <div>
+        <span class="id">MDSO-WB-PLUME-24</span>
+        <h3>Wilkinson Basin storm-pulse glider survey · 2024 nor'easter season</h3>
+        <div class="meta"><span>Profile</span><span>Slocum × 2</span><span>87 days</span><span>CC-BY-4.0</span></div>
+        <p>Continuous along-transect T, S, fluorescence, and DO records from paired Slocum gliders deployed through the 2024 storm season.</p>
+      </div>
+      <div class="preview">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+          <rect width="300" height="80" fill="#0a2c32"/>
+          <path d="M0,40 Q30,20 60,40 T120,40 T180,40 T240,40 T300,40" stroke="#B6532A" stroke-width="1.4" fill="none" opacity="0.8"/>
+          <path d="M0,55 Q40,30 80,55 T160,55 T240,55 T320,55" stroke="#EEE7D8" stroke-opacity="0.5" stroke-width="1.2" fill="none"/>
+        </svg>
+      </div>
+      <div class="actions">
+        <a class="primary" href="#">Preview</a>
+        <a href="#">NetCDF</a>
+        <a href="#">CSV</a>
+        <a href="#">Cite (DOI)</a>
+      </div>
+    </article>
+
+    <article class="dataset">
+      <div>
+        <span class="id">MDSO-CASHES-PHOTO</span>
+        <h3>Cashes Ledge ROV photogrammetry · 1991 – 2025</h3>
+        <div class="meta"><span>Imagery</span><span>ROV Nereus II</span><span>34 years</span><span>CC-BY-NC-4.0</span></div>
+        <p>Orthomosaics and 3D reconstructions of fixed sponge-garden plots at Cashes Ledge, recovered annually with consistent overlap geometry since 1991.</p>
+      </div>
+      <div class="preview">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+          <rect width="300" height="80" fill="#0a2c32"/>
+          <g fill="#155965">
+            <rect x="0" y="40" width="40" height="40"/>
+            <rect x="40" y="30" width="50" height="50"/>
+            <rect x="90" y="48" width="50" height="32"/>
+            <rect x="140" y="35" width="60" height="45"/>
+            <rect x="200" y="50" width="40" height="30"/>
+            <rect x="240" y="42" width="60" height="38"/>
+          </g>
+          <g fill="#2a7884" opacity="0.6">
+            <rect x="0" y="60" width="300" height="20"/>
+          </g>
+        </svg>
+      </div>
+      <div class="actions">
+        <a class="primary" href="#">Preview</a>
+        <a href="#">GeoTIFF</a>
+        <a href="#">3D PLY</a>
+        <a href="#">Cite (DOI)</a>
+      </div>
+    </article>
+
+    <article class="dataset">
+      <div>
+        <span class="id">MDSO-CARBSYS-22Y</span>
+        <h3>Carbonate system at Holloway Station · pH, DIC, TA · 2003 – 2025</h3>
+        <div class="meta"><span>Time series</span><span>Ship + SAMI-CO₂ mooring</span><span>22 years</span><span>CC-BY-4.0</span></div>
+        <p>Monthly carbonate-system observations at Holloway Station, with a high-frequency mooring overlay since 2014.</p>
+      </div>
+      <div class="preview">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+          <rect width="300" height="80" fill="#0a2c32"/>
+          <path d="M0,40 L300,55" stroke="#EEE7D8" stroke-opacity="0.4" stroke-dasharray="2 3"/>
+          <path d="M0,40 C30,30 60,55 90,38 S150,55 180,42 S240,60 300,55" stroke="#B6532A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="actions">
+        <a class="primary" href="#">Preview</a>
+        <a href="#">NetCDF</a>
+        <a href="#">CSV</a>
+        <a href="#">Cite (DOI)</a>
+      </div>
+    </article>
+
+    <header class="sonar-head">
+      <div class="eyebrow">Access guidance</div>
+      <h2>How to cite, reuse, and integrate</h2>
+    </header>
+
+    <div class="content-grid">
+      <div class="prose">
+        <p><b>Licensing.</b> Most Meridian datasets are released under CC-BY-4.0. Imagery products carry CC-BY-NC-4.0 where required by partner agreements. All datasets are DOI-assigned at first public release.</p>
+        <p><b>Citing.</b> Every dataset card has a "Cite (DOI)" action that returns BibTeX, RIS, and CSL-JSON. When citing in a publication, please include the DOI in your data availability statement; we monitor reuse via DataCite.</p>
+        <p><b>Programmatic access.</b> All datasets are exposed through an OpenAPI v3 endpoint at <code style="font-family:var(--mono);color:var(--rust)">api.meridian-obs.org/v3</code>. ERDDAP and THREDDS catalogs mirror most gridded and time-series products. Python and R clients are maintained by the Data Office.</p>
+        <p><b>Quality flags.</b> Real-time streams are flagged provisional and reach final quality after the next service cruise. Final products include per-sample QARTOD flags.</p>
+      </div>
+      <aside class="aside">
+        <section class="widget">
+          <h3>Buoy Network Status <span class="dot"></span></h3>
+          <ul>
+            <li><div class="meta-row"><span class="status-pill at-sea">Online</span><span>14</span></div><span class="title">Buoys reporting in last 30 min</span></li>
+            <li><div class="meta-row"><span class="status-pill planned">Provisional</span><span>2</span></div><span class="title">Awaiting post-cruise QC</span></li>
+            <li><div class="meta-row"><span class="status-pill returned">Offline</span><span>1</span></div><span class="title">MDB-12 · Storm damage, recovery 22 May</span></li>
+          </ul>
+        </section>
+
+        <section class="widget">
+          <h3>API Endpoints</h3>
+          <ul>
+            <li><a class="title" href="#">/v3/buoys/{station_id}/latest</a></li>
+            <li><a class="title" href="#">/v3/timeseries/{dataset_id}</a></li>
+            <li><a class="title" href="#">/v3/expeditions/{cruise_id}/log</a></li>
+            <li><a class="title" href="#">/v3/publications/search</a></li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <h4>Meridian Deep-Sea Observatory</h4>
+      <p>A coastal oceanographic research institute on the Gulf of Maine, operating sensors, vessels, and laboratories in service of a continuously observed ocean.</p>
+      <p>114 Holloway Pier Road · Cape Holloway, ME 04631 · United States</p>
+    </div>
+    <div>
+      <h4>Research</h4>
+      <ul>
+        <li><a href="research.html">Labs &amp; Disciplines</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="expeditions.html">Expeditions</a></li>
+        <li><a href="data.html">Data Catalog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Institute</h4>
+      <ul>
+        <li><a href="people.html">People</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="newsroom.html">Newsroom</a></li>
+        <li><a href="#">Annual Report</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">+1 207 555 0142</a></li>
+        <li><a href="#">press@meridian-obs.org</a></li>
+        <li><a href="#">RSS · News</a></li>
+        <li><a href="#">Mastodon · @meridian</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span data-year>2026</span> Meridian Deep-Sea Observatory</span>
+    <span>ISO 14001 · CARIAD-Aligned · DOI 10.5072/MDSO</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

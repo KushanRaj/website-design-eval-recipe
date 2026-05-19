@@ -1,0 +1,339 @@
+{
+  "seed_id": "botanical-garden-nursery",
+  "concepts": [
+    {
+      "candidate_id": "fernwood-conservatory",
+      "domain": "Botanical garden and rare-plant conservatory",
+      "site_goal": "Position Fernwood Conservatory & Rare Plant Nursery as a destination garden and serious horticultural authority, while driving conservatory visits, plant purchases, workshop sign-ups, and patron memberships.",
+      "audience": [
+        "Serious home gardeners and plant collectors",
+        "Conservatory day visitors and tourists",
+        "Patrons and members supporting plant conservation",
+        "Workshop attendees and horticulture students"
+      ],
+      "description": "An editorial, herbarium-inspired site for Fernwood Conservatory, a 14-acre specialty botanical garden and rare-plant nursery in the Pacific Northwest. The visual system mimics a leather-bound Victorian botanical folio updated for the web: hand-pressed botanical illustration headers, ruled column lines, deckled-edge image plates, and italic latinate captions. Mossy green dominates with bone-white pages and soft coral accents for in-bloom callouts. Long-scrolling encyclopedia entries sit beside an interactive bloom calendar and a hand-drawn SVG garden map. The shop and membership flows feel curatorial rather than commercial.",
+      "motif": "Pressed-herbarium folio: deckled paper textures, taxonomic rule lines, hand-inked botanical illustration headers, hairline dividers, and italic Latin binomial captions over mossy green and bone white",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Full-bleed illustrated hero plate over conservatory photo, followed by 'In Bloom This Week' coral-tagged carousel, a three-column editorial teaser grid, a mossy banded visit-planning strip, and a footer with herbarium-style index",
+          "sections": [
+            "Illustrated hero with site name and tagline",
+            "In Bloom This Week carousel with month chip",
+            "Featured cultivars editorial grid",
+            "Plan Your Visit banded callout",
+            "Workshops on the horizon strip",
+            "Membership invitation block",
+            "Footer with garden hours, address, and indexed sitemap"
+          ]
+        },
+        {
+          "id": "encyclopedia-index",
+          "path": "/encyclopedia",
+          "layout_pattern": "Left filter rail with taxonomic facets, right grid of botanical-plate cards each with Latin binomial caption and conservation badge, alphabetical jump strip across the top",
+          "sections": [
+            "Header with search input and alphabetical jump strip",
+            "Filter rail (family, hardiness zone, light, conservation status)",
+            "Plate grid of cultivars",
+            "Pagination with cultivar count",
+            "Cross-link to bloom calendar"
+          ]
+        },
+        {
+          "id": "encyclopedia-entry",
+          "path": "/encyclopedia/paphiopedilum-fairrieanum",
+          "layout_pattern": "Two-column editorial layout: large illustration plate left, ruled prose right with sticky tab nav for Overview, Cultivation, Propagation, and In the Garden; related cultivars appear as small plates at the foot",
+          "sections": [
+            "Illustration plate with binomial caption",
+            "Quick facts ruled table (family, native range, hardiness, light, soil)",
+            "Sticky tabs (Overview / Cultivation / Propagation / In the Garden)",
+            "Long-form cultivation prose",
+            "Companion plantings sidebar",
+            "Conservation status callout",
+            "Related cultivars plate row"
+          ]
+        },
+        {
+          "id": "bloom-calendar",
+          "path": "/bloom-calendar",
+          "layout_pattern": "Centered circular SVG bloom wheel with month spokes and species arcs, month slider beneath, and a list view below showing currently peaking species with garden zone coordinates",
+          "sections": [
+            "Heading with current month in italic Latin",
+            "Interactive bloom wheel",
+            "Month slider and zone filter",
+            "Currently peaking species list",
+            "Link to garden map for each species"
+          ]
+        },
+        {
+          "id": "garden-map",
+          "path": "/visit/map",
+          "layout_pattern": "Full-width interactive SVG map with mossy-green hand-drawn zones, right-rail zone detail panel that updates on hover or tap, legend along the bottom",
+          "sections": [
+            "Map header with current bloom highlights toggle",
+            "Interactive SVG map",
+            "Zone detail right rail",
+            "Legend (collection types, accessibility, restrooms, refreshments)",
+            "Download printed map link"
+          ]
+        },
+        {
+          "id": "workshops",
+          "path": "/workshops",
+          "layout_pattern": "Editorial month-view calendar at top, scrollable list of workshop cards below with instructor portrait roundels, skill-level chips, and remaining-seat badges",
+          "sections": [
+            "Calendar / list toggle",
+            "Month grid of workshop sessions",
+            "Workshop card list",
+            "Instructor spotlight strip",
+            "Member discount note"
+          ]
+        },
+        {
+          "id": "nursery-shop",
+          "path": "/shop",
+          "layout_pattern": "Filtered grid of nursery products with botanical-plate thumbnails, pot-size and provenance captions, soft coral 'Ships This Season' tags, and a left rail for filters",
+          "sections": [
+            "Shop header with seasonal shipping notice",
+            "Filter rail (cultivar group, pot size, light, hardiness)",
+            "Product grid",
+            "Waitlist explanation block",
+            "Care guides cross-link"
+          ]
+        },
+        {
+          "id": "membership",
+          "path": "/membership",
+          "layout_pattern": "Editorial hero with patron testimonial, four-column tier table with ornament dividers, FAQ accordion below, and a footer band with patron honor roll names",
+          "sections": [
+            "Patron hero quote",
+            "Tier comparison table",
+            "What your membership funds (conservation impact strip)",
+            "FAQ accordion",
+            "Patron honor roll"
+          ]
+        },
+        {
+          "id": "field-notes",
+          "path": "/field-notes",
+          "layout_pattern": "Editorial magazine grid with one large featured plate-essay and two-column secondary articles below, each tagged with cultivar or season, sidebar of recent dispatches",
+          "sections": [
+            "Featured essay plate",
+            "Recent dispatches grid",
+            "Tag filter chips (cultivar, season, garden zone)",
+            "Author bylines block",
+            "Subscribe to printed almanac form"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Convey deep horticultural expertise and editorial seriousness",
+        "Invite physical visits to the glasshouses and grounds",
+        "Drive rare-plant nursery purchases and waitlist sign-ups",
+        "Recruit recurring members and patrons"
+      ],
+      "required_text": [
+        "Fernwood Conservatory & Rare Plant Nursery",
+        "Est. 1924",
+        "Plan Your Visit",
+        "In Bloom This Week",
+        "Become a Member"
+      ],
+      "content_model": [
+        "Cultivar encyclopedia entry (binomial name, common names, family, native range, hardiness, light/water/soil, propagation notes, conservation status, illustration plate, related species)",
+        "Bloom calendar event (species, peak window, garden zone, sun exposure, accompanying companions)",
+        "Garden zone (name, acreage, signature collection, accessibility notes, map coordinates)",
+        "Workshop session (title, instructor, date, duration, skill level, capacity, materials, price, member discount)",
+        "Editorial feature article (title, author, hero illustration, pull quotes, related cultivars)",
+        "Nursery product (cultivar, pot size, age, provenance, stock count, shipping season, price)",
+        "Membership tier (name, annual price, benefits list, guest passes, reciprocal gardens)"
+      ],
+      "interactions": [
+        "Month slider on bloom calendar that recolors a circular wheel of species in peak",
+        "Interactive SVG garden map with hover-highlighted zones and pinned cultivar markers",
+        "Encyclopedia search with filters for hardiness zone, light, family, and conservation status",
+        "Workshop calendar with month/list toggle and seat-count availability badges",
+        "Add-to-cart with seasonal shipping window notice and waitlist for sold-out cultivars",
+        "Sticky in-page tabs on cultivar pages (Overview / Cultivation / Propagation / In the Garden)"
+      ],
+      "asset_needs": [
+        "Hand-inked botanical illustrations for at least eight signature cultivars",
+        "Deckled-edge paper texture for plate frames",
+        "SVG hand-drawn garden map with labeled zones",
+        "Photography of glasshouses, beds, and workshop benches with warm overcast light",
+        "Botanical line-art ornaments and section dividers"
+      ],
+      "mobile_behavior": "Single-column reflow with the garden map becoming a pan-and-zoom panel; encyclopedia tabs collapse to an accordion; bloom wheel becomes a horizontally scrollable month strip",
+      "difficulty": "hard"
+    },
+    {
+      "candidate_id": "moss-and-meridian",
+      "domain": "Specialty rare-plant nursery and demonstration garden",
+      "site_goal": "Establish Moss & Meridian as a contemporary specialty nursery and small demonstration garden — sell rare plants by season, schedule propagation workshops, and bring visitors to the greenhouse open days.",
+      "audience": [
+        "Urban plant collectors and houseplant enthusiasts",
+        "Small-garden owners seeking unusual cultivars",
+        "Local visitors planning open-day trips",
+        "Workshop students learning propagation and stewardship"
+      ],
+      "description": "A more contemporary, almost zine-like take on the botanical site: Moss & Meridian is a small-batch rare-plant nursery with a quarter-acre demonstration garden and a working glasshouse. The design pairs editorial horticulture with a modern grid: oversized italic display serifs, wide-tracked sans labels, and full-bleed photography of cuttings on linen. Mossy green panels sit against bone-white margins, with soft coral used for stock indicators and seasonal tags. The bloom calendar reads as a seasonal almanac, and the encyclopedia is organized by 'meridians' (latitudinal native bands) rather than family. Visitors can reserve open-day tickets, browse a catalog with propagation provenance, and follow a serialized 'Grower's Notebook'.",
+      "motif": "Contemporary almanac: oversized italic serif headlines, tracked-out sans labels, hairline grid lines, and large-format photographs of cuttings on linen, with mossy green panels and soft coral seasonal tags",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Full-bleed photograph of a propagation bench, oversized italic serif headline overlaid, asymmetric two-column intro, a 'This Week in the Glasshouse' band, and three feature blocks for catalog, workshops, and notebook",
+          "sections": [
+            "Hero with headline and shipping-season note",
+            "This Week in the Glasshouse band",
+            "Featured catalog cultivars",
+            "Open day reservation teaser",
+            "Workshop spotlight",
+            "Latest Grower's Notebook entry",
+            "Footer with hours, address, and zone shipping note"
+          ]
+        },
+        {
+          "id": "catalog",
+          "path": "/catalog",
+          "layout_pattern": "Sticky header with postcode shipping-check, left filter rail with meridian band, light, container size, and price, a generous grid of large catalog cards with lineage drawers, and a quiet pagination footer",
+          "sections": [
+            "Sticky header with postcode check",
+            "Filter rail",
+            "Catalog card grid",
+            "Lineage drawer pattern explained",
+            "Seasonal shipping schedule footer"
+          ]
+        },
+        {
+          "id": "catalog-detail",
+          "path": "/catalog/begonia-luxurians",
+          "layout_pattern": "Large photo left, editorial spec column right with mossy green meridian tag, propagation lineage diagram below the fold, care guide accordions, and a related cultivars strip",
+          "sections": [
+            "Hero photo and stock state",
+            "Editorial spec column (light, water, container, age)",
+            "Meridian and provenance tag",
+            "Propagation lineage diagram",
+            "Care guide accordions",
+            "Related cultivars",
+            "Add to order with shipping window note"
+          ]
+        },
+        {
+          "id": "almanac",
+          "path": "/almanac",
+          "layout_pattern": "Horizontal week scrubber across the top, then a three-panel layout: what's flowering, what's dormant, garden tasks; below, a 12-week look-ahead timeline; mossy green panel bands separate sections",
+          "sections": [
+            "Week scrubber",
+            "Flowering / Dormant / Tasks panels",
+            "12-week look-ahead timeline",
+            "Cross-link to catalog 'available this week'",
+            "Subscribe to weekly almanac email"
+          ]
+        },
+        {
+          "id": "encyclopedia-meridians",
+          "path": "/meridians",
+          "layout_pattern": "Hero with horizontal globe slider showing latitude bands, meridian band cards stacked below each linking to a band detail page with native climate notes and signature cultivars",
+          "sections": [
+            "Globe slider with latitude bands",
+            "Meridian band cards",
+            "Climate considerations callout",
+            "Signature cultivar plate strip per band",
+            "Conservation note"
+          ]
+        },
+        {
+          "id": "workshops",
+          "path": "/workshops",
+          "layout_pattern": "Season tabs at top (Spring / Summer / Autumn / Winter), workshop cards in a single column with hero photo, instructor roundel, materials list, and take-home plant chip; reservation modal launches from each",
+          "sections": [
+            "Season tabs",
+            "Workshop card list",
+            "Materials and take-home plant chips",
+            "Instructor bios strip",
+            "Reservation modal pattern"
+          ]
+        },
+        {
+          "id": "visit",
+          "path": "/visit",
+          "layout_pattern": "Hero photo of the gates, two-column intro with hours and directions, a hand-drawn nursery map with bench numbers, open-day ticket picker with time-slot tiles, and accessibility detail block",
+          "sections": [
+            "Hero with hours and address",
+            "Directions and parking",
+            "Hand-drawn nursery map",
+            "Open-day ticket picker",
+            "Accessibility and pet policy",
+            "FAQ about visiting"
+          ]
+        },
+        {
+          "id": "growers-notebook",
+          "path": "/notebook",
+          "layout_pattern": "Editorial feed with one oversized featured entry at the top and a two-column reverse-chronological grid below, tag chips for cultivars and seasons, sidebar with author bio",
+          "sections": [
+            "Featured notebook entry",
+            "Entry grid",
+            "Tag chip filter",
+            "Author sidebar",
+            "Subscribe by email"
+          ]
+        },
+        {
+          "id": "about",
+          "path": "/about",
+          "layout_pattern": "Long editorial scroll: founding story column, glasshouse tour stops with photographs and microclimate captions, growing philosophy pull quotes, team portraits, and a closing values band",
+          "sections": [
+            "Founding story",
+            "Glasshouse tour stops",
+            "Growing philosophy pull quotes",
+            "Team portraits",
+            "Sustainability and sourcing band",
+            "Contact and press"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Communicate craft, provenance, and small-batch growing",
+        "Drive online catalog orders during the active shipping seasons",
+        "Fill workshop seats and open-day reservations",
+        "Build a long-form following through the Grower's Notebook"
+      ],
+      "required_text": [
+        "Moss & Meridian",
+        "Small-batch rare plants, grown from cutting",
+        "This Week in the Glasshouse",
+        "Reserve an Open Day",
+        "Grower's Notebook"
+      ],
+      "content_model": [
+        "Catalog plant (cultivar, meridian/native band, lineage, propagation method, age, light, watering, container size, stock state, price)",
+        "Almanac entry (week, what's flowering, what's dormant, what's available, garden tasks)",
+        "Meridian region (latitudinal band, climate notes, signature cultivars, conservation considerations)",
+        "Workshop (title, instructor, date, hands-on materials, take-home plant, capacity, price)",
+        "Open-day session (date, time slot, capacity, ticket price, accessibility notes)",
+        "Grower's Notebook entry (date, author, hero photograph, body essay, tagged cultivars)",
+        "Glasshouse tour stop (name, plants in residence, microclimate notes)"
+      ],
+      "interactions": [
+        "Meridian selector that filters the encyclopedia by native latitude band on a horizontal globe slider",
+        "Almanac week scrubber that updates 'this week in the garden' text and a small inline plot",
+        "Open-day ticket picker with time-slot tiles and remaining-seat counters",
+        "Catalog cards with hover lineage drawers showing the cultivar's parent stock",
+        "Workshop reservation modal with materials checklist and dietary accessibility fields",
+        "Sticky 'currently shipping to your zone' postcode check in the catalog header"
+      ],
+      "asset_needs": [
+        "Large-format photography of cuttings, propagation trays, and the glasshouse interior",
+        "Botanical line illustrations of signature cultivars and meridian band diagrams",
+        "Linen, kraft, and paper textures for editorial panels",
+        "Hand-drawn nursery map with bench numbers and microclimate labels",
+        "Instructor portraits with consistent natural-light styling"
+      ],
+      "mobile_behavior": "Single-column stack with meridian globe collapsing into a horizontal band-picker; almanac scrubber becomes a swipeable week strip; catalog hover drawers convert to tap-to-expand panels",
+      "difficulty": "medium"
+    }
+  ]
+}

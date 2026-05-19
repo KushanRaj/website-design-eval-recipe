@@ -1,0 +1,47 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "accessibility",
+      "message": "Some form controls (filter selects / search inputs) lack associated labels, which screen readers will announce only by placeholder.",
+      "severity": "warning",
+      "path": "/data"
+    },
+    {
+      "type": "accessibility",
+      "message": "Filter dropdowns and the cruise search input are missing accessible labels.",
+      "severity": "warning",
+      "path": "/expeditions"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Layout consistency score is the lowest on the site (~48). Horizontal alignment of citation result rows and filter rail items could be tightened.",
+      "severity": "info",
+      "path": "/publications"
+    }
+  ],
+  "scores": {
+    "accessibility": 0.85,
+    "mobile_responsiveness": 0.9,
+    "component_consistency": 0.95,
+    "layout_alignment": 0.7,
+    "render_quality": 0.93,
+    "page_completeness": 1.0
+  },
+  "repair_instructions": [
+    "On data.html and expeditions.html, add visible or visually-hidden <label> elements (or aria-label attributes) to every <select> and <input> in the filter bars and search box so assistive tech announces their purpose (e.g. 'Filter by variable', 'Filter by status', 'Search datasets').",
+    "On publications.html, audit the citation list and faceted filter rail for horizontal alignment: ensure the DOI/BibTeX/RIS button row, year tag, and abstract text share consistent left edges, and that filter group headers and counts align across the rail. Aim to reduce row-bottom alignment misses."
+  ],
+  "deterministic_checks": {
+    "page_presence_resolved": {
+      "/about/careers": "careers.html exists and satisfies concept",
+      "/people/dr-yuki-okafor": "person.html exists and renders Dr. Yuki Okafor profile"
+    },
+    "required_text_present": true,
+    "render_sanity_min": 0.882,
+    "accessibility_minor_tags_pages": [
+      "/data",
+      "/expeditions"
+    ]
+  }
+}

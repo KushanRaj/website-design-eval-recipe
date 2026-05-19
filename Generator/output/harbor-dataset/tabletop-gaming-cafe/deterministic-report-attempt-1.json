@@ -1,0 +1,1497 @@
+{
+  "passed": true,
+  "issues": [],
+  "checks": {
+    "site_files": [
+      "assets/hex-bg.svg",
+      "assets/meeple-mark.svg",
+      "book.html",
+      "css/style.css",
+      "events.html",
+      "index.html",
+      "js/app.js",
+      "library.html",
+      "menu.html",
+      "reviews.html",
+      "site_intent.json",
+      "tavern-pass.html"
+    ],
+    "html_page_count": 7,
+    "page_presence": {
+      "/": {
+        "declared_path": "/",
+        "declared_id": "home",
+        "resolved_file": "index.html",
+        "found": true
+      },
+      "/menu": {
+        "declared_path": "/menu",
+        "declared_id": "menu",
+        "resolved_file": "menu.html",
+        "found": true
+      },
+      "/library": {
+        "declared_path": "/library",
+        "declared_id": "library",
+        "resolved_file": "library.html",
+        "found": true
+      },
+      "/events": {
+        "declared_path": "/events",
+        "declared_id": "events",
+        "resolved_file": "events.html",
+        "found": true
+      },
+      "/book": {
+        "declared_path": "/book",
+        "declared_id": "book",
+        "resolved_file": "book.html",
+        "found": true
+      },
+      "/tavern-pass": {
+        "declared_path": "/tavern-pass",
+        "declared_id": "loyalty",
+        "resolved_file": "tavern-pass.html",
+        "found": true
+      },
+      "/reviews": {
+        "declared_path": "/reviews",
+        "declared_id": "blog",
+        "resolved_file": "reviews.html",
+        "found": true
+      }
+    },
+    "missing_required_text": [],
+    "placeholder_hits": [],
+    "per_page_metrics": {
+      "/": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 28,
+          "element_count": 339,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 3921
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.942857,
+          "passed": true,
+          "width": 1440,
+          "height": 3921,
+          "entropy": 2.655459,
+          "gray_std": 80.896255,
+          "non_white_ratio": 0.87016,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.000983,
+          "html_text_chars": 3301
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "icon_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 83.0075,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 1,
+              "total_num": 7,
+              "candidate_component_count": 7,
+              "evaluated_group_count": 2,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 1,
+                  "majority_structure": "2|div:other:1>div:body:3|body,other",
+                  "majority_style": "flex|column|none|normal|normal|normal|0px|0px|0px|0px|18px",
+                  "issues": [
+                    {
+                      "node_id": "node-188",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(7)>div:nth-of-type(2)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "4|div:body:0>h3:title:0>p:body:0>div:body:2|body,body,body,title",
+                  "majority_style": "flex|column|none|normal|normal|8px|20px|20px|20px|20px|18px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 75.0,
+              "tags": [
+                "icon_style_inconsistency"
+              ],
+              "failed_dimension_num": 1,
+              "failed_dimensions": [
+                "underlying_shape_consistency"
+              ],
+              "icon_count": 18,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>header:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)",
+                  "icon_count": 6,
+                  "evaluated": true,
+                  "failed_dimensions": [
+                    "underlying_shape_consistency"
+                  ]
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>article:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>article:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(6)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(8)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>footer:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 57.257878,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 30,
+              "total_elements": 86,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 4,
+                "elements_without_horizontal_alignment": 14,
+                "row_bottom_alignment": 12
+              },
+              "row_group_count": 18,
+              "vertical_alignment_group_count": 55,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 95.505335,
+              "tags": [],
+              "sparsity_rate": 8.787311,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 82,
+                "width": 141,
+                "height": 3526,
+                "area": 495360
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 440,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 3921
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/menu": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 26,
+          "element_count": 307,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 2920
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.928797,
+          "passed": true,
+          "width": 1440,
+          "height": 2920,
+          "entropy": 2.324636,
+          "gray_std": 95.013786,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 0.999881,
+          "unique_color_ratio": 0.001296,
+          "html_text_chars": 2837
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 26,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>header:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(5)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(6)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>div:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>div:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>div:nth-of-type(5)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>div:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>div:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>div:nth-of-type(5)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(2)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(2)>div:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>footer:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 51.096192,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 23,
+              "total_elements": 56,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 10,
+                "elements_without_horizontal_alignment": 8,
+                "row_bottom_alignment": 5
+              },
+              "row_group_count": 14,
+              "vertical_alignment_group_count": 27,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 95.665656,
+              "tags": [],
+              "sparsity_rate": 8.480823,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 83,
+                "width": 141,
+                "height": 2523,
+                "area": 356131
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 591,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 2920
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/library": {
+        "accessibility": {
+          "tags": [
+            "missing_accessible_name",
+            "missing_form_label"
+          ],
+          "issue_count": 1,
+          "control_count": 43,
+          "element_count": 295,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 3348
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.933288,
+          "passed": true,
+          "width": 1440,
+          "height": 3348,
+          "entropy": 2.430294,
+          "gray_std": 82.3097,
+          "non_white_ratio": 0.826928,
+          "non_black_ratio": 0.999823,
+          "unique_color_ratio": 0.001345,
+          "html_text_chars": 2160
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 10,
+              "candidate_component_count": 10,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 10,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "2|div:other:1>div:body:3|body,other",
+                  "majority_style": "flex|column|none|normal|normal|normal|0px|0px|0px|0px|18px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 13,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>header:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(5)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(6)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(7)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(8)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(9)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(10)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(11)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>article:nth-of-type(12)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>footer:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 54.480537,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 23,
+              "total_elements": 61,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 7,
+                "elements_without_horizontal_alignment": 6,
+                "row_bottom_alignment": 10
+              },
+              "row_group_count": 16,
+              "vertical_alignment_group_count": 34,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 91.64517,
+              "tags": [],
+              "sparsity_rate": 16.011628,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 1328,
+                "width": 452,
+                "height": 1707,
+                "area": 771747
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 516,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 3348
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/events": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 29,
+          "element_count": 322,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 3523
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.943047,
+          "passed": true,
+          "width": 1440,
+          "height": 3523,
+          "entropy": 2.65992,
+          "gray_std": 78.279732,
+          "non_white_ratio": 0.811338,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001072,
+          "html_text_chars": 3059
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 3,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>header:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>footer:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 46.948528,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 24,
+              "total_elements": 53,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 9,
+                "elements_without_horizontal_alignment": 9,
+                "row_bottom_alignment": 6
+              },
+              "row_group_count": 12,
+              "vertical_alignment_group_count": 30,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 95.554237,
+              "tags": [],
+              "sparsity_rate": 8.693878,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 82,
+                "width": 141,
+                "height": 3127,
+                "area": 440609
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 490,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 3523
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/book": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 24,
+          "element_count": 172,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 2188
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.93949,
+          "passed": true,
+          "width": 1440,
+          "height": 2188,
+          "entropy": 2.576234,
+          "gray_std": 88.721146,
+          "non_white_ratio": 0.837267,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001278,
+          "html_text_chars": 3348
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 3,
+              "candidate_component_count": 4,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "2|div:other:1>div:body:4|body,other",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|18px",
+                  "issues": []
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 6,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>header:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>footer:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 56.071495,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 21,
+              "total_elements": 58,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 5,
+                "elements_without_horizontal_alignment": 8,
+                "row_bottom_alignment": 8
+              },
+              "row_group_count": 15,
+              "vertical_alignment_group_count": 32,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 95.865413,
+              "tags": [],
+              "sparsity_rate": 8.098226,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 82,
+                "width": 142,
+                "height": 1792,
+                "area": 254906
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 789,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 2188
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/tavern-pass": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 31,
+          "element_count": 302,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 4224
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.947084,
+          "passed": true,
+          "width": 1440,
+          "height": 4224,
+          "entropy": 2.754923,
+          "gray_std": 80.259361,
+          "non_white_ratio": 0.838237,
+          "non_black_ratio": 0.999994,
+          "unique_color_ratio": 0.000929,
+          "html_text_chars": 3222
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 41.50375,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 2,
+              "total_num": 3,
+              "candidate_component_count": 3,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(2)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "5|div:icon:1>h3:title:0>div:body:0>ul:body:4>a:body:0|body,body,body,icon,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|28px",
+                  "issues": [
+                    {
+                      "node_id": "node-120",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    },
+                    {
+                      "node_id": "node-133",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 9,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>header:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>footer:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 54.663438,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 24,
+              "total_elements": 64,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 6,
+                "elements_without_horizontal_alignment": 11,
+                "row_bottom_alignment": 7
+              },
+              "row_group_count": 15,
+              "vertical_alignment_group_count": 43,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 95.463524,
+              "tags": [],
+              "sparsity_rate": 8.867156,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 81,
+                "width": 141,
+                "height": 3830,
+                "area": 539230
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 409,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 4224
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/reviews": {
+        "accessibility": {
+          "tags": [
+            "missing_accessible_name",
+            "missing_form_label"
+          ],
+          "issue_count": 1,
+          "control_count": 34,
+          "element_count": 276,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 3614
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.941529,
+          "passed": true,
+          "width": 1440,
+          "height": 3614,
+          "entropy": 2.624222,
+          "gray_std": 79.535385,
+          "non_white_ratio": 0.69508,
+          "non_black_ratio": 0.999896,
+          "unique_color_ratio": 0.001361,
+          "html_text_chars": 3578
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 6,
+              "candidate_component_count": 6,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(3)>div:nth-of-type(1)",
+                  "component_count": 6,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "5|div:body:0>h3:title:0>p:body:0>div:body:3>a:body:0|body,body,body,body,title",
+                  "majority_style": "flex|column|none|normal|normal|8px|20px|20px|20px|20px|18px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 7,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>header:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>section:nth-of-type(4)>div:nth-of-type(2)>article:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>footer:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 53.185116,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 23,
+              "total_elements": 59,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 8,
+                "elements_without_horizontal_alignment": 8,
+                "row_bottom_alignment": 7
+              },
+              "row_group_count": 15,
+              "vertical_alignment_group_count": 38,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 95.520029,
+              "tags": [],
+              "sparsity_rate": 8.75924,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 81,
+                "width": 142,
+                "height": 3219,
+                "area": 455711
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 478,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 3614
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      }
+    },
+    "per_page_summary": {
+      "/": {
+        "render_sanity": 0.943,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/menu": {
+        "render_sanity": 0.929,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/library": {
+        "render_sanity": 0.933,
+        "accessibility_tags": [
+          "missing_accessible_name",
+          "missing_form_label"
+        ],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/events": {
+        "render_sanity": 0.943,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/book": {
+        "render_sanity": 0.939,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/tavern-pass": {
+        "render_sanity": 0.947,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/reviews": {
+        "render_sanity": 0.942,
+        "accessibility_tags": [
+          "missing_accessible_name",
+          "missing_form_label"
+        ],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      }
+    }
+  }
+}

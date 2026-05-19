@@ -1,0 +1,81 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/regional-credit-union/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 12,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "services-full",
+      "status": "ok",
+      "required": true,
+      "file": "services-full.png"
+    },
+    {
+      "id": "calculators-full",
+      "status": "ok",
+      "required": true,
+      "file": "calculators-full.png"
+    },
+    {
+      "id": "calculators-mortgage-expanded",
+      "status": "ok",
+      "required": false,
+      "file": "calculators-mortgage-expanded.png"
+    },
+    {
+      "id": "find-us-full",
+      "status": "ok",
+      "required": true,
+      "file": "find-us-full.png"
+    },
+    {
+      "id": "find-us-branch-expanded",
+      "status": "ok",
+      "required": false,
+      "file": "find-us-branch-expanded.png"
+    },
+    {
+      "id": "find-us-atm-heatmap",
+      "status": "ok",
+      "required": false,
+      "file": "find-us-atm-heatmap.png"
+    },
+    {
+      "id": "find-us-filters",
+      "status": "ok",
+      "required": false,
+      "file": "find-us-filters.png"
+    },
+    {
+      "id": "governance-full",
+      "status": "ok",
+      "required": true,
+      "file": "governance-full.png"
+    },
+    {
+      "id": "reading-room-full",
+      "status": "ok",
+      "required": true,
+      "file": "reading-room-full.png"
+    },
+    {
+      "id": "sign-in-personal-full",
+      "status": "ok",
+      "required": true,
+      "file": "sign-in-personal-full.png"
+    },
+    {
+      "id": "sign-in-business-tab",
+      "status": "ok",
+      "required": false,
+      "file": "sign-in-business-tab.png"
+    }
+  ]
+}

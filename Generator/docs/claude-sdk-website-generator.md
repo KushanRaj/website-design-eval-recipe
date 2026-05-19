@@ -264,7 +264,7 @@ Failures surface immediately:
 | Builder makes templated route paths like `/subjects/{slug}` | LLM verifier interprets intent; route templates are not literal-string checked |
 | Repair builder exhausts turn budget | Bumped `build_site_min_turns` from 40 → 100 |
 | Deterministic verifier produced machine-format repair briefs the builder couldn't act on | Refactor: deterministic is now data only; LLM writes the repair brief |
-| Manifest agent emits ambiguous nth-of-type selectors that fail Playwright strict mode | **Not yet fixed.** Capture-screenshots.mjs aborts on first bad selector. Tracked as a known limitation. |
+| Manifest agent emits fragile optional interaction captures | Replay logs the failed capture, continues, and prunes failed optional action captures from the manifest. Required no-action page captures still fail the seed. |
 
 ## Commands
 
@@ -315,8 +315,9 @@ runtime surfaces as a loud `AgentRuntimeError`.
 
 These are known gaps tracked but not addressed in v1:
 
-- **`capture-screenshots.mjs` tolerance** for per-capture failures — today
-  one bad selector aborts the whole replay, losing in-flight PNGs
+- **Richer action repair** for fragile states — replay currently prunes failed
+  optional interaction captures instead of trying to synthesize missing setup
+  actions such as "scroll until sticky bar appears, then click dismiss"
 - **File pruning** for orphaned earlier-attempt files in `site/`
 - **Fresh attempt directories** (build in `attempt-N/`, promote to `site/`
   on approval) — current code edits in place

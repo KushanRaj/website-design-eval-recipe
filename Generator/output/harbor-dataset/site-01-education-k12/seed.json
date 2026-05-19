@@ -1,0 +1,17 @@
+{
+  "id": "site-01-education-k12",
+  "one_liner": "A bright, playful K-12 public school district website with a sunny pastel palette, chunky rounded typography, and medium-density layouts featuring school finder maps, calendar grids, parent portal logins, board-meeting agendas, lunch menus, bus route pages, news bulletins, and a left-rail navigation tree linking academics, families, and staff sections.",
+  "metadata": {
+    "domain": "education",
+    "audience": "families and students",
+    "pages": [
+      "home",
+      "schools directory",
+      "parent portal",
+      "academics",
+      "calendar",
+      "news",
+      "board"
+    ]
+  }
+}

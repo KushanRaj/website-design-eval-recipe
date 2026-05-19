@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TAON-1 :: ROSTER</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="packet">
+  <span class="pid">TAON-1</span>
+  <span><span class="pulse"></span><span class="lbl">PACKET STATUS</span> <span class="val">NOMINAL</span></span>
+  <span class="hide-sm"><span class="lbl">UTC</span> <span class="val" data-utc>—</span></span>
+  <span class="hide-sm"><span class="lbl">SPC D1</span> <span class="val warn">ENH</span></span>
+  <span><span class="lbl">CHASERS</span> <span class="val" data-chasers>—</span></span>
+  <span class="hide-sm"><span class="lbl">LAST STRIKE</span> <span class="val warn" data-lastStrike>—</span></span>
+  <span class="hide-sm"><span class="lbl">ROSTER</span> <span class="val">312 CS</span></span>
+</div>
+
+<nav class="nav">
+  <a href="index.html">OPS</a>
+  <a href="logs.html">LOGS</a>
+  <a href="gear.html">GEAR</a>
+  <a href="spotters.html">SPOTTERS</a>
+  <a href="calendar.html">OUTLOOK</a>
+  <a href="gallery.html">GALLERY</a>
+  <a href="roster.html" class="active">ROSTER</a>
+  <span class="spacer"></span>
+  <span class="pill">NOT AN OFFICIAL NWS PRODUCT</span>
+</nav>
+
+<main class="page">
+
+  <div class="page-head">
+    <div>
+      <div class="crumb">/ ROSTER / DIRECTORY</div>
+      <h1>CALLSIGN DIRECTORY</h1>
+    </div>
+    <div></div>
+    <div class="meta">
+      312 active callsigns &middot; 47 net-control eligible<br/>
+      idle &gt; 90 days: <span class="amber">28</span>
+    </div>
+  </div>
+
+  <div class="row-flex" style="gap:8px;margin-bottom:8px;">
+    <input class="input" id="roster-search" style="max-width:300px;" placeholder="search callsign / CWA / vehicle ID…"/>
+    <button class="btn sm">FILTER</button>
+    <span class="dim" style="margin-left:auto;">Identity = callsign. Real names optional and shown only when published by operator.</span>
+  </div>
+
+  <div class="roster-grid">
+
+    <section>
+      <table class="grid" id="roster-table">
+        <thead>
+          <tr>
+            <th>CALLSIGN</th>
+            <th>NAME (opt.)</th>
+            <th>HOME CWA</th>
+            <th>VEHICLE</th>
+            <th>CERTS</th>
+            <th>LAST ON NET</th>
+            <th>MILES YTD</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><span class="cs" data-cs-card="KC5-WHIRL :: home OUN :: SKYWARN-ADV / ARRL-EXTRA :: 12 chases YTD :: net-control eligible">KC5-WHIRL</span></td>
+            <td>M. Carrasco</td>
+            <td>OUN</td>
+            <td>2017 4Runner / TAON-007</td>
+            <td><span class="badge cert">SK-ADV</span><span class="badge cert">EXTRA</span></td>
+            <td>00:14Z</td>
+            <td class="num">14,820</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs" data-cs-card="N0-SCUD :: home OUN :: SKYWARN-BASIC / ARRL-GEN">N0-SCUD</span></td>
+            <td>—</td>
+            <td>OUN</td>
+            <td>2014 Forester / TAON-018</td>
+            <td><span class="badge cert">SK-BASIC</span><span class="badge cert">GEN</span></td>
+            <td>00:08Z</td>
+            <td class="num">9,144</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs" data-cs-card="W5-HOOK :: home AMA :: SKYWARN-BASIC / ARRL-TECH">W5-HOOK</span></td>
+            <td>R. Penate</td>
+            <td>AMA</td>
+            <td>2020 Tacoma / TAON-042</td>
+            <td><span class="badge cert">SK-BASIC</span><span class="badge cert">TECH</span></td>
+            <td>00:05Z</td>
+            <td class="num">11,028</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">KE9-HAIL</span></td>
+            <td>J. Liu</td>
+            <td>FWD</td>
+            <td>2019 4Runner / TAON-051</td>
+            <td><span class="badge cert">SK-BASIC</span></td>
+            <td>2026-05-18 23:11Z</td>
+            <td class="num">7,440</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">KD0-RFD</span></td>
+            <td>—</td>
+            <td>GLD</td>
+            <td>2016 F-150 / TAON-022</td>
+            <td><span class="badge cert">SK-ADV</span><span class="badge cert">EXTRA</span></td>
+            <td>00:01Z</td>
+            <td class="num">10,612</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">AC9-MAMMA</span></td>
+            <td>A. Kovach</td>
+            <td>DDC</td>
+            <td>2018 Outback / TAON-035</td>
+            <td><span class="badge cert">SK-BASIC</span><span class="badge cert">TECH</span></td>
+            <td>2026-05-15 21:02Z</td>
+            <td class="num">5,012</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">KB7-FUNNEL</span></td>
+            <td>—</td>
+            <td>UNR</td>
+            <td>2019 Tundra / TAON-061</td>
+            <td><span class="badge cert">SK-ADV</span><span class="badge cert">GEN</span></td>
+            <td>2026-05-17 03:15Z</td>
+            <td class="num">3,884</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">N5-INFLOW</span></td>
+            <td>—</td>
+            <td>TSA</td>
+            <td>2021 Bronco / TAON-073</td>
+            <td><span class="badge cert">SK-BASIC</span></td>
+            <td>2026-05-12 01:00Z</td>
+            <td class="num">6,318</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">KG4-LP</span></td>
+            <td>S. Vega</td>
+            <td>MAF</td>
+            <td>2022 Bronco Sport / TAON-082</td>
+            <td><span class="badge cert">SK-BASIC</span><span class="badge cert">TECH</span></td>
+            <td>2026-05-10 02:44Z</td>
+            <td class="num">4,166</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">KD5-MESO</span></td>
+            <td>P. Albright</td>
+            <td>GID</td>
+            <td>2018 Pathfinder / TAON-091</td>
+            <td><span class="badge cert">SK-ADV</span><span class="badge cert">GEN</span></td>
+            <td>2026-05-09 00:21Z</td>
+            <td class="num">5,892</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">W0-SHELF</span></td>
+            <td>—</td>
+            <td>DDC</td>
+            <td>2015 Suburban / TAON-104</td>
+            <td><span class="badge cert">SK-BASIC</span></td>
+            <td>2026-05-08 03:18Z</td>
+            <td class="num">4,724</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">KX1-CAPE</span></td>
+            <td>C. Doss</td>
+            <td>TSA</td>
+            <td>2017 Wrangler / TAON-117</td>
+            <td><span class="badge cert">SK-BASIC</span><span class="badge cert">EXTRA</span></td>
+            <td>2026-05-04 00:14Z</td>
+            <td class="num">3,012</td>
+          </tr>
+
+          <tr>
+            <td><span class="cs">NET-CTRL</span></td>
+            <td>(rotating)</td>
+            <td>OUN</td>
+            <td>—</td>
+            <td><span class="badge cert">NET-OP</span></td>
+            <td>00:00Z</td>
+            <td class="num">—</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="panel" style="margin-top:10px;">
+        <div class="panel-head">
+          <div class="lhs"><span>CERTIFICATIONS LEGEND</span></div>
+        </div>
+        <div class="panel-body">
+          <div class="kv">
+            <div class="k"><span class="badge cert">SK-BASIC</span></div>
+            <div>SKYWARN Basic Spotter Training (NWS, ~2hr)</div>
+            <div class="k"><span class="badge cert">SK-ADV</span></div>
+            <div>SKYWARN Advanced — meso recognition, radar interpretation</div>
+            <div class="k"><span class="badge cert">TECH</span></div>
+            <div>FCC Amateur Radio Technician class</div>
+            <div class="k"><span class="badge cert">GEN</span></div>
+            <div>FCC Amateur Radio General class</div>
+            <div class="k"><span class="badge cert">EXTRA</span></div>
+            <div>FCC Amateur Radio Extra class</div>
+            <div class="k"><span class="badge cert">NET-OP</span></div>
+            <div>Authorized net-control operator (TAON-1 internal)</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <aside>
+
+      <div class="qsl">
+        <h2>KC5-WHIRL</h2>
+        <div class="dim">TORNADO ALLEY OPERATIONS NETWORK / TAON-1</div>
+        <div class="row2">
+          <div class="k">REAL NAME</div><div>M. Carrasco</div>
+          <div class="k">HOME GRID</div><div>EM15</div>
+          <div class="k">HOME CWA</div><div>OUN (Norman, OK)</div>
+          <div class="k">VEHICLE</div><div>2017 Toyota 4Runner</div>
+          <div class="k">RIG ID</div><div>TAON-007</div>
+          <div class="k">JOINED</div><div>2017-03-22</div>
+          <div class="k">CHASES</div><div>118 logged / 12 YTD</div>
+          <div class="k">MODE PREF</div><div>discrete supercell · classic</div>
+          <div class="k">LAST ON NET</div><div>00:14Z</div>
+        </div>
+        <div class="stamp-row">
+          <span class="stamp">SKYWARN-ADV</span>
+          <span class="stamp">ARRL-EXTRA</span>
+          <span class="stamp">NET-OP</span>
+        </div>
+        <hr class="ascii"/>
+        <div class="dim" style="font-size:11px;">
+          QSL via TAON-1 bureau, c/o net control. Confirmable contacts above 14.345 MHz and 147.555 MHz simplex.
+        </div>
+      </div>
+
+      <div class="rig-schematic">
+        <div class="dim" style="font-size:11px;">RIG SCHEMATIC :: TAON-007 (4Runner)</div>
+        <svg viewBox="0 0 360 180" style="width:100%;height:auto;">
+          <!-- vehicle outline (top-down) -->
+          <rect x="50" y="40" width="260" height="100" fill="none" stroke="#4cff8f" stroke-width="1"/>
+          <rect x="60" y="50" width="50" height="80" fill="none" stroke="#244836"/>
+          <rect x="120" y="50" width="80" height="80" fill="none" stroke="#244836"/>
+          <rect x="210" y="50" width="60" height="80" fill="none" stroke="#244836"/>
+          <rect x="280" y="50" width="22" height="80" fill="none" stroke="#244836"/>
+
+          <text x="85" y="92" fill="#6fb38a" font-size="9" font-family="monospace" text-anchor="middle">DRIVER</text>
+          <text x="160" y="92" fill="#6fb38a" font-size="9" font-family="monospace" text-anchor="middle">2ND ROW</text>
+          <text x="240" y="92" fill="#6fb38a" font-size="9" font-family="monospace" text-anchor="middle">CARGO</text>
+          <text x="291" y="92" fill="#6fb38a" font-size="9" font-family="monospace" text-anchor="middle">SPARE</text>
+
+          <!-- mesonet on roof -->
+          <rect x="160" y="20" width="40" height="14" fill="none" stroke="#ffae28"/>
+          <text x="180" y="14" fill="#ffae28" font-size="9" font-family="monospace" text-anchor="middle">MESO Mk-IV</text>
+          <line x1="180" y1="34" x2="180" y2="50" stroke="#ffae28"/>
+
+          <!-- anemometer mast -->
+          <line x1="320" y1="40" x2="320" y2="14" stroke="#ffae28"/>
+          <circle cx="320" cy="14" r="4" fill="none" stroke="#ffae28"/>
+          <text x="335" y="18" fill="#ffae28" font-size="9" font-family="monospace">ANEMO</text>
+
+          <!-- antenna -->
+          <line x1="40" y1="90" x2="14" y2="90" stroke="#ffae28"/>
+          <circle cx="14" cy="90" r="3" fill="#ffae28"/>
+          <text x="10" y="84" fill="#ffae28" font-size="9" font-family="monospace">2M/70cm</text>
+
+          <!-- dashcam -->
+          <rect x="62" y="46" width="14" height="6" fill="#ffae28" opacity="0.8"/>
+          <text x="78" y="51" fill="#ffae28" font-size="9" font-family="monospace">DASHCAM</text>
+
+          <!-- power -->
+          <rect x="220" y="60" width="22" height="14" fill="#244836" stroke="#4cff8f"/>
+          <text x="231" y="71" fill="#4cff8f" font-size="9" font-family="monospace" text-anchor="middle">PWR</text>
+
+          <!-- laptop -->
+          <rect x="240" y="60" width="22" height="14" fill="#244836" stroke="#4cff8f"/>
+          <text x="251" y="71" fill="#4cff8f" font-size="9" font-family="monospace" text-anchor="middle">PC</text>
+
+          <text x="180" y="170" fill="#6fb38a" font-size="9" font-family="monospace" text-anchor="middle">FRONT ←———————— REAR</text>
+        </svg>
+
+        <hr class="ascii"/>
+        <pre style="white-space:pre-wrap;font-size:11px;">
+EQUIPMENT MANIFEST (TAON-007)
+  Roof   :: MESO-PLATFORM Mk-IV — 10Hz logging
+  Mast   :: Anemometer mast (rear sill), 3D sonic
+  Comms  :: 2m/70cm mobile, mag-mount whip
+           147.555 MHz primary / APRS 144.39
+  Logger :: SkyLog-128 in cargo
+  Cam    :: 2x dashcam (fwd + cabin)
+  Power  :: 2nd battery isolator, 800W inverter
+  Optics :: 24-70 f2.8, 70-200 f4, 16-35 f4
+        </pre>
+      </div>
+
+      <div class="panel" style="margin-top:10px;">
+        <div class="panel-head"><div class="lhs"><span>QSL :: PRINTABLE CARD</span></div></div>
+        <div class="panel-body">
+          <div class="row-flex">
+            <button class="btn">⇩ PDF (3.5x2)</button>
+            <button class="btn amber">⇩ PNG (300dpi)</button>
+          </div>
+          <div class="dim" style="font-size:11px;margin-top:6px;">
+            QSL card template renders the operator's callsign, certifications, and home grid in a NOAA workstation aesthetic. Standard 3.5"x2" ITU spec.
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="disclaimer">NOT AN OFFICIAL NWS PRODUCT. Roster reflects voluntary community participation. Operators are not NWS employees and do not act under NWS authority.</div>
+  <div>
+    <strong>TORNADO ALLEY OPERATIONS NETWORK</strong><br/>
+    Membership: SKYWARN-BASIC or amateur radio Technician class minimum.<br/>
+    Apply: <a href="#">/roster/apply</a> — bureau review &lt; 14 days.
+  </div>
+  <div>
+    Privacy: real names are operator-published only. GPS is coarsened to 0.1° unless operator opts in.<br/>
+    Bureau email: bureau@taon-1.network
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

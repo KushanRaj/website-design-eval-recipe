@@ -1,0 +1,243 @@
+{
+  "site_id": "lutherie-guild",
+  "concept_seed": {
+    "id": "lutherie-guild",
+    "one_liner": "An ornate craft guild website for stringed-instrument luthiers featuring engraved illustrations, warm walnut and parchment palette, serif typography with ligatures, member workshop directory, apprenticeship program page, materials sourcing guide, annual exhibition gallery, instrument-of-the-month feature, and a journal of techniques.",
+    "metadata": {
+      "visual_feel": "ornate editorial heritage",
+      "palette": "walnut brown, parchment, deep burgundy",
+      "density": "medium-high"
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "lutherie-guild-engraved-folio",
+    "domain": "craft guild / stringed-instrument lutherie",
+    "site_goal": "Present the centuries-old Worshipful Guild of Stringed-Instrument Luthiers as a living craft body — connecting prospective apprentices, member workshops, collectors, and the curious public to its members, materials lore, exhibitions, and technical journal.",
+    "audience": [
+      "prospective apprentices",
+      "collectors and patrons",
+      "professional luthiers seeking membership",
+      "musicians researching their instrument's provenance",
+      "academic researchers in organology"
+    ],
+    "description": "An ornate editorial heritage site rendered as a leather-bound folio brought to the screen. The home page opens like the frontispiece of an 18th-century treatise: a centered engraved viola d'amore framed by acanthus scrollwork, with the guild's full Latin-and-English name set in spaced caps above a date roundel reading 'ESTABLISHED MDCCXIV'. Body copy runs in two narrow justified columns with hanging drop caps, ligatures (ct, st, fi, fl), and small-caps for proper nouns. The walnut-brown chrome (#4A2E1F) sits against a parchment ground (#F2E6D0) with deep burgundy (#6B1E2A) reserved for rules, ornamental dividers, and link underlines. Hand-engraved spot illustrations — a coiled scroll, a chisel, a maple billet showing flame figure — sit in the margins like a Diderot plate. Navigation is a thin parchment ribbon with a wax-seal hover state. Pages feel like chapters: each has a hand-set chapter number ('CAP. III'), a foliate header rule, and footnotes in italic. The instrument-of-the-month is presented as a tipped-in plate with a copperplate caption and provenance notes. The journal page mimics an engraved scientific periodical with figure numbers and roman-numeraled sections.",
+    "motif": "engraved frontispiece with acanthus scrollwork, wax seals, foliate rules, and tipped-in plate illustrations",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "engraved frontispiece: centered title cartouche, large engraved instrument, date roundel, then a two-column 'preface from the Warden' with drop caps, followed by three plate-card teasers (Apprenticeship / Exhibition / Journal) and a footer with the guild oath",
+        "sections": [
+          "title cartouche with full guild name and MDCCXIV roundel",
+          "centered engraved hero instrument (viola d'amore) within acanthus frame",
+          "preface from the Warden — two justified columns with drop cap",
+          "three plate-card teasers linking to Apprenticeship, Exhibition, Journal",
+          "instrument-of-the-month teaser strip with tipped-in plate",
+          "footer with guild oath in small caps and arms of the guild"
+        ]
+      },
+      {
+        "id": "workshops",
+        "path": "/workshops",
+        "layout_pattern": "engraved directory: filter ribbon across the top, then a grid of workshop cards each shaped like a tradesman's sign with the workshop's house mark, master luthier, city, and specialties; a foldout map of Europe shows pin locations as small engraved instruments",
+        "sections": [
+          "directory intro paragraph in italic",
+          "filter ribbon (instrument family / region / accepting apprentices)",
+          "workshop card grid with engraved house marks",
+          "engraved foldout map of member locations",
+          "'Become a member workshop' call-to-action with application steps"
+        ]
+      },
+      {
+        "id": "apprenticeship",
+        "path": "/apprenticeship",
+        "layout_pattern": "chapter-style page: CAP. III header rule, opening paragraph with drop cap, then a three-tier vertical timeline (Apprentice → Journeyman → Master) with foliate dividers, expectations and stipend in side margins as footnotes, closing with an application form set as an engraved petition",
+        "sections": [
+          "chapter heading 'CAP. III — Of the Path to Mastery'",
+          "opening paragraph with drop cap",
+          "three-tier timeline of apprentice / journeyman / master",
+          "marginal footnotes on stipend, hours at the bench, examination",
+          "engraved petition-style application form"
+        ]
+      },
+      {
+        "id": "materials",
+        "path": "/materials",
+        "layout_pattern": "Diderot-plate inspired catalogue: top half a large labelled engraving of an instrument cross-section with callouts, bottom half a sortable table of woods, varnishes, and strings with grading and sourcing partner; a sidebar offers a sustainability note from the guild forester",
+        "sections": [
+          "labelled cross-section engraving with numbered callouts",
+          "sortable materials table (species, grading, sourcing partner, sustainability)",
+          "varnish recipe vignette with engraved bottles",
+          "forester's sidebar note in italic",
+          "interactive billet rotator (quarter-sawn / flat-sawn)"
+        ]
+      },
+      {
+        "id": "exhibition",
+        "path": "/exhibition",
+        "layout_pattern": "annual-exhibition gallery: top banner with year and host city in cartouche, hero plate of the Best-in-Show instrument, then a two-column gallery of juried instruments with copperplate captions; below, an archive carousel of past years' frontispieces",
+        "sections": [
+          "year and host city cartouche",
+          "Best-in-Show hero plate with juror citation",
+          "two-column gallery of juried instruments",
+          "list of attending workshops",
+          "archive carousel of past exhibition frontispieces"
+        ]
+      },
+      {
+        "id": "instrument-of-the-month",
+        "path": "/instrument-of-the-month",
+        "layout_pattern": "tipped-in plate spread: full-bleed engraved instrument on the verso, copperplate caption and detailed entry on the recto with maker, year, dimensions, varnish, tonal notes, and a provenance chain styled as a numbered lineage; audio sample plays from a phonograph-horn button",
+        "sections": [
+          "tipped-in plate of the instrument (verso)",
+          "copperplate caption and full entry (recto)",
+          "provenance chain as a numbered lineage",
+          "audio sample with phonograph-horn play control",
+          "'previous featured instruments' thumbnail strip"
+        ]
+      },
+      {
+        "id": "journal",
+        "path": "/journal",
+        "layout_pattern": "engraved periodical: masthead with roman-numeraled volume and issue, table of contents with article titles and authors, then the lead article rendered in two columns with figure numbers, footnotes, and an author colophon; sidebar lists past issues",
+        "sections": [
+          "masthead with volume / issue in Roman numerals",
+          "table of contents",
+          "lead article in two-column justified setting with figures and footnotes",
+          "author colophon with engraved portrait",
+          "past issues sidebar"
+        ]
+      }
+    ],
+    "message_intent": [
+      "convey institutional gravitas and continuous lineage since 1714",
+      "demystify the path into the craft",
+      "establish authority on materials, technique, and provenance",
+      "invite trade with member workshops",
+      "celebrate the current month's featured instrument"
+    ],
+    "required_text": [
+      "The Worshipful Guild of Stringed-Instrument Luthiers",
+      "ESTABLISHED MDCCXIV",
+      "Instrument of the Month",
+      "Journal of Techniques"
+    ],
+    "content_model": [
+      "member workshop entries with workshop name, master luthier, city, specialties (violin family / lute family / guitar family / historical reproductions), founded year, contact, and an engraved house mark",
+      "apprenticeship program entries with tier (apprentice / journeyman / master), duration, prerequisites, stipend, hosting workshop, and application window",
+      "material entries with species (European spruce, Bosnian maple, Madagascan ebony, etc.), grading, sourcing partner, sustainability note, and engraved cross-section figure",
+      "exhibition entries with year, host city, juried winners, attending workshops, and plate gallery",
+      "instrument-of-the-month entry with maker, year, dimensions, varnish recipe, tonal notes, and provenance chain",
+      "journal articles with chapter heading, figures (numbered), footnotes, and author colophon"
+    ],
+    "interactions": [
+      "wax-seal hover state on nav items that 'presses' a burgundy seal beneath the label",
+      "workshop directory filter chips (instrument family / region / accepting apprentices) styled as engraved tags",
+      "interactive maple-billet rotator on the materials page that flips between flat-sawn and quarter-sawn engravings",
+      "footnote pop-overs on journal articles that surface the cited reference in a parchment tooltip",
+      "page-turn transition with a soft paper crease between chapters"
+    ],
+    "asset_needs": [
+      "high-detail engraved illustrations of: violin, viola d'amore, theorbo, classical guitar, scroll, f-hole, chisel set, maple billet cross-section",
+      "ornamental rule and corner-piece set (foliate, acanthus)",
+      "wax-seal SVG with guild monogram",
+      "parchment paper texture (subtle, non-distracting)",
+      "engraved house marks for ~12 member workshops",
+      "copperplate-style portrait engravings of three featured master luthiers",
+      "tipped-in plate frame ornament for the instrument-of-the-month"
+    ],
+    "mobile_behavior": "Two-column folio collapses to a single justified column; chapter numerals shrink to inline kickers; margin engravings reflow above their related paragraph as half-width plates; the wax-seal nav becomes a hamburger that opens a parchment drawer.",
+    "difficulty": "hard"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "lutherie-guild-engraved-folio",
+        "score": 0.9,
+        "accept": true,
+        "strengths": [
+          "Maps directly onto every element named in the seed one-liner (apprenticeship, materials, exhibition, instrument-of-the-month, journal, workshop directory)",
+          "Motif is exceptionally concrete: frontispiece, acanthus cartouche, MDCCXIV roundel, tipped-in plate, wax-seal nav, CAP. III chapter headers",
+          "Layout patterns are richly specified per page (two-column justified, drop caps, ligatures, foliate rules, copperplate captions)",
+          "Interactions are domain-specific and useful (wax-seal hover, maple-billet rotator quarter/flat-sawn, footnote pop-overs, page-turn transition)",
+          "Palette mapping is precise with hex values reserved for chrome, ground, and rules",
+          "Seven pages, well-differentiated, none feel like filler"
+        ],
+        "weaknesses": [
+          "Risk of veering into pastiche if engravings are weak; relies heavily on illustration quality",
+          "Two-column justified body with drop caps is technically demanding to render cleanly at all breakpoints"
+        ]
+      },
+      {
+        "candidate_id": "lutherie-guild-atelier-ledger",
+        "score": 0.78,
+        "accept": true,
+        "strengths": [
+          "Fresh angle on heritage as a living working network rather than a museum",
+          "Motif of ledger ruling, edge tabs, rubber-stamp progress marks, marginalia is original and concrete",
+          "Commission ledger and on-the-bench pages give genuinely useful interactive utility",
+          "Strong content models with real fields (folio number, lot number, lead time, seats remaining)"
+        ],
+        "weaknesses": [
+          "Drops the seed's explicit 'annual exhibition gallery' page entirely, weakening alignment",
+          "Renames apprenticeship into a courses page, slightly diluting the seed's apprenticeship-program emphasis",
+          "Less ornate than the seed's 'ornate editorial heritage' visual feel calls for; feels more workshop than guild-frontispiece",
+          "Typewriter-serif body and ledger ruling could read as bookkeeping rather than the lush walnut/parchment register"
+        ]
+      }
+    ],
+    "best_candidate_id": "lutherie-guild-engraved-folio",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/real-run-9/lutherie-guild/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "accessibility",
+        "message": "The apprenticeship petition form has inputs without programmatically-associated labels (missing_accessible_name / missing_form_label). The visible 'Given Name(s)', 'Family Name', etc. captions appear to be styled small-caps text rather than <label for=...> elements bound to the inputs.",
+        "severity": "warning",
+        "path": "apprenticeship.html"
+      },
+      {
+        "type": "component_consistency",
+        "message": "Workshop directory cards trip the component-style consistency check (9/12 flagged). Visually the cards are intentionally varied (different specialty-tag counts, optional 'Accepting Apprentices' chip), which matches the concept of a heterogeneous member directory. Acceptable as designed.",
+        "severity": "info",
+        "path": "workshops.html"
+      },
+      {
+        "type": "icon_consistency",
+        "message": "Icon-style consistency flags fire on pages with engraved house marks and plate ornaments. This is by design — the concept explicitly calls for unique engraved house marks per workshop and per-plate ornaments. Not a real defect.",
+        "severity": "info",
+        "path": "workshops.html, journal.html, materials.html"
+      },
+      {
+        "type": "layout_alignment",
+        "message": "Layout consistency scores are low (24-65) on several pages. This reflects the intentional editorial folio asymmetry (drop caps, marginal footnotes, tipped-in plates, two-column justified columns with figures inset), not a real alignment defect. Screenshots show clean editorial grid.",
+        "severity": "info",
+        "path": "multiple"
+      }
+    ],
+    "scores": {
+      "accessibility": 0.85,
+      "mobile_responsiveness": 0.9,
+      "component_consistency": 0.85,
+      "layout_alignment": 0.8,
+      "render_quality": 0.92,
+      "page_completeness": 1.0,
+      "concept_fidelity": 0.96
+    },
+    "repair_instructions": [
+      "In apprenticeship.html, wire up the petition form for accessibility: wrap each visible field caption (Given Name(s), Family Name, Age at Petitioning, Prior Bench Experience, Preferred Instrument Family, Testimony from a Member, Signed at) in a <label> element with a `for` attribute matching the id of its input/select/textarea, or alternatively give each input an `aria-label` / `aria-labelledby` pointing at the existing caption. Keep the engraved small-caps visual styling on the label."
+    ],
+    "deterministic_checks": {
+      "html_page_count": 7,
+      "all_required_text_present": true,
+      "all_declared_pages_resolved": true,
+      "placeholder_hits": 0
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/real-run-9/lutherie-guild/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/real-run-9/lutherie-guild/site/screenshots/reference"
+}

@@ -1,0 +1,39 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "fernwood-conservatory",
+      "score": 0.88,
+      "accept": true,
+      "strengths": [
+        "Tight herbarium-folio motif carried into deckled plates, ruled columns, and italic binomial captions",
+        "Nine concrete pages directly covering seed asks: encyclopedia index + entry, bloom calendar, garden map, workshops, shop, membership, field notes",
+        "Specific, non-generic interactions (circular bloom wheel with month slider, SVG map with zone rail, sticky cultivar tabs, seasonal-shipping waitlist)",
+        "Rich content model with taxonomic facets, conservation status, propagation notes, and reciprocal-garden member benefits",
+        "Clear conservatory framing matches the seed's 'conservatory visit info' requirement"
+      ],
+      "weaknesses": [
+        "Encyclopedia entry path uses a single species and could feel templated if not varied",
+        "Membership page leans on a familiar tier-table pattern"
+      ]
+    },
+    {
+      "candidate_id": "moss-and-meridian",
+      "score": 0.78,
+      "accept": true,
+      "strengths": [
+        "Distinctive 'meridian' latitudinal-band organization is a fresh angle on a plant encyclopedia",
+        "Almanac week scrubber, postcode shipping check, and lineage drawers are concrete, useful interactions",
+        "Strong provenance and propagation content model that fits a small-batch nursery",
+        "Grower's Notebook gives a believable editorial channel separate from product pages"
+      ],
+      "weaknesses": [
+        "Drops the seed's membership page entirely and reframes 'conservatory' as a small glasshouse, weakening alignment",
+        "Workshops + Visit + About risk feeling like standard small-business pages compared to the more curatorial pages elsewhere",
+        "Almanac and encyclopedia-meridians could overlap conceptually if not carefully differentiated"
+      ]
+    }
+  ],
+  "best_candidate_id": "fernwood-conservatory",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

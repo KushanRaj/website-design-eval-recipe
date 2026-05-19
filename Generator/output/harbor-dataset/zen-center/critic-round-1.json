@@ -1,0 +1,42 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "zen-center-stoneandsilence",
+      "score": 0.84,
+      "accept": true,
+      "strengths": [
+        "Disciplined motif (vast off-white, hairline rule, sumi wash, vertical glyph column) carried across all six pages",
+        "Highly domain-specific: shiho, kinhin, dokusan, zazenkai, dana slider, 5-minute silence preroll on dharma audio",
+        "Concrete layouts including vertical lineage chain with sumi connector and hairline waveform rows",
+        "Quiet but functional interactions tied to contemplative intent (no checkout flow on dana)",
+        "Six distinct pages with differentiated layout patterns"
+      ],
+      "weaknesses": [
+        "Six landing 'breaths' risk feeling formulaic if poorly paced",
+        "Single-stroke etiquette icons could read generic without strong assets",
+        "Dana page is intentionally sparse"
+      ]
+    },
+    {
+      "candidate_id": "zen-center-pinetreehall",
+      "score": 0.89,
+      "accept": true,
+      "strengths": [
+        "Distinctive editorial-broadsheet voice differentiates clearly while honoring seed palette",
+        "Seasonal sekki marker pinned to right edge is a memorable, domain-authentic motif",
+        "Concrete content: rice-and-oil monthly giving, roof restoration fund, retreatant scholarship, last-year ledger",
+        "Layout patterns vary meaningfully: horizontal genealogical lineage, ledger schedule, three-column audio archive, zoned etiquette by Sanmon/Genkan/Zendo/Refectory/Garden",
+        "Realistic interactions: one-question-per-screen retreat form, filterable audio by teacher/theme/year",
+        "Mobile behavior thoughtfully described (horizontal lineage becomes vertical indented outline)"
+      ],
+      "weaknesses": [
+        "Combining schedule and retreats on one page risks density unless ledger discipline holds",
+        "Three-column audio archive may feel dense for contemplative tone",
+        "Horizontal-scroll lineage can be awkward on trackpads if not paged"
+      ]
+    }
+  ],
+  "best_candidate_id": "zen-center-pinetreehall",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

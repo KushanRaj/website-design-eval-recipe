@@ -1,0 +1,82 @@
+{
+  "id": "site-01-education-k12",
+  "name": "Maple Hollow Community Schools",
+  "domain": "education / K-12 public school district",
+  "one_liner": "A bright, playful K-12 public school district website with a sunny pastel palette, chunky rounded typography, and medium-density binder-style layouts for school finder, calendars, parent portal, board, news, and lunch menus.",
+  "implementation": {
+    "stack": "Vanilla HTML5 + CSS3 + minimal JS (no frameworks, no build).",
+    "pages": [
+      { "id": "home", "path": "index.html", "title": "Home" },
+      { "id": "schools-directory", "path": "our-schools.html", "title": "Our Schools" },
+      { "id": "parent-portal", "path": "portal.html", "title": "Sign In to the Portal" },
+      { "id": "academics", "path": "academics.html", "title": "Academics" },
+      { "id": "calendar", "path": "calendar.html", "title": "District Calendar" },
+      { "id": "board", "path": "board.html", "title": "Board of Education" },
+      { "id": "news", "path": "news.html", "title": "News" },
+      { "id": "lunch-menus", "path": "lunch.html", "title": "This Week's Menu" }
+    ],
+    "shared_assets": [
+      "css/style.css — full theme: pastel palette, paper texture, dymo headers, washi tape, sticker cards, binder nav",
+      "js/app.js — toggles, role tabs, modals, calendar view switcher, news filter, locale toast, lunch week navigator, alert rotator"
+    ]
+  },
+  "design": {
+    "motif": "Spiral-bound binder with pastel tabbed dividers, ruled notebook lines, crayon underlines, washi-tape highlights, dymo label headers, sticker cards with soft drop shadows.",
+    "palette": {
+      "lemon": "#fff3a8",
+      "robin": "#b6e0f0",
+      "blush": "#ffd6da",
+      "sage": "#cfe3c4",
+      "apricot": "#ffd9b0",
+      "lavender": "#e0d4f0",
+      "paper": "#fdf9ed",
+      "ink": "#2d2a3b",
+      "maple_red": "#d24f3c"
+    },
+    "typography": {
+      "display": "Recoleta-style rounded serif (Recoleta/Fraunces/Georgia fallback) for chunky headlines",
+      "body": "Friendly geometric sans (Nunito/Quicksand/Avenir Next/system-ui)",
+      "label": "Courier New (dymo label-maker feel)"
+    },
+    "layout": "Three-zone front page: persistent left-rail binder nav (Academics/Families/Staff/About), central sticker-card canvas, right-rail This Week + bell schedule + weather; two-column variant on interior pages.",
+    "background_texture": "Cream paper with subtle ruled notebook lines via CSS gradient."
+  },
+  "interactions_implemented": [
+    "Binder left-rail nav with section labels and active-page highlight on every page",
+    "Schools directory Grid/Map toggle with pin overlay map and layer toggle legend",
+    "Role-tabbed portal sign-in (Parent / Student / Staff) with contextual help line and SSO buttons",
+    "Calendar view switcher (Month / Week / Agenda) with category filter pills and color-coded event chips",
+    "Board public-comment signup modal and absence-report modal opened from home + tool sticker",
+    "News category sticker-pill filter that hides/shows posts client-side",
+    "Locale dropdown that displays a translated toast confirmation (en/es/vi/so)",
+    "Lunch menu school-level tabs and week-navigator (◀/▶) that updates the displayed week label",
+    "Rotating alert strip headlines on the home page",
+    "Academics grade-band tab strip with live label sync to the subject heading"
+  ],
+  "content_model_coverage": [
+    "Campus — 7 schools with mascots, principals, addresses, phones, bell schedules, programs",
+    "CalendarEvent — month grid, week list, agenda views with categories and colors",
+    "BoardMember — 7 portraits with seats, terms, committees",
+    "BoardMeeting — Next-meeting hero plus searchable past-meetings table (agenda, minutes, video columns)",
+    "NewsPost — Featured story plus dated post list with thumbnails, reading-time chips, categories",
+    "MenuDay — Mon-Fri grid of Breakfast/Lunch/Snack with allergen legend",
+    "Program — Dual Language, STEAM, AVID, IB, CTE spotlight cards",
+    "BusRoute — Surfaced via alerts, address lookup, and map overlay legend",
+    "PolicyDoc — 1000-6000 series accordion in board page",
+    "Translation — Locale dropdown in topbar with 4 languages"
+  ],
+  "required_text_present": [
+    "Maple Hollow Community Schools",
+    "Our Schools",
+    "Sign In to the Portal",
+    "Report an Absence",
+    "Board of Education",
+    "This Week's Menu"
+  ],
+  "accessibility_and_notes": [
+    "Semantic header/main/aside/footer landmarks on every page",
+    "High-contrast ink-on-paper text with 2px borders for visual sharpness",
+    "Focusable controls retain native focus rings; modals close on backdrop click",
+    "Locale switcher visible in topbar of every page; ADA / Title IX statement linked from footer"
+  ]
+}

@@ -1,0 +1,360 @@
+{
+  "seed_id": "site-01-education-k12",
+  "concepts": [
+    {
+      "candidate_id": "site-01-education-k12-A",
+      "domain": "education / K-12 public school district",
+      "site_goal": "Serve as the unified digital hub for the Sunridge Unified School District, helping families find their neighborhood school, log into the parent portal, scan calendars and lunch menus, and stay current on board decisions and district news.",
+      "audience": [
+        "parents and guardians",
+        "K-12 students",
+        "district staff and teachers",
+        "prospective families relocating to the district",
+        "board members and local press"
+      ],
+      "description": "Sunridge Unified School District (SUSD) website with a bright, playful identity: sunny pastel palette of butter yellow, sky blue, peach, mint, and lavender on a warm off-white canvas. Chunky rounded sans-serif (Fraunhofer-style display) for headings, soft humanist sans for body. Medium-density layouts with rounded card stacks, dotted dividers, sticker-style icons, and a persistent left-rail navigation tree that expands sections for Academics, Families, and Staff. The homepage stitches together a school finder map, a weekly calendar strip, lunch menu of the day, latest board agenda, and a news bulletin board. Pages keep a friendly, scholastic tone with announcement banners, bus alerts, and clear bilingual toggles (English / Español).",
+      "motif": "Sunny pastel sticker book: rounded cards, dotted divider rules, soft drop shadows, hand-drawn icon stickers (apple, bus, pencil, sun), and a left-rail folder-tree feel reminiscent of a school binder.",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Two-column shell with persistent left-rail nav tree and a multi-zone right canvas: hero announcement band, school finder map card, today's lunch + bell schedule strip, news bulletin grid, and a board-meeting countdown footer",
+          "sections": [
+            "District-wide alert ribbon (e.g. snow day, bus delay) at the very top",
+            "Hero greeting block with superintendent welcome and rotating student artwork",
+            "School finder mini-map with ZIP/address input and 'Find My School' button",
+            "This Week at SUSD: 7-day calendar strip with color-coded events",
+            "Today's lunch menu card (elementary / middle / high tabs) with allergen icons",
+            "News & announcements bulletin grid (3-up cards)",
+            "Upcoming board meeting countdown + agenda link",
+            "Quick links sticker row: Parent Portal, Bus Routes, Enroll, Pay Fees, Report Absence",
+            "Footer with bilingual toggle, accessibility statement, and district contact"
+          ]
+        },
+        {
+          "id": "schools-directory",
+          "path": "/schools",
+          "layout_pattern": "Split view: interactive boundary map on the left half, filterable list of schools as rounded cards on the right; address search bar pinned to the top",
+          "sections": [
+            "Address / ZIP search with 'Find My Attendance Zone' button",
+            "Filter chips: Elementary, Middle, High, Magnet, Pre-K, Adult Ed",
+            "Boundary map with color-coded zones and school pins",
+            "School cards (photo, principal, grades served, enrollment, bell time, phone)",
+            "Compare-up-to-3 schools tray at the bottom",
+            "Bus route lookup CTA card",
+            "Transfer / open-enrollment information callout"
+          ]
+        },
+        {
+          "id": "parent-portal",
+          "path": "/families/portal",
+          "layout_pattern": "Login-forward page: centered sign-in card on a pastel gradient panel, with a benefits sidebar and post-login dashboard preview below the fold",
+          "sections": [
+            "Sign-in card with username, password, 'Forgot login', and SSO with Google Classroom",
+            "First-time user 'Activate your account' walkthrough with claim code field",
+            "What you can do in the Portal: grades, attendance, lunch balance reload, bus tracker, teacher messages",
+            "Mobile app download row (iOS / Android badges)",
+            "Help & support: 'I lost my activation letter', live chat hours, phone tree",
+            "Privacy and FERPA statement strip"
+          ]
+        },
+        {
+          "id": "academics",
+          "path": "/academics",
+          "layout_pattern": "Tabbed curriculum hub with grade-band tabs (Pre-K, Elementary, Middle, High) above a three-column subject grid; left-rail tree stays visible",
+          "sections": [
+            "Grade-band tab strip with illustrated headers",
+            "Subject tiles: ELA, Math, Science, Social Studies, World Languages, Arts, PE, CTE",
+            "Standards & report card explainer accordion",
+            "Special programs: Gifted, Dual Language Immersion, Special Education, MTSS",
+            "High school course catalog PDF + Naviance link",
+            "Graduation requirements infographic",
+            "Assessment calendar (state tests, MAP, AP)",
+            "Family resources: 'Help your child with math at home' tip cards"
+          ]
+        },
+        {
+          "id": "calendar",
+          "path": "/calendar",
+          "layout_pattern": "Full-bleed month grid with color legend sidebar, school filter dropdown, and a synced agenda list panel underneath",
+          "sections": [
+            "Year/month switcher with 'Today' jump button",
+            "School filter (All schools, individual campuses) and category filter (Holidays, Early Release, Board, Athletics, Arts)",
+            "Color-coded month grid with sticker-style event chips",
+            "Agenda list below the grid with downloadable .ics per event",
+            "Subscribe to calendar feed (Google, Apple, Outlook) buttons",
+            "Print PDF year-at-a-glance link",
+            "Recurring lunch menu link card"
+          ]
+        },
+        {
+          "id": "board",
+          "path": "/board",
+          "layout_pattern": "Civic-style index page: trustee roster on top as a row of pastel circular portraits, then upcoming meeting card, then a chronological table of past agendas and minutes with search and filter",
+          "sections": [
+            "Board of Trustees roster with photos, areas, terms, and 'Email this trustee' buttons",
+            "Next meeting card: date, time, location, livestream link, agenda PDF, public comment sign-up",
+            "Meeting archive table: date, type (Regular/Special/Workshop), agenda, minutes, video",
+            "Policies & bylaws searchable index",
+            "Public comment guidelines explainer",
+            "Strategic plan and budget documents accordion"
+          ]
+        },
+        {
+          "id": "news",
+          "path": "/news",
+          "layout_pattern": "Editorial bulletin board: large featured story on the left, masonry of recent news cards on the right, and a sidebar with newsletter signup and press contact",
+          "sections": [
+            "Featured news hero with photo, headline, dek, byline",
+            "Filter pills: All, District News, School Spotlights, Athletics, Arts, Bond Updates",
+            "Masonry of dated news cards with thumbnail and 1-line dek",
+            "Newsletter signup card ('Sunridge Weekly')",
+            "Press kit + media contact sidebar",
+            "Social media row (district Facebook, Instagram, YouTube)"
+          ]
+        },
+        {
+          "id": "bus-routes",
+          "path": "/families/transportation",
+          "layout_pattern": "Single utility page combining a route lookup form, a route map, an alerts feed, and a downloadable bell + bus schedule table",
+          "sections": [
+            "Address lookup 'Find my bus stop' form",
+            "Live bus delay alerts feed (timestamped)",
+            "Route detail card: route number, driver, stops list with pickup times",
+            "Interactive route map with stop pins",
+            "Eligibility & fees explainer accordion",
+            "Lost & found and behavior expectations callouts"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Reassure families that the district is organized, welcoming, and bilingual-accessible",
+        "Make it trivially easy to find your child's school, bus stop, and lunch info",
+        "Project transparency around board governance and budget",
+        "Celebrate student work and community pride through warm imagery and news",
+        "Communicate urgent disruptions (weather, bus delays) prominently without panic"
+      ],
+      "required_text": [
+        "Sunridge Unified School District",
+        "Find My School",
+        "Parent Portal Sign In",
+        "Today's Lunch",
+        "Next Board Meeting",
+        "English / Español"
+      ],
+      "content_model": [
+        "School: name, level, address, principal, phone, photo, bell times, enrollment, attendance zone polygon, programs",
+        "CalendarEvent: title, start, end, category, applicable schools, color, ics link",
+        "BoardMeeting: date, type, agenda PDF, minutes PDF, video URL, public comment slots",
+        "NewsArticle: headline, dek, body, hero image, category, author, publish date, tags",
+        "LunchMenu: date, level, entrees, sides, allergens, nutrition PDF",
+        "BusRoute: number, school served, stops [{address, pickup_time, dropoff_time}], driver, alerts",
+        "Trustee: name, photo, area, term_start, term_end, email, bio",
+        "Program: name, description, eligible_grades, contact, schools_offered",
+        "Alert: severity, message, start, end, scope (district/school)"
+      ],
+      "interactions": [
+        "Address-to-school finder with autocomplete and map zoom",
+        "Bilingual English / Español toggle persisted in a cookie",
+        "Left-rail tree nav with expand/collapse and active section highlight",
+        "Calendar filter chips and 'Subscribe' feed export",
+        "Compare-up-to-3 schools tray that slides up from bottom",
+        "Sign-in card with show/hide password and SSO buttons",
+        "Bus route lookup with autocomplete and 'View on map' deep link",
+        "News filter pills with masonry re-flow",
+        "Print-friendly PDF buttons on calendar and board pages"
+      ],
+      "asset_needs": [
+        "District wordmark with sun motif",
+        "Hand-drawn sticker icon set (apple, bus, pencil, sun, book, music note, soccer ball)",
+        "Pastel attendance-zone boundary map tiles",
+        "Photo set of students, classrooms, and campuses (diverse, smiling)",
+        "Trustee circular portrait photos",
+        "Lunch menu allergen icons",
+        "Newsletter cover illustration"
+      ],
+      "mobile_behavior": "Left-rail tree collapses into a top hamburger that opens a full-screen drawer; multi-column dashboards stack into a single column with sticky alert ribbon; calendar month grid becomes an agenda list with a month switcher; school finder map becomes a tap-to-expand card above the school list.",
+      "difficulty": "medium"
+    },
+    {
+      "candidate_id": "site-01-education-k12-B",
+      "domain": "education / K-12 public school district",
+      "site_goal": "Provide the Maple Hollow Community Schools community with a cheerful, low-friction portal where parents and students can navigate seven campuses, manage daily logistics (lunch, bus, attendance), and engage with district academics and governance.",
+      "audience": [
+        "parents and guardians",
+        "elementary, middle, and high school students",
+        "teachers and support staff",
+        "community members and taxpayers",
+        "incoming kindergarten and transfer families"
+      ],
+      "description": "Maple Hollow Community Schools (MHCS) website with a sunny pastel palette anchored by lemon, robin's-egg blue, blush, sage, and apricot on a creamy paper background. Chunky rounded display type (Recoleta-rounded vibe) for headlines, friendly geometric sans for body, with crayon-like underline accents and notebook-margin rules. Medium-density layouts arranged like a kid's binder: tabbed dividers, sticker stamps, and a persistent left-rail collapsible nav tree grouping Academics / Families / Staff / About. The site leans heavily on logistical tools — a campus finder with bus overlay, a 'My Week' calendar, weekly lunch menus, attendance reporting, and a board agenda hub — while keeping a warm, hand-crafted school identity.",
+      "motif": "Spiral-bound binder with pastel tabbed dividers, ruled notebook lines, crayon underlines, and washi-tape highlights. Section headers feel like dymo label-maker tags; cards have a slight paper texture and soft drop shadow.",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Three-zone front page: persistent left-rail binder nav, central canvas with stacked sticker cards (alert, hero, quick tools), and a right rail with a 'This Week' agenda and weather/bell schedule snippet",
+          "sections": [
+            "Top alert strip with rotating district notices and bus delays",
+            "Hero card: 'Welcome to Maple Hollow' with student-of-the-month spotlight",
+            "Quick tools sticker row: Find My School, Report Absence, Pay Fees, Lunch Menu, Bus Routes, Portal Login",
+            "Featured news mosaic (3-up cards) with category tags",
+            "This Week agenda right rail with color-coded events",
+            "Today's bell schedule + early release flag",
+            "Superintendent Friday Note teaser card",
+            "Community partners marquee (library, parks, YMCA)",
+            "Footer with translations dropdown (English, Spanish, Vietnamese, Somali) and ADA statement"
+          ]
+        },
+        {
+          "id": "schools-directory",
+          "path": "/our-schools",
+          "layout_pattern": "Grid of seven large pastel school cards above a shared interactive boundary map; toggle between 'Grid' and 'Map' view; sticky filter rail",
+          "sections": [
+            "View toggle (Grid / Map) and grade-level filter chips",
+            "School cards: mascot illustration, grades, principal, phone, address, 'Visit School Site' arrow",
+            "Boundary & bus overlay map with layer toggles",
+            "Address search 'Which school serves my home?'",
+            "Magnet & choice programs callout",
+            "Enrollment & registration steps stepper",
+            "Open house dates carousel"
+          ]
+        },
+        {
+          "id": "parent-portal",
+          "path": "/portal",
+          "layout_pattern": "Two-panel page: left panel is a sign-in card with role tabs (Parent / Student / Staff), right panel is a feature showcase with screenshots of grades, attendance, and lunch balance",
+          "sections": [
+            "Role tabs (Parent, Student, Staff) above sign-in form",
+            "Sign-in card with username, password, 'Stay signed in', SSO with Clever and Google",
+            "Account help block: 'Need an activation code?', district help desk hours",
+            "Feature showcase: Grades & Report Cards, Attendance, Lunch Balance, Bus Tracker, Forms & Permission Slips",
+            "Mobile app download badges and QR code",
+            "Notifications preferences explainer",
+            "FERPA & data privacy strip"
+          ]
+        },
+        {
+          "id": "academics",
+          "path": "/academics",
+          "layout_pattern": "Curriculum binder: top horizontal tab strip for grade bands, beneath it a two-column layout with subject accordion list on the left and program spotlight cards on the right",
+          "sections": [
+            "Grade-band tabs (Early Learning, Elementary K-5, Middle 6-8, High 9-12)",
+            "Subject accordion (ELA, Math, Science, Social Studies, World Languages, Arts, PE & Health, CTE)",
+            "Program spotlight cards: Dual Language, STEAM Lab, AVID, IB Diploma, CTE Pathways",
+            "Graduation pathways infographic",
+            "Standardized testing calendar with explainers",
+            "Library & media center hub link",
+            "Family Math & Reading nights schedule",
+            "Counselor & college advising directory"
+          ]
+        },
+        {
+          "id": "calendar",
+          "path": "/calendar",
+          "layout_pattern": "Top of page is a sticky filter bar; main area swaps between 'Month Grid', 'Week', and 'Agenda' views; right rail shows a downloadable year-at-a-glance and feed subscribe buttons",
+          "sections": [
+            "View switcher (Month, Week, Agenda) and 'Today' button",
+            "Filter bar: School, Category (Holiday, Early Release, Board, Athletics, Performing Arts, PTA)",
+            "Color-coded calendar canvas with sticker chips",
+            "Event detail flyout with location, audience, attachments",
+            "Year-at-a-glance PDF download card",
+            "Subscribe via Google / Apple / Outlook buttons",
+            "Recurring weekly lunch menu link"
+          ]
+        },
+        {
+          "id": "board",
+          "path": "/board-of-education",
+          "layout_pattern": "Civic page with a roster strip up top, a 'Next Meeting' hero card, then a searchable table of past agendas/minutes/videos, and a policy library accordion",
+          "sections": [
+            "Board roster strip: photos, names, seats (At-Large, Ward 1-5), terms, email",
+            "Next meeting hero: date/time, location, livestream link, agenda PDF, sign up to speak",
+            "Past meetings table with search and year filter (agenda, minutes, video columns)",
+            "Public comment guidelines and code of conduct",
+            "Policy library accordion (1000 Series Governance, 2000 Instruction, etc.)",
+            "Annual budget & audit documents grid",
+            "Strategic plan progress dashboard"
+          ]
+        },
+        {
+          "id": "news",
+          "path": "/news",
+          "layout_pattern": "Editorial bulletin board: featured story column on the left, dated list of posts on the right with sticker category tags, plus a sidebar with newsletter sign-up and press contacts",
+          "sections": [
+            "Featured story hero with photo and pull quote",
+            "Category sticker pills: District, Athletics, Arts, Bond, Awards, Weather",
+            "Dated post list with thumbnails and reading-time chip",
+            "'Sign up for the Maple Hollow Weekly' newsletter card",
+            "Press kit, logos, and media contact sidebar",
+            "Social feed embed (district Instagram + Facebook)"
+          ]
+        },
+        {
+          "id": "lunch-menus",
+          "path": "/families/lunch",
+          "layout_pattern": "Menu of the week table with day columns and meal rows, school-level tabs above (Elementary / Middle / High), and an allergen + nutrition sidebar",
+          "sections": [
+            "School-level tabs (Elementary, Middle, High) and week navigator",
+            "Weekly menu grid (Mon-Fri columns; Breakfast, Lunch, Snack rows) with entree photos",
+            "Allergen legend and nutrition PDF downloads",
+            "Free & reduced meals application CTA",
+            "Reload lunch balance button (deep link to portal)",
+            "Farm-to-school program highlight",
+            "Wellness policy and feedback form"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Convey a warm, hand-crafted community-school feel rather than corporate district",
+        "Demonstrate that every logistical question (bus, lunch, attendance, schedule) has an obvious entry point",
+        "Highlight academic breadth across seven campuses and varied programs",
+        "Support multilingual families with clear translation affordances",
+        "Make board transparency and policy accessibility a first-class feature"
+      ],
+      "required_text": [
+        "Maple Hollow Community Schools",
+        "Our Schools",
+        "Sign In to the Portal",
+        "Report an Absence",
+        "Board of Education",
+        "This Week's Menu"
+      ],
+      "content_model": [
+        "Campus: name, mascot, level, address, principal, phone, bell schedule, enrollment, boundary polygon, programs",
+        "CalendarEvent: title, start, end, location, audience, category, color, attachments, ics",
+        "BoardMember: name, photo, seat, term, email, bio, committees",
+        "BoardMeeting: date, type, agenda, minutes, video, public_comment_signup_open",
+        "NewsPost: title, dek, body, hero, category, tags, author, publish_date, reading_time",
+        "MenuDay: date, level, breakfast[], lunch[], snack[], allergens",
+        "Program: name, description, grades, campuses, contact",
+        "BusRoute: number, campus, stops, driver, alerts",
+        "PolicyDoc: series, number, title, adopted_date, pdf",
+        "Translation: locale, key, value (supports en, es, vi, so)"
+      ],
+      "interactions": [
+        "Binder left-rail nav with expand/collapse sections and active highlight",
+        "Address lookup tied to school + bus route assignment",
+        "Calendar view switcher (Month / Week / Agenda) with category filters",
+        "Lunch menu week navigator and printable PDF",
+        "Board meeting public-comment signup modal",
+        "Role-tabbed sign-in (Parent / Student / Staff) with SSO",
+        "Translation dropdown swapping locale across the site",
+        "Sticker-pill news filters with animated card re-flow",
+        "Map / Grid toggle on the schools directory"
+      ],
+      "asset_needs": [
+        "District crest with a stylized maple leaf in pastel",
+        "Seven mascot illustrations (one per campus) in a consistent flat style",
+        "Notebook-paper background texture and washi-tape highlight strips",
+        "Dymo label-style section headers",
+        "Photography of classrooms, buses, cafeteria, athletics, arts performances",
+        "Board member portraits, square cropped",
+        "Allergen and nutrition pictogram set",
+        "Multilingual flag-free locale icons"
+      ],
+      "mobile_behavior": "Binder left-rail nav collapses into a tabbed bottom sheet with section dividers; multi-column dashboards stack with sticky alert at top; calendar defaults to Agenda view; school directory grid becomes a vertical card stack with a 'View on Map' floating button; lunch menu week grid becomes a swipeable day-by-day carousel.",
+      "difficulty": "medium"
+    }
+  ]
+}

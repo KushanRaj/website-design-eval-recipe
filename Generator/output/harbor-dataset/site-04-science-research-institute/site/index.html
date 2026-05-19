@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meridian Deep-Sea Observatory — Continuous ocean observation since 1978</title>
+<meta name="description" content="An institutional oceanographic research observatory presenting continuous sensor data, publications, expeditions, and the working scientists behind the science." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <span class="live-pill"><span class="live-dot"></span>Live from the buoy network · 14 stations reporting</span>
+    <div class="util-right">
+      <a href="data.html">Data Access</a>
+      <a href="newsroom.html">Press</a>
+      <a href="careers.html">Careers</a>
+      <a href="#">Library</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="lockup">
+        <span class="name">Meridian Deep-Sea Observatory</span>
+        <span class="tagline">Continuous ocean observation since 1978</span>
+      </span>
+    </a>
+    <div class="masthead-meta">
+      <button class="menu-btn" aria-label="Open navigation">☰ Menu</button>
+      <span>Cape Holloway, Maine · 44.0°N 67.8°W</span>
+      <button class="search-pop" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        Search
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <h3 class="toggle">Observatory</h3>
+    <ul>
+      <li class="active"><a href="index.html">Overview <span class="count">01</span></a></li>
+      <li><a href="research.html">Research &amp; Labs <span class="count">17</span></a></li>
+      <li><a href="people.html">People <span class="count">142</span></a></li>
+      <li><a href="publications.html">Publications <span class="count">2,318</span></a></li>
+      <li><a href="expeditions.html">Expeditions <span class="count">86</span></a></li>
+      <li><a href="data.html">Data &amp; Tools <span class="count">412</span></a></li>
+      <li><a href="newsroom.html">Newsroom</a></li>
+      <li><a href="careers.html">Careers <span class="count">9</span></a></li>
+    </ul>
+
+    <h3 class="toggle">Disciplines</h3>
+    <ul>
+      <li><a href="research.html#coastal">Coastal Dynamics</a></li>
+      <li><a href="research.html#benthic">Benthic Ecology</a></li>
+      <li><a href="research.html#acoustics">Acoustics &amp; Bioacoustics</a></li>
+      <li><a href="research.html#chemistry">Ocean Chemistry</a></li>
+      <li><a href="research.html#cryosphere">Climate &amp; Cryosphere</a></li>
+    </ul>
+
+    <h3 class="toggle">Shared Facilities</h3>
+    <ul>
+      <li><a href="#">Mooring Lab</a></li>
+      <li><a href="#">Stable Isotope Facility</a></li>
+      <li><a href="#">ROV Operations</a></li>
+      <li><a href="#">Holloway Pier &amp; Vessels</a></li>
+    </ul>
+
+    <div class="at-sea">
+      <span class="label"><span class="live-dot"></span>Currently at sea · 3</span>
+      <h4>R/V Bartholomew Strait</h4>
+      <p>Leg 24-B · Gulf of Maine benthic mapping · day 9 of 14</p>
+      <a href="expeditions.html">Track all cruises →</a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <nav class="breadcrumb">
+      <a href="index.html">Observatory</a><span class="sep">/</span><span>Overview</span>
+    </nav>
+
+    <section class="hero" aria-label="Director's statement">
+      <div class="hero-eyebrow">From the Director · Dr. Yuki Okafor</div>
+      <h1>The ocean does not stop being measured at night, in winter, or when funding cycles end. <em>Our work is to keep listening</em> — and to make what we hear legible to anyone who needs it.</h1>
+      <div class="quote-attrib">— Annual address, 12 February 2026</div>
+    </section>
+
+    <section aria-label="Live buoy strip">
+      <div class="buoy-strip">
+        <div class="buoy-label">
+          <span class="live"><span class="live-dot"></span>Live · Buoy Network</span>
+          <h4>Cape Holloway Array</h4>
+        </div>
+        <div class="buoy-cell" data-base="11.8" data-jitter="0.15" data-decimals="1">
+          <span class="station">MDB-04 · 12 m</span>
+          <span class="var">Sea Surface Temp</span>
+          <span class="val"><span class="num">11.8</span><span class="unit">°C</span></span>
+          <span class="trend">↑ 0.3 / 24 h</span>
+        </div>
+        <div class="buoy-cell" data-base="32.41" data-jitter="0.08" data-decimals="2">
+          <span class="station">MDB-04 · 5 m</span>
+          <span class="var">Salinity</span>
+          <span class="val"><span class="num">32.41</span><span class="unit">PSU</span></span>
+          <span class="trend">~ stable</span>
+        </div>
+        <div class="buoy-cell" data-base="1.42" data-jitter="0.18" data-decimals="2">
+          <span class="station">MDB-04 · sfc</span>
+          <span class="var">Sig. Wave Height</span>
+          <span class="val"><span class="num">1.42</span><span class="unit">m</span></span>
+          <span class="trend">↑ 0.4 / 6 h</span>
+        </div>
+        <div class="buoy-cell" data-base="7.62" data-jitter="0.07" data-decimals="2">
+          <span class="station">MDB-04 · 8 m</span>
+          <span class="var">Dissolved O₂</span>
+          <span class="val"><span class="num">7.62</span><span class="unit">mg/L</span></span>
+          <span class="trend">↓ 0.1 / 24 h</span>
+        </div>
+        <div class="buoy-timestamp">
+          <span class="label">Last updated</span>
+          <span class="time">17:42:00 UTC</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <div>
+
+        <header class="sonar-head">
+          <div class="eyebrow">Featured Research Threads</div>
+          <h2>What we are working on, openly</h2>
+          <div class="meta">Spring 2026 · curated by the Research Office</div>
+        </header>
+
+        <div class="thread-grid">
+          <article class="thread">
+            <div class="figure" aria-hidden="true">
+              <svg viewBox="0 0 300 150" preserveAspectRatio="none" class="svg-wave">
+                <path d="M0,75 Q15,40 30,75 T60,75 T90,75 T120,75 T150,75 T180,75 T210,75 T240,75 T270,75 T300,75"/>
+                <path d="M0,95 Q20,60 40,95 T80,95 T120,95 T160,95 T200,95 T240,95 T280,95 T320,95"/>
+                <path d="M0,55 Q25,30 50,55 T100,55 T150,55 T200,55 T250,55 T300,55"/>
+              </svg>
+            </div>
+            <span class="tag">Acoustics &amp; Bioacoustics</span>
+            <h3>A decade of right whale vocalizations from the Gulf shelf</h3>
+            <p>Continuous hydrophone records reveal seasonal shifts in calling behavior tied to a warming bottom layer — a dataset now public through our Reuse Portal.</p>
+            <a class="more" href="research.html#acoustics">Read the dispatch</a>
+          </article>
+
+          <article class="thread">
+            <div class="figure" aria-hidden="true">
+              <svg viewBox="0 0 300 150" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#155965"/>
+                    <stop offset="100%" stop-color="#0A2C32"/>
+                  </linearGradient>
+                </defs>
+                <rect width="300" height="150" fill="url(#g1)"/>
+                <g stroke="#EEE7D8" stroke-opacity="0.35" fill="none">
+                  <path d="M0,30 C60,40 120,20 180,35 S260,55 300,40"/>
+                  <path d="M0,70 C60,80 120,60 180,75 S260,95 300,80"/>
+                  <path d="M0,110 C60,120 120,100 180,115 S260,135 300,120"/>
+                </g>
+                <circle cx="220" cy="70" r="4" fill="#B6532A"/>
+              </svg>
+            </div>
+            <span class="tag">Coastal Dynamics</span>
+            <h3>Storm-pulse plume tracking with autonomous gliders</h3>
+            <p>Two Slocum gliders, deployed continuously through last autumn's nor'easter season, mapped freshwater plumes faster than any prior method.</p>
+            <a class="more" href="research.html#coastal">See the data</a>
+          </article>
+
+          <article class="thread">
+            <div class="figure" aria-hidden="true">
+              <svg viewBox="0 0 300 150" preserveAspectRatio="none">
+                <rect width="300" height="150" fill="#11434C"/>
+                <g>
+                  <circle cx="50" cy="60" r="20" fill="none" stroke="#EEE7D8" stroke-opacity="0.5"/>
+                  <circle cx="50" cy="60" r="40" fill="none" stroke="#EEE7D8" stroke-opacity="0.3"/>
+                  <circle cx="50" cy="60" r="60" fill="none" stroke="#EEE7D8" stroke-opacity="0.15"/>
+                  <circle cx="50" cy="60" r="3" fill="#B6532A"/>
+                </g>
+                <g stroke="#EEE7D8" stroke-opacity="0.3">
+                  <line x1="0" y1="120" x2="300" y2="120"/>
+                  <line x1="60" y1="115" x2="60" y2="125"/>
+                  <line x1="120" y1="115" x2="120" y2="125"/>
+                  <line x1="180" y1="115" x2="180" y2="125"/>
+                  <line x1="240" y1="115" x2="240" y2="125"/>
+                </g>
+              </svg>
+            </div>
+            <span class="tag">Climate &amp; Cryosphere</span>
+            <h3>Labrador Sea convection: what the moorings are telling us</h3>
+            <p>Three years of T/S records show a quietly reorganizing subpolar gyre. The team's preprint, with open data, lands next month.</p>
+            <a class="more" href="publications.html">View the preprint</a>
+          </article>
+        </div>
+
+        <header class="sonar-head">
+          <div class="eyebrow">Newsroom</div>
+          <h2>From the desks and the decks</h2>
+          <div class="meta">Updated weekly · field dispatches and institutional news</div>
+        </header>
+
+        <div class="rail">
+          <article class="rail-item">
+            <span class="cat">Field Dispatch</span>
+            <h4><a href="newsroom.html">Day 9 aboard the Bartholomew Strait: a clean line through the Hague Line</a></h4>
+            <p>Chief Scientist Lila Marsoom files from 67°W on the strange quiet of the deep chorus this leg.</p>
+            <span class="byline">By Lila Marsoom · 18 May 2026</span>
+          </article>
+          <article class="rail-item">
+            <span class="cat">Award</span>
+            <h4><a href="newsroom.html">Okafor and Renaud share AGU's Maurice Ewing Medal</a></h4>
+            <p>For four decades of contributions to abyssal acoustic methods and benthic mapping.</p>
+            <span class="byline">14 May 2026</span>
+          </article>
+          <article class="rail-item">
+            <span class="cat">Open Data</span>
+            <h4><a href="data.html">Forty-eight years of Holloway Station hydrography released</a></h4>
+            <p>A continuous record from 1978 to present, with monthly profiles and provenance.</p>
+            <span class="byline">06 May 2026</span>
+          </article>
+        </div>
+
+      </div>
+
+      <aside class="aside">
+        <section class="widget" aria-label="At sea">
+          <h3>Currently at Sea <span class="dot"></span></h3>
+          <ul>
+            <li>
+              <div class="meta-row"><span class="status-pill at-sea">At sea</span><span>Leg 24-B</span></div>
+              <a class="title" href="expeditions.html">Gulf of Maine benthic survey · R/V Bartholomew Strait</a>
+            </li>
+            <li>
+              <div class="meta-row"><span class="status-pill at-sea">At sea</span><span>Glider</span></div>
+              <a class="title" href="expeditions.html">Slocum HG-04 plume transect · Wilkinson Basin</a>
+            </li>
+            <li>
+              <div class="meta-row"><span class="status-pill at-sea">At sea</span><span>Mooring service</span></div>
+              <a class="title" href="expeditions.html">Stellwagen acoustic array refit · R/V Thrush</a>
+            </li>
+          </ul>
+        </section>
+
+        <section class="widget" aria-label="Upcoming">
+          <h3>Upcoming Seminars</h3>
+          <ul>
+            <li>
+              <div class="meta-row"><span>Thu 21 May · 15:00 EDT</span><span>Hjort Hall</span></div>
+              <a class="title" href="#">Microbial loops in the warming Gulf of Maine — A. Strand (Bigelow)</a>
+            </li>
+            <li>
+              <div class="meta-row"><span>Wed 27 May · 12:30 EDT</span><span>Public lecture</span></div>
+              <a class="title" href="#">What we owe the deep — D. Kollar, marine policy</a>
+            </li>
+            <li>
+              <div class="meta-row"><span>Tue 02 Jun · 14:00 EDT</span><span>Hybrid</span></div>
+              <a class="title" href="#">Ocean acoustic tomography revisited — S. Ozaki</a>
+            </li>
+          </ul>
+        </section>
+
+        <section class="widget" aria-label="Latest publication">
+          <h3>Latest Publication</h3>
+          <ul>
+            <li>
+              <div class="meta-row"><span>Nature Geoscience</span><span class="open">Open data</span></div>
+              <a class="title" href="publications.html">Subpolar overturning slowdown detected at the Labrador Mooring Line, 2003–2025</a>
+              <p class="fig-caption" style="margin-top:6px"><b>Fig. 01</b> Two-decade time series of mean transport across the line.</p>
+            </li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <h4>Meridian Deep-Sea Observatory</h4>
+      <p>A coastal oceanographic research institute on the Gulf of Maine, operating sensors, vessels, and laboratories in service of a continuously observed ocean.</p>
+      <p>114 Holloway Pier Road · Cape Holloway, ME 04631 · United States</p>
+    </div>
+    <div>
+      <h4>Research</h4>
+      <ul>
+        <li><a href="research.html">Labs &amp; Disciplines</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="expeditions.html">Expeditions</a></li>
+        <li><a href="data.html">Data Catalog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Institute</h4>
+      <ul>
+        <li><a href="people.html">People</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="newsroom.html">Newsroom</a></li>
+        <li><a href="#">Annual Report</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">+1 207 555 0142</a></li>
+        <li><a href="#">press@meridian-obs.org</a></li>
+        <li><a href="#">RSS · News</a></li>
+        <li><a href="#">Mastodon · @meridian</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span data-year>2026</span> Meridian Deep-Sea Observatory</span>
+    <span>ISO 14001 · CARIAD-Aligned · DOI 10.5072/MDSO</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

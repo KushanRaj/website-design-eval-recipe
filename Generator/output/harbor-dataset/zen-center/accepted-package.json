@@ -1,0 +1,223 @@
+{
+  "site_id": "zen-center",
+  "concept_seed": {
+    "id": "zen-center",
+    "one_liner": "A serene Zen meditation center website with vast negative space, hairline rules, soft ink-wash photography, vertical Japanese-inspired typography, a teacher lineage page, retreat schedule, dana/donation flow, dharma talk audio library, visitor etiquette guide, and a contemplative landing scroll.",
+    "metadata": {
+      "visual_feel": "ancient minimal contemplative",
+      "palette": "off-white, sumi black, warm stone",
+      "density": "low"
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "zen-center-pinetreehall",
+    "domain": "Religious / spiritual institution — Zen Buddhist meditation center",
+    "site_goal": "Present Pine Tree Hall Zen Community as a working monastery with public access: a clearly readable schedule, a calendar-led retreat application, a deep dharma audio archive organized by teacher and theme, a transparent dana page, and an etiquette/visitor primer — all wrapped in a quietly editorial, almost archival feel.",
+    "audience": [
+      "long-term residents and lay members",
+      "weekend retreatants from nearby cities",
+      "academic and interfaith visitors",
+      "donors funding the temple roof restoration",
+      "audiophiles archiving dharma talks"
+    ],
+    "description": "Where the first concept reads as ink on washi, this one reads as the inside cover of a slim hand-bound book: an editorial broadsheet aesthetic in off-white, sumi black, and warm stone. A persistent vertical date column on the right edge marks the season (e.g. '立夏 — Rikka — Beginning of summer'). Type is a generous old-style serif for body, with the center's name in a tall narrow display serif. Horizontal hairline rules organize the page into ledger-like rows. Photography is matte and tonal — interior wood beams, bare feet on tatami, the lip of an oryoki bowl. The contemplative landing scroll opens with the seasonal marker, drifts through three quiet vignettes (a sitting, a bell, a meal), and lands at the week's bell schedule rendered as a typographic table.",
+    "motif": "Hand-bound monastic broadsheet: hairline ledger rules, seasonal marker column, matte tonal photographs, tall narrow serif headings",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "Editorial broadsheet landing. Seasonal marker pinned along the right edge. Three vertically stacked vignettes (image + caption + small body paragraph) separated by hairline rules. Ends with the week's bell schedule rendered as a clean typographic table.",
+        "sections": [
+          "Masthead — Pine Tree Hall Zen Community, current sekki marker",
+          "Vignette I — A sitting (image of zafu, brief paragraph)",
+          "Vignette II — A bell (image of han, brief paragraph)",
+          "Vignette III — A meal (image of oryoki, brief paragraph)",
+          "This week — typographic table of bell times Mon–Sun",
+          "Footer rule — address, next sesshin date, dana line"
+        ]
+      },
+      {
+        "id": "lineage",
+        "path": "/teachers-and-lineage",
+        "layout_pattern": "Horizontal scrolling genealogical chart with hairline branches connecting portrait nodes from founding ancestors to present teachers. Selecting a node opens a sidebar biography card with photograph, dharma name, and years of training.",
+        "sections": [
+          "Introduction — branch of the lineage we belong to",
+          "Ancestral chart — horizontal scroll, oldest at left",
+          "Current teachers — abbot, head of practice, tanto",
+          "Lay teachers and dharma holders",
+          "Note on transmission — short paragraph on what dharma transmission means here"
+        ]
+      },
+      {
+        "id": "schedule-and-retreats",
+        "path": "/schedule",
+        "layout_pattern": "Ledger-style page split into two sections: daily/weekly recurring schedule as a horizontal table at top, retreat calendar below as a vertical list of dated entries with hairline separators. Filter row sits between the two.",
+        "sections": [
+          "Daily rhythm — hourly table from wake bell to lights out",
+          "Weekly variations — Saturday open zazen, Sunday dharma talk",
+          "Filter — All / Open to public / Residential / Sesshin",
+          "Upcoming retreats — chronological list with dates, teacher, capacity, dana band",
+          "Annual rhythms — rohatsu, ango, founder's day",
+          "How to apply — link to multi-step retreat application"
+        ]
+      },
+      {
+        "id": "audio-archive",
+        "path": "/audio",
+        "layout_pattern": "Archive index in three columns: left filter rail (teacher, theme, year), center list of talks as ledger rows with title, date, duration, and theme tag, right column shows currently selected talk with description and transcript link. Slim audio player persistent at the bottom.",
+        "sections": [
+          "Filter rail — teacher / theme / year / location",
+          "Featured this month — three talks with longer descriptions",
+          "Full index — chronological ledger of all talks",
+          "Series — multi-part teisho grouped under a single heading",
+          "Transcripts — note on which talks have transcribed text",
+          "Listening notes — short guidance on how to receive a dharma talk"
+        ]
+      },
+      {
+        "id": "visit-and-etiquette",
+        "path": "/visit",
+        "layout_pattern": "Zoned etiquette guide. Page divided into named zones (Genkan, Zendo, Refectory, Garden, Sanmon Gate) each represented by a section with one matte photograph, a short paragraph, and a small set of itemized guidelines. Closes with a hand-inked map and arrival logistics.",
+        "sections": [
+          "Before you arrive — what to bring, what to wear",
+          "Sanmon Gate — silence begins here",
+          "Genkan — shoes, coats, bags",
+          "Zendo — entering, seating, bowing, kinhin",
+          "Refectory — oryoki for residents, simple meals for visitors",
+          "Garden — work practice (samu) and visitor paths",
+          "Finding the hall — inked map, train and bus directions"
+        ]
+      },
+      {
+        "id": "dana",
+        "path": "/dana",
+        "layout_pattern": "Single narrow column on warm stone field. Opening teaching on dana, followed by three giving paths (monthly rice-and-oil, roof restoration, retreatant scholarship), each presented as a quiet form with a suggested band and a free-entry field. Closes with a transparent breakdown of where last year's gifts went.",
+        "sections": [
+          "On generosity — a paragraph from the abbot",
+          "Rice and oil — monthly recurring giving",
+          "Roof restoration — one-time capital fund",
+          "Retreatant scholarship — for those who cannot pay full dana",
+          "Last year — a small ledger of how the previous year's gifts were used",
+          "Tax note — registered religious nonprofit, contact for receipts"
+        ]
+      }
+    ],
+    "message_intent": [
+      "communicate that this is a working monastery, not a wellness retreat",
+      "make the daily rhythm visible and unambiguous",
+      "convey tradition and care through editorial restraint",
+      "honor the teacher lineage without hagiography",
+      "make giving feel like sustenance, not transaction"
+    ],
+    "required_text": [
+      "Pine Tree Hall Zen Community",
+      "A working monastery, open to visitors.",
+      "Bell at 4:50.",
+      "Dana sustains the hall.",
+      "Please observe silence past the second gate."
+    ],
+    "content_model": [
+      "Teacher record: photograph, given name and dharma name, ordained year, lineage branch, current role, areas of teaching",
+      "Lineage tree: branching ancestry rendered as a horizontal genealogical chart with hairline lines",
+      "Retreat record: title, sesshin or zazenkai, dates, capacity, residential or non-residential, suggested dana band",
+      "Dharma talk record: speaker, date, location (zendo / sesshin / online), duration, themes, audio, optional transcript",
+      "Daily schedule rows: hour, activity, location, optional note (e.g. 'open to public')",
+      "Etiquette entries grouped by zone (Genkan, Zendo, Refectory, Garden)"
+    ],
+    "interactions": [
+      "horizontal scroll on the lineage page to traverse the branching ancestral tree",
+      "audio archive filterable by teacher, theme, and year, with persistent slim player",
+      "retreat application is a multi-step form, one question per screen, generous whitespace, no progress bar",
+      "seasonal marker on the right edge updates with current sekki (24 seasons of the year)",
+      "dana page lets you set a recurring 'rice and oil' monthly amount or contribute to the roof fund as a one-time gift",
+      "hover (or tap) on a schedule row reveals a one-line note about that activity"
+    ],
+    "asset_needs": [
+      "matte tonal photographs: wood beams, tatami edge, oryoki, garden in mist, monk's robe folded",
+      "single calligraphic seasonal markers for each of the 24 sekki",
+      "hand-drawn lineage tree (genealogical, horizontal)",
+      "small icons of monastic implements (kyosaku, han, mokugyo) drawn in single weight line",
+      "warm stone background tone (a paper-like off-white with faint warmth)"
+    ],
+    "mobile_behavior": "Right-edge seasonal marker column collapses to a small fixed tag in the upper right; ledger rows stack to single-column blocks; lineage tree page switches from horizontal scroll to a vertical indented outline; multi-step retreat form keeps one question per screen.",
+    "difficulty": "medium"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "zen-center-stoneandsilence",
+        "score": 0.84,
+        "accept": true,
+        "strengths": [
+          "Disciplined motif (vast off-white, hairline rule, sumi wash, vertical glyph column) carried across all six pages",
+          "Highly domain-specific: shiho, kinhin, dokusan, zazenkai, dana slider, 5-minute silence preroll on dharma audio",
+          "Concrete layouts including vertical lineage chain with sumi connector and hairline waveform rows",
+          "Quiet but functional interactions tied to contemplative intent (no checkout flow on dana)",
+          "Six distinct pages with differentiated layout patterns"
+        ],
+        "weaknesses": [
+          "Six landing 'breaths' risk feeling formulaic if poorly paced",
+          "Single-stroke etiquette icons could read generic without strong assets",
+          "Dana page is intentionally sparse"
+        ]
+      },
+      {
+        "candidate_id": "zen-center-pinetreehall",
+        "score": 0.89,
+        "accept": true,
+        "strengths": [
+          "Distinctive editorial-broadsheet voice differentiates clearly while honoring seed palette",
+          "Seasonal sekki marker pinned to right edge is a memorable, domain-authentic motif",
+          "Concrete content: rice-and-oil monthly giving, roof restoration fund, retreatant scholarship, last-year ledger",
+          "Layout patterns vary meaningfully: horizontal genealogical lineage, ledger schedule, three-column audio archive, zoned etiquette by Sanmon/Genkan/Zendo/Refectory/Garden",
+          "Realistic interactions: one-question-per-screen retreat form, filterable audio by teacher/theme/year",
+          "Mobile behavior thoughtfully described (horizontal lineage becomes vertical indented outline)"
+        ],
+        "weaknesses": [
+          "Combining schedule and retreats on one page risks density unless ledger discipline holds",
+          "Three-column audio archive may feel dense for contemplative tone",
+          "Horizontal-scroll lineage can be awkward on trackpads if not paged"
+        ]
+      }
+    ],
+    "best_candidate_id": "zen-center-pinetreehall",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/real-run-9/zen-center/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "layout_consistency_low",
+        "message": "Visit page (/visit) scores 25 on the layout-consistency heuristic, but visually this reflects the intentional zoned-article structure (image + caption + itemized list per zone) and is not a real defect.",
+        "severity": "info",
+        "path": "visit.html"
+      },
+      {
+        "type": "large_blank_region",
+        "message": "Dana page is tagged with a large blank region, but the concept explicitly calls for a 'single narrow column on warm stone field' so the empty right column is intentional and aesthetically correct.",
+        "severity": "info",
+        "path": "dana.html"
+      }
+    ],
+    "scores": {
+      "accessibility": 0.95,
+      "mobile_responsiveness": 0.85,
+      "component_consistency": 0.95,
+      "layout_alignment": 0.7,
+      "render_quality": 0.85,
+      "page_completeness": 1.0,
+      "concept_fidelity": 0.95
+    },
+    "repair_instructions": [],
+    "deterministic_checks": {
+      "html_page_count": 7,
+      "all_declared_pages_resolved": true,
+      "missing_required_text": [],
+      "placeholder_hits": []
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/real-run-9/zen-center/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/real-run-9/zen-center/site/screenshots/reference"
+}

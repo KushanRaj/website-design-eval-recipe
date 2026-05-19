@@ -1,0 +1,17 @@
+{
+  "id": "site-05-retail-marketplace-vintage",
+  "one_liner": "A clustered, eclectic vintage furniture marketplace with bold earthen color blocks, mixed editorial-and-grotesque typography, and high-density product grids featuring seller storefronts, faceted category filters, item detail galleries, saved-listings dashboards, shipping calculators, blog stories, and a sticky cart drawer across pages.",
+  "metadata": {
+    "domain": "retail-marketplace",
+    "audience": "shoppers and sellers",
+    "pages": [
+      "home",
+      "browse",
+      "product",
+      "seller storefront",
+      "cart",
+      "account",
+      "journal"
+    ]
+  }
+}

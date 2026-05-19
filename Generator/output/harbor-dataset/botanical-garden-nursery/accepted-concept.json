@@ -1,0 +1,166 @@
+{
+  "candidate_id": "fernwood-conservatory",
+  "domain": "Botanical garden and rare-plant conservatory",
+  "site_goal": "Position Fernwood Conservatory & Rare Plant Nursery as a destination garden and serious horticultural authority, while driving conservatory visits, plant purchases, workshop sign-ups, and patron memberships.",
+  "audience": [
+    "Serious home gardeners and plant collectors",
+    "Conservatory day visitors and tourists",
+    "Patrons and members supporting plant conservation",
+    "Workshop attendees and horticulture students"
+  ],
+  "description": "An editorial, herbarium-inspired site for Fernwood Conservatory, a 14-acre specialty botanical garden and rare-plant nursery in the Pacific Northwest. The visual system mimics a leather-bound Victorian botanical folio updated for the web: hand-pressed botanical illustration headers, ruled column lines, deckled-edge image plates, and italic latinate captions. Mossy green dominates with bone-white pages and soft coral accents for in-bloom callouts. Long-scrolling encyclopedia entries sit beside an interactive bloom calendar and a hand-drawn SVG garden map. The shop and membership flows feel curatorial rather than commercial.",
+  "motif": "Pressed-herbarium folio: deckled paper textures, taxonomic rule lines, hand-inked botanical illustration headers, hairline dividers, and italic Latin binomial captions over mossy green and bone white",
+  "pages": [
+    {
+      "id": "home",
+      "path": "/",
+      "layout_pattern": "Full-bleed illustrated hero plate over conservatory photo, followed by 'In Bloom This Week' coral-tagged carousel, a three-column editorial teaser grid, a mossy banded visit-planning strip, and a footer with herbarium-style index",
+      "sections": [
+        "Illustrated hero with site name and tagline",
+        "In Bloom This Week carousel with month chip",
+        "Featured cultivars editorial grid",
+        "Plan Your Visit banded callout",
+        "Workshops on the horizon strip",
+        "Membership invitation block",
+        "Footer with garden hours, address, and indexed sitemap"
+      ]
+    },
+    {
+      "id": "encyclopedia-index",
+      "path": "/encyclopedia",
+      "layout_pattern": "Left filter rail with taxonomic facets, right grid of botanical-plate cards each with Latin binomial caption and conservation badge, alphabetical jump strip across the top",
+      "sections": [
+        "Header with search input and alphabetical jump strip",
+        "Filter rail (family, hardiness zone, light, conservation status)",
+        "Plate grid of cultivars",
+        "Pagination with cultivar count",
+        "Cross-link to bloom calendar"
+      ]
+    },
+    {
+      "id": "encyclopedia-entry",
+      "path": "/encyclopedia/paphiopedilum-fairrieanum",
+      "layout_pattern": "Two-column editorial layout: large illustration plate left, ruled prose right with sticky tab nav for Overview, Cultivation, Propagation, and In the Garden; related cultivars appear as small plates at the foot",
+      "sections": [
+        "Illustration plate with binomial caption",
+        "Quick facts ruled table (family, native range, hardiness, light, soil)",
+        "Sticky tabs (Overview / Cultivation / Propagation / In the Garden)",
+        "Long-form cultivation prose",
+        "Companion plantings sidebar",
+        "Conservation status callout",
+        "Related cultivars plate row"
+      ]
+    },
+    {
+      "id": "bloom-calendar",
+      "path": "/bloom-calendar",
+      "layout_pattern": "Centered circular SVG bloom wheel with month spokes and species arcs, month slider beneath, and a list view below showing currently peaking species with garden zone coordinates",
+      "sections": [
+        "Heading with current month in italic Latin",
+        "Interactive bloom wheel",
+        "Month slider and zone filter",
+        "Currently peaking species list",
+        "Link to garden map for each species"
+      ]
+    },
+    {
+      "id": "garden-map",
+      "path": "/visit/map",
+      "layout_pattern": "Full-width interactive SVG map with mossy-green hand-drawn zones, right-rail zone detail panel that updates on hover or tap, legend along the bottom",
+      "sections": [
+        "Map header with current bloom highlights toggle",
+        "Interactive SVG map",
+        "Zone detail right rail",
+        "Legend (collection types, accessibility, restrooms, refreshments)",
+        "Download printed map link"
+      ]
+    },
+    {
+      "id": "workshops",
+      "path": "/workshops",
+      "layout_pattern": "Editorial month-view calendar at top, scrollable list of workshop cards below with instructor portrait roundels, skill-level chips, and remaining-seat badges",
+      "sections": [
+        "Calendar / list toggle",
+        "Month grid of workshop sessions",
+        "Workshop card list",
+        "Instructor spotlight strip",
+        "Member discount note"
+      ]
+    },
+    {
+      "id": "nursery-shop",
+      "path": "/shop",
+      "layout_pattern": "Filtered grid of nursery products with botanical-plate thumbnails, pot-size and provenance captions, soft coral 'Ships This Season' tags, and a left rail for filters",
+      "sections": [
+        "Shop header with seasonal shipping notice",
+        "Filter rail (cultivar group, pot size, light, hardiness)",
+        "Product grid",
+        "Waitlist explanation block",
+        "Care guides cross-link"
+      ]
+    },
+    {
+      "id": "membership",
+      "path": "/membership",
+      "layout_pattern": "Editorial hero with patron testimonial, four-column tier table with ornament dividers, FAQ accordion below, and a footer band with patron honor roll names",
+      "sections": [
+        "Patron hero quote",
+        "Tier comparison table",
+        "What your membership funds (conservation impact strip)",
+        "FAQ accordion",
+        "Patron honor roll"
+      ]
+    },
+    {
+      "id": "field-notes",
+      "path": "/field-notes",
+      "layout_pattern": "Editorial magazine grid with one large featured plate-essay and two-column secondary articles below, each tagged with cultivar or season, sidebar of recent dispatches",
+      "sections": [
+        "Featured essay plate",
+        "Recent dispatches grid",
+        "Tag filter chips (cultivar, season, garden zone)",
+        "Author bylines block",
+        "Subscribe to printed almanac form"
+      ]
+    }
+  ],
+  "message_intent": [
+    "Convey deep horticultural expertise and editorial seriousness",
+    "Invite physical visits to the glasshouses and grounds",
+    "Drive rare-plant nursery purchases and waitlist sign-ups",
+    "Recruit recurring members and patrons"
+  ],
+  "required_text": [
+    "Fernwood Conservatory & Rare Plant Nursery",
+    "Est. 1924",
+    "Plan Your Visit",
+    "In Bloom This Week",
+    "Become a Member"
+  ],
+  "content_model": [
+    "Cultivar encyclopedia entry (binomial name, common names, family, native range, hardiness, light/water/soil, propagation notes, conservation status, illustration plate, related species)",
+    "Bloom calendar event (species, peak window, garden zone, sun exposure, accompanying companions)",
+    "Garden zone (name, acreage, signature collection, accessibility notes, map coordinates)",
+    "Workshop session (title, instructor, date, duration, skill level, capacity, materials, price, member discount)",
+    "Editorial feature article (title, author, hero illustration, pull quotes, related cultivars)",
+    "Nursery product (cultivar, pot size, age, provenance, stock count, shipping season, price)",
+    "Membership tier (name, annual price, benefits list, guest passes, reciprocal gardens)"
+  ],
+  "interactions": [
+    "Month slider on bloom calendar that recolors a circular wheel of species in peak",
+    "Interactive SVG garden map with hover-highlighted zones and pinned cultivar markers",
+    "Encyclopedia search with filters for hardiness zone, light, family, and conservation status",
+    "Workshop calendar with month/list toggle and seat-count availability badges",
+    "Add-to-cart with seasonal shipping window notice and waitlist for sold-out cultivars",
+    "Sticky in-page tabs on cultivar pages (Overview / Cultivation / Propagation / In the Garden)"
+  ],
+  "asset_needs": [
+    "Hand-inked botanical illustrations for at least eight signature cultivars",
+    "Deckled-edge paper texture for plate frames",
+    "SVG hand-drawn garden map with labeled zones",
+    "Photography of glasshouses, beds, and workshop benches with warm overcast light",
+    "Botanical line-art ornaments and section dividers"
+  ],
+  "mobile_behavior": "Single-column reflow with the garden map becoming a pan-and-zoom panel; encyclopedia tabs collapse to an accordion; bloom wheel becomes a horizontally scrollable month strip",
+  "difficulty": "hard"
+}

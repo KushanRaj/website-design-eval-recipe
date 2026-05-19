@@ -1,0 +1,48 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "accessibility",
+      "message": "Form controls on /about (pitch-a-show), /archive (search), /live (venue booking) and /partner (sponsorship inquiry) are missing programmatic labels / accessible names.",
+      "severity": "warning",
+      "path": "about.html, archive.html, live.html, partner.html"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Layout consistency scores dip on /inner-circle (48.7) and /live (50.6); the deterministic alignment checker flags row-bottom and horizontal-alignment mismatches, but visually the pages read as intentional editorial composition rather than broken layout.",
+      "severity": "info",
+      "path": "inner-circle.html, live.html"
+    },
+    {
+      "type": "component_style_consistency",
+      "message": "Inner-circle perks lockup group scored low (26.3) because tile children vary; visually the tiles are consistent. Live event-card group scored 48.5 because event cards intentionally vary (members-only RSVP vs Buy Tickets vs Tickets-on-sale states) which is correct content modelling, not a defect.",
+      "severity": "info",
+      "path": "inner-circle.html, live.html"
+    }
+  ],
+  "scores": {
+    "accessibility": 0.82,
+    "mobile_responsiveness": 0.85,
+    "component_consistency": 0.78,
+    "layout_alignment": 0.65,
+    "render_quality": 0.92,
+    "page_completeness": 1.0,
+    "brand_fit": 0.95,
+    "overall": 0.88
+  },
+  "repair_instructions": [
+    "Add explicit <label> elements (or aria-label attributes) tied to every form input on about.html (pitch-a-show form), archive.html (transcript search), live.html (venue booking) and partner.html (sponsorship inquiry) so screen readers announce each field. Visible field labels are already present above each input — wire them up with for/id pairs."
+  ],
+  "deterministic_checks": {
+    "html_page_count": 10,
+    "required_text_present": true,
+    "page_presence_resolved": "All 10 declared concept pages have concrete implementations. The two 'not found' entries (/channels/03-the-late-signal and /channels/03-the-late-signal/s2e07-the-quiet-hour) are route templates that are satisfied by channels/the-late-signal.html and episode.html respectively, both clearly rendered in the screenshots.",
+    "placeholder_hits": 0,
+    "accessibility_form_label_issues_pages": [
+      "/about",
+      "/archive",
+      "/live",
+      "/partner"
+    ]
+  }
+}

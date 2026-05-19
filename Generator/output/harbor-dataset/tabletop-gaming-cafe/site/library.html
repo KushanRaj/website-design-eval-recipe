@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Library — Meeple &amp; Mug</title>
+  <meta name="description" content="Browse our 800-game library. Filter by player count, play time, complexity, and mood. Live availability badges show what's on the shelf right now.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/meeple-mark.svg">
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></span>
+      <span class="brand-text">Meeple &amp; Mug<small>Board Game Cafe</small></span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false">☰ Menu</button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="library.html" class="is-active">Library</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="book.html">Book</a></li>
+        <li><a href="tavern-pass.html">Tavern Pass</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta"><a href="book.html" class="btn btn--purple btn--sm">Book a table</a></div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section class="hero" style="padding:48px 0 24px;">
+    <div>
+      <span class="eyebrow">⬢ 800 titles · alphabetized · loved equally</span>
+      <h1><span>Game</span> <span class="alt">Library</span></h1>
+      <p class="lede">What are you in the mood to play? Filter by player count, play time, weight, and vibe — we'll surface what's on the shelf right now.</p>
+      <div class="form-row" style="max-width:520px;">
+        <input type="text" id="f-search" placeholder="🔍 Search by title… (try ‘Wingspan’)">
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 480">
+        <rect x="40" y="60" width="400" height="80" rx="8" fill="#7a3fff" stroke="#1d1830" stroke-width="5"/>
+        <rect x="40" y="160" width="400" height="80" rx="8" fill="#ff7a1f" stroke="#1d1830" stroke-width="5"/>
+        <rect x="40" y="260" width="400" height="80" rx="8" fill="#5fe3c0" stroke="#1d1830" stroke-width="5"/>
+        <rect x="40" y="360" width="400" height="60" rx="8" fill="#fff4dc" stroke="#1d1830" stroke-width="5"/>
+        <!-- books on shelves -->
+        <g stroke="#1d1830" stroke-width="3">
+          <rect x="60" y="72" width="22" height="60" fill="#fff4dc"/>
+          <rect x="86" y="80" width="18" height="52" fill="#5fe3c0"/>
+          <rect x="108" y="76" width="20" height="56" fill="#ff7a1f"/>
+          <rect x="132" y="84" width="16" height="48" fill="#fff4dc"/>
+          <rect x="152" y="72" width="26" height="60" fill="#7a3fff"/>
+          <rect x="182" y="80" width="20" height="52" fill="#5fe3c0"/>
+          <rect x="206" y="78" width="22" height="54" fill="#fff4dc"/>
+          <rect x="232" y="72" width="18" height="60" fill="#ff7a1f"/>
+          <rect x="254" y="84" width="22" height="48" fill="#fff4dc"/>
+          <rect x="280" y="80" width="24" height="52" fill="#5fe3c0"/>
+          <rect x="308" y="72" width="20" height="60" fill="#ff7a1f"/>
+          <rect x="332" y="80" width="22" height="52" fill="#7a3fff"/>
+          <rect x="358" y="76" width="18" height="56" fill="#fff4dc"/>
+          <rect x="380" y="72" width="24" height="60" fill="#5fe3c0"/>
+        </g>
+        <g stroke="#1d1830" stroke-width="3">
+          <rect x="60" y="172" width="20" height="60" fill="#fff4dc"/>
+          <rect x="84" y="180" width="22" height="52" fill="#7a3fff"/>
+          <rect x="110" y="176" width="18" height="56" fill="#5fe3c0"/>
+          <rect x="132" y="184" width="22" height="48" fill="#fff4dc"/>
+          <rect x="158" y="172" width="20" height="60" fill="#ff7a1f"/>
+          <rect x="182" y="180" width="24" height="52" fill="#fff4dc"/>
+          <rect x="210" y="174" width="18" height="58" fill="#7a3fff"/>
+          <rect x="232" y="184" width="20" height="48" fill="#5fe3c0"/>
+          <rect x="256" y="178" width="22" height="54" fill="#ff7a1f"/>
+          <rect x="282" y="172" width="24" height="60" fill="#fff4dc"/>
+          <rect x="310" y="180" width="20" height="52" fill="#5fe3c0"/>
+          <rect x="334" y="176" width="22" height="56" fill="#7a3fff"/>
+          <rect x="360" y="184" width="18" height="48" fill="#fff4dc"/>
+          <rect x="382" y="172" width="22" height="60" fill="#ff7a1f"/>
+        </g>
+        <!-- meeple browsing -->
+        <g transform="translate(180, 280) scale(0.8)">
+          <path d="M30 0 C40 0 47 7 47 17 C47 23 44 26 42 28 C54 28 70 32 70 48 L70 100 L50 100 L50 76 L20 76 L20 100 L0 100 L0 48 C0 32 16 28 28 28 C26 26 23 23 23 17 C23 7 20 0 30 0 Z" fill="#7a3fff" stroke="#1d1830" stroke-width="4"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="library-layout">
+    <!-- FILTER RAIL -->
+    <aside class="filter-rail">
+      <h3>Player count</h3>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span>Looking for</span>
+        <span class="range-val"><span id="f-players-out">4</span> players</span>
+      </div>
+      <input type="range" id="f-players" min="1" max="8" step="1" value="4">
+
+      <h3>Play time</h3>
+      <div>
+        <button class="chip" data-time="short">⚡ &lt; 30 min</button>
+        <button class="chip" data-time="mid">⏱ 30–60</button>
+        <button class="chip" data-time="long">⏳ 60–120</button>
+        <button class="chip" data-time="epic">🌒 2hr+</button>
+      </div>
+
+      <h3>Complexity</h3>
+      <div class="complexity-dots">
+        <button class="dot" data-complexity="1">1</button>
+        <button class="dot" data-complexity="2">2</button>
+        <button class="dot" data-complexity="3">3</button>
+        <button class="dot" data-complexity="4">4</button>
+        <button class="dot" data-complexity="5">5</button>
+      </div>
+      <p class="muted" style="font-size:0.8rem; margin:6px 0 0;">Click for "at least this heavy."</p>
+
+      <h3>Mood</h3>
+      <div>
+        <button class="chip" data-mood="strategy">🧠 Strategy</button>
+        <button class="chip" data-mood="party">🎉 Party</button>
+        <button class="chip" data-mood="coop">🤝 Co-op</button>
+        <button class="chip" data-mood="bluff">🎭 Bluff</button>
+        <button class="chip" data-mood="solo">🌙 Solo</button>
+        <button class="chip" data-mood="family">👨‍👩‍👧 Family</button>
+      </div>
+
+      <h3>Availability</h3>
+      <label style="display:flex; gap:8px; align-items:center; font-weight:700;">
+        <input type="checkbox" id="f-avail"> Only show on the shelf right now
+      </label>
+    </aside>
+
+    <!-- RIGHT PANE -->
+    <div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+        <p style="margin:0;"><strong><span data-game-count>12</span></strong> games match — out of 800.</p>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <label for="f-sort" style="margin:0;">Sort:</label>
+          <select id="f-sort">
+            <option value="a-z">A → Z</option>
+            <option value="complexity">By complexity</option>
+            <option value="time">By play time</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="game-grid" data-game-grid>
+        <article class="game-card" data-title="Wingspan" data-min-players="1" data-max-players="5" data-time="50" data-complexity="2.5" data-mood="strategy,family" data-status="onshelf">
+          <div class="game-cover" style="background:#5fe3c0;"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="46" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><path d="M30 70 Q45 40 60 60 Q75 80 90 50" fill="none" stroke="#7a3fff" stroke-width="6" stroke-linecap="round"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Wingspan</h3><div class="game-meta">1–5 · 50 min · ⚙ 2.5</div><span class="badge is-onshelf">On shelf · D-4</span></div>
+        </article>
+
+        <article class="game-card" data-title="Splendor Duel" data-min-players="2" data-max-players="2" data-time="30" data-complexity="2.0" data-mood="strategy" data-status="inplay">
+          <div class="game-cover" style="background:#ff7a1f;"><svg viewBox="0 0 120 120"><polygon points="60,20 95,45 85,90 35,90 25,45" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><polygon points="60,40 78,55 70,80 50,80 42,55" fill="#7a3fff" stroke="#1d1830" stroke-width="3"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Splendor Duel</h3><div class="game-meta">2 · 30 min · ⚙ 2.0</div><span class="badge is-inplay">In play</span></div>
+        </article>
+
+        <article class="game-card" data-title="Heat: Pedal to the Metal" data-min-players="1" data-max-players="6" data-time="60" data-complexity="3.0" data-mood="strategy,family" data-status="onshelf">
+          <div class="game-cover" style="background:#7a3fff;"><svg viewBox="0 0 120 120"><path d="M20 80 Q60 60 100 80" fill="none" stroke="#fff4dc" stroke-width="8" stroke-linecap="round"/><circle cx="40" cy="78" r="10" fill="#ff7a1f" stroke="#1d1830" stroke-width="3"/><circle cx="80" cy="78" r="10" fill="#5fe3c0" stroke="#1d1830" stroke-width="3"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Heat: Pedal to the Metal</h3><div class="game-meta">1–6 · 60 min · ⚙ 3.0</div><span class="badge is-onshelf">On shelf · B-2</span></div>
+        </article>
+
+        <article class="game-card" data-title="Arcs" data-min-players="3" data-max-players="4" data-time="120" data-complexity="4.2" data-mood="strategy,bluff" data-status="onshelf">
+          <div class="game-cover" style="background:#1d1830;"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="40" fill="none" stroke="#fff4dc" stroke-width="3"/><circle cx="60" cy="60" r="6" fill="#ff7a1f"/><circle cx="90" cy="40" r="4" fill="#5fe3c0"/><circle cx="30" cy="70" r="4" fill="#7a3fff" stroke="#fff4dc" stroke-width="2"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Arcs</h3><div class="game-meta">3–4 · 120 min · ⚙ 4.2</div><span class="badge is-reserved">Reserved</span></div>
+        </article>
+
+        <article class="game-card" data-title="Azul: Summer Pavilion" data-min-players="2" data-max-players="4" data-time="45" data-complexity="2.0" data-mood="strategy,family" data-status="onshelf">
+          <div class="game-cover" style="background:#fff4dc;"><svg viewBox="0 0 120 120"><rect x="30" y="30" width="60" height="60" fill="#fff4dc" stroke="#1d1830" stroke-width="3"/><rect x="38" y="38" width="20" height="20" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/><rect x="62" y="38" width="20" height="20" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/><rect x="38" y="62" width="20" height="20" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/><rect x="62" y="62" width="20" height="20" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Azul: Summer Pavilion</h3><div class="game-meta">2–4 · 45 min · ⚙ 2.0</div><span class="badge is-onshelf">On shelf · A-7</span></div>
+        </article>
+
+        <article class="game-card" data-title="That's Not a Hat" data-min-players="3" data-max-players="8" data-time="20" data-complexity="1.0" data-mood="party" data-status="onshelf">
+          <div class="game-cover" style="background:#ff7a1f;"><svg viewBox="0 0 120 120"><path d="M30 80 Q60 30 90 80 Z" fill="#fff4dc" stroke="#1d1830" stroke-width="4"/><line x1="20" y1="80" x2="100" y2="80" stroke="#1d1830" stroke-width="4"/></svg></div>
+          <div class="game-body"><h3 class="game-title">That's Not a Hat</h3><div class="game-meta">3–8 · 20 min · ⚙ 1.0</div><span class="badge is-onshelf">On shelf · F-1</span></div>
+        </article>
+
+        <article class="game-card" data-title="Cascadia" data-min-players="1" data-max-players="4" data-time="40" data-complexity="2.0" data-mood="family,solo" data-status="onshelf">
+          <div class="game-cover" style="background:#5fe3c0;"><svg viewBox="0 0 120 120"><polygon points="60,20 90,40 90,80 60,100 30,80 30,40" fill="#fff4dc" stroke="#1d1830" stroke-width="3"/><polygon points="60,35 80,47 80,73 60,85 40,73 40,47" fill="#ff7a1f" stroke="#1d1830" stroke-width="3"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Cascadia</h3><div class="game-meta">1–4 · 40 min · ⚙ 2.0</div><span class="badge is-onshelf">On shelf · C-3</span></div>
+        </article>
+
+        <article class="game-card" data-title="Spirit Island" data-min-players="1" data-max-players="4" data-time="120" data-complexity="4.0" data-mood="coop,solo" data-status="onshelf">
+          <div class="game-cover" style="background:#7a3fff;"><svg viewBox="0 0 120 120"><path d="M30 80 Q60 30 90 80 Q75 95 60 85 Q45 95 30 80" fill="#5fe3c0" stroke="#1d1830" stroke-width="3"/><circle cx="60" cy="50" r="10" fill="#fff4dc" stroke="#1d1830" stroke-width="3"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Spirit Island</h3><div class="game-meta">1–4 · 120 min · ⚙ 4.0</div><span class="badge is-inplay">In play</span></div>
+        </article>
+
+        <article class="game-card" data-title="Codenames" data-min-players="4" data-max-players="8" data-time="20" data-complexity="1.5" data-mood="party,bluff" data-status="onshelf">
+          <div class="game-cover" style="background:#fff4dc;"><svg viewBox="0 0 120 120"><rect x="20" y="30" width="80" height="60" fill="#fff4dc" stroke="#1d1830" stroke-width="3"/><line x1="20" y1="50" x2="100" y2="50" stroke="#1d1830" stroke-width="3"/><line x1="20" y1="70" x2="100" y2="70" stroke="#1d1830" stroke-width="3"/><line x1="46" y1="30" x2="46" y2="90" stroke="#1d1830" stroke-width="3"/><line x1="73" y1="30" x2="73" y2="90" stroke="#1d1830" stroke-width="3"/><rect x="20" y="30" width="26" height="20" fill="#ff7a1f"/><rect x="73" y="70" width="27" height="20" fill="#7a3fff"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Codenames</h3><div class="game-meta">4–8 · 20 min · ⚙ 1.5</div><span class="badge is-onshelf">On shelf · F-2</span></div>
+        </article>
+
+        <article class="game-card" data-title="Brass: Birmingham" data-min-players="2" data-max-players="4" data-time="180" data-complexity="4.0" data-mood="strategy" data-status="reserved">
+          <div class="game-cover" style="background:#1d1830;"><svg viewBox="0 0 120 120"><rect x="30" y="40" width="20" height="50" fill="#ff7a1f" stroke="#fff4dc" stroke-width="3"/><rect x="55" y="30" width="20" height="60" fill="#5fe3c0" stroke="#fff4dc" stroke-width="3"/><rect x="80" y="50" width="20" height="40" fill="#7a3fff" stroke="#fff4dc" stroke-width="3"/><line x1="20" y1="100" x2="110" y2="100" stroke="#fff4dc" stroke-width="4"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Brass: Birmingham</h3><div class="game-meta">2–4 · 180 min · ⚙ 4.0</div><span class="badge is-reserved">Reserved</span></div>
+        </article>
+
+        <article class="game-card" data-title="Patchwork" data-min-players="2" data-max-players="2" data-time="25" data-complexity="1.5" data-mood="strategy,family" data-status="onshelf">
+          <div class="game-cover" style="background:#ff7a1f;"><svg viewBox="0 0 120 120"><rect x="20" y="20" width="80" height="80" fill="#fff4dc" stroke="#1d1830" stroke-width="3"/><rect x="20" y="20" width="30" height="30" fill="#5fe3c0" stroke="#1d1830" stroke-width="2"/><rect x="50" y="20" width="50" height="20" fill="#7a3fff" stroke="#1d1830" stroke-width="2"/><rect x="60" y="50" width="40" height="40" fill="#ff7a1f" stroke="#1d1830" stroke-width="2"/><rect x="20" y="70" width="40" height="30" fill="#fff4dc" stroke="#1d1830" stroke-width="2"/></svg></div>
+          <div class="game-body"><h3 class="game-title">Patchwork</h3><div class="game-meta">2 · 25 min · ⚙ 1.5</div><span class="badge is-onshelf">On shelf · A-2</span></div>
+        </article>
+
+        <article class="game-card" data-title="The Crew: Mission Deep Sea" data-min-players="3" data-max-players="5" data-time="30" data-complexity="2.0" data-mood="coop" data-status="onshelf">
+          <div class="game-cover" style="background:#5fe3c0;"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="40" fill="#1d1830" stroke="#1d1830" stroke-width="3"/><circle cx="50" cy="55" r="6" fill="#fff4dc"/><circle cx="75" cy="65" r="4" fill="#fff4dc"/><path d="M20 60 Q60 80 100 60" fill="none" stroke="#fff4dc" stroke-width="3"/></svg></div>
+          <div class="game-body"><h3 class="game-title">The Crew: Mission Deep Sea</h3><div class="game-meta">3–5 · 30 min · ⚙ 2.0</div><span class="badge is-onshelf">On shelf · C-1</span></div>
+        </article>
+      </div>
+
+      <div class="section" style="margin-top:48px;">
+        <div class="section-head">
+          <h2>Cafe staff favorites</h2>
+          <a href="reviews.html" class="btn btn--sm btn--mint">See their reviews →</a>
+        </div>
+        <div class="grid grid--3">
+          <article class="panel panel--tangerine">
+            <h3>Mae's pick</h3>
+            <p><strong>The Crew: Mission Deep Sea.</strong> Quiet cooperative trick-taking. You will hear your friends groan in the most affectionate way.</p>
+          </article>
+          <article class="panel panel--mint">
+            <h3>Devon's pick</h3>
+            <p><strong>Heat.</strong> "It gets out of the box in five minutes and into the bloodstream in ten."</p>
+          </article>
+          <article class="panel panel--cream">
+            <h3>Ren's pick</h3>
+            <p><strong>Patchwork.</strong> Lunch break duels. Best with a Catan Cold Brew on the side.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="panel">
+          <h2>Don't see what you're looking for?</h2>
+          <p>We add 8–10 titles a month. Tell us what you want on the shelf — designers, mechanics, anything.</p>
+          <form class="form-row" onsubmit="event.preventDefault(); alert('Request sent — thanks! We pull the catalog every Monday.');">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+              <div><label for="rq-name">Your name</label><input id="rq-name" type="text" placeholder="Mae Hellerud"></div>
+              <div><label for="rq-email">Email</label><input id="rq-email" type="email" placeholder="hello@example.com"></div>
+            </div>
+            <div><label for="rq-game">Game you want</label><input id="rq-game" type="text" placeholder="e.g. Daybreak, or anything by Vital Lacerda"></div>
+            <div><label for="rq-note">Why?</label><textarea id="rq-note" rows="3" placeholder="Optional — but we love a pitch."></textarea></div>
+            <div><button class="btn btn--purple" type="submit">Send request</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="brand-mark" style="background:#5fe3c0;"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 2 C19 2 21 4 21 7 C21 9 20 10 19 11 C22 11 27 12 28 17 L28 30 L21 30 L21 22 L11 22 L11 30 L4 30 L4 17 C5 12 10 11 13 11 C12 10 11 9 11 7 C11 4 13 2 16 2 Z" fill="#1d1830"/></svg></span><span class="brand-text">Meeple &amp; Mug<small>Roll, Sip, Repeat.</small></span></a>
+      <p style="margin-top:14px; color:rgba(255,244,220,0.75);">A neighborhood board game cafe in a converted warehouse — and a tabletop publisher of two original card games.</p>
+    </div>
+    <div><h4>Visit</h4><ul><li>412 Linwood Mill Ln</li><li>Linwood, NC 27000</li><li>(555) 314-DICE</li><li><a href="book.html">Book a table</a></li></ul></div>
+    <div><h4>Explore</h4><ul><li><a href="library.html">Game library</a></li><li><a href="menu.html">Drinks &amp; bites</a></li><li><a href="events.html">Events</a></li><li><a href="reviews.html">Friday reviews</a></li></ul></div>
+    <div><h4>Tavern Pass</h4><ul><li><a href="tavern-pass.html">Join the club</a></li><li><a href="tavern-pass.html#tiers">Tier perks</a></li><li><a href="tavern-pass.html#calc">Points calculator</a></li></ul></div>
+  </div>
+  <div class="shell legal"><span>© 2026 Meeple &amp; Mug Cafe LLC. All meeples loved equally.</span><span>Drink responsibly. Roll fearlessly.</span></div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

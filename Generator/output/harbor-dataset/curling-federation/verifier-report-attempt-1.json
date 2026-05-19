@@ -1,0 +1,74 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "accessibility",
+      "message": "Search input and filter checkboxes appear to lack associated labels or accessible names.",
+      "severity": "warning",
+      "path": "/athletes"
+    },
+    {
+      "type": "accessibility",
+      "message": "Search input and possibly the map/filter controls are missing accessible names or form labels.",
+      "severity": "warning",
+      "path": "/clubs"
+    },
+    {
+      "type": "accessibility",
+      "message": "Newsletter or filter input is missing an associated label or accessible name.",
+      "severity": "warning",
+      "path": "/news"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Three-column dashboard rows show some bottom-edge misalignment between the rankings, bracket, and news columns.",
+      "severity": "info",
+      "path": "/"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Athlete cards have several rows where card bottoms do not align cleanly — likely due to variable text length in the stat blocks.",
+      "severity": "info",
+      "path": "/athletes"
+    },
+    {
+      "type": "layout_alignment",
+      "message": "Bulletin rows in the two-column list have inconsistent bottom alignment.",
+      "severity": "info",
+      "path": "/news"
+    }
+  ],
+  "scores": {
+    "accessibility": 0.85,
+    "mobile_responsiveness": 0.9,
+    "component_consistency": 0.95,
+    "layout_alignment": 0.78,
+    "render_quality": 0.95,
+    "page_completeness": 1.0
+  },
+  "repair_instructions": [
+    "On athletes.html, add a visible or visually-hidden <label> tied to the surname/club search input via for/id, and ensure each discipline/position/region filter checkbox has an associated <label> element (or aria-label) so screen readers announce them.",
+    "On clubs.html, add a label or aria-label to the 'Search clubs, cities, postal codes…' input and to any map control buttons (zoom, pan toggles) that are currently icon-only.",
+    "On news.html, add a label or aria-label to the 'Subscribe to officiating notices' email input (and any category/format filter controls that are icon- or chip-only without text labels for assistive tech).",
+    "On index.html, equalize the heights of the three dashboard columns (National Rankings, Playoff Bracket, News & Notices) — e.g. use a CSS grid with align-items: stretch and give the inner card bodies min-height or flex: 1 so their bottom rules line up at the same y-coordinate.",
+    "On athletes.html, give every athlete card a uniform min-height (or use grid auto-rows: 1fr within each row) so the card bottoms align across the row even when stat blocks have differing line counts.",
+    "On news.html, give the bulletin rows in the two-column list a fixed or min-height so the bottom rules and metadata rows align horizontally between the left and right columns."
+  ],
+  "deterministic_checks": {
+    "html_page_count": 8,
+    "page_presence_resolution": "All 8 declared pages resolve to concrete files. The two paths flagged as unresolved by the extractor (/officiating/rules-handbook and /tournaments/national-championship/bracket) are clearly implemented as rules.html and brackets.html — this is a path-mapping artifact, not a missing page.",
+    "required_text_present": true,
+    "render_sanity_min": 0.93,
+    "render_sanity_max": 0.968,
+    "accessibility_warnings_pages": [
+      "/athletes",
+      "/clubs",
+      "/news"
+    ],
+    "layout_alignment_low_pages": [
+      "/",
+      "/athletes",
+      "/news"
+    ]
+  }
+}

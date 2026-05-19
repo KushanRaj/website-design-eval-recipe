@@ -58,6 +58,9 @@ coverage.xml
 *.py.cover
 .hypothesis/
 .pytest_cache/
+.claude/
+.harbor-verifier-build/
+datasets/synthetic-website-replication/
 cover/
 
 # Translations

@@ -1,0 +1,156 @@
+{
+  "id": "tabletop-gaming-cafe",
+  "candidate_id": "meeple-and-mug-cafe",
+  "brand": {
+    "name": "Meeple & Mug",
+    "tagline": "Roll, Sip, Repeat.",
+    "loyalty_program": "Tavern Pass",
+    "domain": "Board game cafe and tabletop retail brand (neighborhood storefront with online presence)"
+  },
+  "visual_system": {
+    "palette": {
+      "tangerine": "#ff7a1f",
+      "purple": "#7a3fff",
+      "mint": "#5fe3c0",
+      "cream": "#fff4dc",
+      "ink": "#1d1830"
+    },
+    "feel": "playful illustrated chunky — candy-bright, tactile, like opening a colorful box of dice",
+    "motifs": [
+      "hex-tile background grids (softened to a two-tone wash on mobile)",
+      "chunky bordered illustrated cards with hard drop-shadows",
+      "meeple silhouettes used as bullet markers and brand mark",
+      "dice-face section dividers (d4, d6, d8, d10, d12, d20)",
+      "sticker-style price tags rotated a few degrees with a punched dot"
+    ],
+    "typography": "Fredoka/Baloo-2 style display fonts paired with Nunito/Quicksand body, with system fallbacks via @font-face local() chains so no network fonts are required."
+  },
+  "pages": [
+    {
+      "id": "home",
+      "path": "index.html",
+      "purpose": "Front-door personality + utility — points to events, library, booking, loyalty, and reviews.",
+      "implemented_sections": [
+        "Hero with Roll Sip Repeat tagline and chunky meeple/mug illustrated scene",
+        "Dice-face divider row (d4–d20)",
+        "Three feature cards: Tonight's Events / New on the Shelf / Book a Table",
+        "Tonight & this week — horizontal event chip strip",
+        "Featured games of the month — 4-up card row with availability badges",
+        "Three signature drinks teaser with sticker price tags",
+        "Tavern Pass loyalty band with tier illustration",
+        "Latest reviews row",
+        "Hours / address / stylized map cluster"
+      ]
+    },
+    {
+      "id": "menu",
+      "path": "menu.html",
+      "purpose": "Drinks and snacks menu with allergen filtering and staff picks.",
+      "implemented_sections": [
+        "Chalkboard-style hero with daily special",
+        "Allergen / dietary filter chips (vegan, GF, NF, DF, spicy) — toggling hides non-matching items",
+        "Four-column diner board: Bites / Sweets / Sips / Spirits & Beer with sticker price tags",
+        "Hex-portrait staff pick cards",
+        "Private event catering callout linking to booking"
+      ]
+    },
+    {
+      "id": "library",
+      "path": "library.html",
+      "purpose": "Make the 800-game library feel browsable, not overwhelming.",
+      "implemented_sections": [
+        "Hero with What-are-you-in-the-mood-to-play search bar",
+        "Filter rail: player count slider, play-time chips, complexity dots, mood pills, availability toggle",
+        "Sort + match count + 12 hand-drawn sample game cards with On Shelf / In Play / Reserved badges",
+        "Cafe Staff Favorites callout row",
+        "Request-a-game form"
+      ],
+      "interactivity": "Vanilla JS filters game cards live based on rail selections and search; sort by A–Z / complexity / play time."
+    },
+    {
+      "id": "events",
+      "path": "events.html",
+      "purpose": "Surface tournaments, weekly leagues, learn-to-plays, and open socials.",
+      "implemented_sections": [
+        "Hero with Month / List toggle",
+        "Event type legend (Tournament / League / Learn-to-Play / Open Social)",
+        "Five-week May 2026 calendar grid (color-coded events)",
+        "List view fallback with event chips",
+        "Featured Heat Grand Prix tournament with inline 8-player bracket viewer (collapsible)",
+        "Weekly leagues sidebar (Wingspan / 7 Wonders Duel / Magic Friday)",
+        "Submit-a-meetup form for community groups"
+      ],
+      "interactivity": "Month/List view toggle; bracket viewer collapses inline."
+    },
+    {
+      "id": "book",
+      "path": "book.html",
+      "purpose": "Stepper-style private room booking with sticky live-updating summary.",
+      "implemented_sections": [
+        "Hero with three illustrated rooms",
+        "Stepper navigation across four steps",
+        "Step 1: Three room cards (Dragon's Den / Hex Hall / Quiet Corner) — selection updates summary",
+        "Step 2: Date / time / duration / party size",
+        "Step 3: Three toggleable add-ons (snack platter, dedicated host, themed setup)",
+        "Step 4: Contact and deposit form with terms checkbox",
+        "Sticky purple summary sidebar showing room, date, addons, total, deposit",
+        "FAQ accordion (cancellation, outside food, kids, teaching, accessibility)"
+      ],
+      "interactivity": "JS-driven stepper progression, room selection state, addon toggles, and live total recalculation."
+    },
+    {
+      "id": "loyalty",
+      "path": "tavern-pass.html",
+      "purpose": "Loyalty club with tier ladder, comparison table, calculator, and signup.",
+      "implemented_sections": [
+        "Hero with central Tavern Pass medallion illustration",
+        "How it works — three-step row",
+        "Tier ladder cards (Pawn / Knight / Queen) with chunky icons; Queen card lifted",
+        "Perks comparison table with yes/no/threshold cells",
+        "Points calculator: visits-per-month × avg spend → annual points, current tier, progress meter to next tier",
+        "Signup form on a purple panel",
+        "Member testimonial cards"
+      ],
+      "interactivity": "Calculator computes points (2 per dollar × visits × 12) and sets tier + progress bar."
+    },
+    {
+      "id": "blog",
+      "path": "reviews.html",
+      "purpose": "Editorial review hub with rubric scorecards.",
+      "implemented_sections": [
+        "Hero with rubric chips that filter the visible reviews",
+        "Lead review of Heat: Pedal to the Metal with full rubric scorecard panel and verdict",
+        "Six secondary review cards across rubric categories",
+        "Reviewer roster strip with hex-tile portraits",
+        "Archive list with year jump",
+        "Newsletter signup callout"
+      ],
+      "interactivity": "Rubric chips filter review cards by data-review category tags."
+    }
+  ],
+  "required_text_present": ["Meeple & Mug", "Tavern Pass", "Roll, Sip, Repeat."],
+  "tech": {
+    "stack": "Vanilla HTML, CSS, and a single hand-written js/app.js — no build tooling, no npm, no external CDNs.",
+    "assets": {
+      "css": "css/style.css",
+      "js": "js/app.js",
+      "svg": ["assets/hex-bg.svg (tiling background)", "assets/meeple-mark.svg (brand mark + bullet markers)"],
+      "page_illustrations": "All hero scenes, dice dividers, game covers, room illustrations, staff portraits, mascots, and map art are inline SVG."
+    },
+    "mobile_behavior": "Hex tile background switches to a two-tone wash under 720px; nav collapses behind a hamburger; library filter rail stacks on top of the grid; booking summary becomes inline; calendar and bracket gracefully reflow."
+  },
+  "files": [
+    "index.html",
+    "menu.html",
+    "library.html",
+    "events.html",
+    "book.html",
+    "tavern-pass.html",
+    "reviews.html",
+    "css/style.css",
+    "js/app.js",
+    "assets/hex-bg.svg",
+    "assets/meeple-mark.svg",
+    "site_intent.json"
+  ]
+}

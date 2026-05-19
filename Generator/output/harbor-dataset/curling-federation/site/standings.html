@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Standings — National Curling Federation</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-bar">
+    <div>Member Portal · Officials Login · Calendar</div>
+    <div><a href="#">EN</a> · <a href="#">FR</a> · Season 2025–26</div>
+  </div>
+  <div class="masthead-main">
+    <div class="crest" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#BCD7E6" stroke-width="1.2"/>
+        <circle cx="20" cy="20" r="13" fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="8"  fill="none" stroke="#BCD7E6" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="3"  fill="#BCD7E6"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#BCD7E6" stroke-width="0.6"/>
+        <line x1="20" y1="2" x2="20" y2="38" stroke="#BCD7E6" stroke-width="0.6"/>
+      </svg>
+    </div>
+    <div class="masthead-title">
+      <h1>National Curling Federation</h1>
+      <span class="tagline">Est. 1903 · Hammer · Sweep · Sport for All</span>
+    </div>
+    <div class="masthead-meta">
+      <strong>2025–26 Season</strong>
+      Week 21 · 19 May 2026
+    </div>
+  </div>
+  <nav class="primary-nav">
+    <a href="index.html">Home</a>
+    <a href="standings.html" class="active">Standings</a>
+    <a href="athletes.html">Athletes</a>
+    <a href="brackets.html">Tournaments</a>
+    <a href="clubs.html">Find a Club</a>
+    <a href="rules.html">Rules &amp; Officiating</a>
+    <a href="results.html">Results Archive</a>
+    <a href="news.html">News</a>
+  </nav>
+</header>
+
+<div class="ticker" aria-label="Live results ticker">
+  <div class="ticker-label">Live · Results</div>
+  <div class="ticker-track">
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span>
+    <span class="sep">◆</span>
+    <span><strong>WJC Q-RR</strong> · Hearthstone 8–4 Ironcliff <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span><strong>MX-2D Pool A</strong> · Carrington 6–6 Sable Lakes · End 7</span>
+    <span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span><strong>M-RR</strong> · Foreland 5–7 Greycap <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span class="live">LIVE · Glacier Park 4–4 Brookmoor · End 6 · Sheet C</span>
+    <span class="sep">◆</span>
+    <span class="live">CH-FINAL · Whitestone CC 7–5 Granite Bay CC · End 9</span>
+    <span class="sep">◆</span>
+    <span><strong>WJC Q-RR</strong> · Hearthstone 8–4 Ironcliff <span class="win">W</span></span>
+    <span class="sep">◆</span>
+    <span><strong>MX-2D Pool A</strong> · Carrington 6–6 Sable Lakes · End 7</span>
+    <span class="sep">◆</span>
+    <span><strong>W-SF</strong> · Northfield 9–3 Cape Verity <span class="win">W</span></span>
+    <span class="sep">◆</span>
+  </div>
+</div>
+
+<main>
+  <div class="breadcrumbs"><a href="index.html">Home</a><span class="sep">/</span>Competition<span class="sep">/</span>Standings</div>
+  <h2>Standings · 2025–26 National League</h2>
+
+  <!-- Filter chips -->
+  <div class="chip-rail" role="toolbar" aria-label="Standings filters">
+    <div class="chip-group" data-chip-exclusive>
+      <span class="lbl">Season</span>
+      <span class="chip active">2025–26</span>
+      <span class="chip">2024–25</span>
+      <span class="chip">2023–24</span>
+      <span class="chip">2022–23</span>
+    </div>
+    <div class="chip-group" data-chip-exclusive>
+      <span class="lbl">Discipline</span>
+      <span class="chip active">Men</span>
+      <span class="chip">Women</span>
+      <span class="chip">Mixed Doubles</span>
+      <span class="chip">Wheelchair</span>
+      <span class="chip">U21 Jr</span>
+    </div>
+    <div class="chip-group">
+      <span class="lbl">Region</span>
+      <span class="chip">North</span>
+      <span class="chip">Coastal</span>
+      <span class="chip">Central</span>
+      <span class="chip">Highlands</span>
+      <span class="chip">Capital</span>
+    </div>
+    <div class="chip-group" data-chip-exclusive>
+      <span class="lbl">View</span>
+      <span class="chip active">Premier</span>
+      <span class="chip">Tier 2</span>
+      <span class="chip">Combined</span>
+    </div>
+  </div>
+
+  <!-- Division tabs + table -->
+  <div data-tabs>
+    <div class="tab-row">
+      <div class="tab active" data-tab="d1">Premier Division</div>
+      <div class="tab" data-tab="d2">Challenger</div>
+      <div class="tab" data-tab="d3">Regional Conference</div>
+    </div>
+
+    <div class="tab-panel active" data-tab="d1">
+      <div class="standings-layout">
+        <div>
+          <table class="data sortable" id="standings-premier">
+            <thead>
+              <tr>
+                <th class="rank">#</th>
+                <th>Team / Skip</th>
+                <th>Club</th>
+                <th class="num">GP</th>
+                <th class="num">W</th>
+                <th class="num">L</th>
+                <th class="num">DSC</th>
+                <th class="num">F</th>
+                <th class="num">A</th>
+                <th class="num">+/−</th>
+                <th class="num">H%</th>
+                <th class="num">Pts</th>
+                <th>Form</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rank">1</td>
+                <td class="team">Brennan</td><td>Whitestone CC</td>
+                <td class="num">22</td><td class="num">18</td><td class="num">4</td><td class="num">0</td>
+                <td class="num">168</td><td class="num">112</td><td class="num">+56</td>
+                <td class="num">62.1</td><td class="num"><strong>214</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,12 8,10 16,7 24,9 32,4 40,5 48,3 56,5 64,2"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">2</td><td class="team">Halvorsen</td><td>Greycap Curling</td>
+                <td class="num">22</td><td class="num">17</td><td class="num">5</td><td class="num">0</td>
+                <td class="num">161</td><td class="num">118</td><td class="num">+43</td>
+                <td class="num">59.4</td><td class="num"><strong>208</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,8 8,6 16,9 24,6 32,4 40,7 48,4 56,6 64,3"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">3</td><td class="team">Okafor</td><td>Foreland CC</td>
+                <td class="num">22</td><td class="num">16</td><td class="num">6</td><td class="num">0</td>
+                <td class="num">156</td><td class="num">123</td><td class="num">+33</td>
+                <td class="num">57.8</td><td class="num"><strong>196</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,6 8,9 16,7 24,11 32,9 40,7 48,9 56,6 64,8"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">4</td><td class="team">Tanaka</td><td>Pine Hollow CC</td>
+                <td class="num">22</td><td class="num">15</td><td class="num">7</td><td class="num">1</td>
+                <td class="num">152</td><td class="num">128</td><td class="num">+24</td>
+                <td class="num">56.0</td><td class="num"><strong>188</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,10 8,12 16,9 24,7 32,5 40,8 48,5 56,8 64,5"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">5</td><td class="team">Lemieux</td><td>Brookmoor CC</td>
+                <td class="num">22</td><td class="num">14</td><td class="num">8</td><td class="num">0</td>
+                <td class="num">149</td><td class="num">132</td><td class="num">+17</td>
+                <td class="num">54.5</td><td class="num"><strong>181</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,4 8,7 16,5 24,9 32,8 40,11 48,9 56,12 64,9"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">6</td><td class="team">Östlund</td><td>Glacier Park CC</td>
+                <td class="num">22</td><td class="num">13</td><td class="num">9</td><td class="num">2</td>
+                <td class="num">143</td><td class="num">138</td><td class="num">+5</td>
+                <td class="num">52.9</td><td class="num"><strong>174</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,8 8,6 16,9 24,7 32,10 40,8 48,11 56,9 64,12"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">7</td><td class="team">Reyes</td><td>Cape Verity CC</td>
+                <td class="num">22</td><td class="num">12</td><td class="num">10</td><td class="num">0</td>
+                <td class="num">140</td><td class="num">141</td><td class="num">−1</td>
+                <td class="num">51.2</td><td class="num"><strong>169</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,12 8,11 16,9 24,7 32,8 40,5 48,7 56,4 64,5"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">8</td><td class="team">Saunders</td><td>Hearthstone CC</td>
+                <td class="num">22</td><td class="num">12</td><td class="num">10</td><td class="num">1</td>
+                <td class="num">138</td><td class="num">144</td><td class="num">−6</td>
+                <td class="num">49.8</td><td class="num"><strong>162</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,7 8,9 16,8 24,11 32,9 40,12 48,10 56,13 64,11"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">9</td><td class="team">Ivanov</td><td>Ironcliff CC</td>
+                <td class="num">22</td><td class="num">11</td><td class="num">11</td><td class="num">0</td>
+                <td class="num">135</td><td class="num">142</td><td class="num">−7</td>
+                <td class="num">48.6</td><td class="num"><strong>156</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,9 8,10 16,11 24,9 32,11 40,10 48,12 56,11 64,10"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">10</td><td class="team">Bouchard</td><td>Sable Lakes CC</td>
+                <td class="num">22</td><td class="num">10</td><td class="num">12</td><td class="num">0</td>
+                <td class="num">131</td><td class="num">148</td><td class="num">−17</td>
+                <td class="num">47.0</td><td class="num"><strong>148</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,8 8,11 16,9 24,12 32,11 40,13 48,11 56,14 64,12"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">11</td><td class="team">Yamamoto</td><td>Westbrook CC</td>
+                <td class="num">22</td><td class="num">9</td><td class="num">13</td><td class="num">0</td>
+                <td class="num">128</td><td class="num">152</td><td class="num">−24</td>
+                <td class="num">45.4</td><td class="num"><strong>140</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,11 8,9 16,12 24,11 32,13 40,12 48,14 56,13 64,15"/></svg></td>
+              </tr>
+              <tr>
+                <td class="rank">12</td><td class="team">Petrosian</td><td>Carrington CC</td>
+                <td class="num">22</td><td class="num">7</td><td class="num">15</td><td class="num">1</td>
+                <td class="num">120</td><td class="num">163</td><td class="num">−43</td>
+                <td class="num">42.1</td><td class="num"><strong>119</strong></td>
+                <td><svg class="sparkline" width="68" height="18" viewBox="0 0 68 18"><polyline fill="none" stroke="#1E5F86" stroke-width="1.2" points="0,13 8,12 16,14 24,12 32,15 40,13 48,14 56,15 64,14"/></svg></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="actions">
+            <a class="btn" href="#">Download CSV</a>
+            <a class="btn ghost" href="#">Printable PDF</a>
+            <a class="btn ghost" href="#">Share Link</a>
+          </div>
+        </div>
+
+        <aside class="legend-card">
+          <h4>Legend</h4>
+          <dl>
+            <dt>GP</dt><dd>Games Played</dd>
+            <dt>W / L</dt><dd>Wins / Losses</dd>
+            <dt>DSC</dt><dd>Draw-Shot Challenge points</dd>
+            <dt>F / A</dt><dd>Stones For / Against</dd>
+            <dt>+/−</dt><dd>Stone differential</dd>
+            <dt>H%</dt><dd>Hammer conversion percentage</dd>
+            <dt>Pts</dt><dd>Cumulative ranking points</dd>
+          </dl>
+
+          <h4 style="margin-top:14px;">Scoring</h4>
+          <p style="font-size:11px;color:var(--granite-70);margin:0;">
+            Each Premier Division match awards 8 pts for a win, 4 pts for an extra-end loss, and 0 pts for a regulation loss. Tiebreaks resolve via DSC and head-to-head record per §4.7 of the handbook.
+          </p>
+
+          <h4 style="margin-top:14px;">Notes</h4>
+          <p style="font-size:11px;color:var(--granite-70);margin:0;">
+            Standings frozen at the conclusion of round 22. Playoff seeding is reflected on the <a href="brackets.html">tournament bracket</a>. Withdrawals forfeit accrued points per §2.3.
+          </p>
+        </aside>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-tab="d2">
+      <table class="data sortable">
+        <thead><tr><th class="rank">#</th><th>Skip</th><th>Club</th><th class="num">W</th><th class="num">L</th><th class="num">H%</th><th class="num">Pts</th></tr></thead>
+        <tbody>
+          <tr><td class="rank">1</td><td class="team">Holm</td><td>Glenmoor CC</td><td class="num">16</td><td class="num">2</td><td class="num">58.4</td><td class="num">144</td></tr>
+          <tr><td class="rank">2</td><td class="team">Marchetti</td><td>Driftpine CC</td><td class="num">14</td><td class="num">4</td><td class="num">55.0</td><td class="num">132</td></tr>
+          <tr><td class="rank">3</td><td class="team">Adeyemi</td><td>Tallow Bay CC</td><td class="num">12</td><td class="num">6</td><td class="num">52.7</td><td class="num">114</td></tr>
+          <tr><td class="rank">4</td><td class="team">Halonen</td><td>Bracken Hill CC</td><td class="num">11</td><td class="num">7</td><td class="num">51.0</td><td class="num">102</td></tr>
+          <tr><td class="rank">5</td><td class="team">Vasquez</td><td>Argent Pass CC</td><td class="num">9</td><td class="num">9</td><td class="num">48.6</td><td class="num">88</td></tr>
+          <tr><td class="rank">6</td><td class="team">Schmidt</td><td>Holloway Mills CC</td><td class="num">7</td><td class="num">11</td><td class="num">46.0</td><td class="num">72</td></tr>
+          <tr><td class="rank">7</td><td class="team">Toivonen</td><td>Mooring Point CC</td><td class="num">4</td><td class="num">14</td><td class="num">42.3</td><td class="num">52</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-panel" data-tab="d3">
+      <table class="data sortable">
+        <thead><tr><th class="rank">#</th><th>Skip</th><th>Club</th><th>Conference</th><th class="num">W</th><th class="num">L</th><th class="num">Pts</th></tr></thead>
+        <tbody>
+          <tr><td class="rank">1</td><td class="team">Naumann</td><td>Coppervale CC</td><td>North</td><td class="num">12</td><td class="num">2</td><td class="num">108</td></tr>
+          <tr><td class="rank">2</td><td class="team">Eriksen</td><td>Cinderloch CC</td><td>Highlands</td><td class="num">11</td><td class="num">3</td><td class="num">100</td></tr>
+          <tr><td class="rank">3</td><td class="team">Pace</td><td>Mireview CC</td><td>Coastal</td><td class="num">9</td><td class="num">5</td><td class="num">86</td></tr>
+          <tr><td class="rank">4</td><td class="team">Sørensen</td><td>Vesper Lake CC</td><td>Central</td><td class="num">8</td><td class="num">6</td><td class="num">78</td></tr>
+          <tr><td class="rank">5</td><td class="team">Roussel</td><td>Hadley Bend CC</td><td>Capital</td><td class="num">6</td><td class="num">8</td><td class="num">62</td></tr>
+          <tr><td class="rank">6</td><td class="team">Khoury</td><td>Saltlick CC</td><td>Coastal</td><td class="num">4</td><td class="num">10</td><td class="num">46</td></tr>
+          <tr><td class="rank">7</td><td class="team">Lindgren</td><td>Quill River CC</td><td>North</td><td class="num">2</td><td class="num">12</td><td class="num">28</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="cols">
+    <div>
+      <h5>National Curling Federation</h5>
+      <p style="margin:0 0 6px 0;">Federation House, 41 Granite Row, Capital District — recognised national governing body affiliated with the World Curling Federation since 1966.</p>
+      <p style="margin:0;font-family:var(--mono);font-size:11px;color:var(--ice-200);">contact@ncf.example · +1 (555) 010-0190</p>
+    </div>
+    <div><h5>Competition</h5><a href="standings.html">Standings</a><a href="brackets.html">Tournaments</a><a href="results.html">Results Archive</a><a href="athletes.html">Athletes</a></div>
+    <div><h5>Officiating</h5><a href="rules.html">Rules Handbook</a><a href="rules.html">Certification Ladder</a><a href="rules.html">Equipment Bulletins</a><a href="news.html">Sanctions &amp; Notices</a></div>
+    <div><h5>Membership</h5><a href="clubs.html">Find a Club</a><a href="clubs.html">Register a Club</a><a href="#">Member Portal</a><a href="#">Insurance Schemes</a></div>
+  </div>
+  <div class="colophon"><span>© 2026 National Curling Federation · A registered not-for-profit</span><span>Document NCF-WEB-21 · 19 May 2026</span></div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

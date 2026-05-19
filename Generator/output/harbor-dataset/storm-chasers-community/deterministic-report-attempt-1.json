@@ -1,0 +1,1042 @@
+{
+  "passed": true,
+  "issues": [],
+  "checks": {
+    "site_files": [
+      "calendar.html",
+      "css/style.css",
+      "gallery.html",
+      "gear.html",
+      "index.html",
+      "js/app.js",
+      "logs.html",
+      "roster.html",
+      "site_intent.json",
+      "spotters.html"
+    ],
+    "html_page_count": 7,
+    "page_presence": {
+      "/": {
+        "declared_path": "/",
+        "declared_id": "ops-dashboard",
+        "resolved_file": "index.html",
+        "found": true
+      },
+      "/logs": {
+        "declared_path": "/logs",
+        "declared_id": "chase-logs",
+        "resolved_file": "logs.html",
+        "found": true
+      },
+      "/gear": {
+        "declared_path": "/gear",
+        "declared_id": "gear-bench",
+        "resolved_file": "gear.html",
+        "found": true
+      },
+      "/spotters": {
+        "declared_path": "/spotters",
+        "declared_id": "spotter-net",
+        "resolved_file": "spotters.html",
+        "found": true
+      },
+      "/calendar": {
+        "declared_path": "/calendar",
+        "declared_id": "outlook-calendar",
+        "resolved_file": "calendar.html",
+        "found": true
+      },
+      "/gallery": {
+        "declared_path": "/gallery",
+        "declared_id": "supercell-gallery",
+        "resolved_file": "gallery.html",
+        "found": true
+      },
+      "/roster": {
+        "declared_path": "/roster",
+        "declared_id": "directory",
+        "resolved_file": "roster.html",
+        "found": true
+      }
+    },
+    "missing_required_text": [],
+    "placeholder_hits": [],
+    "per_page_metrics": {
+      "/": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 16,
+          "element_count": 306,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 1774
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.920483,
+          "passed": true,
+          "width": 1440,
+          "height": 1774,
+          "entropy": 3.451601,
+          "gray_std": 26.478958,
+          "non_white_ratio": 0.999996,
+          "non_black_ratio": 0.949897,
+          "unique_color_ratio": 0.007941,
+          "html_text_chars": 3914
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(3)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 86.875547,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 14,
+              "total_elements": 146,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 7,
+                "elements_without_horizontal_alignment": 1,
+                "row_bottom_alignment": 6
+              },
+              "row_group_count": 27,
+              "vertical_alignment_group_count": 92,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 95.870191,
+              "tags": [],
+              "sparsity_rate": 8.089066,
+              "largest_blank_rectangle": {
+                "x": 580,
+                "y": 1376,
+                "width": 847,
+                "height": 244,
+                "area": 206625
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 974,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 1774
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/logs": {
+        "accessibility": {
+          "tags": [
+            "missing_accessible_name",
+            "missing_form_label"
+          ],
+          "issue_count": 1,
+          "control_count": 54,
+          "element_count": 293,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 1177
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.901355,
+          "passed": true,
+          "width": 1440,
+          "height": 1177,
+          "entropy": 3.60901,
+          "gray_std": 26.291374,
+          "non_white_ratio": 0.998826,
+          "non_black_ratio": 0.673715,
+          "unique_color_ratio": 0.003088,
+          "html_text_chars": 4405
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "large_blank_region",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": []
+            },
+            "layout_consistency": {
+              "score": 88.634322,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 20,
+              "total_elements": 243,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 8,
+                "elements_without_horizontal_alignment": 4,
+                "row_bottom_alignment": 8
+              },
+              "row_group_count": 37,
+              "vertical_alignment_group_count": 94,
+              "alignment_tolerance_px": 7.062,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 78.782131,
+              "tags": [
+                "large_blank_region"
+              ],
+              "sparsity_rate": 37.933759,
+              "largest_blank_rectangle": {
+                "x": 232,
+                "y": 553,
+                "width": 1208,
+                "height": 532,
+                "area": 642385
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 1200,
+                "height": 980
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 1177
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/gear": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 35,
+          "element_count": 309,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 1045
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.913345,
+          "passed": true,
+          "width": 1440,
+          "height": 1045,
+          "entropy": 2.933657,
+          "gray_std": 29.571085,
+          "non_white_ratio": 0.99936,
+          "non_black_ratio": 0.912147,
+          "unique_color_ratio": 0.002804,
+          "html_text_chars": 2940
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 58.49625,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 3,
+              "total_num": 8,
+              "candidate_component_count": 8,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 8,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "6|div:icon:1>h3:title:0>div:body:0>div:body:2>div:body:10>button:body:0|body,body,body,body,icon,title",
+                  "majority_style": "flex|column|none|normal|normal|6px|8px|8px|8px|8px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-95",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    },
+                    {
+                      "node_id": "node-146",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    },
+                    {
+                      "node_id": "node-218",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 8,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(5)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(6)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(7)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(2)>section:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(8)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 66.213036,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 38,
+              "total_elements": 143,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 8,
+                "elements_without_horizontal_alignment": 4,
+                "row_bottom_alignment": 26
+              },
+              "row_group_count": 31,
+              "vertical_alignment_group_count": 88,
+              "alignment_tolerance_px": 6.27,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 96.329177,
+              "tags": [],
+              "sparsity_rate": 7.206897,
+              "largest_blank_rectangle": {
+                "x": 1189,
+                "y": 458,
+                "width": 238,
+                "height": 456,
+                "area": 108346
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 1200,
+                "height": 870
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 1045
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/spotters": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 7,
+          "element_count": 271,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 1910
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.859608,
+          "passed": true,
+          "width": 1440,
+          "height": 1910,
+          "entropy": 2.446409,
+          "gray_std": 23.401871,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 0.954738,
+          "unique_color_ratio": 0.001571,
+          "html_text_chars": 4024
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": []
+            },
+            "layout_consistency": {
+              "score": 76.148791,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 32,
+              "total_elements": 177,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 9,
+                "elements_without_horizontal_alignment": 6,
+                "row_bottom_alignment": 17
+              },
+              "row_group_count": 34,
+              "vertical_alignment_group_count": 100,
+              "alignment_tolerance_px": 8.64,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 94.661717,
+              "tags": [],
+              "sparsity_rate": 10.391593,
+              "largest_blank_rectangle": {
+                "x": 856,
+                "y": 998,
+                "width": 583,
+                "height": 490,
+                "area": 285585
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 904,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 1910
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/calendar": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 12,
+          "element_count": 217,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 953
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.92871,
+          "passed": true,
+          "width": 1440,
+          "height": 953,
+          "entropy": 3.763577,
+          "gray_std": 25.62496,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 0.950108,
+          "unique_color_ratio": 0.004435,
+          "html_text_chars": 2424
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": []
+            },
+            "layout_consistency": {
+              "score": 48.3209,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 28,
+              "total_elements": 64,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 16,
+                "elements_without_horizontal_alignment": 3,
+                "row_bottom_alignment": 9
+              },
+              "row_group_count": 14,
+              "vertical_alignment_group_count": 30,
+              "alignment_tolerance_px": 6.0,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 93.346002,
+              "tags": [],
+              "sparsity_rate": 12.865239,
+              "largest_blank_rectangle": {
+                "x": 779,
+                "y": 551,
+                "width": 648,
+                "height": 272,
+                "area": 176515
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 1200,
+                "height": 794
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 953
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/gallery": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 8,
+          "element_count": 310,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 1070
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.95616,
+          "passed": true,
+          "width": 1440,
+          "height": 1070,
+          "entropy": 5.212253,
+          "gray_std": 30.543316,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 0.820008,
+          "unique_color_ratio": 0.006619,
+          "html_text_chars": 2306
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "icon_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 50.0,
+              "tags": [
+                "icon_style_inconsistency"
+              ],
+              "failed_dimension_num": 2,
+              "failed_dimensions": [
+                "size_uniformity",
+                "underlying_shape_consistency"
+              ],
+              "icon_count": 12,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(3)>section:nth-of-type(1)>div:nth-of-type(1)",
+                  "icon_count": 12,
+                  "evaluated": true,
+                  "failed_dimensions": [
+                    "size_uniformity",
+                    "underlying_shape_consistency"
+                  ]
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 54.983428,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 26,
+              "total_elements": 70,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 19,
+                "elements_without_horizontal_alignment": 3,
+                "row_bottom_alignment": 4
+              },
+              "row_group_count": 19,
+              "vertical_alignment_group_count": 25,
+              "alignment_tolerance_px": 6.42,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 97.626145,
+              "tags": [],
+              "sparsity_rate": 4.691358,
+              "largest_blank_rectangle": {
+                "x": 1139,
+                "y": 691,
+                "width": 288,
+                "height": 251,
+                "area": 72230
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 1200,
+                "height": 891
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 1070
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/roster": {
+        "accessibility": {
+          "tags": [
+            "missing_accessible_name",
+            "missing_form_label"
+          ],
+          "issue_count": 1,
+          "control_count": 12,
+          "element_count": 291,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1440,
+            "height": 1170
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.94319,
+          "passed": true,
+          "width": 1440,
+          "height": 1170,
+          "entropy": 3.964814,
+          "gray_std": 29.528114,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 0.758738,
+          "unique_color_ratio": 0.004262,
+          "html_text_chars": 3226
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(3)>aside:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 85.999252,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 16,
+              "total_elements": 156,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 4,
+                "elements_without_horizontal_alignment": 1,
+                "row_bottom_alignment": 11
+              },
+              "row_group_count": 24,
+              "vertical_alignment_group_count": 81,
+              "alignment_tolerance_px": 7.02,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 87.89514,
+              "tags": [],
+              "sparsity_rate": 22.744444,
+              "largest_blank_rectangle": {
+                "x": 0,
+                "y": 721,
+                "width": 1068,
+                "height": 359,
+                "area": 383198
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 1200,
+                "height": 975
+              },
+              "original_size": {
+                "width": 1440,
+                "height": 1170
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      }
+    },
+    "per_page_summary": {
+      "/": {
+        "render_sanity": 0.92,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/logs": {
+        "render_sanity": 0.901,
+        "accessibility_tags": [
+          "missing_accessible_name",
+          "missing_form_label"
+        ],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/gear": {
+        "render_sanity": 0.913,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/spotters": {
+        "render_sanity": 0.86,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/calendar": {
+        "render_sanity": 0.929,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/gallery": {
+        "render_sanity": 0.956,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/roster": {
+        "render_sanity": 0.943,
+        "accessibility_tags": [
+          "missing_accessible_name",
+          "missing_form_label"
+        ],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      }
+    }
+  }
+}

@@ -1,0 +1,295 @@
+{
+  "site_id": "curling-federation",
+  "concept_seed": {
+    "id": "curling-federation",
+    "one_liner": "A niche-sport governing body website for a national curling federation with icy blue-and-granite palette, utilitarian sans typography, dense league standings tables, athlete roster pages, tournament brackets, club locator map, rules/officiating handbook section, news ticker, and a results archive with filter chips.",
+    "metadata": {
+      "visual_feel": "utilitarian institutional",
+      "palette": "cool icy blue, granite gray, white",
+      "density": "high"
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "curling-federation-a",
+    "domain": "National sport governing body — curling federation",
+    "site_goal": "Serve as the authoritative operational portal for a national curling federation: publish league standings, athlete rosters, tournament brackets, results archives, officiating rules, and a club locator for member clubs and competitive curlers.",
+    "audience": [
+      "Competitive curlers and club members",
+      "Coaches and team officials",
+      "Certified officials and ice technicians",
+      "Sport journalists and statisticians",
+      "Recreational players looking for a club"
+    ],
+    "description": "A dense, utilitarian institutional site for the National Curling Federation. The aesthetic reads like a federation handbook crossed with a live scoreboard: icy blue (#BCD7E6) panels, granite gray (#3A3F45) headers, and crisp white data tables. Sans-serif typography (a workhorse grotesk) sits at tight leading, with monospaced numerals in standings columns. A persistent results ticker scrolls along the top below the masthead. The homepage stacks a national rankings widget, the next-up tournament bracket teaser, and a 'club of the week' card over a low-contrast topographic ice-rink line motif. Internal pages favor multi-column tables, filter chip rows, and small-cap metadata labels. Iconography is line-only: brooms, stones, hammer indicators, and circular target house diagrams used as section bullets.",
+    "motif": "Granite stone cross-section circles, broom-stroke underlines, and concentric target-house rings used as accents around stat blocks; thin hairline rules separate dense table rows.",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "Masthead with federation crest left, primary nav row, scrolling results ticker bar, then a three-column dense dashboard: national rankings table (left), upcoming tournament bracket preview (center), latest news + officiating bulletins (right); below, a club-of-the-week spotlight and sponsor strip footer.",
+        "sections": [
+          "Federation masthead with crest and tagline",
+          "Live results ticker (auto-scroll)",
+          "National rankings table — men's, women's, mixed doubles tabs",
+          "Upcoming championship bracket teaser",
+          "News bulletins column",
+          "Officiating notice card",
+          "Club of the week spotlight",
+          "Sponsor strip",
+          "Footer with affiliation, contact, and member portal link"
+        ]
+      },
+      {
+        "id": "standings",
+        "path": "/standings",
+        "layout_pattern": "Full-width data table page: filter chip bar at top (season, division, region, gender, discipline), pinned column headers, sortable columns, alternating row shading; sidebar showing legend (W/L, DSC, hammer %), and a small inline trendline sparkline per team.",
+        "sections": [
+          "Filter chip row",
+          "Division tabs",
+          "Standings table with sparklines",
+          "Legend and scoring glossary sidebar",
+          "Download CSV / printable PDF actions"
+        ]
+      },
+      {
+        "id": "athletes",
+        "path": "/athletes",
+        "layout_pattern": "Roster directory: grid of athlete cards with portrait, club, position (skip/vice/second/lead), national team caps; left-rail filters by team, region, hand dominance, age category; click-through to an athlete profile sub-page with career stats table and competition history timeline.",
+        "sections": [
+          "Search bar and filter rail",
+          "Athlete card grid",
+          "Pagination with results count",
+          "Featured national team module",
+          "Selection criteria document link"
+        ]
+      },
+      {
+        "id": "brackets",
+        "path": "/tournaments/national-championship/bracket",
+        "layout_pattern": "Horizontal single-elimination bracket diagram spanning a wide scrollable canvas with round-robin pool tables stacked above; each match cell shows team names, end-by-end score grid, hammer indicator, and ice sheet assignment.",
+        "sections": [
+          "Tournament header with dates, venue, draw status",
+          "Round-robin pool standings tables",
+          "Playoff bracket diagram",
+          "Live scoring banner",
+          "Draw schedule sheet view",
+          "Officials assigned panel"
+        ]
+      },
+      {
+        "id": "clubs",
+        "path": "/clubs",
+        "layout_pattern": "Two-pane locator: interactive national map (left, ~60%) with dot markers shaded by club size, and a right-side scrollable result list with club name, city, sheets count, and contact; chip filters above for league type, learn-to-curl availability, accessibility, wheelchair curling.",
+        "sections": [
+          "Map view with region zoom",
+          "Filter chips (junior program, accessibility, league nights, leagues offered)",
+          "Club result list with badges",
+          "Selected club detail flyout",
+          "Add-your-club submission link"
+        ]
+      },
+      {
+        "id": "rules",
+        "path": "/officiating/rules-handbook",
+        "layout_pattern": "Documentation-style two-pane layout: sticky left-rail table of contents (collapsible chapters), main column with numbered sections, inline diagrams of the house and free-guard zone, callout boxes for rule changes, footnote citations to WCF references.",
+        "sections": [
+          "Handbook version banner with revision date",
+          "Chapter TOC sidebar",
+          "Section content with numbered subsections",
+          "Diagrams: house, hog line, free guard zone",
+          "Rule change callouts",
+          "Officials certification ladder",
+          "Downloadable PDF of full handbook"
+        ]
+      },
+      {
+        "id": "results-archive",
+        "path": "/results",
+        "layout_pattern": "Archive page with prominent filter chip rail (season range slider, event type, gender, region, medal-only toggle), then a dense paginated results table grouped by event with expandable rows revealing end-by-end scores; right-side facet panel of years.",
+        "sections": [
+          "Headline filter chip rail",
+          "Year facet sidebar",
+          "Grouped results table with expandable end-by-end detail",
+          "Quick-link 'historical champions' carousel",
+          "Export options"
+        ]
+      },
+      {
+        "id": "news",
+        "path": "/news",
+        "layout_pattern": "Editorial index: lead story hero with overline category tag, then a two-column list of dated bulletins (selection news, sanctions, results recaps), with a sidebar 'Officiating notices' feed and an athlete-of-the-month box.",
+        "sections": [
+          "Lead headline hero",
+          "Bulletin list with category tags",
+          "Officiating notices sidebar",
+          "Athlete of the month",
+          "Press release archive link"
+        ]
+      }
+    ],
+    "message_intent": [
+      "Convey institutional authority and procedural rigor",
+      "Surface live and historical competition data quickly",
+      "Make it easy to find a local club and join a league",
+      "Communicate officiating standards transparently",
+      "Promote upcoming national championships"
+    ],
+    "required_text": [
+      "National Curling Federation",
+      "Standings",
+      "Find a Club",
+      "Rules & Officiating Handbook",
+      "Results Archive"
+    ],
+    "content_model": [
+      "Athlete (name, club, position, caps, career_stats, hand)",
+      "Club (name, city, region, sheets, programs, contact, geo)",
+      "Team (roster, division, season, points, hammer_pct)",
+      "Tournament (event, dates, venue, draws, brackets, officials)",
+      "Match (teams, end_scores, hammer, sheet, status)",
+      "Rule (section_id, title, body, revision_date, diagrams)",
+      "NewsBulletin (headline, category, date, body)",
+      "Official (name, level, certifications, region)"
+    ],
+    "interactions": [
+      "Sort and filter dense standings tables via chip rows",
+      "Pan/zoom the club locator map and click markers for a flyout",
+      "Toggle bracket views (round-robin vs playoff)",
+      "Expand match rows to reveal end-by-end scoring grids",
+      "Filter results archive by season range slider",
+      "Subscribe to officiating notices via email",
+      "Download handbook PDF and CSV result exports"
+    ],
+    "asset_needs": [
+      "Federation crest/logo",
+      "Athlete portraits (placeholder silhouettes acceptable)",
+      "National map vector with regional boundaries",
+      "House and ice-sheet line diagrams",
+      "Granite stone illustration",
+      "Sponsor logos placeholder strip"
+    ],
+    "mobile_behavior": "Tables collapse into stacked key-value cards with sticky filter chip drawer; bracket scrolls horizontally with a minimap; club locator switches to a list-first view with a map toggle button at top.",
+    "difficulty": "hard"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "curling-federation-a",
+        "score": 0.86,
+        "accept": true,
+        "strengths": [
+          "Eight concrete pages fully aligned with the seed (standings, athletes, brackets, clubs, rules handbook, results archive, news, home)",
+          "Palette adheres strictly to seed: icy blue, granite gray, white — no off-spec accents",
+          "Motif is specific and curling-native: granite cross-sections, broom-stroke underlines, concentric house rings as section bullets",
+          "Interactions are dense and useful: chip filters, expandable end-by-end rows, season range slider, bracket view toggle",
+          "Content model captures real curling primitives (hammer_pct, end_scores, sheet assignment, officials levels)",
+          "Layout patterns are concrete with column counts, sticky headers, sparklines, and sidebar legends",
+          "Mobile behavior is reasoned per page (tables→stacked cards, bracket minimap, list-first club view)"
+        ],
+        "weaknesses": [
+          "Home dashboard could specify more numerical density (explicit column/row counts)",
+          "Athlete profile sub-page is implied but not enumerated as its own page entry",
+          "Sponsor strip risks looking generic if not handled with restraint"
+        ]
+      },
+      {
+        "candidate_id": "curling-federation-b",
+        "score": 0.78,
+        "accept": true,
+        "strengths": [
+          "Eight pages with strong domain specificity (LiveMatch entity, advanced stats columns DSC/ENDS±/HAM%/DPI, head-to-head matrix)",
+          "Left-rail function taxonomy (Compete/Officiate/Develop/Watch/Records) reads like a real federation IA",
+          "Champions wall, sanctions & eligibility sidebar, and broadcast embed slot add realism",
+          "Pebbled-ice halftone and scoreboard segmented digits are distinctive motifs",
+          "Mobile behavior handles left-rail collapse and bracket swipe explicitly"
+        ],
+        "weaknesses": [
+          "Introduces a hot brick-red accent outside the seed palette (cool icy blue, granite gray, white only)",
+          "'Broadcast control room' framing slightly undercuts the seed's 'utilitarian institutional' tone",
+          "Some redundancy between league-table and results-archive faceting",
+          "Live broadcast embed slot may be ambitious for a static concept render"
+        ]
+      }
+    ],
+    "best_candidate_id": "curling-federation-a",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/real-run-9/curling-federation/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "accessibility",
+        "message": "Search input and filter checkboxes appear to lack associated labels or accessible names.",
+        "severity": "warning",
+        "path": "/athletes"
+      },
+      {
+        "type": "accessibility",
+        "message": "Search input and possibly the map/filter controls are missing accessible names or form labels.",
+        "severity": "warning",
+        "path": "/clubs"
+      },
+      {
+        "type": "accessibility",
+        "message": "Newsletter or filter input is missing an associated label or accessible name.",
+        "severity": "warning",
+        "path": "/news"
+      },
+      {
+        "type": "layout_alignment",
+        "message": "Three-column dashboard rows show some bottom-edge misalignment between the rankings, bracket, and news columns.",
+        "severity": "info",
+        "path": "/"
+      },
+      {
+        "type": "layout_alignment",
+        "message": "Athlete cards have several rows where card bottoms do not align cleanly — likely due to variable text length in the stat blocks.",
+        "severity": "info",
+        "path": "/athletes"
+      },
+      {
+        "type": "layout_alignment",
+        "message": "Bulletin rows in the two-column list have inconsistent bottom alignment.",
+        "severity": "info",
+        "path": "/news"
+      }
+    ],
+    "scores": {
+      "accessibility": 0.85,
+      "mobile_responsiveness": 0.9,
+      "component_consistency": 0.95,
+      "layout_alignment": 0.78,
+      "render_quality": 0.95,
+      "page_completeness": 1.0
+    },
+    "repair_instructions": [
+      "On athletes.html, add a visible or visually-hidden <label> tied to the surname/club search input via for/id, and ensure each discipline/position/region filter checkbox has an associated <label> element (or aria-label) so screen readers announce them.",
+      "On clubs.html, add a label or aria-label to the 'Search clubs, cities, postal codes…' input and to any map control buttons (zoom, pan toggles) that are currently icon-only.",
+      "On news.html, add a label or aria-label to the 'Subscribe to officiating notices' email input (and any category/format filter controls that are icon- or chip-only without text labels for assistive tech).",
+      "On index.html, equalize the heights of the three dashboard columns (National Rankings, Playoff Bracket, News & Notices) — e.g. use a CSS grid with align-items: stretch and give the inner card bodies min-height or flex: 1 so their bottom rules line up at the same y-coordinate.",
+      "On athletes.html, give every athlete card a uniform min-height (or use grid auto-rows: 1fr within each row) so the card bottoms align across the row even when stat blocks have differing line counts.",
+      "On news.html, give the bulletin rows in the two-column list a fixed or min-height so the bottom rules and metadata rows align horizontally between the left and right columns."
+    ],
+    "deterministic_checks": {
+      "html_page_count": 8,
+      "page_presence_resolution": "All 8 declared pages resolve to concrete files. The two paths flagged as unresolved by the extractor (/officiating/rules-handbook and /tournaments/national-championship/bracket) are clearly implemented as rules.html and brackets.html — this is a path-mapping artifact, not a missing page.",
+      "required_text_present": true,
+      "render_sanity_min": 0.93,
+      "render_sanity_max": 0.968,
+      "accessibility_warnings_pages": [
+        "/athletes",
+        "/clubs",
+        "/news"
+      ],
+      "layout_alignment_low_pages": [
+        "/",
+        "/athletes",
+        "/news"
+      ]
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/real-run-9/curling-federation/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/real-run-9/curling-federation/site/screenshots/reference"
+}

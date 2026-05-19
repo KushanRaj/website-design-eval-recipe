@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TAON-1 :: OUTLOOK CALENDAR</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="packet">
+  <span class="pid">TAON-1</span>
+  <span><span class="pulse"></span><span class="lbl">PACKET STATUS</span> <span class="val">NOMINAL</span></span>
+  <span class="hide-sm"><span class="lbl">UTC</span> <span class="val" data-utc>—</span></span>
+  <span class="hide-sm"><span class="lbl">SPC D1</span> <span class="val warn">ENH</span></span>
+  <span><span class="lbl">CHASERS</span> <span class="val" data-chasers>—</span></span>
+  <span class="hide-sm"><span class="lbl">LAST STRIKE</span> <span class="val warn" data-lastStrike>—</span></span>
+  <span class="hide-sm"><span class="lbl">MONTH</span> <span class="val">MAY 2026</span></span>
+</div>
+
+<nav class="nav">
+  <a href="index.html">OPS</a>
+  <a href="logs.html">LOGS</a>
+  <a href="gear.html">GEAR</a>
+  <a href="spotters.html">SPOTTERS</a>
+  <a href="calendar.html" class="active">OUTLOOK</a>
+  <a href="gallery.html">GALLERY</a>
+  <a href="roster.html">ROSTER</a>
+  <span class="spacer"></span>
+  <span class="pill">NOT AN OFFICIAL NWS PRODUCT</span>
+</nav>
+
+<main class="page">
+
+  <div class="page-head">
+    <div>
+      <div class="crumb">/ OUTLOOK / CALENDAR / 2026 / 05</div>
+      <h1>SEVERE OUTLOOK CALENDAR — MAY 2026</h1>
+    </div>
+    <div></div>
+    <div class="meta">
+      Risk gradients shaded per SPC categorical scale.<br/>
+      <a href="#" class="amber">⇩ ICS / iCal export →</a>
+    </div>
+  </div>
+
+  <div class="row-flex" style="justify-content:space-between;margin-bottom:6px;">
+    <div>
+      <button class="btn sm">« APR 2026</button>
+      <button class="btn sm amber">MAY 2026</button>
+      <button class="btn sm">JUN 2026 »</button>
+    </div>
+    <div class="dim">today: <span class="amber">2026-05-19</span></div>
+  </div>
+
+  <div class="layout-rail-main three" style="grid-template-columns: 1fr 360px 280px;">
+
+    <section>
+      <div class="calendar" id="cal">
+        <div class="dow">SUN</div><div class="dow">MON</div><div class="dow">TUE</div>
+        <div class="dow">WED</div><div class="dow">THU</div><div class="dow">FRI</div><div class="dow">SAT</div>
+
+        <!-- May 1 is a Friday in 2026 -->
+        <div class="day off"><div class="n">26</div></div>
+        <div class="day off"><div class="n">27</div></div>
+        <div class="day off"><div class="n">28</div></div>
+        <div class="day off"><div class="n">29</div></div>
+        <div class="day off"><div class="n">30</div></div>
+
+        <div class="day risk-mrgl" data-date="2026-05-01"
+             data-detail='{"cat":"MRGL","summary":"Weak shortwave; isolated TS NE OK.","hazards":[{"k":"Tornado","p":2,"note":"low"},{"k":"Wind","p":5,"note":""},{"k":"Hail","p":5,"note":""}],"rsvps":["KX1-CAPE"],"rdv":"Tulsa, OK — Phillips 66 / I-44"}'>
+          <div class="n">1</div>
+          <div class="chip">MRGL</div>
+        </div>
+        <div class="day risk-mrgl" data-date="2026-05-02"
+             data-detail='{"cat":"MRGL","summary":"Residual moisture; pulse storms.","hazards":[{"k":"Tornado","p":2},{"k":"Wind","p":5},{"k":"Hail","p":15,"note":"sub-severe"}],"rsvps":["KX1-CAPE","AC9-MAMMA"],"rdv":"Bartlesville, OK — Love's I-75"}'>
+          <div class="n">2</div>
+          <div class="chip">MRGL</div>
+        </div>
+
+        <div class="day" data-date="2026-05-03"
+             data-detail='{"cat":"—","summary":"No SPC categorical risk.","hazards":[]}'><div class="n">3</div></div>
+        <div class="day risk-slgt" data-date="2026-05-04"
+             data-detail='{"cat":"SLGT","summary":"Dryline initiates late afternoon W OK/N TX.","hazards":[{"k":"Tornado","p":5,"note":"non-zero"},{"k":"Wind","p":15},{"k":"Hail","p":30,"note":"sig 2\""}],"rsvps":["KC5-WHIRL","W5-HOOK"],"rdv":"Childress, TX — DQ"}'>
+          <div class="n">4</div><div class="chip">SLGT</div>
+        </div>
+        <div class="day risk-slgt" data-date="2026-05-05"
+             data-detail='{"cat":"SLGT","summary":"Bow echo expected from KS into MO.","hazards":[{"k":"Tornado","p":2},{"k":"Wind","p":30,"note":"DAMAGING"},{"k":"Hail","p":15}],"rsvps":["W0-SHELF","KD0-RFD"],"rdv":"Dodge City, KS — Casey's"}'>
+          <div class="n">5</div><div class="chip">SLGT</div>
+        </div>
+        <div class="day" data-date="2026-05-06"
+             data-detail='{"cat":"—","summary":"Post-frontal quiet."}'><div class="n">6</div></div>
+        <div class="day" data-date="2026-05-07"><div class="n">7</div></div>
+        <div class="day risk-mrgl" data-date="2026-05-08"
+             data-detail='{"cat":"MRGL","summary":"Weak return moisture.","hazards":[{"k":"Hail","p":5}],"rsvps":["KD5-MESO"]}'>
+          <div class="n">8</div><div class="chip">MRGL</div>
+        </div>
+        <div class="day risk-enh" data-date="2026-05-09"
+             data-detail='{"cat":"ENH","summary":"Strong shortwave; favorable hodographs across W TX into OK.","hazards":[{"k":"Tornado","p":10,"note":"sig possible"},{"k":"Wind","p":30},{"k":"Hail","p":45,"note":"sig 2\"+"}],"rsvps":["KC5-WHIRL","N0-SCUD","KG4-LP","W5-HOOK"],"rdv":"Big Spring, TX — Stripes/US-87"}'>
+          <div class="n">9</div><div class="chip">ENH</div>
+        </div>
+
+        <div class="day risk-mrgl" data-date="2026-05-10"
+             data-detail='{"cat":"MRGL","summary":"Lingering boundary; isolated pulse cells."}'>
+          <div class="n">10</div><div class="chip">MRGL</div>
+        </div>
+        <div class="day" data-date="2026-05-11"><div class="n">11</div></div>
+        <div class="day risk-slgt" data-date="2026-05-12"
+             data-detail='{"cat":"SLGT","summary":"Cap may break late; discrete window 22-02Z W OK.","hazards":[{"k":"Tornado","p":5},{"k":"Wind","p":15},{"k":"Hail","p":30}],"rsvps":["N5-INFLOW","KC5-WHIRL"],"rdv":"Woodward, OK — Pizza Hut"}'>
+          <div class="n">12</div><div class="chip">SLGT</div>
+        </div>
+        <div class="day risk-slgt" data-date="2026-05-13"><div class="n">13</div><div class="chip">SLGT</div></div>
+        <div class="day risk-mrgl" data-date="2026-05-14"><div class="n">14</div><div class="chip">MRGL</div></div>
+        <div class="day" data-date="2026-05-15"
+             data-detail='{"cat":"SLGT","summary":"Caprock supercells likely.","hazards":[{"k":"Tornado","p":10},{"k":"Wind","p":15},{"k":"Hail","p":30}],"rsvps":["KD0-RFD","KE9-HAIL"]}'>
+          <div class="n">15</div><div class="chip">SLGT</div>
+        </div>
+        <div class="day risk-mrgl" data-date="2026-05-16"><div class="n">16</div><div class="chip">MRGL</div></div>
+
+        <div class="day risk-slgt" data-date="2026-05-17"
+             data-detail='{"cat":"SLGT","summary":"Modest return flow; HP supercells.","hazards":[{"k":"Tornado","p":5,"note":"rain-wrapped risk"},{"k":"Hail","p":30},{"k":"Wind","p":15}],"rsvps":["W5-HOOK","KB7-FUNNEL"]}'>
+          <div class="n">17</div><div class="chip">SLGT</div>
+        </div>
+        <div class="day risk-enh" data-date="2026-05-18"
+             data-detail='{"cat":"ENH","summary":"Long-track supercells; PDS-TOR watch expected.","hazards":[{"k":"Tornado","p":15,"note":"sig"},{"k":"Hail","p":45,"note":"sig 2\"+"},{"k":"Wind","p":30}],"rsvps":["KC5-WHIRL","N0-SCUD","KD0-RFD","KE9-HAIL","W5-HOOK"],"rdv":"Sayre, OK — Love's I-40 exit 23"}'>
+          <div class="n">18</div><div class="chip">ENH</div>
+        </div>
+        <div class="day risk-mod today" data-date="2026-05-19"
+             data-detail='{"cat":"MOD","summary":"MOD risk — discrete supercells across W OK/TX panhandle; significant tornado threat.","hazards":[{"k":"Tornado","p":15,"note":"sig 2 hatched"},{"k":"Hail","p":45,"note":"sig 2\"+"},{"k":"Wind","p":30}],"rsvps":["KC5-WHIRL","N0-SCUD","W5-HOOK","KD0-RFD","N5-INFLOW","KE9-HAIL","KD5-MESO"],"rdv":"Elk City, OK — McDonald's / I-40 exit 32"}'>
+          <div class="n">19</div><div class="chip amber">MOD</div>
+        </div>
+        <div class="day risk-enh" data-date="2026-05-20"
+             data-detail='{"cat":"ENH","summary":"Trailing dryline focus; storm motion fast.","hazards":[{"k":"Tornado","p":10},{"k":"Hail","p":45},{"k":"Wind","p":30}],"rsvps":["KC5-WHIRL","N0-SCUD","W5-HOOK"]}'>
+          <div class="n">20</div><div class="chip">ENH</div>
+        </div>
+        <div class="day risk-slgt" data-date="2026-05-21"><div class="n">21</div><div class="chip">SLGT</div></div>
+        <div class="day risk-mrgl" data-date="2026-05-22"><div class="n">22</div><div class="chip">MRGL</div></div>
+        <div class="day" data-date="2026-05-23"><div class="n">23</div></div>
+
+        <div class="day" data-date="2026-05-24"><div class="n">24</div></div>
+        <div class="day risk-mrgl" data-date="2026-05-25"><div class="n">25</div><div class="chip">MRGL</div></div>
+        <div class="day risk-slgt" data-date="2026-05-26"><div class="n">26</div><div class="chip">SLGT</div></div>
+        <div class="day risk-enh" data-date="2026-05-27"
+             data-detail='{"cat":"ENH","summary":"Forecast: dryline punch into Caprock.","hazards":[{"k":"Tornado","p":10},{"k":"Hail","p":45}],"rsvps":["KX1-CAPE","KG4-LP"]}'>
+          <div class="n">27</div><div class="chip">ENH</div>
+        </div>
+        <div class="day risk-high" data-date="2026-05-28"
+             data-detail='{"cat":"HIGH","summary":"PROJECTED HIGH risk — multi-day outbreak corridor C OK/KS. EHI > 5, hatched tornado.","hazards":[{"k":"Tornado","p":30,"note":"SIG HATCHED"},{"k":"Hail","p":60,"note":"SIG"},{"k":"Wind","p":45,"note":"SIG"}],"rsvps":["KC5-WHIRL","N0-SCUD","W5-HOOK","KD0-RFD","N5-INFLOW","KE9-HAIL","KD5-MESO","KX1-CAPE","KG4-LP"],"rdv":"Wichita, KS — TAON-1 staging hotel"}'>
+          <div class="n">28</div><div class="chip">HIGH</div>
+        </div>
+        <div class="day risk-mod" data-date="2026-05-29"><div class="n">29</div><div class="chip amber">MOD</div></div>
+        <div class="day risk-slgt" data-date="2026-05-30"><div class="n">30</div><div class="chip">SLGT</div></div>
+
+        <div class="day risk-mrgl" data-date="2026-05-31"><div class="n">31</div><div class="chip">MRGL</div></div>
+        <div class="day off"><div class="n">1</div></div>
+        <div class="day off"><div class="n">2</div></div>
+        <div class="day off"><div class="n">3</div></div>
+        <div class="day off"><div class="n">4</div></div>
+        <div class="day off"><div class="n">5</div></div>
+        <div class="day off"><div class="n">6</div></div>
+      </div>
+
+      <div class="panel" style="margin-top:10px;">
+        <div class="panel-head">
+          <div class="lhs"><span>HISTORIC OUTBREAK ANNIVERSARIES // MAY</span></div>
+          <div class="rhs">in this month</div>
+        </div>
+        <div class="panel-body">
+          <pre style="white-space:pre-wrap;font-size:12px;">
+3 MAY 1999 — Bridge Creek-Moore EF5 (OK)              .. 36 fatalities, F5 mph estimate 318
+4 MAY 2007 — Greensburg, KS EF5                       .. 11 fatalities, town destroyed
+20 MAY 2013 — Moore EF5 (OK)                          .. 24 fatalities
+22 MAY 2011 — Joplin EF5 (MO)                         .. 158 fatalities
+24 MAY 2011 — El Reno-Piedmont EF5 (OK)               .. 9 fatalities
+31 MAY 2013 — El Reno EF3 widest tornado on record    .. 2.6 mi (4.2 km) wide
+          </pre>
+        </div>
+      </div>
+
+    </section>
+
+    <aside id="day-detail" class="cal-detail">
+      <h3>SELECT A DAY</h3>
+      <div class="dim">Click any day in the grid to load the SPC-derived hazard breakdown, participating chasers, and rendezvous waypoint.</div>
+      <hr class="ascii"/>
+      <pre style="white-space:pre-wrap;color:var(--text-dim);">
+HAZARD MATRIX
++----------+------+--------------+
+| HAZARD   | PROB | NOTES        |
++----------+------+--------------+
+| Tornado  |  --  | (none loaded)|
+| Hail     |  --  |              |
+| Wind     |  --  |              |
++----------+------+--------------+
+      </pre>
+    </aside>
+
+    <aside class="rail">
+      <h4>CHASER RSVP RAIL</h4>
+      <div class="dim" style="font-size:11px;">Confirmed for upcoming high-end days. Click a date in the grid to see roster.</div>
+      <hr class="ascii"/>
+      <div style="font-size:12px;">
+        <div><span class="amber">2026-05-28 (HIGH)</span></div>
+        <div class="dim">9 confirmed</div>
+        <div class="row-flex" style="gap:3px;margin:4px 0;">
+          <span class="badge">KC5-WHIRL</span>
+          <span class="badge">N0-SCUD</span>
+          <span class="badge">W5-HOOK</span>
+        </div>
+        <hr class="ascii"/>
+        <div><span class="amber">2026-05-19 (MOD) — TODAY</span></div>
+        <div class="dim">7 confirmed</div>
+        <div class="row-flex" style="gap:3px;margin:4px 0;">
+          <span class="badge">KC5-WHIRL</span>
+          <span class="badge">N0-SCUD</span>
+          <span class="badge">W5-HOOK</span>
+          <span class="badge">KD0-RFD</span>
+          <span class="badge">N5-INFLOW</span>
+          <span class="badge">KE9-HAIL</span>
+          <span class="badge">KD5-MESO</span>
+        </div>
+      </div>
+
+      <h4>RISK KEY</h4>
+      <div class="row-flex" style="gap:6px;">
+        <span class="badge" style="background:rgba(31,107,58,0.4);border-color:#1f6b3a;color:#a0e7b0;">MRGL</span>
+        <span class="badge" style="background:rgba(255,174,40,0.25);border-color:#ffae28;color:#ffae28;">SLGT</span>
+        <span class="badge" style="background:rgba(255,122,24,0.35);border-color:#ff7a18;color:#ffd8b0;">ENH</span>
+        <span class="badge" style="background:rgba(255,58,58,0.35);border-color:#ff3a3a;color:#ffc0c0;">MOD</span>
+        <span class="badge" style="background:rgba(208,72,255,0.35);border-color:#d048ff;color:#ecc0ff;">HIGH</span>
+      </div>
+
+      <h4>ICS EXPORT</h4>
+      <a href="#" class="amber">taon1-may2026.ics</a>
+      <div class="dim" style="font-size:11px;margin-top:4px;">Subscribe to feed for auto-sync. Updates within 1 hour of new SPC outlook.</div>
+    </aside>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="disclaimer">NOT AN OFFICIAL NWS PRODUCT. Outlook shading is interpreted from SPC convective outlook text products. Categorical risks may change; refer to SPC for authoritative current outlook.</div>
+  <div>
+    <strong>TORNADO ALLEY OPERATIONS NETWORK</strong><br/>
+    Outlook calendar regenerated every 6 hours from SPC text + GeoJSON feed.<br/>
+    Historic anniversaries sourced from NWS storm event database.
+  </div>
+  <div>
+    Want to RSVP for a day? Authenticated callsigns can mark intent from this page.<br/>
+    Rendezvous waypoints courtesy of the TAON-1 routing working group.
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

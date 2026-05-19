@@ -1,0 +1,76 @@
+{
+  "id": "site-05-retail-marketplace-vintage",
+  "candidate_id": "site-05-retail-marketplace-vintage-c2",
+  "name": "Barnyard & Bone",
+  "tagline": "Honest, unrestored vintage — new Drop every Thursday at noon Central.",
+  "site_goal": "Connect estate-sale pickers and barn-find dealers with collectors hunting honest, unrestored vintage furniture, with radical price transparency and freight logistics baked in.",
+  "domain": "retail-marketplace",
+  "audience": [
+    "collectors of unrestored and patinated furniture",
+    "estate-sale pickers and barn-find dealers",
+    "renters and first-apartment shoppers hunting cheap character pieces",
+    "set designers and prop stylists"
+  ],
+  "motif": "Paper price-tags, stenciled lot numbers, masonry walls of finds, weekly Drop countdowns over mustard-and-brick.",
+  "palette": {
+    "mustard": "#D4A537",
+    "brick": "#A8392B",
+    "cream": "#F2E8D5",
+    "ink": "#1A1614",
+    "kraft": "#8B6F47",
+    "moss": "#6E7A3A",
+    "rust": "#C25420"
+  },
+  "typography": {
+    "display_grotesque": "Helvetica Neue Black / Impact stack — chunky display grotesque (Druk-like)",
+    "body_serif": "Iowan Old Style / Palatino — old-style serif (Caslon-like) for body and italic interjections",
+    "treatment": "Display grotesque slammed against italic old-style serif; stenciled lot numbers; paper price-tag labels."
+  },
+  "required_text_present": [
+    "Barnyard & Bone",
+    "Next Drop: Thursday, noon Central",
+    "The Picker's Log",
+    "Patina Report"
+  ],
+  "pages": [
+    { "id": "home",             "path": "index.html",   "layout": "Mustard Drop banner with live countdown over a chaotic masonry wall of fresh finds, with category color blocks, featured pickers, log teaser, and three-step explainer." },
+    { "id": "browse",           "path": "browse.html",  "layout": "Sticky facet pill bar with multi-select and Save-this-search, density slider toggling 3/5/8 column masonry, inline Drop markers, side rail of related searches and sold comps." },
+    { "id": "product",          "path": "lot.html",     "layout": "Gallery-left, details-right with stacked Patina Report card (wear/repairs/structural/odor + notes), dimensions spec table, freight quote module with SVG route map, seller card, sold comps strip, and more-from-this-Drop carousel." },
+    { "id": "seller-storefront","path": "picker.html",  "layout": "Big picker portrait header with stats and quote, tabbed shop (Current Drop / Sold / Watched / On-the-truck / Dispatches / Reviews), inventory masonry, dispatch grid, ratings with condition-accuracy score." },
+    { "id": "cart",             "path": "cart.html",    "layout": "Cart grouped by picker with per-group fulfillment toggle (Ship freight / Local pickup / White-glove), consolidation prompt across pickers in shared region, sticky order summary rail, promo/gift fields, watchlist row, and trust strip." },
+    { "id": "account",          "path": "account.html", "layout": "Brick member hero, tabs, May Drop calendar with reminder Drops, three-column watchlist board (Drops soon / Price reduced / About to expire), orders timeline with progress bars and ETAs, followed pickers grid, addresses/payment/notifications preference panels." },
+    { "id": "journal",          "path": "log.html",     "layout": "'The Picker's Log' photo-essay feed — featured dispatch with oversized italic headline, full-bleed photo and shoppable hotspots; region chip filter; dispatch grid with bylines, locations, and items-recovered counts; submit-a-tip form." }
+  ],
+  "interactions_implemented": [
+    "Drop countdown timer ticking to next Thursday noon (vanilla JS, every second)",
+    "Column-density slider on browse switching masonry between 3 / 5 / 8 columns",
+    "Top-bar facet pills toggle on click; Save-this-search button confirms",
+    "Watchlist heart icon on every card toggles filled state",
+    "Patina Report expandable card with checklist of wear / repairs / structural / odor + Picker's note",
+    "Freight quote module: ZIP/postcode input deterministically draws an SVG route, miles, days, and dollar estimate",
+    "Sticky cart drawer (collapsed by default, click to expand) with per-page item summaries",
+    "Per-picker Ship/Pickup/White-glove toggle on the cart page",
+    "Shoppable photo hotspots on the journal featured dispatch",
+    "Region chip multi-select on the journal"
+  ],
+  "content_model": {
+    "Listing": "lot number, title, ask price, freight estimate, condition grade chip (Honest wear / Rough but right / Original finish), Patina Report (wear, repairs, structural, odor + picker note), dimensions, dated photos, seller, pickup region",
+    "Drop": "scheduled release Thursday noon Central, participating sellers count, item count, preview thumbnails, live countdown",
+    "Seller": "handle, region, picker bio, vehicle (delivery range), Drop participation, archive, stats, condition accuracy",
+    "PickerLog": "dispatch headline, dateline, location, byline, photo essay with hotspots linking to live listings, items-recovered count",
+    "Order": "freight routing map, ETA, multi-stage progress bar, inspection window"
+  },
+  "mobile_behavior": "Drop countdown stays pinned at top; facet pills become horizontal scroller; density slider hides in favor of a fixed two-column masonry; cart drawer collapses to a small sticky bar at the bottom edge.",
+  "files": [
+    "index.html",
+    "browse.html",
+    "lot.html",
+    "picker.html",
+    "cart.html",
+    "account.html",
+    "log.html",
+    "styles.css",
+    "app.js",
+    "site_intent.json"
+  ]
+}

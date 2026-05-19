@@ -1,0 +1,260 @@
+{
+  "site_id": "storm-chasers-community",
+  "concept_seed": {
+    "id": "storm-chasers-community",
+    "one_liner": "An experimental amateur meteorology and storm-chasing community website with radar-green monospace UI, live doppler embeds, chase log entries, gear review pages, regional spotter forum, an event calendar of severe weather outlooks, photo gallery of supercells, and a callsign-driven member directory.",
+    "metadata": {
+      "visual_feel": "experimental utilitarian dashboard",
+      "palette": "radar green, black, amber alert orange",
+      "density": "very high"
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "storm-chasers-community-a",
+    "domain": "amateur meteorology / storm-chasing community",
+    "site_goal": "Provide a dense, dashboard-style hub where amateur storm chasers can monitor live doppler, file chase logs, review gear, coordinate spotter networks, and connect via callsign-based identity.",
+    "audience": [
+      "amateur storm chasers",
+      "SKYWARN spotters",
+      "ham radio operators with weather interest",
+      "meteorology students",
+      "severe weather photographers"
+    ],
+    "description": "TORNADO ALLEY OPERATIONS NETWORK ('TAON-1') — an experimental utilitarian web app styled like a 1990s NOAA workstation crossed with a ham radio packet cluster. The entire UI runs in radar-green IBM Plex Mono on near-black (#050807), with amber alert orange used only for WATCH/WARNING states and clickable affordances. Layout is grid-heavy with thin 1px borders, ASCII separators, and live-updating numeric readouts. Every page header carries a 'PACKET' status line: UTC clock, current SPC outlook category, active chaser count, and last-strike timestamp. Multi-column information density is the point — sidebars, ticker bars, and inline mini-radars are everywhere. No hero images, no marketing fluff; instead, embedded GR2Analyst-style radar tiles, sparkline gauges, and tables of CAPE/Helicity/SRH values. Callsigns (e.g. 'KC5-WHIRL', 'N0-SCUD') are the primary identity throughout. The tone is field-operator: terse, abbreviation-heavy, with footer disclaimers about not interpreting outputs as official NWS guidance.",
+    "motif": "monospace dashboard with ASCII rules, radar sweeps, callsign tags, and amber WATCH/WARNING chips",
+    "pages": [
+      {
+        "id": "ops-dashboard",
+        "path": "/",
+        "layout_pattern": "four-quadrant operations console: top-left live CONUS doppler mosaic, top-right SPC convective outlook map with day-1/2/3 tabs, bottom-left ticker of recent member chase pings (callsign + lat/lon + time), bottom-right rolling LSR (Local Storm Reports) feed; persistent top status bar with UTC clock, sun/moon, and dewpoint readouts",
+        "sections": [
+          "packet status bar",
+          "live radar mosaic quadrant",
+          "SPC outlook quadrant",
+          "active chaser ping ticker",
+          "LSR rolling feed",
+          "system uptime + data source footer"
+        ]
+      },
+      {
+        "id": "chase-logs",
+        "path": "/logs",
+        "layout_pattern": "tabular log archive: filter rail (year, state, EF-rating, member callsign, storm mode), main table with sortable columns (date, location, intercept time, storm type, max hail, peak wind, distance driven), expandable row reveals embedded GPS track, hodograph snapshot, and narrative entry",
+        "sections": [
+          "filter rail",
+          "log table",
+          "expandable detail drawer",
+          "submit-new-log button (member-gated)",
+          "export to CSV control"
+        ]
+      },
+      {
+        "id": "gear-bench",
+        "path": "/gear",
+        "layout_pattern": "review database styled as a parts catalog: left nav by category (mobile mesonets, anemometers, hail guards, mesh radios, dashcams, laptops, lightning detectors), center grid of reviewed items with mini-spec readouts, right-rail comparison cart that holds up to four items for side-by-side spec diff",
+        "sections": [
+          "category nav",
+          "item grid with spec mini-cards",
+          "comparison cart rail",
+          "field-tested badge legend",
+          "submit-a-review CTA"
+        ]
+      },
+      {
+        "id": "spotter-net",
+        "path": "/spotters",
+        "layout_pattern": "regional forum index: collapsible accordion of NWS County Warning Areas (CWAs) as forum boards, each row shows post count, last-callsign-active, and a tiny activity sparkline; threaded discussion view uses monospace with quoted reply ancestry indented with '>' marks",
+        "sections": [
+          "CWA accordion list",
+          "pinned briefings",
+          "thread view with quote nesting",
+          "callsign hover-card",
+          "net-control rotation schedule"
+        ]
+      },
+      {
+        "id": "outlook-calendar",
+        "path": "/calendar",
+        "layout_pattern": "month grid where each day cell color-codes SPC categorical risk (MRGL/SLGT/ENH/MOD/HIGH) with amber escalation; clicking a day opens a side panel with hazard breakdown (tornado/wind/hail probabilities), participating chasers, and rendezvous waypoints",
+        "sections": [
+          "month grid with risk shading",
+          "day-detail side panel",
+          "chaser RSVP rail",
+          "historic outbreak anniversaries strip",
+          "ICS export link"
+        ]
+      },
+      {
+        "id": "supercell-gallery",
+        "path": "/gallery",
+        "layout_pattern": "dense masonry of supercell photographs on black with thin amber borders; each tile carries an EXIF strip (lens, focal length, GPS, time, callsign of photographer) and storm metadata (mesocyclone tag, RFD slot, lowering type); filter chips for 'wall cloud', 'inflow band', 'mammatus', 'LP', 'HP', 'classic'",
+        "sections": [
+          "filter chip rail",
+          "masonry photo grid with EXIF strips",
+          "photo lightbox with radar-at-time-of-shot overlay",
+          "photographer leaderboard"
+        ]
+      },
+      {
+        "id": "directory",
+        "path": "/roster",
+        "layout_pattern": "callsign-driven member directory: searchable table by callsign, real name (optional), home CWA, vehicle ID, certifications (SKYWARN, ARRL, HAM class), and last-active-on-net timestamp; profile detail view shows chase mileage total, storm-mode preferences, and rig schematic",
+        "sections": [
+          "callsign search bar",
+          "roster table",
+          "member profile detail",
+          "certifications legend",
+          "QSL-style printable card"
+        ]
+      }
+    ],
+    "message_intent": [
+      "signal operational seriousness and field credibility",
+      "make dense real-time data legible at a glance",
+      "foreground callsign identity over real-name social patterns",
+      "communicate that this is community-run, not an official NWS service"
+    ],
+    "required_text": [
+      "TORNADO ALLEY OPERATIONS NETWORK",
+      "TAON-1",
+      "NOT AN OFFICIAL NWS PRODUCT",
+      "PACKET STATUS"
+    ],
+    "content_model": [
+      "chase log entry",
+      "gear review",
+      "forum post",
+      "outlook day",
+      "supercell photo",
+      "member profile",
+      "LSR ping"
+    ],
+    "interactions": [
+      "live radar tile pan/zoom",
+      "expandable log rows",
+      "gear comparison cart up to four items",
+      "CWA accordion expand",
+      "day-cell click reveals side panel",
+      "photo lightbox with radar overlay toggle",
+      "callsign hover-card"
+    ],
+    "asset_needs": [
+      "radar mosaic still frames",
+      "SPC outlook map snapshots",
+      "hodograph diagrams",
+      "supercell photography",
+      "vehicle/rig schematic line art",
+      "callsign QSL-style card template"
+    ],
+    "mobile_behavior": "quadrants stack vertically into a single scrollable column; persistent packet status bar collapses to UTC clock + active chaser count; tables become horizontally scrollable with sticky callsign column; gear comparison cart becomes a bottom sheet",
+    "difficulty": "hard"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "storm-chasers-community-a",
+        "score": 0.88,
+        "accept": true,
+        "strengths": [
+          "Tight fit with seed's 'experimental utilitarian dashboard' framing — four-quadrant ops console reads as a genuine NOAA-workstation pastiche, not generic template",
+          "Seven distinct, concrete pages with differentiated layout patterns (quadrant dashboard, tabular log archive, parts catalog, CWA accordion, risk-shaded calendar, masonry+EXIF, callsign roster)",
+          "Specific motif vocabulary: packet status bar, ASCII separators, '>' quote nesting, callsign tags like KC5-WHIRL, amber WATCH/WARNING chips — avoids vagueness",
+          "Interactions are useful and motivated: comparison cart up to four items, day-cell side panel, photo lightbox with radar overlay, callsign hover-card",
+          "Required text and disclaimers ('NOT AN OFFICIAL NWS PRODUCT') reinforce community-run framing realistically",
+          "Content model is domain-true: LSR pings, hodograph snapshots, CAPE/Helicity/SRH tables, CWAs"
+        ],
+        "weaknesses": [
+          "Tone is uniformly terse across all pages; could risk monotony without the longer-form variation candidate B introduces",
+          "Gear comparison and directory pages, while concrete, are the more conventional pieces of the set"
+        ]
+      },
+      {
+        "candidate_id": "storm-chasers-community-b",
+        "score": 0.82,
+        "accept": true,
+        "strengths": [
+          "Split-rail console + reading column is a genuinely experimental layout invention that still honors the dashboard palette",
+          "Distinct motif assets (hodograph spiral dividers, isobar contour pattern, ASCII compass roses, bracketed callsign tags) give the site a recognizable signature",
+          "Seven concrete pages with meaningfully different patterns (bulletin split, masonry+full reading view, test-rig two-column, CB-net roster with check-in queue, seasonal timeline, curated portfolio, guild ledger)",
+          "Adds storytelling depth (narrative field logs, briefer bios, photo portfolio) the seed allows without diluting domain credibility",
+          "Net check-in queue and 'tonight's net control callsign + frequency' is a sharp, realistic detail"
+        ],
+        "weaknesses": [
+          "Leans slightly away from the 'very high density' seed metadata by giving real estate to a reading column",
+          "Some page goals overlap conceptually with A (calendar/briefings, directory/guild) but execution is differentiated enough to stand",
+          "'EST. 2011' required text feels arbitrary versus A's more operational required strings"
+        ]
+      }
+    ],
+    "best_candidate_id": "storm-chasers-community-a",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/real-run-9/storm-chasers-community/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "accessibility",
+        "message": "Filter inputs (e.g. callsign text field, year/state/EF-rating checkbox groups) appear to lack programmatic labels — extractor flagged missing_form_label and missing_accessible_name.",
+        "severity": "warning",
+        "path": "/logs"
+      },
+      {
+        "type": "accessibility",
+        "message": "Callsign search input lacks an associated label; extractor flagged missing_form_label / missing_accessible_name.",
+        "severity": "warning",
+        "path": "/roster"
+      },
+      {
+        "type": "layout_sparsity",
+        "message": "Large blank region (~37.9% sparsity, ~642k px area below the 12-row table) — the log table only renders one page worth of rows then leaves the lower viewport empty.",
+        "severity": "warning",
+        "path": "/logs"
+      },
+      {
+        "type": "component_consistency",
+        "message": "Three of eight gear cards in the mobile-mesonet grid have mismatched internal hierarchy/tag structure compared to the majority pattern (node-95, node-146, node-218).",
+        "severity": "warning",
+        "path": "/gear"
+      },
+      {
+        "type": "icon_style_consistency",
+        "message": "The 12 storm-feature filter-chip / thumbnail glyphs show inconsistent size and underlying shape across the group.",
+        "severity": "warning",
+        "path": "/gallery"
+      },
+      {
+        "type": "layout_alignment",
+        "message": "Layout consistency score is 48 — calendar grid has 28 alignment errors out of 64 elements (row-bottom alignment and vertical-alignment groups).",
+        "severity": "info",
+        "path": "/calendar"
+      }
+    ],
+    "scores": {
+      "accessibility": 0.82,
+      "mobile_responsiveness": 0.9,
+      "component_consistency": 0.78,
+      "layout_alignment": 0.72,
+      "render_quality": 0.92,
+      "page_completeness": 1.0,
+      "concept_fidelity": 0.95
+    },
+    "repair_instructions": [
+      "On /logs, the page currently renders only ~12 visible rows and then leaves a ~530px-tall blank band beneath the table. Either (a) increase the rows-per-page so the table fills the viewport down to the pagination control, or (b) move ancillary content (export controls, schema notes, last-modified strip, or a mini chart summarizing record counts by year/EF) into that blank region so the page reads as dense rather than truncated.",
+      "Add explicit <label> elements (or aria-label/aria-labelledby) to the form controls on /logs and /roster. Specifically: the callsign text input on /logs (placeholder 'e.g. KC5-WHIRL'), the callsign search input on /roster (placeholder 'search callsign / CWA / vehicle ID…'), and each filter checkbox group (Year, State/CWA, EF-Rating, Storm Mode) should have a programmatically associated label or aria-labelledby pointing at the section heading.",
+      "On /gear, normalize the internal structure of every card in the mobile-mesonet grid. The majority pattern is: icon block → <h3> title → body paragraph → spec rows → COMPARE button. Three cards (the ones flagged as node-95, node-146, node-218 — these appear to be cards with the DIY/LEG badges and price ranges that differ from the FIELD/CERT majority) have a different tag hierarchy. Refactor each card to use identical wrapper tags, heading levels, and spec-row markup so they look and parse uniformly.",
+      "On /gallery, give every storm-feature thumbnail/filter glyph the same bounding box and underlying SVG shape conventions. Right now the supercell silhouettes vary in height/aspect across the 12 visible tiles (some are deep classic bells, some are flatter HP wedges, some show mammatus rows or lightning bolts at very different scales). Either standardize the artboard size and stroke weight across all SVG thumbnails, or wrap each thumbnail in a fixed-aspect container so they line up as a coherent grid.",
+      "On /calendar, tighten the day-cell alignment. The current grid has 28 alignment errors across 64 elements — most stem from inconsistent vertical placement of the day-number and risk-chip inside cells with different content lengths. Use a consistent flexbox or grid layout per cell (e.g. day number top-left at a fixed offset, risk chip bottom-left at a fixed offset) so the chips and numbers line up across rows regardless of whether the cell carries an MRGL/SLGT/ENH/MOD/HIGH tag."
+    ],
+    "deterministic_checks": {
+      "html_page_count": 7,
+      "missing_required_text": [],
+      "all_pages_present": true,
+      "render_sanity_floor": 0.86,
+      "render_sanity_ceiling": 0.956
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/real-run-9/storm-chasers-community/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/real-run-9/storm-chasers-community/site/screenshots/reference"
+}

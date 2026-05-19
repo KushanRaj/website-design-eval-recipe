@@ -1,0 +1,17 @@
+{
+  "id": "site-04-science-research-institute",
+  "one_liner": "An institutional oceanographic research institute website with a deep teal and bone-white palette, scientific serif body type, and medium-high density across lab pages, principal investigator directories, publication search, expedition trackers with maps, dataset downloads, news features, careers, and a left-sidebar navigation grouping disciplines.",
+  "metadata": {
+    "domain": "science-research",
+    "audience": "scientists, press, public",
+    "pages": [
+      "home",
+      "labs",
+      "people",
+      "publications",
+      "expeditions",
+      "data",
+      "news"
+    ]
+  }
+}

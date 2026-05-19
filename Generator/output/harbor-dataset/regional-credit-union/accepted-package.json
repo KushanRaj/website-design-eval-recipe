@@ -1,0 +1,296 @@
+{
+  "site_id": "regional-credit-union",
+  "concept_seed": {
+    "id": "regional-credit-union",
+    "one_liner": "A friendly regional credit union website with warm earth-toned palette, rounded humanist type, member testimonials, account product pages, branch and ATM locator, loan calculator widgets, financial literacy blog, community sponsorship section, secure login panel, and a clearly tiered services navigation.",
+    "metadata": {
+      "visual_feel": "warm community institutional",
+      "palette": "olive green, terracotta, cream",
+      "density": "medium"
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "regional-credit-union-b",
+    "domain": "regional credit union (cooperative bank with co-op heritage emphasis)",
+    "site_goal": "Differentiate a 90-year-old credit union from regional commercial banks by foregrounding cooperative governance, member voting, and tangible community lending stories — while delivering modern self-service banking tools.",
+    "audience": [
+      "Multi-generational members across the three-state region",
+      "Worker-owned cooperatives seeking lending partners",
+      "Small farmers and ag businesses in succession planning",
+      "Civic-minded depositors choosing values-aligned banking",
+      "Business members needing commercial accounts",
+      "Long-time members participating in board elections"
+    ],
+    "description": "Three Rivers Cooperative Credit Union — founded 1936 by mill workers, today serving 84,000 members across a riverine three-state region. The visual feel diverges sharply from concept A: instead of leading with member portraits, the site uses an editorial almanac aesthetic borrowed from old farmers' co-op annual reports. Olive green dominates as wide horizontal banding (think ledger-paper stripes), terracotta is reserved as a chapter-marker accent and for percentage figures (rates, voting turnout, dividend returns), and cream forms the body background with a faint engraved-line texture. Type pairing: a rounded humanist serif (e.g. Cooper-adjacent) for headlines, paired with a workhorse rounded sans for body, and a monospace for figures so rate tables and ledgers read as 'honest accounting.' The grid is asymmetric — articles run in two unequal columns like a broadsheet, and inline marginalia (footnotes, definitions, historical asides) sits in the narrow column. Decorative motifs: scratchboard-style engraved spot illustrations of a hydroelectric dam, wheat sheaves, a hand-shake, and a bridge — referencing the cooperative's mill-town origins. The tone is earnest, occasionally archival, and quietly proud. Every page footer carries the cooperative's seven Rochdale Principles in tiny caps.",
+    "motif": "Engraved scratchboard spot illustrations + horizontal ledger-stripe banding that visually divides every page into 'chapters,' echoing a cooperative's annual report.",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "Almanac-style cover: a centered cream panel with a large engraved bridge motif, the cooperative's founding year ('Est. 1936') in terracotta numerals, and a one-sentence mission. Below, an olive ledger stripe holds the current dividend rate and member count. The page then unfolds into chapters: 'What We Offer,' 'Where We Lend,' 'How We're Governed,' 'What Members Are Reading.' Each chapter is announced by a terracotta Roman numeral.",
+        "sections": [
+          "Almanac-cover hero with founding year and mission",
+          "Ledger stripe: current 12-month dividend, member count, branches",
+          "Chapter I: Services overview (tiered nav preview)",
+          "Chapter II: Community lending map (recent loans funded, anonymized)",
+          "Chapter III: Governance — annual meeting countdown, board election banner",
+          "Chapter IV: Reading room — three featured literacy articles",
+          "Member voices: rotating long-form testimonial (200+ words, byline, photo)",
+          "Footer with Rochdale Principles, NCUA badge, equal housing mark"
+        ]
+      },
+      {
+        "id": "services-tiered-nav",
+        "path": "/services",
+        "layout_pattern": "A tiered services index page acting as a wayfinding hub. Three primary tiers — Personal, Business, Cooperative Lending — each rendered as a wide horizontal ledger-stripe band. Within each band, sub-products are listed as a typographic table with name, one-line description, current rate (monospaced), and a rightward arrow. A persistent left-rail outline mirrors the tiered structure as the user scrolls.",
+        "sections": [
+          "Personal banking tier (checking, savings, CDs, money market, IRA, youth)",
+          "Borrowing tier (auto, mortgage, HELOC, personal, credit-builder)",
+          "Business tier (operating accounts, SBA, commercial real estate, ag loans)",
+          "Cooperative lending tier (co-op startup loans, worker-owned conversion financing, community solar loans)",
+          "Glossary marginalia (APR vs APY, share vs deposit, etc.)",
+          "Sticky left-rail outline navigation",
+          "'Not sure where to start?' guided-help launcher"
+        ]
+      },
+      {
+        "id": "loan-calculator-suite",
+        "path": "/tools/calculators",
+        "layout_pattern": "Tools page presented as a 'workshop' with six discrete calculator widgets laid out in a 2×3 grid, each in its own bordered card with a small engraved tool icon (plane = mortgage, gear = auto refi, scale = debt consolidation, sprout = savings goal, bridge = HELOC, ledger = amortization). Selecting a card expands it inline to full width with input fields, a result panel, and a 'Print this estimate' option that produces a clean PDF.",
+        "sections": [
+          "Mortgage payment calculator (P&I, taxes, insurance, PMI)",
+          "Auto loan + refi-savings calculator",
+          "Debt consolidation calculator",
+          "Savings goal projector",
+          "HELOC draw-period calculator",
+          "Amortization schedule generator",
+          "Assumptions and disclosures sidebar",
+          "Schedule-a-lender-call CTA"
+        ]
+      },
+      {
+        "id": "branches-and-atms",
+        "path": "/find-us",
+        "layout_pattern": "Locator with a regional vector map of the three-state service area drawn in olive linework on cream, dotted with terracotta pins. A right-side panel lists branches grouped by river basin (Upper, Middle, Lower) — reinforcing the 'Three Rivers' brand. Each branch entry expands to show hours, services, branch manager name, and a small archive note ('opened 1962, in the former Grange hall'). A separate tab swaps to ATM-only view including 30,000+ shared-network ATMs as a heatmap.",
+        "sections": [
+          "Regional vector map with river-basin grouping",
+          "Branch list by basin with archive notes",
+          "ATM heatmap toggle (shared CO-OP network)",
+          "Drive-thru-only filter",
+          "Notary and safe-deposit availability filter",
+          "Holiday hours and weather closure banner",
+          "Shared branching explainer card"
+        ]
+      },
+      {
+        "id": "governance-and-voting",
+        "path": "/governance",
+        "layout_pattern": "Civic-style page foregrounding the cooperative's one-member-one-vote structure. Top band: annual meeting date with an RSVP form and live countdown. Middle: board of directors gallery with candidate statements during election season (terracotta 'BALLOT OPEN' chip when active). Bottom: archive of past annual reports rendered as a year-grid of downloadable PDFs styled as little ledger spines.",
+        "sections": [
+          "Annual meeting RSVP and countdown",
+          "Current board of directors (photos, terms, committees)",
+          "Board election ballot panel (member-authenticated)",
+          "Bylaws and policies library",
+          "Member proposals submission form",
+          "Annual report archive grid (1996 → present)",
+          "Rochdale Principles long-form explainer"
+        ]
+      },
+      {
+        "id": "community-impact-blog",
+        "path": "/reading-room",
+        "layout_pattern": "Editorial blog called 'The Reading Room' presented as a periodical with issue numbers and monthly cover illustrations. The index shows the current issue's three feature articles in a broadsheet two-column layout, with a sidebar carrying community sponsorship news, scholarship recipients, and a 'Loans at work' column profiling a recent borrower's project (a worker co-op, a farm transition, a first-time homebuyer).",
+        "sections": [
+          "Current issue cover and table of contents",
+          "Feature articles in broadsheet two-column",
+          "Loans at Work column (member project profile)",
+          "Sponsorship news ticker",
+          "Scholarship recipients gallery",
+          "Past issues archive carousel",
+          "Subscribe-by-mail print newsletter option"
+        ]
+      },
+      {
+        "id": "secure-member-login",
+        "path": "/sign-in",
+        "layout_pattern": "Two-column auth screen: left column carries the login form in a bordered cream card, right column carries a rotating 'security note of the week' authored by the credit union's fraud team (with byline). Below the form sits a subtle row of trust marks (NCUA, MULTI-FACTOR, ENCRYPTED) rendered as engraved-style badges rather than glossy logos. A separate 'Business banking' tab routes commercial members to a distinct portal.",
+        "sections": [
+          "Personal login form",
+          "Business banking login tab",
+          "MFA prompt path",
+          "Forgot username / password recovery",
+          "First-time enrollment flow launcher",
+          "Security note of the week column",
+          "Engraved trust-mark row",
+          "24/7 fraud hotline call-out"
+        ]
+      }
+    ],
+    "message_intent": [
+      "Foreground cooperative governance and member voice",
+      "Establish 90-year institutional continuity and trust",
+      "Show, with specifics, where deposits get re-lent locally",
+      "Differentiate from commercial regional banks via Rochdale Principles",
+      "Make rates and fees legible through ledger-styled typography",
+      "Invite member participation beyond transactional banking"
+    ],
+    "required_text": [
+      "Three Rivers Cooperative Credit Union",
+      "Est. 1936",
+      "One member, one vote.",
+      "Federally insured by NCUA",
+      "Equal Housing Lender"
+    ],
+    "content_model": [
+      "Service tier (name, description, products[])",
+      "Product (name, rate, term, fees, eligibility, related products)",
+      "Branch (basin grouping, address, hours, services, manager, archive note, opened year)",
+      "Board member (name, photo, term start, term end, committees, candidate statement)",
+      "Annual report (year, PDF, total assets, member count, dividends returned)",
+      "Article (issue number, byline, dek, body, marginalia footnotes, illustration)",
+      "Loan-at-work profile (borrower, loan type, amount, story, photo, year)",
+      "Calculator config (type, inputs, output formulas, disclosures)",
+      "Rate snapshot (product, rate, effective date, prior rate)"
+    ],
+    "interactions": [
+      "Six calculator widgets with print-to-PDF",
+      "Member-authenticated board election ballot",
+      "Annual meeting RSVP with guest count",
+      "Regional map with basin filter and pin clustering",
+      "Tiered service index with sticky outline nav",
+      "Issue-by-issue blog archive carousel",
+      "Member proposal submission form",
+      "Print newsletter mail-subscribe form",
+      "Fraud-alert subscription toggle"
+    ],
+    "asset_needs": [
+      "Scratchboard-style engraved spot illustrations (bridge, dam, wheat, handshake, ledger)",
+      "Regional vector map of three-state service area with river basins",
+      "Board member portraits in consistent lighting",
+      "Annual report PDF spine renderings (1996 → present)",
+      "Monthly 'Reading Room' cover illustrations",
+      "Loan-at-work member project photography",
+      "Engraved-badge trust marks (NCUA, MFA, ENCRYPTED)",
+      "Cooper-adjacent rounded humanist display serif license"
+    ],
+    "mobile_behavior": "Ledger stripes compress into stacked chapter cards with terracotta Roman numerals retained as section headers. Tiered services collapse into accordion bands. Locator map becomes list-first grouped by basin with a 'View map' toggle. Calculator workshop reflows to a single vertical stack with one widget expanded at a time. Login two-column collapses to form-first, with security note moving below. Marginalia footnotes become tap-to-expand inline glosses.",
+    "difficulty": "medium"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "regional-credit-union-a",
+        "score": 0.82,
+        "accept": true,
+        "strengths": [
+          "Strong domain fit with concrete cooperative/credit-union specifics (NCUA, routing #, SEGs, shared branching)",
+          "Clear recurring motif: concentric rounded membership-card frames used structurally across testimonials, rate cards, branch tiles",
+          "Seven well-differentiated pages with distinct layout patterns (split-view locator, calculator-led borrow page, editorial Money Garden, timeline Belong)",
+          "Highly concrete interactions: loan calc with credit-tier slider + amortization sparkline, pin-bar account comparison, eligibility quick-check, lock-my-card from utility bar",
+          "Content model fields are realistic (lobby wait, life-stage tag, leaf-count difficulty meter, scholarship recipient)",
+          "Voice and copy specifics ('Your money. Your neighbors. Your call.', 'Front Porch Mortgage') avoid generic templating"
+        ],
+        "weaknesses": [
+          "Money Garden + Belong + home blog teaser slightly overlap in editorial function",
+          "Some patterns (sticky compare bar, ZIP-search locator) are conventional fintech moves rather than surprising",
+          "'Bank · Borrow · Belong' alliteration risks feeling marketing-deck rather than institutional"
+        ]
+      },
+      {
+        "candidate_id": "regional-credit-union-b",
+        "score": 0.89,
+        "accept": true,
+        "strengths": [
+          "Distinctive almanac/broadsheet aesthetic with ledger stripes, Roman-numeral chapter markers, and monospace figures is genuinely fresh and far from generic credit-union template output",
+          "Governance-and-voting page is a sharp differentiator that leans into the cooperative seed and few competitors execute (board ballot, annual meeting RSVP, Rochdale Principles, member proposals)",
+          "Calculator 'workshop' as a 2×3 engraved-tool grid with print-to-PDF is a concrete, layout-specific idea, not a vague widget",
+          "River-basin grouping of branches ties brand name (Three Rivers) into the locator's information architecture — motif-driven IA, not just decoration",
+          "Content model is unusually rich (board candidate statements, annual report PDFs by year with total assets, marginalia footnotes, Loans-at-Work profiles)",
+          "Engraved scratchboard motif + horizontal ledger banding is a unified, page-spanning visual system that justifies the 'warm community institutional' brief in a non-cliched way",
+          "Seven pages, each with a distinct layout pattern and purpose; no near-duplicates"
+        ],
+        "weaknesses": [
+          "Risk that monospace figures + engraved illustrations skew cold/archival rather than warm — tension with seed's 'warm' palette intent",
+          "Marginalia and broadsheet two-column may be heavy at mobile breakpoints despite the stated reflow plan",
+          "Member-authenticated ballot is ambitious for a marketing-site concept and may bleed into authenticated-app scope"
+        ]
+      }
+    ],
+    "best_candidate_id": "regional-credit-union-b",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/real-run-9/regional-credit-union/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "path_mismatch",
+        "message": "Concept declares the calculator suite at /tools/calculators but the builder wrote it as /calculators.html at site root. The page itself is fully implemented (six calculator cards, assumptions/disclosures sidebar, lender-call CTA) and is linked from the footer and TOOLS nav, so this is a routing nit rather than a missing page.",
+        "severity": "info",
+        "path": "/tools/calculators"
+      },
+      {
+        "type": "accessibility",
+        "message": "Governance page has 8 accessibility issues flagged (missing accessible names and form labels) on the RSVP form, the member-authenticated ballot form, and the member-proposal submission form.",
+        "severity": "warning",
+        "path": "/governance"
+      },
+      {
+        "type": "accessibility",
+        "message": "Sign-in form fields (member number, password) and the subscribe-by-mail toggle row are missing programmatic labels.",
+        "severity": "warning",
+        "path": "/sign-in"
+      },
+      {
+        "type": "accessibility",
+        "message": "Reading Room has a form input (mailing address for print subscription) without an associated label.",
+        "severity": "warning",
+        "path": "/reading-room"
+      },
+      {
+        "type": "component_consistency",
+        "message": "Component-style consistency dips on /services (51.5) and /reading-room (58.5) because some article/card siblings inside the same group use different inner element ordering or tag mix. Visually the broadsheet layout is intentional, but the cards inside repeating sections should share identical inner structure.",
+        "severity": "info",
+        "path": "/services"
+      },
+      {
+        "type": "layout_alignment",
+        "message": "Layout-alignment scores are middling on /services (51.8), /reading-room (57.2) and /governance (60.3). The asymmetric broadsheet grid is intentional, but a number of row groups have inconsistent bottom alignment that pulls the score down.",
+        "severity": "info",
+        "path": null
+      }
+    ],
+    "scores": {
+      "accessibility": 0.7,
+      "mobile_responsiveness": 0.85,
+      "component_consistency": 0.72,
+      "layout_alignment": 0.65,
+      "render_quality": 0.94,
+      "page_completeness": 0.95,
+      "brand_fit": 0.97
+    },
+    "repair_instructions": [
+      "On /governance, add explicit labels to the RSVP form (Member Name, Member Number, Guests including children, Dietary Accommodation), the member-authenticated ballot inputs (Member Number, Last Name), and every field in the Submit-a-Proposal form (Member Name, Member Number, Branch, Proposal Title, Proposal Text). Wrap each input in a <label> or use aria-label / aria-labelledby so screen readers announce each field. Also give the 'Up for Election' chip and the icon-only PDF buttons (Cooperative Bylaws, Lending Policy, Privacy Policy, etc.) accessible names.",
+      "On /sign-in, associate the Member Number and Password inputs with their visible labels (use <label for=...> or wrap them), give the 'Trust this device for 30 days' checkbox a programmatic label, and add accessible names to the Fraud-alert texts and Weekly security note toggles. Make sure the Begin Enrollment and 24/7 Fraud Hotline blocks expose an accessible name on any clickable element.",
+      "On /reading-room, add a <label> for the 'Mailing address — Street, town, ZIP' input in the Subscribe-by-Mail card, and give the Earlier / Later carousel arrow buttons accessible names (aria-label='Previous issues' / 'Next issues').",
+      "Either move calculators.html to /tools/calculators/index.html (or add a /tools/calculators/ route) so the URL matches the concept's declared path, or update site_intent.json / internal links so the 'Tools' nav target and the concept path agree. The page content is fine; this is just a path-alignment fix.",
+      "On /services, normalize the inner structure of the product rows inside each tier so every row uses the same tag sequence (e.g. h3 product name + p description + monospaced rate + arrow link), and on /reading-room match the inner structure of the two feature article cards in the bottom row to the lead article card. This will lift the component-style consistency score without changing the visual look.",
+      "Tighten row-bottom alignment on /services, /reading-room and /governance: ensure cards or articles that sit in the same horizontal row share the same baseline (e.g. give product-row containers a consistent min-height, align board-member cards on a shared baseline grid, and ensure the three Reading Room feature cards have matching internal padding so their bottoms line up)."
+    ],
+    "deterministic_checks": {
+      "page_presence_resolved": "6 of 7 declared paths resolved directly; /tools/calculators is implemented as calculators.html at site root and linked from footer/nav as 'Calculators' / 'TOOLS', so it satisfies the concept intent at a different path",
+      "required_text_present": true,
+      "accessibility_tag_pages": [
+        "/governance",
+        "/reading-room",
+        "/sign-in"
+      ],
+      "render_sanity_min": 0.92,
+      "component_style_min": 51.46,
+      "layout_consistency_min": 51.83
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/real-run-9/regional-credit-union/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/real-run-9/regional-credit-union/site/screenshots/reference"
+}

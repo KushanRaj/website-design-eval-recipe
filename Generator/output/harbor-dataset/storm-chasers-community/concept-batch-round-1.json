@@ -1,0 +1,287 @@
+{
+  "seed_id": "storm-chasers-community",
+  "concepts": [
+    {
+      "candidate_id": "storm-chasers-community-a",
+      "domain": "amateur meteorology / storm-chasing community",
+      "site_goal": "Provide a dense, dashboard-style hub where amateur storm chasers can monitor live doppler, file chase logs, review gear, coordinate spotter networks, and connect via callsign-based identity.",
+      "audience": [
+        "amateur storm chasers",
+        "SKYWARN spotters",
+        "ham radio operators with weather interest",
+        "meteorology students",
+        "severe weather photographers"
+      ],
+      "description": "TORNADO ALLEY OPERATIONS NETWORK ('TAON-1') — an experimental utilitarian web app styled like a 1990s NOAA workstation crossed with a ham radio packet cluster. The entire UI runs in radar-green IBM Plex Mono on near-black (#050807), with amber alert orange used only for WATCH/WARNING states and clickable affordances. Layout is grid-heavy with thin 1px borders, ASCII separators, and live-updating numeric readouts. Every page header carries a 'PACKET' status line: UTC clock, current SPC outlook category, active chaser count, and last-strike timestamp. Multi-column information density is the point — sidebars, ticker bars, and inline mini-radars are everywhere. No hero images, no marketing fluff; instead, embedded GR2Analyst-style radar tiles, sparkline gauges, and tables of CAPE/Helicity/SRH values. Callsigns (e.g. 'KC5-WHIRL', 'N0-SCUD') are the primary identity throughout. The tone is field-operator: terse, abbreviation-heavy, with footer disclaimers about not interpreting outputs as official NWS guidance.",
+      "motif": "monospace dashboard with ASCII rules, radar sweeps, callsign tags, and amber WATCH/WARNING chips",
+      "pages": [
+        {
+          "id": "ops-dashboard",
+          "path": "/",
+          "layout_pattern": "four-quadrant operations console: top-left live CONUS doppler mosaic, top-right SPC convective outlook map with day-1/2/3 tabs, bottom-left ticker of recent member chase pings (callsign + lat/lon + time), bottom-right rolling LSR (Local Storm Reports) feed; persistent top status bar with UTC clock, sun/moon, and dewpoint readouts",
+          "sections": [
+            "packet status bar",
+            "live radar mosaic quadrant",
+            "SPC outlook quadrant",
+            "active chaser ping ticker",
+            "LSR rolling feed",
+            "system uptime + data source footer"
+          ]
+        },
+        {
+          "id": "chase-logs",
+          "path": "/logs",
+          "layout_pattern": "tabular log archive: filter rail (year, state, EF-rating, member callsign, storm mode), main table with sortable columns (date, location, intercept time, storm type, max hail, peak wind, distance driven), expandable row reveals embedded GPS track, hodograph snapshot, and narrative entry",
+          "sections": [
+            "filter rail",
+            "log table",
+            "expandable detail drawer",
+            "submit-new-log button (member-gated)",
+            "export to CSV control"
+          ]
+        },
+        {
+          "id": "gear-bench",
+          "path": "/gear",
+          "layout_pattern": "review database styled as a parts catalog: left nav by category (mobile mesonets, anemometers, hail guards, mesh radios, dashcams, laptops, lightning detectors), center grid of reviewed items with mini-spec readouts, right-rail comparison cart that holds up to four items for side-by-side spec diff",
+          "sections": [
+            "category nav",
+            "item grid with spec mini-cards",
+            "comparison cart rail",
+            "field-tested badge legend",
+            "submit-a-review CTA"
+          ]
+        },
+        {
+          "id": "spotter-net",
+          "path": "/spotters",
+          "layout_pattern": "regional forum index: collapsible accordion of NWS County Warning Areas (CWAs) as forum boards, each row shows post count, last-callsign-active, and a tiny activity sparkline; threaded discussion view uses monospace with quoted reply ancestry indented with '>' marks",
+          "sections": [
+            "CWA accordion list",
+            "pinned briefings",
+            "thread view with quote nesting",
+            "callsign hover-card",
+            "net-control rotation schedule"
+          ]
+        },
+        {
+          "id": "outlook-calendar",
+          "path": "/calendar",
+          "layout_pattern": "month grid where each day cell color-codes SPC categorical risk (MRGL/SLGT/ENH/MOD/HIGH) with amber escalation; clicking a day opens a side panel with hazard breakdown (tornado/wind/hail probabilities), participating chasers, and rendezvous waypoints",
+          "sections": [
+            "month grid with risk shading",
+            "day-detail side panel",
+            "chaser RSVP rail",
+            "historic outbreak anniversaries strip",
+            "ICS export link"
+          ]
+        },
+        {
+          "id": "supercell-gallery",
+          "path": "/gallery",
+          "layout_pattern": "dense masonry of supercell photographs on black with thin amber borders; each tile carries an EXIF strip (lens, focal length, GPS, time, callsign of photographer) and storm metadata (mesocyclone tag, RFD slot, lowering type); filter chips for 'wall cloud', 'inflow band', 'mammatus', 'LP', 'HP', 'classic'",
+          "sections": [
+            "filter chip rail",
+            "masonry photo grid with EXIF strips",
+            "photo lightbox with radar-at-time-of-shot overlay",
+            "photographer leaderboard"
+          ]
+        },
+        {
+          "id": "directory",
+          "path": "/roster",
+          "layout_pattern": "callsign-driven member directory: searchable table by callsign, real name (optional), home CWA, vehicle ID, certifications (SKYWARN, ARRL, HAM class), and last-active-on-net timestamp; profile detail view shows chase mileage total, storm-mode preferences, and rig schematic",
+          "sections": [
+            "callsign search bar",
+            "roster table",
+            "member profile detail",
+            "certifications legend",
+            "QSL-style printable card"
+          ]
+        }
+      ],
+      "message_intent": [
+        "signal operational seriousness and field credibility",
+        "make dense real-time data legible at a glance",
+        "foreground callsign identity over real-name social patterns",
+        "communicate that this is community-run, not an official NWS service"
+      ],
+      "required_text": [
+        "TORNADO ALLEY OPERATIONS NETWORK",
+        "TAON-1",
+        "NOT AN OFFICIAL NWS PRODUCT",
+        "PACKET STATUS"
+      ],
+      "content_model": [
+        "chase log entry",
+        "gear review",
+        "forum post",
+        "outlook day",
+        "supercell photo",
+        "member profile",
+        "LSR ping"
+      ],
+      "interactions": [
+        "live radar tile pan/zoom",
+        "expandable log rows",
+        "gear comparison cart up to four items",
+        "CWA accordion expand",
+        "day-cell click reveals side panel",
+        "photo lightbox with radar overlay toggle",
+        "callsign hover-card"
+      ],
+      "asset_needs": [
+        "radar mosaic still frames",
+        "SPC outlook map snapshots",
+        "hodograph diagrams",
+        "supercell photography",
+        "vehicle/rig schematic line art",
+        "callsign QSL-style card template"
+      ],
+      "mobile_behavior": "quadrants stack vertically into a single scrollable column; persistent packet status bar collapses to UTC clock + active chaser count; tables become horizontally scrollable with sticky callsign column; gear comparison cart becomes a bottom sheet",
+      "difficulty": "hard"
+    },
+    {
+      "candidate_id": "storm-chasers-community-b",
+      "domain": "amateur meteorology / storm-chasing community",
+      "site_goal": "Serve a Great Plains storm-chasing collective with a field-journal aesthetic that still honors the radar-green dashboard vibe — combining live data with longer-form chase narratives, gear deep dives, and a strong photo culture.",
+      "audience": [
+        "plains storm chasers",
+        "weather photographers",
+        "SKYWARN-trained spotters",
+        "amateur radio operators",
+        "field meteorology enthusiasts"
+      ],
+      "description": "THE MESOCYCLONE GUILD — an experimental utilitarian site that splits the screen between a left 'console rail' (radar-green monospace, always live) and a right 'reading column' (slightly wider, still monospace but with relaxed leading) where chase narratives, gear essays, and event briefs live. Background is deep storm-cell black (#0A0D0B); the radar-green (#7BFF8E) handles UI chrome, data, and links, while amber alert orange (#FF9A1F) flags warnings, severity escalations, and call-to-action affordances only. Decorative motifs include thin hodograph spirals as section dividers, an isobar contour repeating-pattern used sparingly behind page headers, and ASCII compass roses marking chase direction. Member callsigns appear as bracketed tags [KD0-FUNNEL] inline in body copy. The site reads like a packet-radio bulletin merged with a field naturalist's logbook.",
+      "motif": "split-rail console + field journal with hodograph dividers, isobar contours, and bracketed callsign tags",
+      "pages": [
+        {
+          "id": "bulletin-home",
+          "path": "/",
+          "layout_pattern": "split screen: left 40% is a live console rail (national radar loop, current SPC outlook chip, top three active chases with callsign + truncated lat/lon, dewpoint/CAPE strip for the central plains), right 60% is a stacked feed of latest bulletins — chase reports, gear field notes, photo of the day, upcoming outlook briefings — each entry led by a tag chip and timestamp",
+          "sections": [
+            "live console rail",
+            "bulletin feed",
+            "photo of the day card",
+            "join-the-guild footer band"
+          ]
+        },
+        {
+          "id": "field-logs",
+          "path": "/field-logs",
+          "layout_pattern": "long-form chase narrative archive: top filter strip (year, state, storm mode, chaser), masonry of log cards each showing date, route distance, supercell type, peak intensity, and a thumbnail; clicking a card opens a full reading view with embedded radar-at-time strips, hodograph snapshots, route map, photo inserts, and the writer's narrative",
+          "sections": [
+            "filter strip",
+            "log card masonry",
+            "full reading view",
+            "annotated route map",
+            "embedded radar-at-time strips",
+            "comments thread by callsign"
+          ]
+        },
+        {
+          "id": "gear-test-rig",
+          "path": "/test-rig",
+          "layout_pattern": "comparative review hub: hero spec table at top (the 'test rig' itself — what hardware the guild uses for evaluations), then category sections (anemometers, hail shields, mobile mesonets, dashcams, lightning detectors) each laid out as a tested-vs-baseline two-column with field-condition notes, durability scores, and verdict chips",
+          "sections": [
+            "test rig hero spec table",
+            "category sections",
+            "tested vs baseline two-column",
+            "field-condition notes",
+            "verdict chip legend",
+            "request-a-test form"
+          ]
+        },
+        {
+          "id": "regional-net",
+          "path": "/net",
+          "layout_pattern": "regional spotter forum laid out as a CB-style net roster: top of page shows tonight's net control callsign, frequency, and check-in queue; below, forum boards by region (Texas Panhandle, Oklahoma, Kansas, Nebraska, Dakotas, Iowa, Missouri) each with last-post preview and active-callsigns count",
+          "sections": [
+            "tonight's net header",
+            "check-in queue",
+            "regional board list",
+            "thread view with bracketed callsign quotes",
+            "net archive search"
+          ]
+        },
+        {
+          "id": "outlook-briefings",
+          "path": "/briefings",
+          "layout_pattern": "calendar-style outlook archive: horizontal timeline at top spanning the current convective season (March–July emphasized), each day a colored tick mark by SPC risk; below the timeline, today's and upcoming briefings as cards with risk maps, hazard probabilities, and the assigned briefer's callsign and bio thumbnail",
+          "sections": [
+            "seasonal timeline",
+            "today's briefing card",
+            "upcoming briefings list",
+            "briefer roster strip",
+            "archive of past briefings"
+          ]
+        },
+        {
+          "id": "supercell-portfolio",
+          "path": "/portfolio",
+          "layout_pattern": "photo gallery presented as a curated portfolio: large feature image at top with full metadata strip (date, time, location, callsign, lens, radar-tag), then categorized rows — wall clouds, lowerings, lightning, mammatus, structure shots; lightbox shows the photo with a synchronized mini-radar still from the moment of capture",
+          "sections": [
+            "feature image with metadata strip",
+            "categorized photo rows",
+            "lightbox with synchronized mini-radar",
+            "photographer credit list",
+            "print-request inquiry link"
+          ]
+        },
+        {
+          "id": "guild-roster",
+          "path": "/guild",
+          "layout_pattern": "member directory styled as a printed guild ledger: alphabetical-by-callsign index rail on the left, central column of member entries each showing callsign, real name (optional), home base (county + state), years active, vehicle nickname, specialization (structure photog / data logger / nowcaster / driver), and a small portrait or QSL card; profile detail page expands to full chase history stats",
+          "sections": [
+            "alphabetical callsign rail",
+            "ledger entries column",
+            "QSL card thumbnails",
+            "specialization legend",
+            "profile detail page with stats"
+          ]
+        }
+      ],
+      "message_intent": [
+        "balance operational seriousness with longer-form storytelling",
+        "honor callsign culture as the social fabric",
+        "make severe-weather risk legible without sensationalism",
+        "convey collective stewardship and field discipline"
+      ],
+      "required_text": [
+        "THE MESOCYCLONE GUILD",
+        "TONIGHT'S NET",
+        "NOT AN OFFICIAL FORECAST",
+        "EST. 2011"
+      ],
+      "content_model": [
+        "bulletin entry",
+        "field log narrative",
+        "gear review",
+        "forum thread",
+        "outlook briefing",
+        "supercell photo",
+        "guild member profile"
+      ],
+      "interactions": [
+        "live radar loop on console rail",
+        "log card expand into reading view",
+        "gear comparison two-column toggle",
+        "net check-in queue updates",
+        "seasonal timeline scrubbing",
+        "synchronized photo+radar lightbox",
+        "callsign tag hover reveals member card"
+      ],
+      "asset_needs": [
+        "radar loop frames",
+        "hodograph spiral SVGs",
+        "isobar contour pattern",
+        "ASCII compass rose glyphs",
+        "supercell photography across categories",
+        "QSL-style portrait cards",
+        "annotated chase route maps"
+      ],
+      "mobile_behavior": "split rail collapses — console becomes a sticky top strip with radar thumbnail + current outlook chip + active chaser count; reading column takes full width; ledger entries stack as single-column cards; lightbox radar-sync becomes a swipe-to-toggle",
+      "difficulty": "hard"
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "site_id": "site-01-education-k12",
+  "concept_seed": {
+    "id": "site-01-education-k12",
+    "one_liner": "A bright, playful K-12 public school district website with a sunny pastel palette, chunky rounded typography, and medium-density layouts featuring school finder maps, calendar grids, parent portal logins, board-meeting agendas, lunch menus, bus route pages, news bulletins, and a left-rail navigation tree linking academics, families, and staff sections.",
+    "metadata": {
+      "domain": "education",
+      "audience": "families and students",
+      "pages": [
+        "home",
+        "schools directory",
+        "parent portal",
+        "academics",
+        "calendar",
+        "news",
+        "board"
+      ]
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "site-01-education-k12-B",
+    "domain": "education / K-12 public school district",
+    "site_goal": "Provide the Maple Hollow Community Schools community with a cheerful, low-friction portal where parents and students can navigate seven campuses, manage daily logistics (lunch, bus, attendance), and engage with district academics and governance.",
+    "audience": [
+      "parents and guardians",
+      "elementary, middle, and high school students",
+      "teachers and support staff",
+      "community members and taxpayers",
+      "incoming kindergarten and transfer families"
+    ],
+    "description": "Maple Hollow Community Schools (MHCS) website with a sunny pastel palette anchored by lemon, robin's-egg blue, blush, sage, and apricot on a creamy paper background. Chunky rounded display type (Recoleta-rounded vibe) for headlines, friendly geometric sans for body, with crayon-like underline accents and notebook-margin rules. Medium-density layouts arranged like a kid's binder: tabbed dividers, sticker stamps, and a persistent left-rail collapsible nav tree grouping Academics / Families / Staff / About. The site leans heavily on logistical tools — a campus finder with bus overlay, a 'My Week' calendar, weekly lunch menus, attendance reporting, and a board agenda hub — while keeping a warm, hand-crafted school identity.",
+    "motif": "Spiral-bound binder with pastel tabbed dividers, ruled notebook lines, crayon underlines, and washi-tape highlights. Section headers feel like dymo label-maker tags; cards have a slight paper texture and soft drop shadow.",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "Three-zone front page: persistent left-rail binder nav, central canvas with stacked sticker cards (alert, hero, quick tools), and a right rail with a 'This Week' agenda and weather/bell schedule snippet",
+        "sections": [
+          "Top alert strip with rotating district notices and bus delays",
+          "Hero card: 'Welcome to Maple Hollow' with student-of-the-month spotlight",
+          "Quick tools sticker row: Find My School, Report Absence, Pay Fees, Lunch Menu, Bus Routes, Portal Login",
+          "Featured news mosaic (3-up cards) with category tags",
+          "This Week agenda right rail with color-coded events",
+          "Today's bell schedule + early release flag",
+          "Superintendent Friday Note teaser card",
+          "Community partners marquee (library, parks, YMCA)",
+          "Footer with translations dropdown (English, Spanish, Vietnamese, Somali) and ADA statement"
+        ]
+      },
+      {
+        "id": "schools-directory",
+        "path": "/our-schools",
+        "layout_pattern": "Grid of seven large pastel school cards above a shared interactive boundary map; toggle between 'Grid' and 'Map' view; sticky filter rail",
+        "sections": [
+          "View toggle (Grid / Map) and grade-level filter chips",
+          "School cards: mascot illustration, grades, principal, phone, address, 'Visit School Site' arrow",
+          "Boundary & bus overlay map with layer toggles",
+          "Address search 'Which school serves my home?'",
+          "Magnet & choice programs callout",
+          "Enrollment & registration steps stepper",
+          "Open house dates carousel"
+        ]
+      },
+      {
+        "id": "parent-portal",
+        "path": "/portal",
+        "layout_pattern": "Two-panel page: left panel is a sign-in card with role tabs (Parent / Student / Staff), right panel is a feature showcase with screenshots of grades, attendance, and lunch balance",
+        "sections": [
+          "Role tabs (Parent, Student, Staff) above sign-in form",
+          "Sign-in card with username, password, 'Stay signed in', SSO with Clever and Google",
+          "Account help block: 'Need an activation code?', district help desk hours",
+          "Feature showcase: Grades & Report Cards, Attendance, Lunch Balance, Bus Tracker, Forms & Permission Slips",
+          "Mobile app download badges and QR code",
+          "Notifications preferences explainer",
+          "FERPA & data privacy strip"
+        ]
+      },
+      {
+        "id": "academics",
+        "path": "/academics",
+        "layout_pattern": "Curriculum binder: top horizontal tab strip for grade bands, beneath it a two-column layout with subject accordion list on the left and program spotlight cards on the right",
+        "sections": [
+          "Grade-band tabs (Early Learning, Elementary K-5, Middle 6-8, High 9-12)",
+          "Subject accordion (ELA, Math, Science, Social Studies, World Languages, Arts, PE & Health, CTE)",
+          "Program spotlight cards: Dual Language, STEAM Lab, AVID, IB Diploma, CTE Pathways",
+          "Graduation pathways infographic",
+          "Standardized testing calendar with explainers",
+          "Library & media center hub link",
+          "Family Math & Reading nights schedule",
+          "Counselor & college advising directory"
+        ]
+      },
+      {
+        "id": "calendar",
+        "path": "/calendar",
+        "layout_pattern": "Top of page is a sticky filter bar; main area swaps between 'Month Grid', 'Week', and 'Agenda' views; right rail shows a downloadable year-at-a-glance and feed subscribe buttons",
+        "sections": [
+          "View switcher (Month, Week, Agenda) and 'Today' button",
+          "Filter bar: School, Category (Holiday, Early Release, Board, Athletics, Performing Arts, PTA)",
+          "Color-coded calendar canvas with sticker chips",
+          "Event detail flyout with location, audience, attachments",
+          "Year-at-a-glance PDF download card",
+          "Subscribe via Google / Apple / Outlook buttons",
+          "Recurring weekly lunch menu link"
+        ]
+      },
+      {
+        "id": "board",
+        "path": "/board-of-education",
+        "layout_pattern": "Civic page with a roster strip up top, a 'Next Meeting' hero card, then a searchable table of past agendas/minutes/videos, and a policy library accordion",
+        "sections": [
+          "Board roster strip: photos, names, seats (At-Large, Ward 1-5), terms, email",
+          "Next meeting hero: date/time, location, livestream link, agenda PDF, sign up to speak",
+          "Past meetings table with search and year filter (agenda, minutes, video columns)",
+          "Public comment guidelines and code of conduct",
+          "Policy library accordion (1000 Series Governance, 2000 Instruction, etc.)",
+          "Annual budget & audit documents grid",
+          "Strategic plan progress dashboard"
+        ]
+      },
+      {
+        "id": "news",
+        "path": "/news",
+        "layout_pattern": "Editorial bulletin board: featured story column on the left, dated list of posts on the right with sticker category tags, plus a sidebar with newsletter sign-up and press contacts",
+        "sections": [
+          "Featured story hero with photo and pull quote",
+          "Category sticker pills: District, Athletics, Arts, Bond, Awards, Weather",
+          "Dated post list with thumbnails and reading-time chip",
+          "'Sign up for the Maple Hollow Weekly' newsletter card",
+          "Press kit, logos, and media contact sidebar",
+          "Social feed embed (district Instagram + Facebook)"
+        ]
+      },
+      {
+        "id": "lunch-menus",
+        "path": "/families/lunch",
+        "layout_pattern": "Menu of the week table with day columns and meal rows, school-level tabs above (Elementary / Middle / High), and an allergen + nutrition sidebar",
+        "sections": [
+          "School-level tabs (Elementary, Middle, High) and week navigator",
+          "Weekly menu grid (Mon-Fri columns; Breakfast, Lunch, Snack rows) with entree photos",
+          "Allergen legend and nutrition PDF downloads",
+          "Free & reduced meals application CTA",
+          "Reload lunch balance button (deep link to portal)",
+          "Farm-to-school program highlight",
+          "Wellness policy and feedback form"
+        ]
+      }
+    ],
+    "message_intent": [
+      "Convey a warm, hand-crafted community-school feel rather than corporate district",
+      "Demonstrate that every logistical question (bus, lunch, attendance, schedule) has an obvious entry point",
+      "Highlight academic breadth across seven campuses and varied programs",
+      "Support multilingual families with clear translation affordances",
+      "Make board transparency and policy accessibility a first-class feature"
+    ],
+    "required_text": [
+      "Maple Hollow Community Schools",
+      "Our Schools",
+      "Sign In to the Portal",
+      "Report an Absence",
+      "Board of Education",
+      "This Week's Menu"
+    ],
+    "content_model": [
+      "Campus: name, mascot, level, address, principal, phone, bell schedule, enrollment, boundary polygon, programs",
+      "CalendarEvent: title, start, end, location, audience, category, color, attachments, ics",
+      "BoardMember: name, photo, seat, term, email, bio, committees",
+      "BoardMeeting: date, type, agenda, minutes, video, public_comment_signup_open",
+      "NewsPost: title, dek, body, hero, category, tags, author, publish_date, reading_time",
+      "MenuDay: date, level, breakfast[], lunch[], snack[], allergens",
+      "Program: name, description, grades, campuses, contact",
+      "BusRoute: number, campus, stops, driver, alerts",
+      "PolicyDoc: series, number, title, adopted_date, pdf",
+      "Translation: locale, key, value (supports en, es, vi, so)"
+    ],
+    "interactions": [
+      "Binder left-rail nav with expand/collapse sections and active highlight",
+      "Address lookup tied to school + bus route assignment",
+      "Calendar view switcher (Month / Week / Agenda) with category filters",
+      "Lunch menu week navigator and printable PDF",
+      "Board meeting public-comment signup modal",
+      "Role-tabbed sign-in (Parent / Student / Staff) with SSO",
+      "Translation dropdown swapping locale across the site",
+      "Sticker-pill news filters with animated card re-flow",
+      "Map / Grid toggle on the schools directory"
+    ],
+    "asset_needs": [
+      "District crest with a stylized maple leaf in pastel",
+      "Seven mascot illustrations (one per campus) in a consistent flat style",
+      "Notebook-paper background texture and washi-tape highlight strips",
+      "Dymo label-style section headers",
+      "Photography of classrooms, buses, cafeteria, athletics, arts performances",
+      "Board member portraits, square cropped",
+      "Allergen and nutrition pictogram set",
+      "Multilingual flag-free locale icons"
+    ],
+    "mobile_behavior": "Binder left-rail nav collapses into a tabbed bottom sheet with section dividers; multi-column dashboards stack with sticky alert at top; calendar defaults to Agenda view; school directory grid becomes a vertical card stack with a 'View on Map' floating button; lunch menu week grid becomes a swipeable day-by-day carousel.",
+    "difficulty": "medium"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "site-01-education-k12-A",
+        "score": 0.82,
+        "accept": true,
+        "strengths": [
+          "Concrete Sunridge USD identity with specific palette (butter yellow, sky blue, peach, mint, lavender) and Fraunhofer-style display type",
+          "Eight well-differentiated pages including a dedicated bus-routes utility page",
+          "Rich content model covering Schools, BusRoute, Trustee, Alert, LunchMenu with realistic fields like attendance zone polygons and ics links",
+          "Interactions are domain-specific: address-to-school finder, compare-up-to-3 schools tray, bilingual cookie persistence",
+          "Left-rail folder-tree motif clearly evokes a school binder and matches seed brief"
+        ],
+        "weaknesses": [
+          "Bilingual support limited to English/Español whereas many districts serve more languages",
+          "News page layout (featured + masonry) is a somewhat conventional editorial pattern",
+          "Sticker-book motif risks generic 'friendly school' aesthetic without the differentiating texture B adds"
+        ]
+      },
+      {
+        "candidate_id": "site-01-education-k12-B",
+        "score": 0.88,
+        "accept": true,
+        "strengths": [
+          "Strong, specific Maple Hollow identity with seven-campus mascot system and notebook/binder motif including washi tape, dymo labels, ruled lines",
+          "Eight distinct pages including a fully-developed weekly Lunch Menus page with grid layout",
+          "Multilingual support across English, Spanish, Vietnamese, Somali with Translation entity in content model",
+          "Calendar offers Month/Week/Agenda view switcher and rich filter taxonomy (PTA, Performing Arts, etc.)",
+          "Role-tabbed sign-in (Parent/Student/Staff) with Clever + Google SSO is realistic for K-12",
+          "Mobile behavior is specific per page (swipeable lunch carousel, bottom-sheet binder nav)"
+        ],
+        "weaknesses": [
+          "Some sections (community partners marquee, social feed embed) feel like filler",
+          "Board page policy library accordion could use more specific examples beyond series numbers",
+          "Two concepts overlap heavily in calendar and board layouts, but B differentiates with binder textures"
+        ]
+      }
+    ],
+    "best_candidate_id": "site-01-education-k12-B",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/real-run-8/site-01-education-k12/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "accessibility",
+        "message": "A few pages (home, news, our-schools) have form inputs (search field, address lookup, newsletter email) without explicit associated <label> elements or aria-label attributes.",
+        "severity": "warning",
+        "path": null
+      },
+      {
+        "type": "page_presence_routing",
+        "message": "Deterministic check flagged /board-of-education and /families/lunch as missing, but the builder implemented them as board.html and lunch.html — both pages render fully and faithfully. This is a path-resolution artifact, not a real gap.",
+        "severity": "info",
+        "path": null
+      },
+      {
+        "type": "component_consistency",
+        "message": "Component-style-consistency scores on calendar (32) and news (41) are pulled down by sidebar cards that legitimately have different internal structures (Subscribe form vs. Press Kit vs. Social embed). Visually the cards read as a coherent family thanks to shared frame, label tags, and washi tape.",
+        "severity": "info",
+        "path": null
+      }
+    ],
+    "scores": {
+      "accessibility": 0.85,
+      "mobile_responsiveness": 0.85,
+      "component_consistency": 0.7,
+      "layout_alignment": 0.65,
+      "render_quality": 0.97,
+      "page_completeness": 1.0,
+      "concept_fidelity": 0.95
+    },
+    "repair_instructions": [
+      "Add an explicit label or aria-label to the homepage district search input (\"Search the district…\"), the \"Find my school\" address lookup input on our-schools.html, and the newsletter email field on news.html so each form control has an accessible name. Visually you can keep the placeholder; just add a visually-hidden <label for=\"…\"> or an aria-label attribute.",
+      "Optional polish: the deterministic page-presence check expects files at the declared concept paths. If you want a clean presence map without affecting users, add lightweight redirect/alias HTML files at board-of-education.html and families/lunch.html (or rename board.html → board-of-education.html and move lunch.html → families/lunch.html and update internal links). Not required for approval."
+    ],
+    "deterministic_checks": {
+      "html_page_count": 8,
+      "required_text_present": true,
+      "declared_pages_implemented": "8/8 (board and lunch are implemented at board.html and lunch.html rather than /board-of-education and /families/lunch — both pages exist and are content-complete)",
+      "render_sanity_min": 0.965,
+      "placeholder_hits": 0,
+      "motif_match": "spiral-bound binder + dymo labels + washi tape + pastel palette all clearly present",
+      "required_text_hits": [
+        "Maple Hollow Community Schools",
+        "Our Schools",
+        "Sign In to the Portal",
+        "Report an Absence",
+        "Board of Education",
+        "This Week's Menu"
+      ]
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/real-run-8/site-01-education-k12/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/real-run-8/site-01-education-k12/site/screenshots/reference"
+}

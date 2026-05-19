@@ -26,6 +26,16 @@ def _normalize_api_key_env() -> None:
     """The Claude Agent SDK / CLI authenticates via ANTHROPIC_API_KEY. Users
     here keep their key under CLAUDE_API_KEY, so bridge it once at import time."""
 
+    # Opt-out: if GENERATOR_USE_SUBSCRIPTION=1, do not set any ANTHROPIC_API_KEY,
+    # so the bundled CLI uses the user's `claude login` credentials (subscription
+    # billing) instead of API billing.
+    if os.environ.get("GENERATOR_USE_SUBSCRIPTION") == "1":
+        for key in ("ANTHROPIC_API_KEY", "CLAUDE_API_KEY", "CLAUDE_CODE_API_KEY", "ANTHROPIC_KEY"):
+            if key in os.environ:
+                del os.environ[key]
+        logger.info("GENERATOR_USE_SUBSCRIPTION=1 — cleared API key env vars; using claude login auth.")
+        return
+
     if os.environ.get("ANTHROPIC_API_KEY"):
         return
     bridge_keys = ("CLAUDE_API_KEY", "CLAUDE_CODE_API_KEY", "ANTHROPIC_KEY")
@@ -38,6 +48,17 @@ def _normalize_api_key_env() -> None:
 
 
 _normalize_api_key_env()
+
+
+def _setting_sources() -> list[str]:
+    """Decide which SDK setting sources to load. In subscription mode, we
+    must include "user" so the bundled CLI can find ~/.claude/credentials.json
+    from the user's `claude login` session. In API mode, we keep settings
+    isolated ([]) to avoid pulling in user CLAUDE.md / hooks / MCP servers."""
+
+    if os.environ.get("GENERATOR_USE_SUBSCRIPTION") == "1":
+        return ["user"]
+    return []
 
 
 class AgentRuntimeError(RuntimeError):
@@ -166,6 +187,26 @@ def _heartbeat(agent_name: str, stage: str, started_at: float, site_dir: Path | 
         except Exception:
             pass
     return f"agent={agent_name} stage={stage} heartbeat elapsed={elapsed:.0f}s{extra}"
+
+
+_TRANSIENT_ERROR_PATTERNS = (
+    # The CLI sometimes emits a `result` message with is_error=True but
+    # subtype="success" and an empty errors list — a wire-protocol contradiction.
+    # The SDK then formats it as "Claude Code returned an error result: success"
+    # and we receive it as a transport failure. The next attempt almost always
+    # succeeds. See claude_agent_sdk/_internal/query.py:304-308 + 340-353 for
+    # where this string is assembled.
+    "Claude Code returned an error result: success",
+)
+
+
+def _is_transient_transport_error(exc: BaseException) -> bool:
+    """True if this exception looks like a CLI / SDK transient glitch we can
+    safely retry. Genuine errors (max_turns, structured-output retry exhaustion,
+    schema validation) emit specific subtypes and do not match these patterns."""
+
+    message = str(exc)
+    return any(pattern in message for pattern in _TRANSIENT_ERROR_PATTERNS)
 
 
 class _RunAccounting:
@@ -472,20 +513,16 @@ class ClaudeAgentRuntime:
             max_turns=max_turns,
             max_budget_usd=self.max_budget_usd,
             permission_mode="bypassPermissions",
-            setting_sources=[],
+            setting_sources=_setting_sources(),
             output_format={"type": "json_schema", "schema": schema} if supports_output_format else None,
         )
 
         # If image_paths is supplied, we must use the streaming-prompt form so
         # the SDK can deliver a structured user message with image content
-        # blocks. The SDK only accepts the streaming form for can_use_tool,
-        # but for image attachments we also need the streaming form to mix
-        # text + image content.
+        # blocks. The actual prompt_arg is constructed fresh inside the retry
+        # loop below because async generators are single-use.
         usable_images = [p for p in (image_paths or []) if p and p.exists()]
-        if usable_images:
-            prompt_arg: Any = _prompt_as_stream_with_images(prompt, usable_images)
-        else:
-            prompt_arg = prompt
+        prompt_arg: Any  # constructed inside the attempt loop
 
         logger.info(
             "agent=%s stage=run_json START model=%s max_turns=%s output_model=%s output_format=%s images=%d",
@@ -503,32 +540,59 @@ class ClaudeAgentRuntime:
         last_usage: Any = None
         turn_counter = [0]
 
-        async with _Heartbeat(
-            agent_name=agent_name, stage="run_json", interval_seconds=self.heartbeat_seconds
-        ):
-            try:
-                async for message in query(prompt=prompt_arg, options=options):
-                    if isinstance(message, AssistantMessage):
-                        for block in message.content:
-                            if isinstance(block, TextBlock):
-                                chunks.append(block.text)
-                            elif _is_thinking_block(block):
-                                _log_thinking(agent_name, block)
-                            elif _is_tool_use_block(block):
-                                _log_tool_use(agent_name, block, turn_counter)
-                            elif hasattr(block, "text"):
-                                chunks.append(str(block.text))
-                    elif isinstance(message, ResultMessage):
-                        last_result_summary = _result_message_summary(message)
-                        last_usage = getattr(message, "usage", None)
-                        if getattr(message, "structured_output", None) is not None:
-                            structured_payload = message.structured_output
-                        if getattr(message, "result", None):
-                            chunks.append(message.result)
-            except Exception as exc:
-                raise AgentRuntimeError(
-                    f"{agent_name} run_json transport failure: {type(exc).__name__}: {exc}"
-                ) from exc
+        # One transparent retry for CLI/SDK transient transport glitches.
+        # Each attempt re-streams the full query; we only retry on errors
+        # that match a known-transient pattern. Genuine schema/max_turns
+        # failures propagate on the first hit.
+        max_attempts = 2
+        for attempt in range(1, max_attempts + 1):
+            chunks = []
+            structured_payload = None
+            last_result_summary = {}
+            last_usage = None
+            turn_counter = [0]
+
+            if usable_images:
+                prompt_arg = _prompt_as_stream_with_images(prompt, usable_images)
+            else:
+                prompt_arg = prompt
+
+            async with _Heartbeat(
+                agent_name=agent_name, stage="run_json", interval_seconds=self.heartbeat_seconds
+            ):
+                try:
+                    async for message in query(prompt=prompt_arg, options=options):
+                        if isinstance(message, AssistantMessage):
+                            for block in message.content:
+                                if isinstance(block, TextBlock):
+                                    chunks.append(block.text)
+                                elif _is_thinking_block(block):
+                                    _log_thinking(agent_name, block)
+                                elif _is_tool_use_block(block):
+                                    _log_tool_use(agent_name, block, turn_counter)
+                                elif hasattr(block, "text"):
+                                    chunks.append(str(block.text))
+                        elif isinstance(message, ResultMessage):
+                            last_result_summary = _result_message_summary(message)
+                            last_usage = getattr(message, "usage", None)
+                            if getattr(message, "structured_output", None) is not None:
+                                structured_payload = message.structured_output
+                            if getattr(message, "result", None):
+                                chunks.append(message.result)
+                except Exception as exc:
+                    if attempt < max_attempts and _is_transient_transport_error(exc):
+                        logger.warning(
+                            "agent=%s stage=run_json transient transport error on attempt %d; retrying once: %s",
+                            agent_name,
+                            attempt,
+                            exc,
+                        )
+                        continue
+                    raise AgentRuntimeError(
+                        f"{agent_name} run_json transport failure: {type(exc).__name__}: {exc}"
+                    ) from exc
+            # Stream completed without raising — done.
+            break
 
         raw = "\n".join(chunks).strip()
         ACCOUNTING.record(agent_name, last_result_summary)
@@ -644,7 +708,7 @@ class ClaudeAgentRuntime:
             allowed_tools=builder_tools,
             permission_mode="default",
             can_use_tool=_make_cwd_path_guard(root, agent_name),
-            setting_sources=[],
+            setting_sources=_setting_sources(),
         )
 
         logger.info(
@@ -660,33 +724,54 @@ class ClaudeAgentRuntime:
         last_usage: Any = None
         turn_counter = [0]
 
-        async with _Heartbeat(
-            agent_name=agent_name,
-            stage="build_site",
-            site_dir=root,
-            interval_seconds=self.heartbeat_seconds,
-        ):
-            try:
-                async for message in query(prompt=_prompt_as_stream(prompt), options=options):
-                    if isinstance(message, AssistantMessage):
-                        for block in message.content:
-                            if isinstance(block, TextBlock):
-                                chunks.append(block.text)
-                            elif _is_thinking_block(block):
-                                _log_thinking(agent_name, block)
-                            elif _is_tool_use_block(block):
-                                _log_tool_use(agent_name, block, turn_counter)
-                            elif hasattr(block, "text"):
-                                chunks.append(str(block.text))
-                    elif isinstance(message, ResultMessage):
-                        last_result_summary = _result_message_summary(message)
-                        last_usage = getattr(message, "usage", None)
-                        if getattr(message, "result", None):
-                            chunks.append(message.result)
-            except Exception as exc:
-                raise AgentRuntimeError(
-                    f"{agent_name} build_site transport failure: {type(exc).__name__}: {exc}"
-                ) from exc
+        # Same single-retry-on-transient pattern as run_json. Note: if a
+        # transient hits mid-build, the previous attempt's files persist
+        # on disk. The retry builder will LS, see them, and either continue
+        # or overwrite — both are fine and beat losing the whole seed.
+        max_attempts = 2
+        for attempt_idx in range(1, max_attempts + 1):
+            chunks = []
+            last_result_summary = {}
+            last_usage = None
+            turn_counter = [0]
+
+            async with _Heartbeat(
+                agent_name=agent_name,
+                stage="build_site",
+                site_dir=root,
+                interval_seconds=self.heartbeat_seconds,
+            ):
+                try:
+                    async for message in query(prompt=_prompt_as_stream(prompt), options=options):
+                        if isinstance(message, AssistantMessage):
+                            for block in message.content:
+                                if isinstance(block, TextBlock):
+                                    chunks.append(block.text)
+                                elif _is_thinking_block(block):
+                                    _log_thinking(agent_name, block)
+                                elif _is_tool_use_block(block):
+                                    _log_tool_use(agent_name, block, turn_counter)
+                                elif hasattr(block, "text"):
+                                    chunks.append(str(block.text))
+                        elif isinstance(message, ResultMessage):
+                            last_result_summary = _result_message_summary(message)
+                            last_usage = getattr(message, "usage", None)
+                            if getattr(message, "result", None):
+                                chunks.append(message.result)
+                except Exception as exc:
+                    if attempt_idx < max_attempts and _is_transient_transport_error(exc):
+                        logger.warning(
+                            "agent=%s stage=build_site transient transport error on attempt %d; retrying once: %s",
+                            agent_name,
+                            attempt_idx,
+                            exc,
+                        )
+                        continue
+                    raise AgentRuntimeError(
+                        f"{agent_name} build_site transport failure: {type(exc).__name__}: {exc}"
+                    ) from exc
+            # Stream completed without raising — done.
+            break
 
         files = list_site_files(root)
         ACCOUNTING.record(agent_name, last_result_summary)

@@ -224,7 +224,7 @@ class GeneratorPipeline:
 
             if request.replay_manifest and manifest_path is not None:
                 with _stage(seed.id, "replay_manifest", attempt=attempt_no):
-                    self._replay_manifest_or_raise(seed, manifest_path)
+                    manifest = self._replay_manifest_or_raise(seed, manifest_path)
 
             verifier_screenshots = self._select_verifier_screenshots(manifest, screenshots_dir)
 
@@ -275,7 +275,7 @@ class GeneratorPipeline:
                         manifest_path = write_manifest(site_dir, manifest)
                     if request.replay_manifest:
                         with _stage(seed.id, "replay_manifest_final", attempt=attempt_no):
-                            self._replay_manifest_or_raise(seed, manifest_path)
+                            manifest = self._replay_manifest_or_raise(seed, manifest_path)
 
                 assert manifest_path is not None
                 # Enforce the contract Harbor packaging relies on: every
@@ -495,6 +495,8 @@ class GeneratorPipeline:
             )
         bad: list[str] = []
         for relative in files:
+            if relative.startswith("screenshots/"):
+                continue
             try:
                 normalize_bundle_path(relative)
             except SitePathError as exc:
@@ -529,10 +531,14 @@ class GeneratorPipeline:
             allow_fallback=True,
         )
 
-    def _replay_manifest_or_raise(self, seed: SiteSeed, manifest_path: Path) -> None:
+    def _replay_manifest_or_raise(self, seed: SiteSeed, manifest_path: Path) -> ScreenshotManifest:
         logger.info("replaying manifest %s", manifest_path)
         try:
-            completed = run_manifest_capture(manifest_path, repo_root=self.repo_root)
+            completed = run_manifest_capture(
+                manifest_path,
+                repo_root=self.repo_root,
+                prune_failed=True,
+            )
         except subprocess.CalledProcessError as exc:
             raise PipelineError(
                 f"Manifest replay failed for {seed.id} ({manifest_path}):\n"
@@ -544,8 +550,18 @@ class GeneratorPipeline:
             ) from exc
         except FileNotFoundError as exc:
             raise PipelineError(f"capture-screenshots.mjs not found: {exc}") from exc
+        try:
+            updated_manifest = ScreenshotManifest.model_validate_json(
+                manifest_path.read_text(encoding="utf-8")
+            )
+        except Exception as exc:
+            raise PipelineError(
+                f"Manifest replay completed but produced an invalid manifest for {seed.id}: {manifest_path}"
+            ) from exc
         logger.info(
-            "manifest replay for %s ok (stdout %d chars)",
+            "manifest replay for %s ok (stdout %d chars, captures=%d)",
             seed.id,
             len(completed.stdout or ""),
+            len(updated_manifest.captures),
         )
+        return updated_manifest

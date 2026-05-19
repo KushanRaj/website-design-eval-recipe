@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "indie-record-label",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full home zine cover splash with masthead, featured release, dispatch news cards, label sampler, tear-off newsletter, and sticky player.",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "roster-full",
+      "weight": 1.0,
+      "page": "roster",
+      "state": "default",
+      "intent": "Full roster page with header, genre chip row, asymmetric trading-card artist grid, and demos block.",
+      "path": "/roster.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "roster-filter-noise",
+      "weight": 0.3,
+      "page": "roster",
+      "state": "filter-noise",
+      "intent": "Roster filtered by the 'NOISE' genre chip to reveal filter behavior and the active chip styling.",
+      "path": "/roster.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-tag=\"noise\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "artist-full",
+      "weight": 1.0,
+      "page": "artist",
+      "state": "default",
+      "intent": "Full artist detail page (Sable Circuit) with halftone hero, three-column bio, discography rail, press clippings, upcoming dates, and booking block.",
+      "path": "/artist.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "catalog-full",
+      "weight": 1.0,
+      "page": "catalog",
+      "state": "default",
+      "intent": "Full catalog page with catalog-number index rail, filter row, and grid of release sleeve cards.",
+      "path": "/catalog.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "catalog-flip-xrx047",
+      "weight": 0.5,
+      "page": "catalog",
+      "state": "card-flipped",
+      "intent": "Flipped release card revealing the B-side tracklist and liner notes excerpt (XRX-047 Concrete Lullaby).",
+      "path": "/catalog.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-65-button-flip\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 500,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "release-full",
+      "weight": 1.0,
+      "page": "release",
+      "state": "default",
+      "intent": "Full release detail page (XRX-039 Pink Static) with sleeve art, metadata, pressing variant selector, add-to-cart, tracklist, credits, liner notes, and related releases.",
+      "path": "/release.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "tour-full",
+      "weight": 1.0,
+      "page": "tour",
+      "state": "default",
+      "intent": "Full tour page with typewriter-style tour date table, region chips, sold-out stamps, poster gallery, and promoter contact block.",
+      "path": "/tour.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "tour-filter-uk",
+      "weight": 0.3,
+      "page": "tour",
+      "state": "filter-uk",
+      "intent": "Tour list filtered to the UK region to demonstrate the region chip behavior.",
+      "path": "/tour.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-region-chip=\"uk\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "shop-full",
+      "weight": 1.0,
+      "page": "shop",
+      "state": "default",
+      "intent": "Full merch page with category sidebar, contact-sheet product grid across shirts/hoodies/totes/posters/pins/bundles, and shipping policy.",
+      "path": "/shop.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "history-full",
+      "weight": 1.0,
+      "page": "history",
+      "state": "default",
+      "intent": "Full history zine spread with chaptered scrolling content, pull-quote callouts, photo blocks, footnotes, and annotated catalog timeline.",
+      "path": "/history.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ]
+}

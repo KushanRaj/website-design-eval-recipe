@@ -1,0 +1,1146 @@
+/* =========================================================================
+   Pine Tree Hall Zen Community
+   Editorial broadsheet — off-white, sumi black, warm stone
+   ========================================================================= */
+
+:root {
+  --paper:        #efe9da;   /* warm stone, paper-like off-white */
+  --paper-deep:   #e6dfcc;   /* faintly deeper paper, used sparingly */
+  --paper-soft:   #f5f1e5;   /* lighter region within a page */
+  --ink:          #15140f;   /* sumi black */
+  --ink-soft:     #3a362c;   /* secondary text */
+  --ink-faint:    #6b6354;   /* tertiary, captions */
+  --rule:         #15140f33; /* hairline, ~20% */
+  --rule-soft:    #15140f1a; /* hairline softer */
+  --warm-shadow:  #2a261b;
+  --measure:      62ch;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: "Hoefler Text", "Cormorant Garamond", "EB Garamond",
+               "Garamond", Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.62;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  font-feature-settings: "onum" 1, "kern" 1, "liga" 1;
+  padding-right: 56px; /* room for the right-edge seasonal column */
+  min-height: 100vh;
+}
+
+/* ---------- Typography ---------- */
+
+.display, h1, h2, h3, h4 {
+  font-family: "Bodoni 72", "Bodoni Moda", "Didot", "Hoefler Text",
+               "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 1.02;
+  font-stretch: condensed;
+  margin: 0 0 0.4em;
+}
+
+h2 {
+  font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+  line-height: 1.12;
+  margin: 0 0 0.5em;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.15rem;
+  line-height: 1.25;
+  margin: 0 0 0.45em;
+  font-weight: 500;
+}
+
+p { margin: 0 0 1em; max-width: var(--measure); }
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+a:hover { border-bottom-color: var(--ink); }
+
+small, .small { font-size: 0.78rem; letter-spacing: 0.06em; }
+
+.kicker {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  font-family: "Hoefler Text", Georgia, serif;
+  font-weight: 400;
+}
+
+.lede {
+  font-size: 1.18rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+
+.japanese {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP",
+               serif;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Rules ---------- */
+
+.hr-hair { border: 0; border-top: 1px solid var(--rule); margin: 2.4rem 0; }
+.hr-hair--soft { border: 0; border-top: 1px solid var(--rule-soft); margin: 1.6rem 0; }
+.hr-double {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  height: 4px;
+  margin: 2.4rem 0;
+}
+
+/* ---------- Page frame ---------- */
+
+.frame {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 56px;
+}
+
+/* ---------- Masthead / nav ---------- */
+
+.masthead {
+  padding-top: 36px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.masthead__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.brand {
+  font-family: "Bodoni 72", "Bodoni Moda", "Didot", "Hoefler Text", Georgia, serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  font-stretch: condensed;
+  white-space: nowrap;
+}
+.brand a { border: 0; color: var(--ink); }
+.brand small {
+  display: block;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  font-stretch: normal;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.nav a {
+  border: 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.nav a:hover { color: var(--ink); }
+.nav a.is-active { color: var(--ink); border-bottom: 1px solid var(--ink); }
+
+.masthead__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 20px;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+.masthead__meta span { display: inline-block; }
+
+/* ---------- Seasonal marker (right edge) ---------- */
+
+.sekki {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 56px;
+  height: 100vh;
+  border-left: 1px solid var(--rule);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  pointer-events: none;
+}
+.sekki__text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP",
+               "Hoefler Text", serif;
+  font-size: 0.84rem;
+  letter-spacing: 0.4em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.sekki__text .kanji {
+  font-size: 1.3rem;
+  letter-spacing: 0.18em;
+  margin-bottom: 1.4em;
+}
+.sekki__text .romaji {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+  margin-top: 1.2em;
+}
+.sekki__year {
+  position: absolute;
+  bottom: 26px;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+  writing-mode: vertical-rl;
+}
+
+/* ---------- Hero / opening ---------- */
+
+.opening {
+  padding: 6vw 0 4vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.opening h1 {
+  font-size: clamp(2.6rem, 7.5vw, 5.6rem);
+  font-stretch: condensed;
+  line-height: 0.98;
+}
+.opening .lede { margin-top: 0.6rem; max-width: 46ch; }
+
+/* ---------- Vignette (image + caption + body) ---------- */
+
+.vignette {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 56px;
+  padding: 3.6rem 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
+.vignette:last-of-type { border-bottom: 1px solid var(--rule); }
+
+.vignette__plate {
+  aspect-ratio: 4 / 3;
+  background: var(--paper-deep);
+  overflow: hidden;
+  position: relative;
+}
+.vignette__plate svg { width: 100%; height: 100%; display: block; }
+
+.vignette__index {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+.vignette__caption {
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.92rem;
+  margin-top: 0.4em;
+}
+
+/* ---------- Bell schedule (home) ---------- */
+
+.bells {
+  margin-top: 4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--ink);
+}
+.bells__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.4rem;
+}
+.bells__head h2 { margin: 0; font-size: 1.3rem; }
+.bells__head .sub { font-style: italic; color: var(--ink-faint); font-size: 0.9rem; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+.table th, .table td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.95rem;
+  vertical-align: top;
+}
+.table th {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 8px;
+}
+.table td.time {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 1.04rem;
+  letter-spacing: 0.02em;
+  width: 10ch;
+  color: var(--ink);
+}
+.table td.activity { width: auto; }
+.table td.location {
+  color: var(--ink-faint);
+  font-style: italic;
+  width: 18ch;
+}
+.table tr { transition: background 0.18s ease; }
+.table tr.has-note { cursor: help; }
+.table tr.has-note:hover { background: var(--paper-soft); }
+.table tr .note {
+  display: none;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.86rem;
+  padding-top: 4px;
+}
+.table tr.is-open .note,
+.table tr:hover .note { display: block; }
+
+/* ---------- Footer ---------- */
+
+.footer {
+  margin-top: 6rem;
+  padding: 2.5rem 0 3.5rem;
+  border-top: 1px solid var(--ink);
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.footer h4 {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.84rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  margin: 0 0 0.6em;
+}
+.footer p { font-size: 0.92rem; }
+.footer .colophon {
+  margin-top: 2.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule-soft);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---------- Lineage page ---------- */
+
+.lineage-intro {
+  padding: 4vw 0 2vw;
+  max-width: 60ch;
+}
+
+.lineage-scroller {
+  margin: 2rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  background: var(--paper-soft);
+  position: relative;
+}
+.lineage-scroller__hint {
+  position: sticky;
+  left: 8px;
+  top: 8px;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  padding: 4px 0;
+  z-index: 2;
+}
+
+.lineage-tree {
+  display: flex;
+  gap: 0;
+  padding: 80px 60px 100px;
+  min-width: max-content;
+  position: relative;
+  align-items: stretch;
+}
+
+.gen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 64px;
+  padding: 0 60px;
+  position: relative;
+  scroll-snap-align: start;
+  border-right: 1px solid var(--rule-soft);
+}
+.gen:last-child { border-right: 0; }
+.gen__label {
+  position: absolute;
+  top: -56px;
+  left: 60px;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.node {
+  width: 200px;
+  text-align: left;
+  position: relative;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+.node__portrait {
+  width: 88px;
+  height: 110px;
+  background: var(--paper-deep);
+  margin-bottom: 0.6rem;
+  position: relative;
+}
+.node__portrait svg { width: 100%; height: 100%; display: block; }
+.node__dharma {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.1;
+  margin-bottom: 0.15rem;
+}
+.node__given {
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+.node__years {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  margin-top: 0.25rem;
+}
+.node:hover .node__dharma { text-decoration: underline; text-decoration-thickness: 1px; }
+
+/* Branch lines drawn with pseudo-elements */
+.node::before {
+  content: "";
+  position: absolute;
+  top: 55px;
+  right: -60px;
+  width: 60px;
+  border-top: 1px solid var(--rule);
+}
+.gen:last-child .node::before { display: none; }
+.node--leaf::before { display: none; }
+
+/* Biography sidebar card */
+.bio {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 56px;
+  width: min(420px, 90vw);
+  height: 100vh;
+  background: var(--paper-soft);
+  border-left: 1px solid var(--ink);
+  padding: 60px 40px 40px;
+  overflow-y: auto;
+  z-index: 40;
+  box-shadow: -24px 0 60px -20px rgba(0,0,0,0.18);
+}
+.bio.is-open { display: block; }
+.bio__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: transparent;
+  border: 0;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.86rem;
+  cursor: pointer;
+  color: var(--ink-faint);
+}
+.bio__portrait {
+  width: 140px;
+  height: 180px;
+  background: var(--paper-deep);
+  margin-bottom: 1.4rem;
+}
+.bio__portrait svg { width: 100%; height: 100%; display: block; }
+.bio h3 {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1.7rem;
+  line-height: 1.05;
+  margin-bottom: 0.1rem;
+}
+.bio .bio__given {
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-bottom: 1.4rem;
+}
+.bio__meta {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.6rem 0;
+  margin-bottom: 1.4rem;
+  font-size: 0.86rem;
+}
+.bio__meta dt {
+  font-style: italic;
+  color: var(--ink-faint);
+  display: inline-block;
+  width: 8em;
+}
+.bio__meta dd { display: inline; margin: 0; }
+.bio__meta dd::after { content: ""; display: block; height: 0.5rem; }
+
+/* ---------- Schedule & retreats ---------- */
+
+.ledger {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 0;
+  margin-top: 1.6rem;
+}
+.ledger-row {
+  display: grid;
+  grid-template-columns: 10ch 1fr 18ch 1fr;
+  gap: 24px;
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+  font-size: 0.96rem;
+}
+.ledger-row:last-child { border-bottom: 0; }
+.ledger-row .time {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.02em;
+}
+.ledger-row .loc {
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.86rem;
+}
+.ledger-row .note {
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.86rem;
+}
+.ledger-row.is-head {
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--ink);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: baseline;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  margin: 3rem 0 0;
+  font-size: 0.82rem;
+}
+.filterbar__label {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  margin-right: 10px;
+}
+.chip {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  padding: 6px 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  cursor: pointer;
+  font-family: "Hoefler Text", Georgia, serif;
+}
+.chip:hover { border-color: var(--ink); color: var(--ink); }
+.chip.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.retreats {
+  margin-top: 2rem;
+  border-top: 1px solid var(--ink);
+}
+.retreat {
+  display: grid;
+  grid-template-columns: 13ch 1fr 12ch 12ch;
+  gap: 28px;
+  padding: 24px 12px;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+.retreat__date {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.02em;
+}
+.retreat__title {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1.2rem;
+  line-height: 1.18;
+}
+.retreat__title small {
+  display: block;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.84rem;
+  color: var(--ink-faint);
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+.retreat__meta {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.retreat__meta span { display: block; font-style: italic; color: var(--ink-faint); font-size: 0.78rem; }
+.retreat[hidden] { display: none; }
+
+/* ---------- Audio archive ---------- */
+
+.archive {
+  display: grid;
+  grid-template-columns: 200px 1fr 320px;
+  gap: 40px;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ink);
+}
+.archive__rail h4 {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin: 1.6rem 0 0.6rem;
+}
+.archive__rail ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+.archive__rail li {
+  font-size: 0.88rem;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: color 0.15s ease;
+}
+.archive__rail li:hover { color: var(--ink); }
+.archive__rail li.is-on { color: var(--ink); }
+.archive__rail li.is-on::before { content: "・"; color: var(--ink); margin-right: 2px; }
+
+.talks {
+  border-top: 1px solid var(--rule);
+}
+.talk {
+  display: grid;
+  grid-template-columns: 12ch 1fr 6ch;
+  gap: 18px;
+  padding: 16px 8px;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  align-items: baseline;
+  transition: background 0.15s ease;
+}
+.talk:hover, .talk.is-selected { background: var(--paper-soft); }
+.talk__date {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+.talk__title {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1.04rem;
+  line-height: 1.22;
+}
+.talk__title small {
+  display: block;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin-top: 3px;
+}
+.talk__dur {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  text-align: right;
+}
+.talk__theme {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule);
+  padding: 1px 7px;
+  vertical-align: middle;
+}
+.talk[hidden] { display: none; }
+
+.now-playing {
+  border-left: 1px solid var(--rule);
+  padding-left: 30px;
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+.now-playing h4 {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.now-playing h3 {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1.45rem;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+.now-playing .meta {
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+.now-playing p { font-size: 0.94rem; }
+
+.player {
+  position: fixed;
+  left: 0;
+  right: 56px;
+  bottom: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 56px;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 20px;
+  align-items: center;
+  font-size: 0.86rem;
+}
+.player__btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--paper);
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+.player__title {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+.player__title em {
+  font-style: italic;
+  color: #c8bfa6;
+  font-size: 0.84rem;
+  margin-left: 10px;
+}
+.player__bar {
+  flex: 1;
+  height: 2px;
+  background: #524a39;
+  position: relative;
+  min-width: 120px;
+}
+.player__bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  background: var(--paper);
+}
+.player__time {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.8rem;
+  color: #c8bfa6;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Visit & etiquette ---------- */
+
+.zones { margin-top: 2.4rem; }
+.zone {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 56px;
+  padding: 3rem 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
+.zone:last-of-type { border-bottom: 1px solid var(--rule); }
+.zone__plate {
+  aspect-ratio: 3 / 4;
+  background: var(--paper-deep);
+  position: relative;
+  overflow: hidden;
+}
+.zone__plate svg { width: 100%; height: 100%; display: block; }
+.zone__num {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.zone h2 {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 2rem;
+  line-height: 1.04;
+  margin-bottom: 0.3rem;
+}
+.zone h2 small {
+  display: block;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+  font-family: "Hoefler Text", Georgia, serif;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+.zone ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.4rem 0 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.zone li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: 0.94rem;
+  display: grid;
+  grid-template-columns: 3ch 1fr;
+  gap: 8px;
+}
+.zone li::before {
+  content: "—";
+  color: var(--ink-faint);
+}
+
+.map {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--ink);
+}
+.map__inner { background: var(--paper-soft); aspect-ratio: 16/8; max-width: 880px; margin: 1.5rem auto 0; }
+.map__inner svg { width: 100%; height: 100%; display: block; }
+.directions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-top: 1.6rem;
+}
+.directions h4 {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+.directions p { font-size: 0.92rem; }
+
+/* ---------- Dana ---------- */
+
+.dana-col {
+  max-width: 56ch;
+  margin: 4rem auto 0;
+}
+.dana-col h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+.dana-col .lede { margin-bottom: 2.5rem; }
+
+.gift {
+  border-top: 1px solid var(--ink);
+  padding: 2.2rem 0 2.4rem;
+}
+.gift:last-of-type { border-bottom: 1px solid var(--ink); }
+.gift h2 {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1.75rem;
+  margin-bottom: 0.2rem;
+}
+.gift h2 small {
+  display: block;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+.gift p { margin-bottom: 1.2rem; }
+.bands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 1rem 0 1.2rem;
+}
+.band {
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 10px 18px;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.band:hover { border-color: var(--ink); }
+.band.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.band em { font-style: italic; color: var(--ink-faint); font-size: 0.78rem; margin-left: 6px; }
+.band.is-on em { color: #c8bfa6; }
+
+.free-input {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border-bottom: 1px solid var(--rule);
+  padding: 6px 0;
+  max-width: 28ch;
+  margin-bottom: 1.2rem;
+}
+.free-input span {
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.86rem;
+}
+.free-input input {
+  border: 0;
+  background: transparent;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-size: 1rem;
+  outline: none;
+  flex: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--ink);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  padding: 12px 28px;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-size: 0.84rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn--ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+
+.ledger-card {
+  background: var(--paper-soft);
+  padding: 2rem;
+  margin-top: 3rem;
+}
+.ledger-card h3 {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.ledger-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.ledger-list td {
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: 0.92rem;
+  vertical-align: top;
+}
+.ledger-list td.amt { text-align: right; width: 9ch; }
+.ledger-list td.pct { color: var(--ink-faint); text-align: right; width: 6ch; }
+
+/* ---------- Page header (interior) ---------- */
+
+.page-head {
+  padding: 5vw 0 3vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: end;
+  border-bottom: 1px solid var(--rule);
+}
+.page-head h1 { margin: 0; font-size: clamp(2.4rem, 6vw, 4.6rem); font-stretch: condensed; }
+.page-head .lede { margin: 0; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 880px) {
+  body { padding-right: 0; }
+  .frame { padding: 0 24px; }
+  .sekki {
+    position: fixed;
+    width: auto;
+    height: auto;
+    top: 14px;
+    right: 14px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 6px 10px;
+  }
+  .sekki__text { writing-mode: horizontal-tb; display: flex; gap: 10px; align-items: baseline; }
+  .sekki__text .kanji { font-size: 1rem; margin: 0; }
+  .sekki__text .romaji { margin: 0; font-size: 0.7rem; }
+  .sekki__year { display: none; }
+  .player { right: 0; padding: 12px 20px; grid-template-columns: auto 1fr auto; }
+  .player__bar { display: none; }
+  .opening h1 { font-size: 3rem; }
+  .masthead__row { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .nav { gap: 16px; }
+  .vignette { grid-template-columns: 1fr; gap: 24px; }
+  .zone { grid-template-columns: 1fr; gap: 24px; }
+  .archive { grid-template-columns: 1fr; }
+  .now-playing { position: static; border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 1.4rem; }
+  .ledger-row { grid-template-columns: 8ch 1fr; gap: 12px; }
+  .ledger-row .loc, .ledger-row .note { grid-column: 2; }
+  .retreat { grid-template-columns: 1fr; gap: 6px; padding: 18px 8px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+  .directions { grid-template-columns: 1fr; }
+  .lineage-tree { padding: 60px 30px 80px; }
+  .gen { padding: 0 30px; gap: 36px; }
+  .page-head { grid-template-columns: 1fr; gap: 18px; padding: 7vw 0 4vw; }
+  .bio { right: 0; }
+}
+
+/* ---------- Multi-step form (retreat application) ---------- */
+
+.steps-form {
+  min-height: 70vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  padding: 6vw 0;
+}
+.step { display: none; max-width: 56ch; margin: 0 auto; }
+.step.is-on { display: block; }
+.step h2 {
+  font-family: "Bodoni 72", "Didot", Georgia, serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.08;
+  margin-bottom: 1.4rem;
+}
+.step .field {
+  border-bottom: 1px solid var(--rule);
+  padding: 6px 0;
+}
+.step input, .step textarea {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  outline: none;
+  padding: 10px 0;
+  color: var(--ink);
+}
+.step textarea { resize: vertical; min-height: 100px; }
+.step__nav { margin-top: 2rem; display: flex; gap: 14px; }

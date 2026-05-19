@@ -1,0 +1,111 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/podcast-network/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 17,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "channels-full",
+      "status": "ok",
+      "required": true,
+      "file": "channels-full.png"
+    },
+    {
+      "id": "channels-filter-music",
+      "status": "ok",
+      "required": false,
+      "file": "channels-filter-music.png"
+    },
+    {
+      "id": "show-channel-late-signal-full",
+      "status": "ok",
+      "required": true,
+      "file": "show-channel-late-signal-full.png"
+    },
+    {
+      "id": "show-channel-season-s1",
+      "status": "ok",
+      "required": false,
+      "file": "show-channel-season-s1.png"
+    },
+    {
+      "id": "archive-full",
+      "status": "ok",
+      "required": true,
+      "file": "archive-full.png"
+    },
+    {
+      "id": "archive-lucky-dip",
+      "status": "ok",
+      "required": false,
+      "file": "archive-lucky-dip.png"
+    },
+    {
+      "id": "episode-detail-full",
+      "status": "ok",
+      "required": true,
+      "file": "episode-detail-full.png"
+    },
+    {
+      "id": "voices-full",
+      "status": "ok",
+      "required": true,
+      "file": "voices-full.png"
+    },
+    {
+      "id": "voices-filter-the-late-signal",
+      "status": "ok",
+      "required": false,
+      "file": "voices-filter-the-late-signal.png"
+    },
+    {
+      "id": "live-full",
+      "status": "ok",
+      "required": true,
+      "file": "live-full.png"
+    },
+    {
+      "id": "live-show-filter-late-signal",
+      "status": "ok",
+      "required": false,
+      "file": "live-show-filter-late-signal.png"
+    },
+    {
+      "id": "live-view-list",
+      "status": "ok",
+      "required": false,
+      "file": "live-view-list.png"
+    },
+    {
+      "id": "inner-circle-full",
+      "status": "ok",
+      "required": true,
+      "file": "inner-circle-full.png"
+    },
+    {
+      "id": "inner-circle-faq-open",
+      "status": "ok",
+      "required": false,
+      "file": "inner-circle-faq-open.png"
+    },
+    {
+      "id": "partner-full",
+      "status": "ok",
+      "required": true,
+      "file": "partner-full.png"
+    },
+    {
+      "id": "about-full",
+      "status": "ok",
+      "required": true,
+      "file": "about-full.png"
+    }
+  ]
+}

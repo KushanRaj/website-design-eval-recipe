@@ -1,0 +1,301 @@
+{
+  "seed_id": "site-05-retail-marketplace-vintage",
+  "concepts": [
+    {
+      "candidate_id": "site-05-retail-marketplace-vintage-c1",
+      "domain": "retail-marketplace",
+      "site_goal": "Run a curated peer-to-peer marketplace for vintage and antique furniture where independent sellers list one-of-a-kind pieces and shoppers browse, save, and purchase with confidence.",
+      "audience": [
+        "vintage furniture shoppers",
+        "independent dealers and pickers",
+        "interior designers sourcing one-of-a-kind pieces",
+        "collectors of mid-century, art deco, and folk furniture"
+      ],
+      "description": "Wares & Provenance is a clustered, editorial vintage furniture marketplace. The homepage hits with a full-bleed terracotta hero block and a dense salon-wall grid of listings cropped at uneven heights. Browse uses a left-rail faceted filter (era, material, style, region, price, condition, ships-from) over a six-column high-density product grid with hover quicklooks. Product pages are gallery-first with a sticky right-rail buy box, provenance timeline, dimensions diagram, and shipping calculator. Seller storefronts function as mini-shops with banner, bio, policies, and tabbed inventory. A sticky cart drawer slides in from the right across every page, and a Journal section runs long-form stories on dealers, eras, and restoration. Earthen palette of terracotta, ochre, oxblood, moss, and bone with a mixed serif editorial display face (Tiempos-like) paired with a grotesque body (Söhne-like) and a typewriter accent for metadata.",
+      "motif": "Salon-style clustered product walls with bold earthen color-blocks, asymmetric editorial captions, hand-stamped lot numbers, and a persistent right-side cart drawer.",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Editorial hero block over a salon-style clustered product wall with category color-blocks",
+          "sections": [
+            "Terracotta hero block with rotating featured-lot headline and 'Shop the Lot' CTA",
+            "Marquee strip of just-listed thumbnails scrolling horizontally",
+            "Salon wall: six-column asymmetric clustered grid mixing tall, square, and wide product cards",
+            "Color-blocked category tiles (Seating, Storage, Lighting, Tables, Textiles, Oddities)",
+            "Featured Sellers row with shop banners and follower counts",
+            "Journal teaser: three editorial cards with dek and read time",
+            "Footer with newsletter signup, dealer application, and policy links"
+          ]
+        },
+        {
+          "id": "browse",
+          "path": "/browse",
+          "layout_pattern": "Left-rail faceted filters beside a six-column high-density product grid with sticky toolbar",
+          "sections": [
+            "Breadcrumb + result count + sort dropdown sticky toolbar",
+            "Active filter chip stack with 'Clear all'",
+            "Left rail: collapsible facet groups (Era, Style, Material, Room, Price, Ships from, Condition, Seller rating)",
+            "Product grid with lot-number tags, price, seller handle, and saved-heart toggle",
+            "Inline 'Editor's pick' callout cards interrupting the grid every 12 items",
+            "Pagination footer with load-more and jump-to-page"
+          ]
+        },
+        {
+          "id": "product",
+          "path": "/listing/lot-2847-walnut-credenza",
+          "layout_pattern": "Two-column gallery + sticky buy-box with stacked provenance, dimensions, and shipping modules below",
+          "sections": [
+            "Gallery column with thumbnail rail and zoom",
+            "Sticky right buy-box: title, lot number, price, condition grade, Add to cart, Make offer, Save",
+            "Seller chip with shop name, rating, response time, and Follow",
+            "Provenance timeline (made / acquired / refinished / listed)",
+            "Dimensions diagram with measured drawing",
+            "Materials & condition notes",
+            "Shipping calculator with ZIP/postcode input and three quote tiers",
+            "More from this seller carousel",
+            "You might also like cluster"
+          ]
+        },
+        {
+          "id": "seller-storefront",
+          "path": "/shop/atelier-ferro",
+          "layout_pattern": "Storefront banner with shop identity over tabbed inventory grid and pinned policies sidebar",
+          "sections": [
+            "Banner image with shop name, location, years active, follower count, and Follow button",
+            "Shop bio paragraph with founder portrait",
+            "Tabs: In stock / Sold archive / On hold",
+            "Inventory grid with shop-specific filter chips",
+            "Pinned sidebar: shipping policy, returns, payment, contact",
+            "Recent reviews with star breakdown",
+            "Shop journal entries if the seller publishes"
+          ]
+        },
+        {
+          "id": "cart",
+          "path": "/cart",
+          "layout_pattern": "Full-page cart grouped by seller with shipping quote per group and order summary rail",
+          "sections": [
+            "Items grouped under seller headers with thumbnail, title, price, qty, remove",
+            "Per-seller shipping option selector (freight, white-glove, local pickup)",
+            "Promo code field",
+            "Order summary rail: subtotal, shipping, taxes, total, Checkout button",
+            "Saved for later row beneath cart",
+            "Trust strip: buyer protection, condition guarantee, secure checkout"
+          ]
+        },
+        {
+          "id": "account",
+          "path": "/account",
+          "layout_pattern": "Dashboard with left-nav and tabbed panels for orders, saved listings, offers, and followed shops",
+          "sections": [
+            "Greeting header with avatar and member-since date",
+            "Left nav: Orders, Saved listings, Offers, Followed shops, Addresses, Payment, Settings",
+            "Orders table with status pills and condition-on-arrival window countdown",
+            "Saved listings board with multiple named lists and price-drop alerts",
+            "Offers panel showing pending, accepted, expired",
+            "Followed shops grid with new-listing badges"
+          ]
+        },
+        {
+          "id": "journal",
+          "path": "/journal",
+          "layout_pattern": "Editorial index with magazine-style asymmetric hero and category-tagged story grid",
+          "sections": [
+            "Featured story block with oversized serif headline and full-bleed photograph",
+            "Category chips: Dealer Profiles, Eras, Materials, Restoration, Style Guides",
+            "Story grid with mixed-size cards, author byline, and read time",
+            "Inline shoppable product chips embedded in story previews",
+            "Newsletter signup block"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Convey that every piece is one-of-a-kind and worth lingering on",
+        "Build trust in independent sellers through provenance, ratings, and policies",
+        "Make dense inventory feel curated rather than overwhelming",
+        "Position the marketplace as both a shop and an editorial authority on vintage"
+      ],
+      "required_text": [
+        "Wares & Provenance",
+        "One-of-one. Vetted. Ships worldwide.",
+        "The Journal",
+        "Your cart"
+      ],
+      "content_model": [
+        "Listing: title, lot number, price, era, style, materials, dimensions, condition grade, provenance notes, seller, location, shipping options, gallery (6-12 images)",
+        "Seller storefront: shop name, banner, bio, location, years active, policies, ratings, inventory tabs (in stock / sold archive / on hold)",
+        "Category facets: era (Pre-1900, 1900s, 1920s, 1950s, 1970s, 1990s), style (Mid-Century, Art Deco, Brutalist, Shaker, Bauhaus, Postmodern), material, room, price band, ships-from",
+        "Journal article: title, dek, hero image, author, read time, body with pull quotes and shoppable inline product chips",
+        "Saved listing: list name, items, price-drop alerts, notes",
+        "Order: items, seller, shipping quote, tracking, condition-on-arrival window"
+      ],
+      "interactions": [
+        "Faceted filter drawer with chip-stack of active filters and result count",
+        "Hover quicklook on product cards revealing second image and 'add to saved'",
+        "Sticky cart drawer that slides from the right and persists across navigation",
+        "Shipping calculator on product page that takes ZIP/postcode and returns freight, white-glove, and pickup quotes",
+        "Image gallery with thumbnail rail, pinch-zoom, and a fullscreen lightbox",
+        "Make-an-offer modal with seller's accept/decline threshold hint",
+        "Follow-seller toggle with notification preferences",
+        "Save-to-list with multiple named lists and a price-drop bell"
+      ],
+      "asset_needs": [
+        "Cropped photographs of vintage furniture against warm neutral backdrops",
+        "Detail shots showing wood grain, joinery, patina, and maker's marks",
+        "Seller portrait photography for storefront headers",
+        "Editorial spreads for Journal stories with environmental shots"
+      ],
+      "mobile_behavior": "Filters collapse into a bottom-sheet drawer; product grid drops to two columns; cart drawer becomes a full-screen takeover triggered by a sticky footer bar showing item count and subtotal.",
+      "difficulty": "hard"
+    },
+    {
+      "candidate_id": "site-05-retail-marketplace-vintage-c2",
+      "domain": "retail-marketplace",
+      "site_goal": "Connect estate-sale pickers and barn-find dealers with collectors hunting honest, unrestored vintage furniture, with radical price transparency and freight logistics baked in.",
+      "audience": [
+        "collectors of unrestored and patinated furniture",
+        "estate-sale pickers and barn-find dealers",
+        "renters and first-apartment shoppers hunting cheap character pieces",
+        "set designers and prop stylists"
+      ],
+      "description": "Barnyard & Bone is a punchier, more flea-market take on the seed: a clustered marketplace built around weekly 'Drops' where dozens of sellers post fresh finds every Thursday at noon. The aesthetic leans into mustard, brick, cream, and ink-black with a chunky display grotesque (Druk-like) slammed against an old-style serif (Caslon-like) for body, plus stenciled lot numbers and price tags rendered as paper labels. Layouts are denser and more chaotic than a typical marketplace: the homepage opens with a countdown to the next Drop and a wall-of-finds masonry grid, browse uses top-bar facet pills plus a column-density slider (3/5/8 across), product pages emphasize honest condition with a 'Patina Report' card and a freight quote module that maps the route. Seller storefronts double as dealer journals; the Journal itself is called 'The Picker's Log' and runs first-person dispatches from estate sales and barn cleanouts.",
+      "motif": "Paper price-tags, stenciled lot numbers, masonry walls of finds, and weekly Drop countdowns over a mustard-and-brick palette.",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "Drop countdown banner over a chaotic masonry wall of fresh finds with sidebar of featured pickers",
+          "sections": [
+            "Mustard banner with next-Drop countdown, participating-seller count, and item preview total",
+            "Just-dropped masonry grid (uneven heights, mixed crops) with stenciled lot numbers",
+            "Category color-block row (Chairs, Cabinets, Lamps, Rugs, Smalls, Outsider)",
+            "Featured pickers sidebar with portrait, region, and 'follow for Drop alerts'",
+            "Picker's Log teaser strip with three latest dispatches",
+            "How it works three-step explainer (Pickers find / We vet / You bid or buy)",
+            "Footer with newsletter, seller application, and freight FAQ"
+          ]
+        },
+        {
+          "id": "browse",
+          "path": "/browse",
+          "layout_pattern": "Top-bar facet pills with density slider over a masonry product grid and inline Drop markers",
+          "sections": [
+            "Top bar: search, facet pills (Era, Style, Condition, Region, Price, Ships/Pickup), Save this search",
+            "Density slider toggling 3 / 5 / 8 columns and sort dropdown",
+            "Masonry grid of listings with paper price-tag overlays and condition grade chips",
+            "Inline Drop markers separating this-week and archive items",
+            "Sidebar of related searches and recently sold comps",
+            "Load-more with item count remaining"
+          ]
+        },
+        {
+          "id": "product",
+          "path": "/lot/3412-mustard-armchair",
+          "layout_pattern": "Gallery-left, details-right with stacked Patina Report, freight-route map, and seller card below",
+          "sections": [
+            "Gallery with dated photo timestamps and a 360-spin toggle if available",
+            "Right column: title, lot number, ask price, Buy now, Make offer, Watch",
+            "Patina Report expandable card with checkboxes and notes",
+            "Dimensions and weight with shipping class",
+            "Freight quote module with ZIP/postcode input and route map",
+            "Seller card with picker bio, region, and vehicle range for delivery",
+            "Sold comps strip showing similar lots and final prices",
+            "More from this Drop carousel"
+          ]
+        },
+        {
+          "id": "seller-storefront",
+          "path": "/picker/red-barn-ruth",
+          "layout_pattern": "Picker profile header with current-Drop inventory grid and dispatch archive feed",
+          "sections": [
+            "Header with picker portrait, handle, region, vehicle, years picking, follower count",
+            "Bio paragraph and quote pull",
+            "Current Drop inventory grid with countdown to next release",
+            "Archive tabs: Sold, Watched, On-the-truck",
+            "Dispatch feed: this picker's Picker's Log entries with photo thumbnails",
+            "Reviews with star breakdown and condition-accuracy score"
+          ]
+        },
+        {
+          "id": "cart",
+          "path": "/cart",
+          "layout_pattern": "Sticky-drawer-expanded cart page grouped by picker with per-group freight and pickup toggle",
+          "sections": [
+            "Items grouped under picker headers with thumbnail, title, ask, freight estimate, remove",
+            "Per-group toggle: Ship freight / Local pickup / White-glove",
+            "Freight consolidation prompt if two pickers share a region",
+            "Promo code and gift card fields",
+            "Order summary rail with subtotal, freight, taxes, total, Checkout",
+            "Watchlist row showing items dropping price soon",
+            "Trust strip: condition guarantee, 72-hour inspection window"
+          ]
+        },
+        {
+          "id": "account",
+          "path": "/account",
+          "layout_pattern": "Tabbed dashboard with Drop calendar, watchlist board, orders timeline, and followed pickers",
+          "sections": [
+            "Greeting header with member tier and total saved",
+            "Drop calendar showing upcoming releases with reminder toggles",
+            "Watchlist board grouped by 'Drops soon', 'Price reduced', 'About to expire'",
+            "Orders timeline with freight status, route map, and inspection-window countdown",
+            "Followed pickers grid with new-Drop badges",
+            "Addresses, payment, and notification preferences panels"
+          ]
+        },
+        {
+          "id": "journal",
+          "path": "/log",
+          "layout_pattern": "Photo-essay feed titled 'The Picker's Log' with location-tagged dispatches and shoppable hotspots",
+          "sections": [
+            "Featured dispatch with oversized headline, dateline, and full-bleed photo essay",
+            "Region filter chips (Midwest, Northeast, South, Mountain, Coast)",
+            "Dispatch grid with picker byline, location, items recovered count",
+            "Shoppable photo hotspots linking from essay images to live listings",
+            "Submit-a-tip form for readers to point pickers at upcoming estate sales"
+          ]
+        }
+      ],
+      "message_intent": [
+        "Make the marketplace feel like a live, time-bound event rather than a static catalog",
+        "Celebrate honest wear and unrestored character over polish",
+        "Demystify freight cost and timing so buyers can commit confidently",
+        "Give pickers and dealers a stage for their hunt narratives"
+      ],
+      "required_text": [
+        "Barnyard & Bone",
+        "Next Drop: Thursday, noon Central",
+        "The Picker's Log",
+        "Patina Report"
+      ],
+      "content_model": [
+        "Listing: lot number, title, ask price, freight estimate, condition grade with Patina Report (wear, repairs, smells, structural), dimensions, dated photos, seller, pickup region",
+        "Drop: scheduled release time, participating sellers, item count, preview thumbnails, countdown",
+        "Seller: handle, region, picker bio, vehicle (for delivery range), drop participation, archive",
+        "Picker's Log entry: dispatch title, location, date picked, photo essay, items recovered with inline shop links",
+        "Saved list and watchlist with Drop-day notifications",
+        "Order with freight routing map and ETA"
+      ],
+      "interactions": [
+        "Drop countdown timer that flips to a live-listing grid at release",
+        "Column-density slider toggling 3, 5, or 8 items across",
+        "Top-bar facet pills with multi-select and 'Save this search'",
+        "Patina Report expandable card with checkboxes for wear, repairs, structural notes, and odor",
+        "Freight quote module that geocodes ZIP/postcode and draws a route on a small map",
+        "Sticky cart drawer with per-seller pickup-vs-ship toggle",
+        "Watchlist alarm icon on each card that sets a Drop-day reminder",
+        "Picker's Log photo essays with shoppable image hotspots"
+      ],
+      "asset_needs": [
+        "On-location photography from estate sales, barns, and warehouses",
+        "Studio-lit furniture shots with visible wear, scratches, and original finishes",
+        "Paper price-tag and stenciled-number graphic elements",
+        "Small route-map illustrations for freight visualization",
+        "Picker portraits leaning against trucks or in workshops"
+      ],
+      "mobile_behavior": "Drop countdown pins to the top; facet pills become a horizontal scroller; density slider hides in favor of a fixed two-column masonry; cart drawer becomes a swipe-up sheet with a sticky 'View cart' tab.",
+      "difficulty": "hard"
+    }
+  ]
+}

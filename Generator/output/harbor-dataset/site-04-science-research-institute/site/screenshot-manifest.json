@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "site-04-science-research-institute",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 150,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Home: director hero, live buoy strip, featured research threads, newsroom rail, and right-rail widgets",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "research-full",
+      "weight": 1.0,
+      "page": "research",
+      "state": "default",
+      "intent": "Research & Labs: five discipline bands with labs and shared facilities",
+      "path": "/research.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "people-full",
+      "weight": 1.0,
+      "page": "people",
+      "state": "default",
+      "intent": "People directory: filter chips and grouped person-card grid (PIs, scientists, postdocs, emeritus)",
+      "path": "/people.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "people-filter-pi",
+      "weight": 0.4,
+      "page": "people",
+      "state": "filter-principal-investigators",
+      "intent": "Representative filter chip active state on the people directory",
+      "path": "/people.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-filter=\"pi\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "person-detail-full",
+      "weight": 1.0,
+      "page": "person",
+      "state": "default",
+      "intent": "PI profile page: sidebar identifiers/contact plus biography, projects, publications, field-sites and teaching",
+      "path": "/person.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "publications-full",
+      "weight": 1.0,
+      "page": "publications",
+      "state": "default",
+      "intent": "Publications: search bar, faceted filters, reverse-chronological citation list with bulk export controls",
+      "path": "/publications.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "publications-open-data-filter",
+      "weight": 0.3,
+      "page": "publications",
+      "state": "filter-open-data",
+      "intent": "Toggle 'Only with open data' to show faceted filter state on results",
+      "path": "/publications.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "#open-data-only",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "expeditions-full",
+      "weight": 1.0,
+      "page": "expeditions",
+      "state": "default",
+      "intent": "Expeditions: regional map with cruise tracks, filters, sortable table, and the open detail drawer with daily log and science party",
+      "path": "/expeditions.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "data-full",
+      "weight": 1.0,
+      "page": "data",
+      "state": "default",
+      "intent": "Data catalog: live buoy network strip, faceted filters, dataset cards with bioacoustics player, plus right-rail buoy status and API endpoints",
+      "path": "/data.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "newsroom-full",
+      "weight": 1.0,
+      "page": "newsroom",
+      "state": "default",
+      "intent": "Newsroom: lead feature, two-column secondary stories, chronological archive, field dispatches feed, and press/media-kit sidebar",
+      "path": "/newsroom.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "careers-full",
+      "weight": 1.0,
+      "page": "careers",
+      "state": "default",
+      "intent": "Careers: role category nav, nine open positions, fellowships, culture, benefits, and DEI sections",
+      "path": "/careers.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ]
+}

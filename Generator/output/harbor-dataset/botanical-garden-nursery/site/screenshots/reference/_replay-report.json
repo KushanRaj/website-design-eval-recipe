@@ -1,0 +1,99 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/botanical-garden-nursery/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 15,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "encyclopedia-index-full",
+      "status": "ok",
+      "required": true,
+      "file": "encyclopedia-index-full.png"
+    },
+    {
+      "id": "encyclopedia-entry-full",
+      "status": "ok",
+      "required": true,
+      "file": "encyclopedia-entry-full.png"
+    },
+    {
+      "id": "encyclopedia-entry-tab-cultivation",
+      "status": "ok",
+      "required": false,
+      "file": "encyclopedia-entry-tab-cultivation.png"
+    },
+    {
+      "id": "encyclopedia-entry-tab-propagation",
+      "status": "ok",
+      "required": false,
+      "file": "encyclopedia-entry-tab-propagation.png"
+    },
+    {
+      "id": "bloom-calendar-full",
+      "status": "ok",
+      "required": true,
+      "file": "bloom-calendar-full.png"
+    },
+    {
+      "id": "garden-map-full",
+      "status": "ok",
+      "required": true,
+      "file": "garden-map-full.png"
+    },
+    {
+      "id": "garden-map-bloom-highlights",
+      "status": "ok",
+      "required": false,
+      "file": "garden-map-bloom-highlights.png"
+    },
+    {
+      "id": "workshops-full",
+      "status": "ok",
+      "required": true,
+      "file": "workshops-full.png"
+    },
+    {
+      "id": "workshops-list-view",
+      "status": "ok",
+      "required": false,
+      "file": "workshops-list-view.png"
+    },
+    {
+      "id": "shop-full",
+      "status": "ok",
+      "required": true,
+      "file": "shop-full.png"
+    },
+    {
+      "id": "membership-full",
+      "status": "ok",
+      "required": true,
+      "file": "membership-full.png"
+    },
+    {
+      "id": "membership-faq-open",
+      "status": "ok",
+      "required": false,
+      "file": "membership-faq-open.png"
+    },
+    {
+      "id": "field-notes-full",
+      "status": "ok",
+      "required": true,
+      "file": "field-notes-full.png"
+    },
+    {
+      "id": "visit-full",
+      "status": "ok",
+      "required": true,
+      "file": "visit-full.png"
+    }
+  ]
+}

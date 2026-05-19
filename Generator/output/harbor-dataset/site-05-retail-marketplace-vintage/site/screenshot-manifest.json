@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "site-05-retail-marketplace-vintage",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full-page capture of the homepage showing Drop countdown banner, masonry preview wall, category row, featured pickers, Picker's Log teasers, how-it-works, and footer.",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "browse-full",
+      "weight": 1.0,
+      "page": "browse",
+      "state": "default",
+      "intent": "Full-page capture of the Browse page with facet pills, density slider (5-across active), sort dropdown, masonry grid with drop markers, related searches sidebar, and sold comps.",
+      "path": "/browse.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "browse-density-3-across",
+      "weight": 0.5,
+      "page": "browse",
+      "state": "density-3-across",
+      "intent": "Density slider switched to 3-across; reveals the alternate larger-card masonry layout for the same lot grid.",
+      "path": "/browse.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-cols=\"3\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "browse-density-8-across",
+      "weight": 0.5,
+      "page": "browse",
+      "state": "density-8-across",
+      "intent": "Density slider switched to 8-across; reveals the dense packed masonry layout for the same lot grid.",
+      "path": "/browse.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-cols=\"8\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "lot-full",
+      "weight": 1.0,
+      "page": "product",
+      "state": "default",
+      "intent": "Full-page capture of the product lot page showing gallery, title and CTAs, Patina Report card with checklists, dimensions table, freight quote module, picker card, sold comps strip, and more-from-this-drop carousel.",
+      "path": "/lot.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "picker-full",
+      "weight": 1.0,
+      "page": "seller-storefront",
+      "state": "default",
+      "intent": "Full-page capture of the picker storefront with header, bio, archive tabs, current Drop inventory grid with countdown, dispatch feed, and reviews with star breakdown.",
+      "path": "/picker.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "cart-full",
+      "weight": 1.0,
+      "page": "cart",
+      "state": "default",
+      "intent": "Full-page capture of the cart grouped by picker with per-group freight toggles, consolidation prompt, watchlist row, order summary rail, and trust strip.",
+      "path": "/cart.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "cart-whiteglove-toggle",
+      "weight": 0.25,
+      "page": "cart",
+      "state": "ruth-white-glove-selected",
+      "intent": "Toggles the first picker group (Red Barn Ruth) to White-Glove fulfillment to verify the per-picker shipping mode selector changes the active state.",
+      "path": "/cart.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-44-button-white-glove\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "account-full",
+      "weight": 1.0,
+      "page": "account",
+      "state": "default",
+      "intent": "Full-page capture of the account dashboard with greeting hero stats, tabs row, Drop calendar with reminders, watchlist board groups, orders timeline, followed pickers grid, and settings panels.",
+      "path": "/account.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "log-full",
+      "weight": 1.0,
+      "page": "journal",
+      "state": "default",
+      "intent": "Full-page capture of The Picker's Log featuring the oversized featured dispatch with hotspots, region filter chips, dispatch grid, and submit-a-tip form.",
+      "path": "/log.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "log-region-northeast",
+      "weight": 0.25,
+      "page": "journal",
+      "state": "region-northeast",
+      "intent": "Region filter pill set to Northeast to verify the active filter state of the regional chips above the dispatch feed.",
+      "path": "/log.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "[data-wde-manifest-id=\"wde-50-button-northeast\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    }
+  ]
+}

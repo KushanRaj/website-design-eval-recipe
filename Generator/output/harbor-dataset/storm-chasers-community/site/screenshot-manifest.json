@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "storm-chasers-community",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-ops-dashboard",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full-page capture of OPS dashboard with packet status bar, doppler mosaic quadrant, SPC outlook quadrant, active chaser pings, LSR feed and system uptime",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "home-spc-outlook-day2",
+      "weight": 0.5,
+      "page": "home",
+      "state": "spc-day2-tab",
+      "intent": "DAY 2 SPC convective outlook tab selected in dashboard quadrant to reveal D2 outlook content",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-tab=\"d2\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 250,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "logs-archive",
+      "weight": 1.0,
+      "page": "logs",
+      "state": "default",
+      "intent": "Full-page capture of chase log archive with filter rail and sortable log table",
+      "path": "/logs.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "logs-row-expanded",
+      "weight": 0.5,
+      "page": "logs",
+      "state": "row-expanded",
+      "intent": "Expand first log row to reveal embedded GPS track, hodograph snapshot and narrative entry drawer",
+      "path": "/logs.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[aria-label=\"expand\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "gear-bench",
+      "weight": 1.0,
+      "page": "gear",
+      "state": "default",
+      "intent": "Full-page capture of gear bench parts-catalog: category nav, item grid, and empty comparison cart rail",
+      "path": "/gear.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "gear-compare-cart-filled",
+      "weight": 0.5,
+      "page": "gear",
+      "state": "compare-cart-two-items",
+      "intent": "Add two items to the compare cart to show populated cart slots and side-by-side diff state",
+      "path": "/gear.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "click",
+          "selector": "button[data-name=\"MESO-PLATFORM Mk-IV\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 200,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "button[data-name=\"RoofRunner MM-2\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "wait",
+          "selector": null,
+          "value": null,
+          "key": null,
+          "ms": 300,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "spotters-forum",
+      "weight": 1.0,
+      "page": "spotters",
+      "state": "default",
+      "intent": "Full-page capture of CWA spotter-net forum index with pinned briefings, CWA accordion, sample thread view and net-control rotation schedule",
+      "path": "/spotters.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "outlook-calendar",
+      "weight": 1.0,
+      "page": "calendar",
+      "state": "default",
+      "intent": "Full-page capture of severe outlook calendar with risk-shaded month grid, hazard matrix side panel and chaser RSVP rail",
+      "path": "/calendar.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "gallery-supercell",
+      "weight": 1.0,
+      "page": "gallery",
+      "state": "default",
+      "intent": "Full-page capture of supercell photo archive with filter chip rail, masonry grid with EXIF strips, and photographer leaderboard",
+      "path": "/gallery.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "roster-directory",
+      "weight": 1.0,
+      "page": "roster",
+      "state": "default",
+      "intent": "Full-page capture of callsign-driven roster directory with search bar, table, member profile detail and QSL-style printable card",
+      "path": "/roster.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ]
+}

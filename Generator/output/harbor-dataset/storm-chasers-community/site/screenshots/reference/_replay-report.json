@@ -1,0 +1,69 @@
+{
+  "manifestPath": "/Users/kushanraj/Downloads/Proximal work triasl/Generator/output/real-run-9/storm-chasers-community/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 10,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-ops-dashboard",
+      "status": "ok",
+      "required": true,
+      "file": "home-ops-dashboard.png"
+    },
+    {
+      "id": "home-spc-outlook-day2",
+      "status": "ok",
+      "required": false,
+      "file": "home-spc-outlook-day2.png"
+    },
+    {
+      "id": "logs-archive",
+      "status": "ok",
+      "required": true,
+      "file": "logs-archive.png"
+    },
+    {
+      "id": "logs-row-expanded",
+      "status": "ok",
+      "required": false,
+      "file": "logs-row-expanded.png"
+    },
+    {
+      "id": "gear-bench",
+      "status": "ok",
+      "required": true,
+      "file": "gear-bench.png"
+    },
+    {
+      "id": "gear-compare-cart-filled",
+      "status": "ok",
+      "required": false,
+      "file": "gear-compare-cart-filled.png"
+    },
+    {
+      "id": "spotters-forum",
+      "status": "ok",
+      "required": true,
+      "file": "spotters-forum.png"
+    },
+    {
+      "id": "outlook-calendar",
+      "status": "ok",
+      "required": true,
+      "file": "outlook-calendar.png"
+    },
+    {
+      "id": "gallery-supercell",
+      "status": "ok",
+      "required": true,
+      "file": "gallery-supercell.png"
+    },
+    {
+      "id": "roster-directory",
+      "status": "ok",
+      "required": true,
+      "file": "roster-directory.png"
+    }
+  ]
+}

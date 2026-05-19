@@ -1,0 +1,77 @@
+{
+  "id": "podcast-network",
+  "candidate_id": "podcast-network-frequency-room",
+  "title": "Frequency Room — Independent Podcast Network",
+  "one_liner": "A dynamic independent podcast network website with bold dark-mode UI, neon gradient accents, animated waveform motifs, show landing pages, episode archives with transcripts, host bios, advertiser/partnership page, live tour dates, a member-supported club tier, and a global persistent audio player.",
+  "site_goal": "Make Frequency Room feel like a high-design listening lounge for night owls — a glossy magenta-lit broadcast booth where each show feels like its own intimate channel, the episode archive reads like a deep crate of liner-noted records, and the Inner Circle membership tier feels like getting handed an after-hours key.",
+  "metadata": {
+    "density": "medium-high",
+    "palette": "near-black, magenta gradient, electric lime",
+    "visual_feel": "dynamic modern dark glossy"
+  },
+  "motif": "Concentric tuner-dial waveform rings, hairline lime dividers, soft magenta neon halos around portraits and primary CTAs",
+  "required_text_present": [
+    "Frequency Room",
+    "Inner Circle",
+    "Tonight on Frequency Room"
+  ],
+  "pages": [
+    {"id": "home",            "path": "index.html",                              "sections": ["Tonight hero", "Channel selector strip", "Editor's Crate", "From the Archive deep cut", "Inner Circle teaser", "Upcoming tour dates", "Masthead footer"]},
+    {"id": "channels",        "path": "channels.html",                           "sections": ["Channel-guide row list", "Genre / cadence / sort filters", "Active channels", "On hiatus", "Coming soon"]},
+    {"id": "show-channel",    "path": "channels/the-late-signal.html",           "sections": ["Sticky show identity rail with subscribe chips", "Featured-season hero", "Season tab selector", "Liner-notes episode list", "Host duo bio", "Underwriter ribbon", "Listener letters mailbag"]},
+    {"id": "archive",         "path": "archive.html",                            "sections": ["Full-text transcript search", "Faceted filter rail", "Search-result rows with highlighted snippets", "Saved searches (Inner Circle)", "Topic tag cloud", "Random episode lucky-dip"]},
+    {"id": "episode-detail",  "path": "episode.html",                            "sections": ["Episode masthead with concentric-ring artwork", "Three-column metadata", "Inline player with waveform scrubber", "Long-form transcript with speaker drop-caps and timestamp gutter", "Mentioned sidebar", "If you liked this", "Listener mailbag"]},
+    {"id": "voices",          "path": "voices.html",                             "sections": ["Staff-roll portrait grid", "Filter by show", "Expanded host feature with timeline", "Self-selected episodes", "Guest appearances index"]},
+    {"id": "live-broadcasts", "path": "live.html",                               "sections": ["Month-grid calendar with neon pins", "Upcoming dates sidebar", "Event detail cards", "Inner Circle simulcast badges", "Past tapings gallery", "Venue booking inquiry form"]},
+    {"id": "inner-circle",    "path": "inner-circle.html",                       "sections": ["Atmospheric hero with concentric ring loop", "Two-tier pricing (Late Pass / Skeleton Key)", "Perks lockup grid", "Gated after-hours feed preview", "Member Discord ribbon", "Member quotes", "FAQ accordion", "Sticky enroll CTA"]},
+    {"id": "partner-with-us", "path": "partner.html",                            "sections": ["Animated audience counters", "Psychographic chart", "Host-read sample clips", "Media kit download", "Partner logo wall", "Tiered inquiry form", "Press clippings"]},
+    {"id": "about",           "path": "about.html",                              "sections": ["Mission statement masthead", "Founding timeline as vertical waveform", "Operations & production grid", "Studio + contact", "Pitch-a-show form", "Open roles"]}
+  ],
+  "content_model": [
+    "Channel / Show (channel number, accent color, hosts, cadence, seasons)",
+    "Season (number, run dates, episode count, art)",
+    "Episode (audio, chapters, transcript, guests, mentioned links, mailbag)",
+    "Voice / Host (portrait, bio, timeline, shows, self-selected episodes)",
+    "Live broadcast (venue, datetime, supporting shows, simulcast flag)",
+    "Membership tier (perks, gated feed)",
+    "Partner (logo, case study, sample clip)"
+  ],
+  "interactions": [
+    "Global persistent vertical mini-player rail (right edge desktop, bottom-docked mobile)",
+    "Animated concentric-ring waveform on hero and episode artwork",
+    "Animated equaliser bars in the mini-player",
+    "Spinning vinyl-style mini-player art",
+    "Filter chips with grouped single-active behavior (channels, archive, voices, live)",
+    "Season tabs on the show channel page",
+    "Random episode lucky-dip with curated picks",
+    "Archive search live-filters search rows by query",
+    "Calendar pin hover reveals event detail tooltip",
+    "Animated counters on the partner page",
+    "FAQ accordion on the Inner Circle page",
+    "Typed-effect manifesto opening on the About page",
+    "Gated feed preview with blur + unlock CTA"
+  ],
+  "implementation": {
+    "stack": "vanilla HTML, single shared stylesheet, single small JS file",
+    "no_build": true,
+    "shared_stylesheet": "css/styles.css",
+    "shared_script": "js/app.js",
+    "image_strategy": "All visuals are generated with CSS gradients, SVG concentric rings and CSS-drawn silhouettes — no binary image assets to download. Per-show accent colors set inline as --accent custom properties so the same component reflows across all channels.",
+    "responsive": "Single breakpoint cascade at 1100 / 960 / 880 / 760 / 700 / 640. Right-edge mini-player rail collapses to a bottom-docked bar under 960px. Show channel sticky rail and archive facets reflow to top-stacked blocks."
+  },
+  "files": [
+    "index.html",
+    "channels.html",
+    "channels/the-late-signal.html",
+    "archive.html",
+    "episode.html",
+    "voices.html",
+    "live.html",
+    "inner-circle.html",
+    "partner.html",
+    "about.html",
+    "css/styles.css",
+    "js/app.js",
+    "site_intent.json"
+  ]
+}

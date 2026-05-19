@@ -1,0 +1,109 @@
+{
+  "id": "botanical-garden-nursery",
+  "candidate_id": "fernwood-conservatory",
+  "name": "Fernwood Conservatory & Rare Plant Nursery",
+  "established": "1924",
+  "domain": "Botanical garden and rare-plant conservatory",
+  "one_liner": "A lush specialty botanical garden and rare-plant nursery website with botanical-illustration headers, mossy greens and bone-white palette, plant encyclopedia pages, seasonal bloom calendar, garden map, workshop schedule, membership and shop pages, conservatory visit info, and editorial features on cultivars.",
+  "site_goal": "Position Fernwood Conservatory & Rare Plant Nursery as a destination garden and serious horticultural authority, while driving conservatory visits, plant purchases, workshop sign-ups, and patron memberships.",
+  "metadata": {
+    "density": "medium-high",
+    "palette": "moss green, bone white, soft coral",
+    "visual_feel": "editorial horticultural lush",
+    "typefaces": ["Cormorant Garamond (display serif)", "Inter (sans, eyebrow/meta)", "IBM Plex Mono (badges, codes)"],
+    "tokens": {
+      "moss-900": "#1f2a1d",
+      "moss-700": "#3a4a30",
+      "moss-500": "#647a4f",
+      "moss-100": "#e8ecd9",
+      "bone-100": "#faf6ec",
+      "paper": "#f7f1df",
+      "coral-700": "#b3492f",
+      "coral-500": "#d36247",
+      "coral-100": "#f9d9cd",
+      "ink": "#221b10",
+      "gold": "#a07827"
+    }
+  },
+  "motif": "Pressed-herbarium folio: deckled paper textures, taxonomic rule lines, hand-inked SVG botanical illustration headers, hairline dividers, italic Latin binomial captions over mossy green and bone white.",
+  "required_text_present": [
+    "Fernwood Conservatory & Rare Plant Nursery",
+    "Est. 1924",
+    "Plan Your Visit",
+    "In Bloom This Week",
+    "Become a Member"
+  ],
+  "audience": [
+    "Serious home gardeners and plant collectors",
+    "Conservatory day visitors and tourists",
+    "Patrons and members supporting plant conservation",
+    "Workshop attendees and horticulture students"
+  ],
+  "message_intent": [
+    "Convey deep horticultural expertise and editorial seriousness",
+    "Invite physical visits to the glasshouses and grounds",
+    "Drive rare-plant nursery purchases and waitlist sign-ups",
+    "Recruit recurring members and patrons"
+  ],
+  "pages": [
+    { "id": "home",                "file": "index.html",                                       "path": "/" },
+    { "id": "encyclopedia-index",  "file": "encyclopedia.html",                                "path": "/encyclopedia" },
+    { "id": "encyclopedia-entry",  "file": "encyclopedia/paphiopedilum-fairrieanum.html",      "path": "/encyclopedia/paphiopedilum-fairrieanum" },
+    { "id": "bloom-calendar",      "file": "bloom-calendar.html",                              "path": "/bloom-calendar" },
+    { "id": "garden-map",          "file": "garden-map.html",                                  "path": "/visit/map" },
+    { "id": "workshops",           "file": "workshops.html",                                   "path": "/workshops" },
+    { "id": "nursery-shop",        "file": "shop.html",                                        "path": "/shop" },
+    { "id": "membership",          "file": "membership.html",                                  "path": "/membership" },
+    { "id": "field-notes",         "file": "field-notes.html",                                 "path": "/field-notes" },
+    { "id": "visit",               "file": "visit.html",                                       "path": "/visit" }
+  ],
+  "interactions_implemented": [
+    "Month slider on the Bloom Calendar that recolours the circular SVG wheel and re-renders the peaking-species list",
+    "Interactive SVG garden map with hover- and click-highlighted zones updating a right-rail dossier panel",
+    "Encyclopedia search input that live-filters the visible plate cards",
+    "Workshop calendar/list toggle (month grid vs. card list)",
+    "Add-to-cart button on shop products with a live cart counter and ghost waitlist state for sold-out cultivars",
+    "Sticky in-page tabs on the cultivar entry (Overview / Cultivation / Propagation / In the Garden) with IntersectionObserver-driven active state",
+    "Accordion FAQ on the membership page",
+    "Field-notes tag chip filters (visual toggle)"
+  ],
+  "content_model_examples": {
+    "cultivar_entry": "Paphiopedilum fairrieanum — Fairrie's Slipper · Orchidaceae · Bhutan/Sikkim · Glasshouse · IUCN VU.",
+    "bloom_event":    "Magnolia campbellii · Peak Mar–Apr · Camellia Glade · Full sun.",
+    "garden_zone":    "Glasshouses · 0.8 ac · Paphiopedilum, Platycerium, Vireya · step-free.",
+    "workshop":       "Slipper Orchids from Seed · Dr. James Karuthers · 31 May · 4 hr · Advanced · 12 seats · $145 (members $116).",
+    "feature_article":"‘Why the Blue Poppy Mists in May, and Sulks in July’ by Helena Mór · hero plate of Meconopsis betonicifolia.",
+    "nursery_product":"Paphiopedilum fairrieanum · 6″ pot · 2022 flask · Fernwood propagated · $240 · ships May · stock 4/12.",
+    "membership_tier":"Household · $165/yr · 2 adults + children · 4 guest passes · 327 reciprocal gardens · printed almanac."
+  },
+  "asset_strategy": {
+    "illustrations": "All botanical plates, garden map, ornaments, and brand mark are inline SVG hand-drawn in the file (no external image dependencies). Eight signature cultivars are illustrated: Paphiopedilum fairrieanum, Magnolia campbellii, Helleborus × hybridus, Erythronium revolutum, Meconopsis betonicifolia, Lilium auratum, Camellia japonica, Rhododendron sinogrande (plus Galanthus, Hamamelis, Colchicum, Hydrangea on the index).",
+    "paper_texture": "Deckled-edge plate frames simulated with dashed/dotted SVG rectangles and CSS double-border treatments; subtle dot-pattern background applied to the body via radial-gradient.",
+    "map": "Hand-drawn SVG garden map with ten named zones, hatched fills, scale bar, compass rose, and coral bloom pins.",
+    "photography": "Replaced with editorial SVG plates and pattern washes — the herbarium folio aesthetic is held entirely by illustration."
+  },
+  "mobile_behavior": "Single-column reflow at <980 px. Bloom wheel keeps its circular form but the month strip becomes scrollable; the garden map drops the rail beneath the SVG; encyclopedia tabs collapse to a horizontal scroll; tier tables reflow to two and then one column; honor roll columns step from 3 to 2 to 1.",
+  "files_written": {
+    "html": [
+      "index.html",
+      "encyclopedia.html",
+      "encyclopedia/paphiopedilum-fairrieanum.html",
+      "bloom-calendar.html",
+      "garden-map.html",
+      "workshops.html",
+      "shop.html",
+      "membership.html",
+      "field-notes.html",
+      "visit.html"
+    ],
+    "css": ["css/style.css"],
+    "js":  ["js/main.js"],
+    "json": ["site_intent.json"]
+  },
+  "tech_notes": {
+    "build": "Pure static HTML/CSS, one small vanilla JS file (no frameworks, no build tooling).",
+    "fonts": "Google Fonts loaded by link tag for Cormorant Garamond, Inter, and IBM Plex Mono.",
+    "no_external_images": true,
+    "accessibility": "Semantic landmarks (header, nav, main sections, footer), aria-current on active nav links, alt/labels on SVGs that convey content, keyboard-focusable interactive elements, sufficient contrast for moss/bone palette."
+  }
+}
