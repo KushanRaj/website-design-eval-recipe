@@ -55,6 +55,19 @@ class PageSpec(StrictModel):
     sections: list[str] = Field(default_factory=list)
 
 
+AnimationChannel = Literal["motion", "color"]
+
+
+class ConceptAnimationIntent(StrictModel):
+    id: str = Field(min_length=1)
+    page: str = Field(min_length=1)
+    target: str = Field(min_length=1)
+    trigger: dict[str, Any] = Field(default_factory=dict)
+    channels: list[AnimationChannel] = Field(min_length=1)
+    durationMs: int = Field(ge=0)
+    description: str = Field(min_length=1)
+
+
 class ConceptCandidate(StrictModel):
     candidate_id: str = Field(min_length=1)
     domain: str = Field(min_length=1)
@@ -67,6 +80,7 @@ class ConceptCandidate(StrictModel):
     required_text: list[str] = Field(default_factory=list)
     content_model: list[str] = Field(default_factory=list)
     interactions: list[str] = Field(default_factory=list)
+    animations: list[ConceptAnimationIntent] = Field(default_factory=list)
     asset_needs: list[str] = Field(default_factory=list)
     mobile_behavior: str = "responsive single-column mobile layout"
     difficulty: Literal["easy", "medium", "hard"] = "medium"
@@ -162,6 +176,51 @@ class CaptureSpec(StrictModel):
     enabled: bool = True
 
 
+class AnimationTrigger(StrictModel):
+    type: Literal["hover", "click", "focus", "scroll", "wait"] = "click"
+    selector: str | None = None
+    target: str | None = None
+    description: str | None = None
+    settleBeforeMs: int = Field(default=0, ge=0)
+    settleMs: int = Field(default=0, ge=0)
+
+
+class AnimationTimeline(StrictModel):
+    durationMs: int = Field(ge=0)
+    samplesMs: list[int] = Field(min_length=2)
+    recordFrames: bool = True
+    recordBoundingBoxes: bool = True
+    recordComputedStyles: bool = True
+
+    @field_validator("samplesMs")
+    @classmethod
+    def samples_must_be_non_negative(cls, value: list[int]) -> list[int]:
+        if any(sample < 0 for sample in value):
+            raise ValueError("samplesMs cannot contain negative values")
+        return value
+
+
+class AnimationTarget(StrictModel):
+    name: str = Field(min_length=1)
+    selector: str | None = None
+    signature: dict[str, Any] = Field(default_factory=dict)
+    channels: list[AnimationChannel] = Field(min_length=1)
+    track: list[str] = Field(default_factory=list)
+
+
+class ManifestAnimationCapture(StrictModel):
+    id: str = Field(min_length=1)
+    kind: Literal["animation"] = "animation"
+    weight: float | None = Field(default=None, ge=0.0)
+    page: str | None = None
+    path: str = Field(min_length=1)
+    viewport: dict[str, int] = Field(default_factory=lambda: {"width": 1440, "height": 900})
+    trigger: AnimationTrigger
+    timeline: AnimationTimeline
+    targets: list[AnimationTarget] = Field(min_length=1)
+    enabled: bool = True
+
+
 class ScreenshotManifest(StrictModel):
     schemaVersion: int = 1
     site: dict[str, Any] = Field(default_factory=dict)
@@ -169,6 +228,7 @@ class ScreenshotManifest(StrictModel):
     cleanOutputDir: bool = True
     defaults: dict[str, Any] = Field(default_factory=dict)
     captures: list[CaptureSpec] = Field(min_length=5)
+    animations: list[ManifestAnimationCapture] = Field(default_factory=list)
 
 
 class AcceptedWebsitePackage(StrictModel):

@@ -426,6 +426,29 @@ STAMP_MANIFEST_ELEMENTS_SCRIPT = """
 """
 
 
+ANIMATION_SAMPLE_SCRIPT = """
+({ selector, track }) => {
+  const el = document.querySelector(selector);
+  if (!el) return null;
+  const cs = window.getComputedStyle(el);
+  const rect = el.getBoundingClientRect();
+  const style = {};
+  for (const prop of track || []) style[prop] = cs.getPropertyValue(prop);
+  return {
+    selector,
+    bbox_px: {
+      x: rect.left,
+      y: rect.top,
+      width: rect.width,
+      height: rect.height
+    },
+    visible: cs.display !== 'none' && cs.visibility !== 'hidden' && Number(cs.opacity) !== 0 && rect.width > 0 && rect.height > 0,
+    style
+  };
+}
+"""
+
+
 def _load_dotenv(path: Path) -> None:
     if not path.exists():
         return
@@ -565,7 +588,12 @@ class EvaluateConfig:
     candidate_manifest_claude_auth: str = "api"
 
 
-def _route_for_capture(root: Path, capture: dict[str, Any]) -> dict[str, Any]:
+def _route_for_capture(
+    root: Path,
+    capture: dict[str, Any],
+    *,
+    route_inventory: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     capture_path = capture.get("path") or capture.get("urlPath") or "/index.html"
     relative = capture_path.lstrip("/") or "index.html"
     exact_path = root / relative
@@ -579,6 +607,11 @@ def _route_for_capture(root: Path, capture: dict[str, Any]) -> dict[str, Any]:
             "method": "exact_path",
             "failure_mode": None,
         }
+
+    if route_inventory:
+        semantic_route = _semantic_route_for_capture(capture, route_inventory)
+        if semantic_route:
+            return semantic_route
 
     page = str(capture.get("page") or "").strip().lower()
     candidates = []
@@ -607,6 +640,145 @@ def _route_for_capture(root: Path, capture: dict[str, Any]) -> dict[str, Any]:
         "status": "missing",
         "method": None,
         "failure_mode": "no_matching_route_file",
+    }
+
+
+_ROUTE_STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "archive",
+    "capture",
+    "default",
+    "desktop",
+    "for",
+    "full",
+    "html",
+    "index",
+    "is",
+    "it",
+    "of",
+    "page",
+    "selected",
+    "state",
+    "the",
+    "this",
+    "to",
+    "we",
+    "with",
+    "you",
+}
+
+
+def _route_tokens(value: Any) -> set[str]:
+    text = re.sub(r"([a-z])([A-Z])", r"\1 \2", str(value or ""))
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]+", text.lower())
+        if len(token) > 1 and token not in _ROUTE_STOPWORDS
+    }
+
+
+def _route_inventory(root: Path) -> list[dict[str, Any]]:
+    inventory: list[dict[str, Any]] = []
+    for html_path in sorted(root.glob("*.html")):
+        try:
+            html = html_path.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        title = ""
+        headings: list[str] = []
+        nav_text = ""
+        body_text = ""
+        try:
+            from bs4 import BeautifulSoup
+
+            soup = BeautifulSoup(html, "html.parser")
+            title = re.sub(r"\s+", " ", soup.title.get_text(" ", strip=True) if soup.title else "").strip()
+            headings = [
+                re.sub(r"\s+", " ", heading.get_text(" ", strip=True)).strip()
+                for heading in soup.find_all(["h1", "h2", "h3"])[:12]
+            ]
+            nav_text = re.sub(
+                r"\s+",
+                " ",
+                " ".join(nav.get_text(" ", strip=True) for nav in soup.find_all("nav")[:3]),
+            ).strip()
+            body_text = re.sub(r"\s+", " ", soup.get_text(" ", strip=True)).strip()[:3000]
+        except Exception:
+            text = re.sub(r"<[^>]+>", " ", html)
+            body_text = re.sub(r"\s+", " ", text).strip()[:3000]
+        rel_path = "/" + html_path.relative_to(root).as_posix()
+        page = html_path.stem if html_path.stem != "index" else "home"
+        inventory.append(
+            {
+                "path": rel_path,
+                "page": page,
+                "file_path": str(html_path.resolve()),
+                "title": title,
+                "headings": headings,
+                "nav_text": nav_text,
+                "route_tokens": _route_tokens(" ".join([rel_path, page, title, " ".join(headings)])),
+                "content_tokens": _route_tokens(" ".join([rel_path, page, title, " ".join(headings), body_text])),
+            }
+        )
+    return inventory
+
+
+def _semantic_route_for_capture(
+    capture: dict[str, Any],
+    route_inventory: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    capture_path = capture.get("path") or capture.get("urlPath") or "/index.html"
+    capture_page = str(capture.get("page") or "")
+    route_query = _route_tokens(f"{Path(str(capture_path)).stem} {capture_page}")
+    intent_query = _route_tokens(capture.get("intent"))
+    query = route_query | intent_query
+    if not query:
+        return None
+
+    best: tuple[float, dict[str, Any]] | None = None
+    for route in route_inventory:
+        route_tokens = set(route.get("route_tokens") or set())
+        content_tokens = set(route.get("content_tokens") or route_tokens)
+        if not route_tokens:
+            continue
+        route_hits = len(route_query & route_tokens)
+        intent_route_hits = len(intent_query & route_tokens)
+        intent_content_hits = len(intent_query & content_tokens)
+        route_score = route_hits / max(1, min(len(route_query), len(route_tokens)))
+        intent_route_score = intent_route_hits / max(1, min(3, len(intent_query)))
+        intent_content_score = intent_content_hits / max(1, min(len(intent_query), len(content_tokens)))
+        slug_score = SequenceMatcher(
+            None,
+            re.sub(r"[^a-z0-9]+", "", f"{Path(str(capture_path)).stem}{capture_page}".lower()),
+            re.sub(r"[^a-z0-9]+", "", f"{route.get('path')} {route.get('page')}".lower()),
+        ).ratio()
+        score = max(
+            route_score,
+            intent_route_score,
+            slug_score * 0.7,
+            route_score * 0.7 + intent_content_score * 0.3,
+        )
+        if best is None or score > best[0]:
+            best = (score, route)
+
+    if not best or best[0] < 0.45:
+        return None
+
+    score, route = best
+    confidence = 1.0 if score >= 0.65 else round(max(0.75, min(0.95, score)), 6)
+    return {
+        "requested_path": capture_path,
+        "resolved_path": route["path"],
+        "file_path": route["file_path"],
+        "confidence": confidence,
+        "status": "resolved",
+        "method": "semantic_route_inventory",
+        "failure_mode": "exact_path_missing",
+        "match_score": round(score, 6),
+        "matched_page": route.get("page"),
+        "matched_title": route.get("title"),
     }
 
 
@@ -1049,7 +1221,6 @@ def _artifact_from_page(
     actions: list[dict[str, Any]],
     *,
     side: str,
-    direct_candidate_actions: bool = False,
 ) -> dict[str, Any]:
     screenshot_dir = artifact_dir / "screenshots"
     screenshot_dir.mkdir(parents=True, exist_ok=True)
@@ -1076,6 +1247,433 @@ def _artifact_from_page(
     }
     _write_json(artifact_dir / f"{capture['id']}.json", artifact)
     return artifact
+
+
+def _safe_box(box: dict[str, Any] | None) -> dict[str, float] | None:
+    if not box:
+        return None
+    width = float(box.get("width", 0.0))
+    height = float(box.get("height", 0.0))
+    if width <= 0 or height <= 0:
+        return None
+    return {
+        "x": float(box.get("x", 0.0)),
+        "y": float(box.get("y", 0.0)),
+        "width": width,
+        "height": height,
+    }
+
+
+def _bbox_iou(reference: dict[str, Any] | None, candidate: dict[str, Any] | None) -> float:
+    ref = _safe_box(reference)
+    cand = _safe_box(candidate)
+    if ref is None or cand is None:
+        return 0.0
+    x1 = max(ref["x"], cand["x"])
+    y1 = max(ref["y"], cand["y"])
+    x2 = min(ref["x"] + ref["width"], cand["x"] + cand["width"])
+    y2 = min(ref["y"] + ref["height"], cand["y"] + cand["height"])
+    intersection = max(0.0, x2 - x1) * max(0.0, y2 - y1)
+    union = ref["width"] * ref["height"] + cand["width"] * cand["height"] - intersection
+    return round(float(intersection / union), 6) if union > 0 else 0.0
+
+
+def _bbox_center(box: dict[str, Any] | None) -> tuple[float, float] | None:
+    safe = _safe_box(box)
+    if safe is None:
+        return None
+    return (safe["x"] + safe["width"] / 2.0, safe["y"] + safe["height"] / 2.0)
+
+
+def _distance(a: tuple[float, float] | None, b: tuple[float, float] | None) -> float | None:
+    if a is None or b is None:
+        return None
+    return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2) ** 0.5
+
+
+def _clip_box(box: dict[str, Any] | None, width: int, height: int) -> tuple[int, int, int, int] | None:
+    safe = _safe_box(box)
+    if safe is None:
+        return None
+    left = max(0, min(width, int(round(safe["x"]))))
+    top = max(0, min(height, int(round(safe["y"]))))
+    right = max(0, min(width, int(round(safe["x"] + safe["width"]))))
+    bottom = max(0, min(height, int(round(safe["y"] + safe["height"]))))
+    if right <= left or bottom <= top:
+        return None
+    return (left, top, right, bottom)
+
+
+def _crop_from_frame(frame_path: Path, box: dict[str, Any] | None, output_path: Path) -> str | None:
+    with Image.open(frame_path) as image:
+        clip = _clip_box(box, image.width, image.height)
+        if clip is None:
+            return None
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        image.crop(clip).save(output_path)
+        return str(output_path)
+
+
+def _resolve_target(page: Page, target: dict[str, Any], reference_signature: dict[str, Any] | None) -> dict[str, Any]:
+    selector = target.get("selector")
+    if selector:
+        try:
+            if page.locator(selector).count() == 1:
+                return {
+                    "status": "resolved",
+                    "method": "exact_selector",
+                    "requested_selector": selector,
+                    "resolved_selector": selector,
+                    "confidence": 1.0,
+                    "failure_mode": None,
+                    "matched_element": None,
+                }
+        except Exception:
+            pass
+    if reference_signature is None:
+        return {
+            "status": "unsupported",
+            "method": None,
+            "requested_selector": selector,
+            "resolved_selector": None,
+            "confidence": 0.0,
+            "failure_mode": "target_selector_missing_or_reference_signature_unavailable",
+            "matched_element": None,
+        }
+    candidates = [element for element in _candidate_elements(page) if element.get("visible")]
+    scored = [(_score_candidate_element(reference_signature, candidate, "focus"), candidate) for candidate in candidates]
+    scored.sort(key=lambda item: item[0], reverse=True)
+    if not scored:
+        return {
+            "status": "unsupported",
+            "method": "element_match",
+            "requested_selector": selector,
+            "resolved_selector": None,
+            "confidence": 0.0,
+            "failure_mode": "no_candidate_elements",
+            "matched_element": None,
+        }
+    best_score, best_element = scored[0]
+    if best_score < 0.35:
+        return {
+            "status": "unsupported",
+            "method": "element_match",
+            "requested_selector": selector,
+            "resolved_selector": None,
+            "confidence": best_score,
+            "failure_mode": "no_candidate_target_above_threshold",
+            "matched_element": best_element,
+        }
+    return {
+        "status": "resolved",
+        "method": "element_match",
+        "requested_selector": selector,
+        "resolved_selector": best_element["selector"],
+        "confidence": best_score,
+        "failure_mode": None,
+        "matched_element": best_element,
+    }
+
+
+def _animation_action(animation: dict[str, Any]) -> dict[str, Any]:
+    trigger = animation.get("trigger") or {}
+    return {
+        "type": trigger.get("type") or "click",
+        "selector": trigger.get("selector"),
+        "settleMs": trigger.get("settleMs") or 0,
+    }
+
+
+def _animation_samples(animation: dict[str, Any]) -> list[int]:
+    timeline = animation.get("timeline") or {}
+    samples = sorted({int(value) for value in timeline.get("samplesMs") or [] if isinstance(value, int | float) and value >= 0})
+    if 0 not in samples:
+        samples.insert(0, 0)
+    if len(samples) < 2:
+        duration = int(timeline.get("durationMs") or 600)
+        samples = [0, duration]
+    return samples
+
+
+def _sample_animation_page(
+    page: Page,
+    animation: dict[str, Any],
+    target_resolutions: list[dict[str, Any]],
+    artifact_dir: Path,
+    *,
+    side: str,
+) -> dict[str, Any]:
+    frames_dir = artifact_dir / "animations" / animation["id"] / "frames"
+    crops_dir = artifact_dir / "animations" / animation["id"] / "target-crops"
+    samples = _animation_samples(animation)
+    timeline_rows = []
+
+    def sample_at(timestamp_ms: int) -> dict[str, Any]:
+        frame_path = frames_dir / f"frame-{timestamp_ms:04d}.png"
+        frames_dir.mkdir(parents=True, exist_ok=True)
+        page.screenshot(path=str(frame_path), full_page=False, animations="allow", caret="hide")
+        target_rows = []
+        for index, target in enumerate(animation.get("targets") or []):
+            resolution = target_resolutions[index] if index < len(target_resolutions) else {}
+            selector = resolution.get("resolved_selector")
+            sample = page.evaluate(
+                ANIMATION_SAMPLE_SCRIPT,
+                {"selector": selector, "track": target.get("track") or []},
+            ) if selector else None
+            crop_path = None
+            if sample:
+                crop_path = _crop_from_frame(
+                    frame_path,
+                    sample.get("bbox_px"),
+                    crops_dir / f"target-{index}-frame-{timestamp_ms:04d}.png",
+                )
+            target_rows.append(
+                {
+                    "target_index": index,
+                    "name": target.get("name"),
+                    "channels": target.get("channels") or [],
+                    "track": target.get("track") or [],
+                    "resolution": resolution,
+                    "sample": sample,
+                    "crop_path": crop_path,
+                }
+            )
+        return {"timestampMs": timestamp_ms, "frame_path": str(frame_path), "targets": target_rows}
+
+    timeline_rows.append(sample_at(samples[0]))
+    action = _animation_action(animation)
+    trigger_signature = _element_signature(page, action["selector"]) if action.get("selector") else None
+    trigger_status = "resolved"
+    trigger_failure = None
+    try:
+        settle_before_ms = int((animation.get("trigger") or {}).get("settleBeforeMs") or 0)
+        if settle_before_ms:
+            page.wait_for_timeout(settle_before_ms)
+        if action.get("type") != "wait":
+            _run_action(page, action)
+    except Exception as exc:
+        trigger_status = "failed"
+        trigger_failure = f"{type(exc).__name__}: {exc}"
+
+    previous = samples[0]
+    for timestamp_ms in samples[1:]:
+        page.wait_for_timeout(max(0, timestamp_ms - previous))
+        timeline_rows.append(sample_at(timestamp_ms))
+        previous = timestamp_ms
+
+    artifact = {
+        "animation_id": animation["id"],
+        "side": side,
+        "page": animation.get("page"),
+        "path": animation.get("path"),
+        "viewport": animation.get("viewport"),
+        "trigger": {
+            "action": action,
+            "status": trigger_status,
+            "failure": trigger_failure,
+            "reference_signature": trigger_signature,
+        },
+        "timeline": timeline_rows,
+    }
+    _write_json(artifact_dir / "animations" / animation["id"] / "timeline.json", artifact)
+    return artifact
+
+
+def _capture_reference_animation(
+    browser: Browser,
+    base_url: str,
+    animation: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    artifact_dir: Path,
+) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, Any] | None]:
+    defaults = manifest.get("defaults", {})
+    context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = context.new_page()
+    try:
+        _goto_capture(page, base_url, route, animation, defaults)
+        target_resolutions = []
+        for target in animation.get("targets") or []:
+            signature = _element_signature(page, target.get("selector")) if target.get("selector") else None
+            target_resolutions.append(
+                {
+                    "status": "resolved" if signature else "unsupported",
+                    "method": "exact_selector" if signature else None,
+                    "requested_selector": target.get("selector"),
+                    "resolved_selector": target.get("selector") if signature else None,
+                    "confidence": 1.0 if signature else 0.0,
+                    "failure_mode": None if signature else "reference_target_unresolved",
+                    "reference_signature": signature,
+                }
+            )
+        artifact = _sample_animation_page(page, animation, target_resolutions, artifact_dir, side="reference")
+        return artifact, target_resolutions, artifact.get("trigger", {}).get("reference_signature")
+    finally:
+        context.close()
+
+
+def _capture_candidate_animation(
+    browser: Browser,
+    base_url: str,
+    animation: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    reference_target_resolutions: list[dict[str, Any]],
+    reference_trigger_signature: dict[str, Any] | None,
+    artifact_dir: Path,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    defaults = manifest.get("defaults", {})
+    context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = context.new_page()
+    try:
+        _goto_capture(page, base_url, route, animation, defaults)
+        target_resolutions = []
+        for index, target in enumerate(animation.get("targets") or []):
+            reference_signature = None
+            if index < len(reference_target_resolutions):
+                reference_signature = reference_target_resolutions[index].get("reference_signature")
+            target_resolutions.append(_resolve_target(page, target, reference_signature))
+
+        action = _animation_action(animation)
+        if action.get("type") != "wait":
+            trigger_resolution = _resolve_action(page, action, reference_trigger_signature)
+            if trigger_resolution["status"] == "resolved":
+                animation = json.loads(json.dumps(animation))
+                animation["trigger"]["selector"] = trigger_resolution.get("resolved_selector")
+            else:
+                artifact = {
+                    "animation_id": animation["id"],
+                    "side": "candidate",
+                    "page": animation.get("page"),
+                    "path": animation.get("path"),
+                    "viewport": animation.get("viewport"),
+                    "trigger": {"action": action, "status": "unsupported", "resolution": trigger_resolution},
+                    "timeline": [],
+                }
+                _write_json(artifact_dir / "animations" / animation["id"] / "timeline.json", artifact)
+                return artifact, target_resolutions
+
+        artifact = _sample_animation_page(page, animation, target_resolutions, artifact_dir, side="candidate")
+        return artifact, target_resolutions
+    finally:
+        context.close()
+
+
+def _score_motion_target(reference_rows: list[dict[str, Any]], candidate_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    ious = []
+    for ref_row, cand_row in zip(reference_rows, candidate_rows, strict=False):
+        ref_box = ((ref_row.get("sample") or {}).get("bbox_px") if ref_row else None)
+        cand_box = ((cand_row.get("sample") or {}).get("bbox_px") if cand_row else None)
+        ious.append(_bbox_iou(ref_box, cand_box))
+
+    interval_scores = []
+    weighted_total = 0.0
+    weight_sum = 0.0
+    for index in range(max(0, min(len(reference_rows), len(candidate_rows)) - 1)):
+        ref_a = _bbox_center((reference_rows[index].get("sample") or {}).get("bbox_px"))
+        ref_b = _bbox_center((reference_rows[index + 1].get("sample") or {}).get("bbox_px"))
+        cand_a = _bbox_center((candidate_rows[index].get("sample") or {}).get("bbox_px"))
+        cand_b = _bbox_center((candidate_rows[index + 1].get("sample") or {}).get("bbox_px"))
+        ref_move = _distance(ref_a, ref_b)
+        cand_move = _distance(cand_a, cand_b)
+        if ref_move is None or cand_move is None or ref_move <= 1.0:
+            continue
+        interval_score = max(0.0, 1.0 - abs(cand_move - ref_move) / max(ref_move, 1.0))
+        interval_scores.append(
+            {
+                "interval": [index, index + 1],
+                "reference_movement_px": round(ref_move, 6),
+                "candidate_movement_px": round(cand_move, 6),
+                "score": round(interval_score, 6),
+                "weight": round(ref_move, 6),
+            }
+        )
+        weighted_total += interval_score * ref_move
+        weight_sum += ref_move
+
+    return {
+        "bbox_iou": round(float(sum(ious) / len(ious)), 6) if ious else 0.0,
+        "bbox_iou_by_frame": ious,
+        "motion_delta": round(float(weighted_total / weight_sum), 6) if weight_sum else 1.0,
+        "motion_delta_intervals": interval_scores,
+        "movement_weight_sum": round(weight_sum, 6),
+    }
+
+
+def _normalize_style_value(value: Any) -> str:
+    return re.sub(r"\s+", " ", str(value or "").strip().lower())
+
+
+def _score_color_target(reference_rows: list[dict[str, Any]], candidate_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    pixel_scores = []
+    cssom_scores = []
+    cssom_rows = []
+    for ref_row, cand_row in zip(reference_rows, candidate_rows, strict=False):
+        ref_crop = ref_row.get("crop_path")
+        cand_crop = cand_row.get("crop_path")
+        if ref_crop and cand_crop:
+            pixel_scores.append(pixelmatch_score(ref_crop, cand_crop)["score"])
+        ref_style = (ref_row.get("sample") or {}).get("style") or {}
+        cand_style = (cand_row.get("sample") or {}).get("style") or {}
+        props = sorted(set(ref_style) | set(cand_style))
+        prop_scores = []
+        for prop in props:
+            ref_value = _normalize_style_value(ref_style.get(prop))
+            cand_value = _normalize_style_value(cand_style.get(prop))
+            score = 1.0 if ref_value == cand_value else 0.0
+            prop_scores.append(score)
+            cssom_rows.append({"property": prop, "reference": ref_value, "candidate": cand_value, "score": score})
+        if prop_scores:
+            cssom_scores.append(sum(prop_scores) / len(prop_scores))
+    return {
+        "target_box_pixelmatch": round(float(sum(pixel_scores) / len(pixel_scores)), 6) if pixel_scores else None,
+        "target_box_pixelmatch_by_frame": pixel_scores,
+        "cssom_color": round(float(sum(cssom_scores) / len(cssom_scores)), 6) if cssom_scores else None,
+        "cssom_color_by_property": cssom_rows,
+    }
+
+
+def _score_animation_pair(reference_artifact: dict[str, Any], candidate_artifact: dict[str, Any]) -> dict[str, Any]:
+    if not reference_artifact.get("timeline") or not candidate_artifact.get("timeline"):
+        return {"status": "unsupported", "reason": "animation_timeline_missing"}
+    target_count = max(
+        len(reference_artifact["timeline"][0].get("targets", [])),
+        len(candidate_artifact["timeline"][0].get("targets", [])),
+    )
+    targets = []
+    for target_index in range(target_count):
+        ref_rows = [
+            sample.get("targets", [])[target_index]
+            for sample in reference_artifact.get("timeline", [])
+            if len(sample.get("targets", [])) > target_index
+        ]
+        cand_rows = [
+            sample.get("targets", [])[target_index]
+            for sample in candidate_artifact.get("timeline", [])
+            if len(sample.get("targets", [])) > target_index
+        ]
+        channels = sorted(set(ref_rows[0].get("channels") or []) | set(cand_rows[0].get("channels") or [])) if ref_rows and cand_rows else []
+        channel_scores: dict[str, Any] = {}
+        if "motion" in channels:
+            channel_scores["motion"] = _score_motion_target(ref_rows, cand_rows)
+        if "color" in channels:
+            channel_scores["color"] = _score_color_target(ref_rows, cand_rows)
+        targets.append(
+            {
+                "target_index": target_index,
+                "name": ref_rows[0].get("name") if ref_rows else None,
+                "channels": channels,
+                "scores": channel_scores,
+            }
+        )
+    return {
+        "status": "scored",
+        "trigger": {
+            "reference_status": (reference_artifact.get("trigger") or {}).get("status"),
+            "candidate_status": (candidate_artifact.get("trigger") or {}).get("status"),
+        },
+        "targets": targets,
+    }
 
 
 def _missing_artifact(
@@ -1115,6 +1713,7 @@ def _extract_visual_blocks_for_artifact(
     artifact: dict[str, Any],
     *,
     side: str,
+    direct_candidate_actions: bool = False,
 ) -> dict[str, Any]:
     defaults = manifest.get("defaults", {})
     context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -1526,9 +2125,25 @@ def _build_report(result: dict[str, Any]) -> str:
                 capture.get("missing_reason") or coverage.get("reason"),
             ]
         )
+    animation_rows = []
+    for animation_id, animation in result.get("animations", {}).items():
+        metrics = animation.get("metrics", {})
+        for target in metrics.get("targets", []) if isinstance(metrics, dict) else []:
+            scores = target.get("scores") or {}
+            animation_rows.append(
+                [
+                    animation_id,
+                    target.get("target_index"),
+                    ",".join(target.get("channels") or []),
+                    _get_metric(scores, ["motion", "bbox_iou"]),
+                    _get_metric(scores, ["motion", "motion_delta"]),
+                    _get_metric(scores, ["color", "target_box_pixelmatch"]),
+                    _get_metric(scores, ["color", "cssom_color"]),
+                    animation.get("missing_reason") or metrics.get("reason"),
+                ]
+            )
     summary = result["summary"]
-    return "\n".join(
-        [
+    sections = [
             "# Functional Evaluation Report",
             "",
             f"Generated at: `{result['metadata']['generated_at']}`",
@@ -1552,6 +2167,12 @@ def _build_report(result: dict[str, Any]) -> str:
                     ["mean_html_text_rouge_1_recall", summary.get("mean_html_text_rouge_1_recall")],
                     ["mean_html_tree_f1", summary.get("mean_html_tree_f1")],
                     ["mean_visual_block_score", summary.get("mean_visual_block_score")],
+                    ["animations", summary.get("animation_count")],
+                    ["scored_animations", summary.get("scored_animation_count")],
+                    ["mean_animation_bbox_iou", summary.get("mean_animation_bbox_iou")],
+                    ["mean_animation_motion_delta", summary.get("mean_animation_motion_delta")],
+                    ["mean_animation_target_pixelmatch", summary.get("mean_animation_target_pixelmatch")],
+                    ["mean_animation_cssom_color", summary.get("mean_animation_cssom_color")],
                 ],
             ),
             "## Captures",
@@ -1577,8 +2198,28 @@ def _build_report(result: dict[str, Any]) -> str:
                 ],
                 rows,
             ),
-        ]
-    )
+    ]
+    if animation_rows:
+        sections.extend(
+            [
+                "## Animations",
+                "",
+                _md_table(
+                    [
+                        "Animation",
+                        "Target",
+                        "Channels",
+                        "BBox IoU",
+                        "Motion Delta",
+                        "Target Pixel",
+                        "CSSOM Color",
+                        "Reason",
+                    ],
+                    animation_rows,
+                ),
+            ]
+        )
+    return "\n".join(sections)
 
 
 def _summarize(result: dict[str, Any]) -> dict[str, Any]:
@@ -1597,6 +2238,19 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
     html_text_rouge_scores = [_get_metric(metric, ["html_text", "rouge_1_recall"]) for metric in scored_metrics]
     html_tree_f1_scores = [_get_metric(metric, ["html_tree", "f1"]) for metric in scored_metrics]
     visual_scores = [_get_metric(metric, ["visual_block", "score"]) for metric in scored_metrics]
+    animation_payloads = result.get("animations", {})
+    animation_metrics = [payload.get("metrics", {}) for payload in animation_payloads.values()]
+    animation_bbox = []
+    animation_motion = []
+    animation_pixel = []
+    animation_cssom = []
+    for metric in animation_metrics:
+        for target in metric.get("targets", []) if isinstance(metric, dict) else []:
+            scores = target.get("scores") or {}
+            animation_bbox.append(_get_metric(scores, ["motion", "bbox_iou"]))
+            animation_motion.append(_get_metric(scores, ["motion", "motion_delta"]))
+            animation_pixel.append(_get_metric(scores, ["color", "target_box_pixelmatch"]))
+            animation_cssom.append(_get_metric(scores, ["color", "cssom_color"]))
 
     def numeric(values: list[Any]) -> list[float]:
         return [float(value) for value in values if isinstance(value, int | float)]
@@ -1614,6 +2268,12 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
         "mean_html_text_rouge_1_recall": _mean(numeric(html_text_rouge_scores)),
         "mean_html_tree_f1": _mean(numeric(html_tree_f1_scores)),
         "mean_visual_block_score": _mean(numeric(visual_scores)),
+        "animation_count": len(animation_payloads),
+        "scored_animation_count": sum(1 for metric in animation_metrics if metric.get("status") == "scored"),
+        "mean_animation_bbox_iou": _mean(numeric(animation_bbox)),
+        "mean_animation_motion_delta": _mean(numeric(animation_motion)),
+        "mean_animation_target_pixelmatch": _mean(numeric(animation_pixel)),
+        "mean_animation_cssom_color": _mean(numeric(animation_cssom)),
     }
 
 
@@ -1628,6 +2288,11 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
         capture
         for capture in reference_manifest.get("captures", [])
         if _enabled_capture(capture) and (not config.capture_filter or capture["id"] in config.capture_filter)
+    ]
+    animations = [
+        animation
+        for animation in reference_manifest.get("animations", [])
+        if _enabled_capture(animation) and (not config.capture_filter or animation["id"] in config.capture_filter)
     ]
     candidate_manifest_result: dict[str, Any] | None = None
     candidate_manifest: dict[str, Any] | None = None
@@ -1661,12 +2326,18 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
 
     reference_server = StaticServer.start(config.reference_root)
     candidate_server = StaticServer.start(config.candidate_root)
+    candidate_route_inventory = _route_inventory(config.candidate_root)
     candidate_plan: dict[str, Any] = {
         "reference_root": str(config.reference_root),
         "candidate_root": str(config.candidate_root),
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "candidate_manifest_planner": candidate_manifest_result,
+        "candidate_route_inventory": [
+            {key: route.get(key) for key in ("path", "page", "title", "headings", "nav_text")}
+            for route in candidate_route_inventory
+        ],
         "captures": {},
+        "animations": {},
     }
     result: dict[str, Any] = {
         "metadata": {
@@ -1683,6 +2354,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
             "candidate_manifest_planner": candidate_manifest_result,
         },
         "captures": {},
+        "animations": {},
     }
 
     try:
@@ -1704,7 +2376,11 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                             "failure_mode": "candidate_manifest_capture_missing",
                         }
                     else:
-                        candidate_route = _route_for_capture(config.candidate_root, candidate_capture or capture)
+                        candidate_route = _route_for_capture(
+                            config.candidate_root,
+                            candidate_capture or capture,
+                            route_inventory=candidate_route_inventory,
+                        )
                     reference_artifact_dir = config.output_dir / "artifacts" / "reference"
                     candidate_artifact_dir = config.output_dir / "artifacts" / "candidate"
 
@@ -1793,6 +2469,93 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                         "metrics": {"status": "pending"},
                         "missing_reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
                     }
+                for animation in animations:
+                    animation_id = animation["id"]
+                    reference_route = _route_for_capture(config.reference_root, animation)
+                    candidate_route = _route_for_capture(
+                        config.candidate_root,
+                        animation,
+                        route_inventory=candidate_route_inventory,
+                    )
+                    reference_artifact_dir = config.output_dir / "artifacts" / "reference"
+                    candidate_artifact_dir = config.output_dir / "artifacts" / "candidate"
+
+                    if reference_route["status"] != "resolved":
+                        reference_artifact = {
+                            "animation_id": animation_id,
+                            "side": "reference",
+                            "missing_reason": reference_route["failure_mode"] or "reference_route_missing",
+                            "timeline": [],
+                        }
+                        reference_target_resolutions = []
+                        reference_trigger_signature = None
+                        _write_json(reference_artifact_dir / "animations" / animation_id / "timeline.json", reference_artifact)
+                    else:
+                        try:
+                            reference_artifact, reference_target_resolutions, reference_trigger_signature = _capture_reference_animation(
+                                browser,
+                                reference_server.base_url,
+                                animation,
+                                reference_manifest,
+                                reference_route,
+                                reference_artifact_dir,
+                            )
+                        except Exception as exc:
+                            reference_artifact = {
+                                "animation_id": animation_id,
+                                "side": "reference",
+                                "missing_reason": f"reference_animation_capture_failed: {type(exc).__name__}: {exc}",
+                                "timeline": [],
+                            }
+                            reference_target_resolutions = []
+                            reference_trigger_signature = None
+                            _write_json(reference_artifact_dir / "animations" / animation_id / "timeline.json", reference_artifact)
+
+                    if candidate_route["status"] != "resolved":
+                        candidate_artifact = {
+                            "animation_id": animation_id,
+                            "side": "candidate",
+                            "missing_reason": candidate_route["failure_mode"] or "candidate_route_missing",
+                            "timeline": [],
+                        }
+                        candidate_target_resolutions = []
+                        _write_json(candidate_artifact_dir / "animations" / animation_id / "timeline.json", candidate_artifact)
+                    else:
+                        try:
+                            candidate_artifact, candidate_target_resolutions = _capture_candidate_animation(
+                                browser,
+                                candidate_server.base_url,
+                                animation,
+                                reference_manifest,
+                                candidate_route,
+                                reference_target_resolutions,
+                                reference_trigger_signature,
+                                candidate_artifact_dir,
+                            )
+                        except Exception as exc:
+                            candidate_artifact = {
+                                "animation_id": animation_id,
+                                "side": "candidate",
+                                "missing_reason": f"candidate_animation_capture_failed: {type(exc).__name__}: {exc}",
+                                "timeline": [],
+                            }
+                            candidate_target_resolutions = []
+                            _write_json(candidate_artifact_dir / "animations" / animation_id / "timeline.json", candidate_artifact)
+
+                    candidate_plan["animations"][animation_id] = {
+                        "animation": animation,
+                        "route_resolution": candidate_route,
+                        "target_resolutions": candidate_target_resolutions,
+                    }
+                    result["animations"][animation_id] = {
+                        "animation": animation,
+                        "reference_artifact": str(reference_artifact_dir / "animations" / animation_id / "timeline.json"),
+                        "candidate_artifact": str(candidate_artifact_dir / "animations" / animation_id / "timeline.json"),
+                        "reference_route": reference_route,
+                        "candidate_route": candidate_route,
+                        "metrics": _score_animation_pair(reference_artifact, candidate_artifact),
+                        "missing_reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
+                    }
             finally:
                 browser.close()
     finally:
@@ -1844,6 +2607,12 @@ def print_functional_status(result: dict[str, Any]) -> None:
         "mean_html_text_rouge_1_recall": summary.get("mean_html_text_rouge_1_recall"),
         "mean_html_tree_f1": summary.get("mean_html_tree_f1"),
         "mean_visual_block_score": summary.get("mean_visual_block_score"),
+        "animations": summary.get("animation_count"),
+        "scored_animations": summary.get("scored_animation_count"),
+        "mean_animation_bbox_iou": summary.get("mean_animation_bbox_iou"),
+        "mean_animation_motion_delta": summary.get("mean_animation_motion_delta"),
+        "mean_animation_target_pixelmatch": summary.get("mean_animation_target_pixelmatch"),
+        "mean_animation_cssom_color": summary.get("mean_animation_cssom_color"),
         "output_dir": result["metadata"]["output_dir"],
         "metrics": str(Path(result["metadata"]["output_dir"]) / "metrics.json"),
         "report": str(Path(result["metadata"]["output_dir"]) / "functional-report.md"),

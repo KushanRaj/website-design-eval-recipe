@@ -15,7 +15,9 @@ pages."""
 CONCEPT_SYSTEM = """You are the concept engine for website generation.
 Generate multiple concrete website concepts from one seed. Expand the seed into
 realistic, visually distinct, multi-page website concepts that could plausibly
-exist in the real world. Every concept must contain at least five pages."""
+exist in the real world. Every concept must contain at least five pages.
+When animation is appropriate, describe it as structured, testable intent using
+only the V1 channels "motion" and/or "color"."""
 
 CRITIC_SYSTEM = """You are a strict concept critic. Score each concept for domain
 fit, motif clarity, page/layout concreteness, interaction usefulness, realism,
@@ -89,7 +91,9 @@ Prefer specific, surgical instructions over vague criticism."""
 MANIFEST_SYSTEM = """You are the screenshot manifest generator for verified
 reference websites. Create replayable Playwright-style capture specs for full
 pages, mobile states, and meaningful interactions that are actually present in
-the site. Include captures for at least five pages."""
+the site. Include captures for at least five pages. If the accepted concept
+contains structured animations, map those intents to an animations list with
+browser-replayable trigger selectors, target selectors, and sample timelines."""
 
 
 def _json(value: Any) -> str:
@@ -171,6 +175,10 @@ Rules:
 - Explode the seed into concrete layout patterns, visual motifs, content models,
   and natural controls/interactions.
 - Include natural controls/interactions when they fit the site.
+- If the site should include animation, add entries to animations. Each
+  animation must include: id, page, target, trigger, channels, durationMs, and
+  description. Use only channels ["motion"] and/or ["color"]. Avoid vague
+  animation descriptions that cannot be replayed by a browser evaluator.
 - Do not use arbitrary component-count thresholds.
 - Use message_intent for semantic communication goals.
 - Use required_text only for exact visible strings that must appear.
@@ -314,4 +322,10 @@ Rules:
 - Include full-page desktop captures for every page, with at least five pages.
 - Include mobile captures when mobile behavior is specified.
 - Include hover/focus/dropdown captures only when the concept and site files support them.
+- If the accepted concept includes animations, add an animations array. Each
+  animation must include id, kind="animation", page, path, viewport, trigger,
+  timeline, and targets. Use only channels ["motion"] and/or ["color"].
+- For motion animations, include target selectors and sample times that cover
+  the full duration. For color animations, include target selectors and track
+  computed color properties such as background-color, color, and border colors.
 """

@@ -1,5 +1,38 @@
 # Claude SDK Website Generator
 
+## Status Update - 2026-05-20
+
+The generator is no longer only a plan. The current implementation lives under
+`Generator/` and has the main host-controlled loop in place:
+
+```text
+dataset plan
+  -> concept candidates
+  -> critic selection/regeneration
+  -> builder writes site files
+  -> host validates files and runs browser checks
+  -> verifier approves or requests repair
+  -> manifest agent generates screenshot manifest
+  -> replay screenshots
+  -> package metadata
+```
+
+Important implementation decisions now reflected in code:
+
+- The builder writes directly into the site directory. The host validates path
+  hygiene afterward instead of asking the builder for a structured file bundle.
+- Managed screenshot output under `site/screenshots/` is ignored during builder
+  file validation, so repair loops do not fail because a previous replay created
+  PNG files.
+- The screenshot manifest is generated after the site passes verification.
+- Manifest replay runs with pruning in the generator path. Failed optional
+  interaction captures are dropped from the manifest; required no-action captures
+  still fail the seed.
+- Harbor packaging only copies already-captured screenshots. It does not
+  regenerate or repair incomplete screenshots.
+- Concept and manifest schemas now include V1 animation intent/captures, but
+  animation remains an early track separate from the static reward curriculum.
+
 ## Summary
 Build `Generator/` as a Python package for the Oracle/reference website generation pipeline, using **Claude Agent SDK** as the default agent runtime. The current docs point to `claude-agent-sdk` with `claude_agent_sdk` imports, and support structured outputs, tools, permissions, hooks, subagents, and MCP, so the implementation should not use stale `claude-code-sdk` examples. citeturn2search1turn2search0
 
@@ -16,6 +49,8 @@ Build `Generator/` as a Python package for the Oracle/reference website generati
   - Host validates path hygiene over the files the agent wrote, renders with
     Playwright, runs local checks, then calls verifier.
   - Manifest agent creates screenshot manifest only after approval.
+  - Manifest replay prunes failed optional interaction captures and keeps the
+    successfully captured high-information states.
 - Use Pydantic schemas for all artifacts: request, dataset plan, concept candidates, critic report, website bundle, verifier report, repair instructions, screenshot manifest, and final package metadata.
 - Integrate existing repo capabilities instead of duplicating them:
   - Reuse `scripts/capture-screenshots.mjs` for manifest replay.
@@ -34,6 +69,9 @@ Build `Generator/` as a Python package for the Oracle/reference website generati
 - Unit-test safe file writing: reject absolute paths, parent traversal, duplicate paths, missing `index.html`, missing assets, and unsupported file types.
 - Unit-test pipeline control with a fake Claude runtime: concept regeneration, critic acceptance, builder repair, verifier approval/rejection, retry exhaustion.
 - Smoke-test manifest replay against a tiny generated static site using the existing Playwright capture script.
+- Unit-test that managed `screenshots/` outputs are ignored during builder file
+  validation.
+- Unit-test that failed optional replay captures can be pruned from the manifest.
 - Add one integration-style dry run that uses fake agent outputs and existing local metrics, so tests do not require API keys.
 
 ## Assumptions
@@ -43,4 +81,6 @@ Build `Generator/` as a Python package for the Oracle/reference website generati
   whatever the agent produced (no abs paths, no traversal, allowed suffixes,
   index.html present).
 - Default model is configurable via env/CLI, with `sonnet` as the practical Claude SDK default unless the user overrides it.
-- No repo-tracked files are changed until Plan Mode ends.
+- Generated run outputs under `Generator/output/` are artifacts, not hand-authored
+  source. Commit policy should keep code/docs/tests separate from large generated
+  site runs unless a run is intentionally promoted into the dataset.

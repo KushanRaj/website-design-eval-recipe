@@ -11,6 +11,7 @@ dependencies = [
     "dreamsim",
     "lxml>=6.1.0",
     "matplotlib>=3.10.9",
+    "modal>=1.4.3",
     "nltk>=3.9.4",
     "numpy>=2.4.5",
     "open-clip-torch>=3.3.0",

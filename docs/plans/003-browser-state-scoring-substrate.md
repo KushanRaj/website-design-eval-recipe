@@ -1,5 +1,22 @@
 # Plan 003: Browser-State Scoring Substrate
 
+## Status Update - 2026-05-20
+
+The main substrate shift has been implemented in the manifest-aware evaluator:
+
+- rendered HTML text/tree metrics read `outerHTML` from the Playwright capture
+  artifacts
+- CSSOM is captured from the manifest-replayed page state
+- visual blocks are extracted from isolated Playwright pages that replay the same
+  manifest state before doing text-color mutation
+- candidate routes can use semantic route inventory fallback when exact paths
+  differ
+- evaluator-added node stamps are removed before clean artifact capture
+
+Remaining work is mostly calibration and robustness: stronger intent/postcondition
+schemas, better action resolution, more generated-site runs, and batch/runtime
+optimization.
+
 ## Summary
 
 The evaluator should treat the Playwright-rendered page state as the ground truth for scoring.
@@ -279,7 +296,9 @@ Element-local scoring can come later.
 
 Once both reference and candidate action targets are resolved, it may be useful to compare only the affected element, dropdown, menu, or local region. That is a separate metric. The immediate goal is to make full-page state scoring correct first.
 
-DOM stamping cleanup can also come later unless it affects metrics. A clean implementation would isolate resolver DOM stamping from artifact capture, but the main functional blocker is visual block and CSSOM state correctness.
+DOM stamping is no longer treated as a scoring substrate. The evaluator removes
+its own `data-wde-node-id` attributes before clean artifact capture and
+visual-block extraction.
 
 ## Implementation Steps
 

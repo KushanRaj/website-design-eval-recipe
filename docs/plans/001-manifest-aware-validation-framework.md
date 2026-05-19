@@ -1,5 +1,23 @@
 # Plan 001: Manifest-Aware Validation Framework
 
+## Status Update - 2026-05-20
+
+This plan has largely been implemented and partially superseded by later work.
+Treat the body below as the original build plan, not the latest product surface.
+
+Current deltas from this first plan:
+
+- visual-block extraction from isolated Playwright manifest-state pages is now
+  implemented rather than merely planned/unsupported
+- rendered `outerHTML` text/tree metrics are captured and reported
+- reward curriculum V0 is defined in `docs/reward-curriculum-v0.md`
+- pixelmatch is included as a later-pass precision signal in reward V0
+- LLM-backed oracle manifest generation now exists
+- generator manifest replay can prune failed optional interaction captures
+
+The current overview is `docs/evaluation-progress-report.md`; the browser-state
+substrate follow-up is `docs/plans/003-browser-state-scoring-substrate.md`.
+
 ## Summary
 
 Build a new evaluator path where the evaluator receives the oracle code folder, oracle manifest, and candidate code folder, then generates the candidate capture plan itself.

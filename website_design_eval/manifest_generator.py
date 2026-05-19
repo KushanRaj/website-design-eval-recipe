@@ -42,6 +42,7 @@ DEFAULT_MANIFEST = {
         },
     },
     "captures": [],
+    "animations": [],
 }
 
 
@@ -357,6 +358,24 @@ MANIFEST_OUTPUT_SCHEMA: dict[str, Any] = {
                         "type": "object",
                         "additionalProperties": True,
                     },
+                },
+            },
+        },
+        "animations": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": True,
+                "required": ["id", "kind", "path", "trigger", "timeline", "targets"],
+                "properties": {
+                    "id": {"type": "string"},
+                    "kind": {"type": "string"},
+                    "page": {"type": "string"},
+                    "path": {"type": "string"},
+                    "viewport": {"type": "object", "additionalProperties": True},
+                    "trigger": {"type": "object", "additionalProperties": True},
+                    "timeline": {"type": "object", "additionalProperties": True},
+                    "targets": {"type": "array", "items": {"type": "object", "additionalProperties": True}},
                 },
             },
         },
@@ -823,6 +842,20 @@ Return strict JSON only. Use this schema:
       "actions": [{{"type": "hover", "selector": ".dropdown", "settleMs": 250}}],
       "screenshot": {{"fullPage": true}}
     }}
+  ],
+  "animations": [
+    {{
+      "id": "page.card-hover",
+      "kind": "animation",
+      "page": "page",
+      "path": "/page.html",
+      "viewport": {{"width": 1440, "height": 900}},
+      "trigger": {{"type": "hover", "selector": ".card", "settleBeforeMs": 0}},
+      "timeline": {{"durationMs": 300, "samplesMs": [0, 100, 200, 300], "recordFrames": true, "recordBoundingBoxes": true, "recordComputedStyles": true}},
+      "targets": [
+        {{"name": "animated card", "selector": ".card", "channels": ["motion"], "track": ["transform"]}}
+      ]
+    }}
   ]
 }}
 
@@ -853,6 +886,13 @@ Rules:
 - For focus actions prefer inputs with id/name selectors.
 - Add a short intent string for each non-default state capture.
 - Do not include disabled captures.
+- If context includes accepted_concept.animations, map each concrete animation
+  intent to the top-level animations array when the rendered inventory provides
+  a reliable trigger and target selector.
+- For V1 animations, use only channels "motion" and "color". Motion animations
+  need target selectors and timeline samples. Color animations also need track
+  entries for computed color properties such as background-color, color, and
+  border colors.
 
 Browser-rendered inventory:
 {json.dumps(inventory, indent=2)}
@@ -889,7 +929,8 @@ The manifest must follow this schema:
     "timeoutMs": 30000,
     "screenshot": {{"fullPage": false, "animations": "disabled", "caret": "hide"}}
   }},
-  "captures": []
+  "captures": [],
+  "animations": []
 }}
 
 Capture rules:
@@ -916,6 +957,13 @@ Capture rules:
 - Use only paths and selectors present in the rendered inventory.
 - Add a short intent string for each non-default state capture.
 - Do not include disabled captures.
+- If context includes accepted_concept.animations, map each concrete animation
+  intent to the top-level animations array when the rendered inventory provides
+  a reliable trigger and target selector.
+- For V1 animations, use only channels "motion" and "color". Motion animations
+  need target selectors and timeline samples. Color animations also need track
+  entries for computed color properties such as background-color, color, and
+  border colors.
 - Return strict JSON only. No markdown, no commentary.
 
 Browser-rendered inventory:
@@ -1194,7 +1242,144 @@ def _sanitize_manifest_with_inventory(
     if not captures:
         return _fallback_manifest(root, max_captures=max_captures)
     manifest["captures"] = captures
+    manifest["animations"] = _sanitize_animations(
+        root,
+        raw.get("animations") or [],
+        inventory_paths=inventory_paths,
+        inventory_selectors=inventory_selectors,
+        inventory_selector_counts=inventory_selector_counts,
+    )
     return manifest
+
+
+def _sanitize_animations(
+    root: Path,
+    raw_animations: Any,
+    *,
+    inventory_paths: set[str],
+    inventory_selectors: dict[str, set[str]],
+    inventory_selector_counts: dict[str, dict[str, int]],
+) -> list[dict[str, Any]]:
+    if not isinstance(raw_animations, list):
+        return []
+    animations: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    allowed_channels = {"motion", "color"}
+    allowed_trigger_types = {"hover", "click", "focus", "scroll", "wait"}
+    color_track_defaults = [
+        "background-color",
+        "color",
+        "border-top-color",
+        "border-right-color",
+        "border-bottom-color",
+        "border-left-color",
+    ]
+
+    def selector_ok(path: str, selector: str | None) -> bool:
+        if not selector:
+            return False
+        selector_count = inventory_selector_counts.get(path, {}).get(selector)
+        selector_known = selector in inventory_selectors.get(path, set()) or _selector_exists(root, path, selector)
+        selector_unique = selector_count == 1 or (selector_count is None and _selector_unique_in_source(root, path, selector))
+        return bool(selector_known and selector_unique)
+
+    for item in raw_animations:
+        if not isinstance(item, dict):
+            continue
+        path = str(item.get("path") or "")
+        if not path.startswith("/"):
+            path = "/" + path
+        browser_path_known = path in inventory_paths
+        file_path_known = (root / path.lstrip("/")).exists()
+        if not browser_path_known and not file_path_known:
+            continue
+
+        animation_id = re.sub(r"[^a-zA-Z0-9_.-]+", "-", str(item.get("id") or "")).strip("-")
+        if not animation_id:
+            page_name = Path(path).stem if Path(path).stem != "index" else "home"
+            animation_id = f"{page_name}.animation.{len(animations) + 1}"
+        original_id = animation_id
+        suffix = 2
+        while animation_id in seen_ids:
+            animation_id = f"{original_id}-{suffix}"
+            suffix += 1
+        seen_ids.add(animation_id)
+
+        trigger = item.get("trigger") if isinstance(item.get("trigger"), dict) else {}
+        trigger_type = str(trigger.get("type") or "click")
+        if trigger_type not in allowed_trigger_types:
+            trigger_type = "click"
+        trigger_selector = trigger.get("selector")
+        if trigger_type not in {"wait"} and trigger_selector and not selector_ok(path, str(trigger_selector)):
+            continue
+        if trigger_type not in {"wait"} and not trigger_selector:
+            continue
+
+        timeline = item.get("timeline") if isinstance(item.get("timeline"), dict) else {}
+        duration_ms = int(timeline.get("durationMs") or 0)
+        raw_samples = timeline.get("samplesMs")
+        samples_ms = [int(value) for value in raw_samples if isinstance(value, int | float)] if isinstance(raw_samples, list) else []
+        samples_ms = sorted({sample for sample in samples_ms if sample >= 0})
+        if len(samples_ms) < 2:
+            duration_ms = duration_ms or 600
+            samples_ms = [0, duration_ms // 3, (duration_ms * 2) // 3, duration_ms]
+        if duration_ms <= 0:
+            duration_ms = max(samples_ms)
+
+        targets: list[dict[str, Any]] = []
+        for raw_target in item.get("targets") or []:
+            if not isinstance(raw_target, dict):
+                continue
+            selector = raw_target.get("selector")
+            if not selector_ok(path, str(selector) if selector else None):
+                continue
+            channels = [
+                str(channel)
+                for channel in raw_target.get("channels") or []
+                if str(channel) in allowed_channels
+            ]
+            if not channels:
+                continue
+            track = [str(prop) for prop in raw_target.get("track") or [] if isinstance(prop, str)]
+            if "color" in channels and not track:
+                track = color_track_defaults
+            targets.append(
+                {
+                    "name": str(raw_target.get("name") or "animated target"),
+                    "selector": str(selector),
+                    "channels": channels,
+                    "track": track,
+                }
+            )
+        if not targets:
+            continue
+
+        animations.append(
+            {
+                "id": animation_id,
+                "kind": "animation",
+                "weight": float(item.get("weight") if isinstance(item.get("weight"), int | float) else 1.0),
+                "page": str(item.get("page") or (Path(path).stem if Path(path).stem != "index" else "home")),
+                "path": path,
+                "viewport": item.get("viewport") if isinstance(item.get("viewport"), dict) else {"width": 1440, "height": 900},
+                "trigger": {
+                    "type": trigger_type,
+                    "selector": str(trigger_selector) if trigger_selector else None,
+                    "settleBeforeMs": int(trigger.get("settleBeforeMs") or 0),
+                    "settleMs": int(trigger.get("settleMs") or 0),
+                },
+                "timeline": {
+                    "durationMs": duration_ms,
+                    "samplesMs": samples_ms,
+                    "recordFrames": bool(timeline.get("recordFrames", True)),
+                    "recordBoundingBoxes": bool(timeline.get("recordBoundingBoxes", True)),
+                    "recordComputedStyles": bool(timeline.get("recordComputedStyles", True)),
+                },
+                "targets": targets,
+                "enabled": bool(item.get("enabled", True)),
+            }
+        )
+    return animations
 
 
 def generate_manifest(

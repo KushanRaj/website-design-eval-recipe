@@ -270,6 +270,109 @@ async function runCapture({ browser, baseUrl, defaults, capture, outputDir }) {
   }
 }
 
+async function sampleAnimationTarget(page, selector, track = []) {
+  return page.evaluate(({ selector: targetSelector, track: trackedProps }) => {
+    const el = document.querySelector(targetSelector);
+    if (!el) return null;
+    const cs = window.getComputedStyle(el);
+    const rect = el.getBoundingClientRect();
+    const style = {};
+    for (const prop of trackedProps || []) style[prop] = cs.getPropertyValue(prop);
+    return {
+      selector: targetSelector,
+      visible: cs.display !== "none" && cs.visibility !== "hidden" && Number(cs.opacity) !== 0 && rect.width > 0 && rect.height > 0,
+      bbox_px: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+      style
+    };
+  }, { selector, track });
+}
+
+async function runAnimation({ browser, baseUrl, defaults, animation, outputDir, animationIndex }) {
+  const page = await browser.newPage({
+    deviceScaleFactor: defaults.deviceScaleFactor ?? 1
+  });
+
+  try {
+    const viewport = animation.viewport ?? defaults.viewport;
+    if (!viewport) {
+      throw new Error(`Animation ${animation.id} is missing a viewport`);
+    }
+    await page.setViewportSize(viewport);
+
+    const url = new URL(animation.path ?? "/index.html", baseUrl).toString();
+    await page.goto(url, {
+      waitUntil: animation.waitUntil ?? defaults.waitUntil ?? "networkidle",
+      timeout: animation.timeoutMs ?? defaults.timeoutMs ?? 30000
+    });
+    if (defaults.afterLoadWaitMs) {
+      await page.waitForTimeout(defaults.afterLoadWaitMs);
+    }
+
+    const folderName = `animation-${String(animationIndex + 1).padStart(2, "0")}`;
+    const animationDir = path.join(outputDir, "animations", folderName);
+    await fs.mkdir(animationDir, { recursive: true });
+
+    const samples = Array.from(new Set([0, ...((animation.timeline?.samplesMs ?? []).map((value) => Number(value)).filter((value) => Number.isFinite(value) && value >= 0))])).sort((a, b) => a - b);
+    if (samples.length < 2) {
+      samples.push(Number(animation.timeline?.durationMs ?? 600));
+    }
+
+    const timeline = [];
+    const takeSample = async (timestampMs) => {
+      const framePath = path.join(animationDir, `${String(timestampMs).padStart(4, "0")}ms.png`);
+      await page.screenshot({ path: framePath, fullPage: false, animations: "allow", caret: "hide" });
+      const targets = [];
+      for (const [index, target] of (animation.targets ?? []).entries()) {
+        const sample = target.selector
+          ? await sampleAnimationTarget(page, target.selector, target.track ?? [])
+          : null;
+        targets.push({
+          target_index: index,
+          name: target.name,
+          selector: target.selector,
+          channels: target.channels ?? [],
+          track: target.track ?? [],
+          sample
+        });
+      }
+      timeline.push({
+        timestampMs,
+        frame: path.relative(outputDir, framePath),
+        targets
+      });
+    };
+
+    await takeSample(samples[0]);
+
+    const trigger = animation.trigger ?? {};
+    if (trigger.settleBeforeMs) {
+      await page.waitForTimeout(trigger.settleBeforeMs);
+    }
+    if ((trigger.type ?? "click") !== "wait") {
+      await runAction(page, { type: trigger.type ?? "click", selector: trigger.selector, settleMs: trigger.settleMs ?? 0 }, defaults);
+    }
+
+    let previous = samples[0];
+    for (const sampleMs of samples.slice(1)) {
+      await page.waitForTimeout(Math.max(0, sampleMs - previous));
+      await takeSample(sampleMs);
+      previous = sampleMs;
+    }
+
+    console.log(`${animation.id} animation -> ${path.relative(process.cwd(), animationDir)}`);
+    return {
+      id: animation.id,
+      status: "ok",
+      required: false,
+      kind: "animation",
+      folder: path.relative(outputDir, animationDir),
+      timeline
+    };
+  } finally {
+    await page.close().catch(() => {});
+  }
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const manifestPath = path.resolve(args.manifestPath);
@@ -325,6 +428,26 @@ async function main() {
         };
         results.push(failure);
         console.error(`[capture failed] ${capture.id}${required ? " required" : " optional"}: ${failure.error}`);
+      }
+    }
+    for (const [animationIndex, animation] of (manifest.animations ?? []).entries()) {
+      if (animation.enabled === false) {
+        console.log(`${animation.id} animation skipped`);
+        results.push({ id: animation.id, status: "skipped", required: false, kind: "animation" });
+        continue;
+      }
+      try {
+        results.push(await runAnimation({ browser, baseUrl, defaults, animation, outputDir, animationIndex }));
+      } catch (error) {
+        const failure = {
+          id: animation.id,
+          status: "failed",
+          required: false,
+          kind: "animation",
+          error: compactError(error)
+        };
+        results.push(failure);
+        console.error(`[animation failed] ${animation.id} optional: ${failure.error}`);
       }
     }
   } finally {

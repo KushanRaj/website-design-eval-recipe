@@ -1,486 +1,218 @@
 # Evaluation Progress Report
 
+Last updated: 2026-05-20
+
 ## Current State
 
-We now have a small controlled setup for testing website design replication:
+The project has moved from a screenshot-scoring prototype to a manifest-aware
+browser-state evaluator and a synthetic-site generation pipeline.
 
 | Area | Status | Notes |
 | --- | --- | --- |
-| Reference site | Working | Static six-page BrightPath education website in `test-site/`. |
-| Reproductions | Working | Two Claude-generated attempts in `reproductions/`. One good-ish, one intentionally poor. |
-| Screenshot manifest | Working | Manifest captures full pages and a few page states. |
-| Screenshot runner | Working | Playwright-based runner reads the manifest, opens pages, performs actions, and saves screenshots. |
-| Scoring functions | Working | Local pixel/SSIM/CLIP/HTML/DOM/code metrics are available. |
-| VLM judge | Working | OpenAI key loads from `.env`; VLM judge ran successfully on sample screenshots. |
-| Harbor packaging | Not started | We have the pieces, but not yet wrapped as Harbor tasks/tests. |
+| Reference test site | Working | Static BrightPath education site in `test-site/`. |
+| Reproductions | Working | Good, bad, and moderate attempts under `reproductions/`. |
+| Screenshot manifest | Working | Full pages plus meaningful page states, with per-capture weights and intent strings. |
+| Manifest generator | Working | `website-design-eval generate-manifest` uses Playwright-rendered inventory and Claude Code/OpenAI backends. |
+| Screenshot replay | Working | `scripts/capture-screenshots.mjs` replays static captures and optional animation captures. |
+| Failed-state pruning | Working | Generator replay can prune failed optional captures instead of failing the whole seed. |
+| Manifest-aware evaluator | Working | Serves reference/candidate folders, captures browser-state artifacts, writes `candidate-capture-plan.json`, and computes metrics. |
+| Reward curriculum | Working V0 | `website-design-eval reward` computes the current weighted pass/fail curriculum. |
+| Harbor packaging | Working local path | Synthetic generated sites can be packaged into Harbor tasks with hidden verifier inputs. |
+| Animation V1 | Prototype/early integration | Schema, prompt support, capture replay, and evaluator scoring hooks exist; not yet part of final reward. |
 
 ## Files Of Interest
 
 | File / Folder | Purpose |
 | --- | --- |
-| `test-site/` | Reference website. |
-| `test-site/screenshot-manifest.json` | Canonical capture manifest for the reference site. |
-| `scripts/capture-screenshots.mjs` | Playwright screenshot runner. |
-| `test-site/screenshots/reference/` | Reference screenshots generated from the manifest. |
-| `reproductions/claude-attempt-01/` | Better reproduction. |
-| `reproductions/claude-attempt-02-bad/` | Worse reproduction. |
-| `website_design_eval/scoring.py` | Scoring functions. |
-| `website_design_eval/cli.py` | CLI wrapper for screenshot scoring. |
-| `docs/scoring-functions.md` | Scoring API documentation. |
-| `progress-logs/ideas.md` | Notes on assets, screenshot manifests, disclosure/evaluation policies. |
+| `website_design_eval/evaluator.py` | Manifest-aware evaluator runtime. |
+| `website_design_eval/manifest_generator.py` | Browser-inventory-driven screenshot/animation manifest generator. |
+| `website_design_eval/reward.py` | Reward curriculum V0. |
+| `website_design_eval/scoring.py` | Screenshot, VLM, DreamSim, HTML, and diagnostic metrics. |
+| `website_design_eval/block_visual.py` | Visual-block extraction and WebCode2M/Design2Code adapter. |
+| `scripts/capture-screenshots.mjs` | Node/Playwright manifest replay and screenshot capture. |
+| `Generator/` | Oracle/reference website generation pipeline. |
+| `docs/reward-curriculum-v0.md` | Current final-score proposal. |
+| `docs/evaluation-consolidation-2026-05-19.md` | Consolidated metric and evaluator notes. |
+| `docs/animation-evaluation-design.md` | Animation scoring design. |
+| `docs/harbor-packaging.md` | Harbor packaging and verifier-image flow. |
 
-## Screenshot Capture
+## Current Pipeline Shape
 
-The active reference manifest currently captures:
-
-| Capture type | Count | Examples |
-| --- | ---: | --- |
-| Full-page desktop screenshots | 6 | Home, governments, enterprises, schools, careers, contact |
-| Page states | 3 | Work dropdown, scrolled work section, focused contact email field |
-| Disabled / parked captures | 12 | Default viewport and mobile viewport captures |
-
-The reproduction manifests use the same capture IDs where possible.
-
-| Reproduction | Screenshots generated | Notes |
-| --- | ---: | --- |
-| `claude-attempt-01` | 9 | Implements dropdown, work-section scroll, email focus. |
-| `claude-attempt-02-bad` | 8 | Dropdown state is missing/disabled because the page has no dropdown. |
-
-This exposed an important grading question: missing states should not silently disappear. They should become an explicit coverage or missing-state penalty.
-
-## Available Scoring Functions
-
-| Function | Input | Current usefulness |
-| --- | --- | --- |
-| `render_sanity_score` | Screenshot, optional HTML | Useful guardrail for blank/broken renders. |
-| `pixelmatch_score` | Screenshot pair | Strong deterministic visual signal. |
-| `mse_score` | Screenshot pair | Diagnostic pixel error. |
-| `mae_score` | Screenshot pair | Diagnostic pixel error. |
-| `ssim_score` | Screenshot pair | Some signal, less separating than expected here. |
-| `clip_similarity` | Screenshot pair | Strong perceptual signal; local model worked. |
-| `vlm_judge_score` | Screenshot pair | Strong qualitative signal; API-backed and slower/costly. |
-| `html_text_score` | HTML pair | Very useful for checking content preservation. |
-| `dom_tree_score` | HTML pair | Some signal, but shallow and noisy. |
-| `code_diff_score` | Code pair | Diagnostic only; can be implementation-biased. |
-| `ast_code_score` | HTML/code pair | Not reliable as a visual signal. |
-| `cw_ssim_score` | Placeholder | Not implemented. |
-| `visual_block_score` | HTML + screenshot pair | Wired through the checked-in WebCode2M/Design2Code OCR-free block metric; promising but still optional/experimental. |
-| `element_block_pixelmatch_score` | HTML + screenshot pair | Uses the visual block matcher, then runs pixelmatch on matched block crops. |
-| `cssom_block_style_score` | HTML + screenshot pair | Uses the visual block matcher, then compares computed CSSOM styles for resolved matched blocks. |
-| `mobile_overflow_tags` | Rendered HTML page | Emits WebCoderBench-style mobile overflow tags and raw overflow measurements. |
-| `accessibility_control_tags` | Rendered HTML page | Emits WebCoderBench/Lighthouse-style control accessibility tags from rendered controls. |
-| `webcoderbench_tags` | Rendered HTML page | Bundles the currently implemented WebCoderBench-inspired tag surfaces. |
-| `webcoderbench_visual_quality_scores` | Rendered HTML + screenshot | Bundles paper-formula fallbacks for WebCoderBench component, icon, layout, and sparsity metrics. |
-| `presentation_diff_tags` | Screenshot pair | Emits WebSee-style visual-diff cluster tags and raw diff measurements. |
-| `websee_dom_localization_tags` | HTML + screenshot pair | Maps local WebSee-style visual diff clusters to candidate DOM/CSSOM boxes. |
-
-## Metric Results
-
-### Screenshot Metrics
-
-Directory-level screenshot scoring against `test-site/screenshots/reference`.
-
-| Reproduction | Pixelmatch ↑ | SSIM ↑ | CLIP ↑ | Missing captures |
-| --- | ---: | ---: | ---: | --- |
-| `claude-attempt-01` | 0.897 | 0.793 | 0.906 | None |
-| `claude-attempt-02-bad` | 0.683 | 0.745 | 0.643 | `home.desktop.work-dropdown.png` |
-
-Interpretation:
-
-- Pixelmatch separated the good and bad attempts clearly.
-- CLIP also separated them clearly.
-- SSIM separated them, but less strongly.
-- Missing captures are already surfaced by the directory scorer, but not yet converted into an explicit reward penalty.
-
-### HTML / Code Metrics
-
-Page-by-page scoring across:
-
-- `index.html`
-- `governments.html`
-- `enterprises.html`
-- `schools.html`
-- `careers.html`
-- `contact.html`
-
-| Reproduction | HTML text F1 ↑ | DOM tree F1 ↑ | Code token F1 ↑ | Tag F1 ↑ |
-| --- | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 0.989 | 0.364 | 0.789 | 0.727 |
-| `claude-attempt-02-bad` | 0.303 | 0.244 | 0.762 | 0.839 |
-
-Interpretation:
-
-- `html_text_score` is very useful here. It strongly distinguishes the good attempt from the bad one.
-- `dom_tree_score` is weak but directionally useful.
-- `code_diff_score` is not very useful for design quality. The bad attempt still scores high because it has similar amounts of HTML/code.
-- `ast_code_score` is actively misleading here: the bad attempt scores higher on tag F1 than the good attempt. This reinforces that tag structure is not design quality.
-
-### Visual Block Metric
-
-Home-page scoring through the checked-in WebCode2M/Design2Code OCR-free block metric:
-
-| Reproduction | Score ↑ | Size ↑ | Text ↑ | Position ↑ | Text color ↑ | Masked CLIP ↑ |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 0.957 | 1.000 | 0.997 | 0.885 | 0.972 | 0.931 |
-| `claude-attempt-02-bad` | 0.584 | 0.096 | 0.729 | 0.752 | 0.628 | 0.717 |
-
-Interpretation:
-
-- This metric separated the two examples clearly on the home page.
-- It is useful because it checks matched visual text blocks, not just whole-image similarity.
-- It should stay optional for now because it is slower, dependency-heavy, and still uses the research pipeline internally.
-
-### Element Block Pixelmatch
-
-Home-page crop-level pixelmatch over the visual block matcher pairs:
-
-| Reproduction | Coverage-adjusted ↑ | Matched crop pixelmatch ↑ | Block coverage ↑ | Matched pairs |
-| --- | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 0.794 | 0.794 | 1.000 | 49 |
-| `claude-attempt-02-bad` | 0.047 | 0.490 | 0.096 | 12 |
-
-Interpretation:
-
-- This reuses the visual block matcher. It does not add a new CSSOM or selector-based matcher.
-- `matched_pixelmatch` checks whether corresponding matched block crops actually look alike.
-- `coverage_adjusted_score` multiplies crop similarity by block coverage so a page cannot score well by matching only a small subset of blocks.
-
-### CSSOM Block Style
-
-Home-page computed-style comparison over the visual block matcher pairs:
-
-| Reproduction | Coverage-adjusted ↑ | Matched CSSOM ↑ | Resolution ↑ | Coverage ↑ | Resolved pairs |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 0.850 | 0.856 | 0.993 | 1.000 | 48 / 49 |
-| `claude-attempt-02-bad` | 0.060 | 0.632 | 1.000 | 0.096 | 12 / 12 |
-
-Interpretation:
-
-- This does not change `visual_block_score`; it uses the visual block matcher as correspondence.
-- It compares CSSOM groups for resolved rendered nodes: typography, color, spacing, shape, effects, and layout.
-- The bad attempt has a moderate matched-style score on the small subset it matches, but the coverage-adjusted score is low because most reference blocks are missing or unmatched.
-
-Terminology note:
-
-- `dom_resolution_score` means the share of already matched visual-block pairs that were resolvable back to rendered DOM nodes.
-- `visual_block_coverage_score` means the underlying WebCode2M/Design2Code block coverage, including unmatched reference blocks.
-- The bad page can have `dom_resolution_score = 1.0` because all 12 matched pairs resolved to DOM nodes, while `visual_block_coverage_score = 0.096` shows that most reference blocks were not matched in the first place.
-
-### WebCoderBench / WebSee Diagnostic Tags
-
-These are tag and measurement surfaces, not final reward scores. They are intentionally separate from `visual_block_score`.
-
-WebCoderBench-inspired page diagnostics:
-
-| Page | Tags | Mobile overflow | Accessibility issues | Controls |
-| --- | --- | ---: | ---: | ---: |
-| `test-site/index.html` | `mobile_horizontal_overflow` at threshold 0 | 4 px | 0 | 19 |
-| `test-site/index.html --threshold-px 4` | None | 4 px tolerated | 0 | 19 |
-| `claude-attempt-01/index.html` | `mobile_horizontal_overflow`, `element_horizontal_overflow` | 110 px | 0 | 14 |
-| `claude-attempt-02-bad/index.html` | None | 0 px | 0 | 17 |
-
-WebSee-inspired visual diff diagnostics:
-
-| Reproduction | Diff ratio | Cluster count | Tags |
-| --- | ---: | ---: | --- |
-| `claude-attempt-01` | 0.114 | 788 | `visual_diff`, `visual_diff_cluster`, `large_visual_diff` |
-| `claude-attempt-02-bad` | 0.457 | 448 | `visual_diff`, `visual_diff_cluster`, `large_visual_diff` |
-
-Interpretation:
-
-- `mobile_overflow_tags` covers the fastest WebCoderBench-style mobile compatibility case: rendered page wider than a phone viewport.
-- `accessibility_control_tags` covers buttons, links, inputs, selects, textareas, ARIA controls, and focusable controls for missing rendered accessible names or labels.
-- `webcoderbench_tags` currently bundles the no-screenshot surfaces. `webcoderbench_visual_quality_scores` separately adds component style, icon style, layout consistency, and layout sparsity fallbacks using the paper formulas.
-- `presentation_diff_tags` implements WebSee-like visual-difference detection and clustering. `websee_dom_localization_tags` adds local DOM/CSSOM localization for those clusters.
-
-WebCoderBench visual-quality fallback smoke results:
-
-| Page | Component style | Icon style | Layout consistency | Layout sparsity |
-| --- | ---: | ---: | ---: | ---: |
-| `test-site/index.html` | 100.000 | 100.000 | 62.619 | 93.037 |
-| `claude-attempt-01/index.html` | 100.000 | 100.000 | 52.607 | 94.120 |
-| `claude-attempt-02-bad/index.html` | 100.000 | 100.000 | 16.046 | 92.035 |
-
-WebSee-style DOM localization at `--min-cluster-area 5000`:
-
-| Reproduction | Diff ratio | Large clusters | Localized clusters | What top clusters point to |
-| --- | ---: | ---: | ---: | --- |
-| `claude-attempt-01` | 0.114 | 7 | 7 | Schools card, hero visual, `See our work` button, H1, section boundary. |
-| `claude-attempt-02-bad` | 0.457 | 13 | 13 | Stats band, header/nav, footer, work-card section, government card. |
-
-Notes:
-
-- These are no-reference page-quality metrics from the WebCoderBench paper, not reference-vs-candidate design matching metrics.
-- Public WebCoderBench artifacts checked so far expose leaderboard/result files but not runnable evaluator code, so these are paper-formula local fallbacks.
-- The strongest new signals are WebSee-style reference diff/localization and WebCoderBench layout consistency. Component style, icon style, and sparsity are weak separators on these two attempts.
-- The WebSee upstream Java repo was cloned, but build failed because Maven could not resolve old dependencies through the HTTP USC Artifactory repository. The local WebSee fallback maps visual diff clusters to candidate DOM/CSSOM elements.
-
-### VLM Judge
-
-VLM was run on `home.desktop.full.png` only as an initial check.
-
-| Reproduction | Overall ↑ | Layout ↑ | Typography ↑ | Color ↑ | Content ↑ | Visual hierarchy ↑ |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 0.78 | 0.72 | 0.88 | 0.82 | 0.94 | 0.82 |
-| `claude-attempt-02-bad` | 0.12 | 0.22 | 0.04 | 0.03 | 0.20 | 0.12 |
-
-Interpretation:
-
-- VLM judge strongly separates the two attempts.
-- The notes are useful for qualitative debugging.
-- It should probably be used as an audit/calibration metric, not the main reward, because it is slower, costs money, and may be less deterministic.
-
-## What Is Working
-
-### 1. The screenshot-manifest idea is good
-
-The manifest makes hidden visual states explicit:
-
-- full pages
-- dropdowns
-- focused fields
-- scrolled sections
-- later, mobile and animation states
-
-This gives us a reproducible contract for both generating reference screenshots and capturing candidate screenshots.
-
-### 2. Pixelmatch is a useful first deterministic signal
-
-It produced a strong separation:
+The current evaluator contract is:
 
 ```text
-good attempt: 0.897
-bad attempt:  0.683
+oracle site folder
+oracle screenshot manifest
+candidate site folder
+  -> serve both on separate local origins
+  -> resolve route and candidate action/state
+  -> capture browser-rendered artifacts
+  -> score artifacts
+  -> compute reward curriculum
 ```
 
-It catches color, spacing, position, missing blocks, and broad visual drift.
-
-### 3. CLIP is useful as a perceptual signal
-
-It separated:
+The browser-rendered manifest state is the source of truth:
 
 ```text
-good attempt: 0.906
-bad attempt:  0.643
+route loaded in Playwright
+  -> viewport set
+  -> manifest state replayed
+  -> screenshot
+  -> rendered outerHTML
+  -> CSSOM snapshot
+  -> visual blocks
 ```
 
-This is useful because pixel metrics can over-penalize small shifts while CLIP can capture broader visual similarity.
+Raw source files are still inputs for serving and debugging. They are not the
+main scoring substrate. This keeps the evaluator compatible with static HTML
+today and React/Solid later.
 
-### 4. HTML text scoring is very useful
+## Manifest Generation
 
-It separated:
+The manifest generator now works from a Playwright-rendered browser inventory.
+The prompt asks the model to produce:
+
+- full-page captures for important unique pages
+- interaction captures only when they reveal substantial hidden content, change
+  layout, or change visible data/content
+- intent strings that describe the desired visible state, not just the selector
+  or action used in the oracle
+- minimal high-information state coverage instead of repeated hover/focus noise
+- optional `animations` entries when structured animation intent exists
+
+The important distinction:
 
 ```text
-good attempt: 0.989
-bad attempt:  0.303
+selector/action = replay mechanism for this oracle
+intent = semantic state the evaluator should look for in a candidate
 ```
 
-This helps catch cases where the visual style is plausible but the content is wrong or incomplete.
+For candidate evaluation, exact selectors may not exist. The evaluator uses the
+oracle manifest as an intent/coverage guide and resolves candidate routes/actions
+against rendered browser state.
 
-### 5. VLM judge is useful for calibration
+## Screenshot Replay And Pruning
 
-The VLM judge gave intuitive scores and useful critique. It can help validate whether the deterministic reward is aligned with human judgment.
+`scripts/capture-screenshots.mjs` is used both for reference screenshot
+generation and generator smoke replay.
 
-## What Is Not Working Yet
+Normal behavior:
 
-### 1. No single reward function yet
+- required no-action captures must succeed
+- failed captures are reported in `_replay-report.json`
+- without pruning, any failed capture makes replay fail
 
-We have metrics, but not a final reward formula. The next step is a manifest-aware site scorer that emits one reward JSON.
+Generator behavior:
 
-### 2. Missing states are not penalized properly yet
+- the generator calls replay with `--prune-failed`
+- failed optional interaction captures are removed from the manifest
+- successfully captured screenshots remain
+- packaging later validates only the remaining enabled captures
 
-The bad reproduction missing `home.desktop.work-dropdown.png` is reported, but not yet converted into a numeric penalty.
+This is intentional. A generated reference should not fail because of one flaky
+or low-value interaction such as an offscreen dismiss button. Broad design
+coverage matters more than proving every UI control is functionally clickable.
 
-### 3. Candidate state capture is still manually mapped
+The generator validator also ignores managed `screenshots/` output during repair
+loops, so screenshots created by a previous attempt are not treated as files
+written by the builder.
 
-For the good reproduction, the dropdown selector changed from `.dropdown` to `.has-menu`, so we wrote a reproduction-specific manifest.
+## Current Score Surface
 
-This is okay for now, but the real grader should eventually understand state intent:
+Default/currently useful metrics:
 
-```json
-{
-  "state": "work dropdown open",
-  "intent": {
-    "triggerText": "Work",
-    "expectedVisibleText": [
-      "With governments",
-      "With enterprises",
-      "With schools"
-    ]
-  }
-}
-```
+- manifest/state coverage
+- render sanity and screenshot size match
+- DreamSim
+- Web2Code-style VLM judge
+- rendered HTML text BLEU/ROUGE
+- visual block core: size, text, position, text color
+- bbox geometry over matched visual blocks
+- CSSOM block-style over matched visual blocks
+- pixelmatch as a later-pass exactness signal
 
-Then the grader can try reference selectors, text selectors, heuristics, and maybe LLM-assisted locator fallback.
+Collected but not counted in reward V0:
 
-### 4. Source HTML comparison will not generalize to React/Solid
+- rendered HTML tree BLEU/ROUGE/F1
+- SSIM
+- MSE / MAE
+- global CLIP
+- WebSee / WebCoderBench diagnostics
+- WebCode2M bbox inventory
+- code diff / AST score
+- masked CLIP inside visual block
 
-For plain HTML, `html_text_score` and DOM checks can read source files directly.
+Tree metrics remain in reports for now, but current examples show they mostly
+measure generic HTML skeleton overlap and do not separate good/bad attempts well.
 
-For React, Solid, Tailwind, etc., source files are not comparable:
+## Reward Curriculum V0
 
-- source may be JSX/TSX
-- DOM only exists after render/hydration
-- Tailwind classes encode styling differently
-- components can generate equivalent output from very different code
-
-So the durable direction is **rendered DOM scoring**, not raw source scoring.
-
-### 5. DOM/tag/code metrics are noisy
-
-The bad attempt scored higher than the good attempt on tag F1. That means these metrics should be diagnostic or low-weight only.
-
-## How To Handle Multiple Pages
-
-The right shape is page-level scoring:
+The current reward is intentionally a curriculum, not a flat average:
 
 ```text
-site score
-  home
-    screenshots: full, dropdown, scrolled section
-    HTML/text/DOM score: index.html
-  governments
-    screenshots: full
-    HTML/text/DOM score: governments.html
-  enterprises
-  schools
-  careers
-  contact
+capture_score =
+  manifest_coverage *
+  (0.05 * foundation + 0.15 * content + 0.80 * specifics)
 ```
 
-Each page gets a local score:
+Passes:
 
-```json
-{
-  "page": "home",
-  "visual_score": 0.82,
-  "text_score": 0.91,
-  "dom_score": 0.36,
-  "state_coverage": 1.0,
-  "page_score": 0.80
-}
+- Pass 1 foundation: manifest coverage and screenshot size match.
+- Pass 2 content/broad fit: rendered text, VLM, visual block size.
+- Pass 3 specifics: visual block quality, CSSOM, bbox geometry, pixelmatch, and DreamSim gated by visual block size.
+
+Latest recorded gradient:
+
+```text
+bad 0.0985 < moderate 0.5620 < good 0.8906
 ```
 
-Then the final site reward is an aggregate of all page scores.
+Full details live in `docs/reward-curriculum-v0.md`.
 
-## How This Changes For React / Solid
+## Animation V1
 
-For modern frameworks, avoid raw source comparison.
+Animation work has started, but it is still separate from the final static
+reward.
 
-Instead:
+Implemented/planned shape:
 
-1. Build/run the candidate app.
-2. Use Playwright to visit the same routes/states.
-3. Capture screenshots.
-4. Extract rendered DOM/text/layout/computed styles from the browser.
-5. Score the rendered artifacts.
+- concepts can carry structured `animations`
+- manifests can include top-level `animations`
+- the capture script records animation frames and `timeline.json`
+- evaluator hooks score motion/color channels from browser-observed timelines
 
-This means the same grader can work across:
+V1 only supports:
 
-- HTML/CSS
-- React + CSS
-- React + Tailwind
-- Solid + Tailwind
+- `motion`: bbox IoU and movement-weighted motion delta
+- `color`: target-box pixelmatch and CSSOM color comparison
 
-The contract should be the rendered website, not the source structure.
+Full-page DreamSim/CLIP/SSIM are diagnostics only for animation. Animation
+intent must come from the concept/oracle side; the evaluator should not infer
+animation intent from pixels alone.
 
-## Proposed Reward Shape
+## Harbor Status
 
-Initial rough formula:
+The local Harbor packaging path exists:
 
-| Component | Weight | Notes |
-| --- | ---: | --- |
-| Visual screenshot score | 55% | Pixelmatch + SSIM + maybe CLIP. |
-| Text/content score | 20% | HTML text now, rendered visible text later. |
-| State coverage | 10% | Missing dropdowns/modals/focus states penalized. |
-| Render sanity | 5% | Prevent blank/broken pages passing. |
-| DOM/layout diagnostics | 10% | Use rendered DOM/layout later; source DOM only for now. |
-
-Code similarity should not be in the main reward, or should be very low-weight, because it encourages copying the reference implementation rather than matching the design.
-
-## Next Engineering Steps
-
-### 1. Implement a manifest-aware `site` scorer
-
-Add a CLI command like:
-
-```bash
-uv run website-design-eval site \
-  --reference-root test-site \
-  --candidate-root reproductions/claude-attempt-01 \
-  --reference-manifest test-site/screenshot-manifest.json \
-  --reference-screenshots test-site/screenshots/reference \
-  --candidate-screenshots reproductions/claude-attempt-01/screenshots
+```text
+Generator/output/harbor-dataset/
+  -> scripts/package_synthetic_dataset.py
+  -> datasets/synthetic-website-replication/
 ```
 
-It should:
+Packaged tasks expose numbered screenshots and assets to the agent. Hidden
+verifier inputs contain the oracle site, manifest, and metric config.
 
-1. Read the manifest.
-2. Group captures by page.
-3. Score matching screenshots.
-4. Penalize missing required captures.
-5. Score matching HTML pages.
-6. Emit page-level and site-level JSON.
+Important rule: packaging never regenerates screenshots. It only copies and
+validates them. If a manifest capture survives pruning, its PNG must exist.
 
-### 2. Add a simple aggregate reward
+## Open Engineering Items
 
-The output should look like:
-
-```json
-{
-  "reward": 0.81,
-  "visual_score": 0.78,
-  "text_score": 0.91,
-  "state_coverage": 0.89,
-  "render_sanity": 0.92,
-  "missing_captures": ["home.desktop.work-dropdown.png"],
-  "pages": {}
-}
-```
-
-### 3. Add rendered DOM snapshot extraction
-
-This is the key bridge to React/Solid.
-
-For each manifest capture, extract:
-
-- visible text
-- element bounding boxes
-- computed styles
-- headings/buttons/nav/form controls
-- maybe coarse layout regions
-
-### 4. Calibrate on more controlled variants
-
-Create variants with known failure modes:
-
-- wrong colors
-- missing section
-- layout shifted
-- wrong typography
-- missing dropdown
-- bad responsive layout
-
-Then verify that reward ordering matches expectation.
-
-### 5. Only then wrap in Harbor
-
-Once reward behavior is sane, package this into Harbor:
-
-- task includes screenshots/assets
-- agent writes website
-- verifier captures candidate screenshots
-- verifier runs site scorer
-- verifier writes `/logs/verifier/reward.json`
-
-## Current Takeaway
-
-The current stack is promising:
-
-- Pixelmatch catches concrete visual differences.
-- CLIP catches perceptual similarity.
-- HTML text catches content preservation.
-- VLM judge is useful for calibration.
-- DOM/code/tag metrics need caution.
-
-The immediate missing piece is not more metrics. It is a clean **manifest-aware site scorer** that combines the existing metrics across pages and states into a stable reward.
+- Keep testing generated oracle manifests on more sites and prune low-value/flaky
+  replay states.
+- Improve candidate action resolution with stronger intent/postcondition use.
+- Decide whether animation captures become part of the Harbor task package now
+  or remain an experimental track.
+- Add batch-level reference artifact caching if we start evaluating many
+  candidates against the same oracle.
+- Run more controlled reproductions before locking reward weights.

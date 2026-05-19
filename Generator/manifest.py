@@ -58,6 +58,7 @@ def manifest_from_concept(concept: ConceptCandidate, *, site_name: str) -> Scree
         cleanOutputDir=True,
         defaults=_manifest_defaults(),
         captures=captures,
+        animations=[],
     )
 
 
@@ -219,6 +220,7 @@ def manifest_from_browser_inventory(
         cleanOutputDir=True,
         defaults=_manifest_defaults(),
         captures=captures[:budget] if budget is not None else captures,
+        animations=[],
     )
 
 

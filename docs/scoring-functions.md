@@ -56,7 +56,7 @@ scores = score_screenshot_pair(
 | DreamSim | No | Yes | Installed from `research/source-repos/dreamsim`; first call downloads model weights. |
 | VLM judge | Yes | No local model | Uses OpenAI `gpt-5.5`; requires `OPENAI_API_KEY`. |
 | CW-SSIM | No | Not wired | Explicit placeholder raising `NotImplementedError`. |
-| Visual block matching, bbox geometry, element block pixelmatch, CSSOM block style | No | Yes | Uses checked-in WebCode2M/Design2Code OCR-free block metric under `research/`; first masked-CLIP call loads `open-clip-torch`. CSSOM extraction also launches Chromium through Playwright. |
+| Visual block matching, bbox geometry, element block pixelmatch, CSSOM block style | No | Yes | Pair-level CLI keeps the checked-in WebCode2M/Design2Code adapter under `research/`. The manifest-aware evaluator uses the same scoring logic over blocks extracted from isolated Playwright manifest-state pages. First masked-CLIP call loads `open-clip-torch`, but masked CLIP is skipped in the default evaluator/reward path. |
 | WebCoderBench/WebSee diagnostic tags | No | No | Runs local Playwright/image processing checks and returns tags/raw measurements, not final reward scores. WebCoderBench visual fallbacks use paper formulas, not released evaluator code. |
 
 The verified local CLIP cache for this workspace is:
@@ -80,7 +80,7 @@ PLAYWRIGHT_BROWSERS_PATH=./.playwright uv run playwright install chromium
 | `webcode2m_text_score` / `html_text_score` | Calls the same `nltk` BLEU-1 and `rouge` ROUGE-1 flow as WebCode2M `metrics.py::bleu_rouge`. | Faithful. |
 | `webcode2m_dom_score` | Mirrors WebCode2M `metrics.py::dom_sim` and `html_tree.py::html2tree`. | Faithful, with unrelated optional imports avoided. |
 | `extract_webcode2m_bbox_tree` / `webcode2m_bbox_tree_to_html` / `webcode2m_bbox_tree_to_style_list` | Mirrors WebCode2M `html2screenshot.py::output_bbox` and `scripts/train/utils.py` bbox-tree serializers. | Faithful surface; this is a data/training representation, not an official scalar score. |
-| `visual_block_score` | Adapter around checked-in WebCode2M/Design2Code `visual_score_v3`. | Faithful to the scoring logic; subprocess cleanup and CLIP loading are modernized. |
+| `visual_block_score` | Adapter around checked-in WebCode2M/Design2Code `visual_score_v3`; evaluator path can feed blocks extracted from Playwright manifest state. | Faithful to the scoring/matching logic; browser IO is modernized for evaluator state captures. |
 | `dreamsim_distance` | Calls the local DreamSim package. | Defaults to DreamSim's full `ensemble` rather than the lighter single-branch model. |
 | `screenshot_size_match_score` | Local diagnostic comparing raw screenshot dimensions before any resizing. | Not a paper metric; useful to separate canvas/document-height mismatch from pixel-level visual mismatch. |
 | `mse_score` | Mirrors WebCode2M `metrics.py::mse` after the same OpenCV Lanczos4 candidate resize used by `image_sim_scores`. | Faithful. |
@@ -373,8 +373,9 @@ Runs the checked-in WebCode2M/Design2Code OCR-free visual block metric through a
 
 Current behavior:
 
-- Uses `research/source-repos/naturalcc/examples/webcode2m/scripts/evaluation/design2code/visual_score.py`.
-- Instruments text blocks in temporary HTML files, renders them with Playwright, recovers block boxes by pixel diffing, and matches candidate/reference blocks.
+- The standalone CLI/API adapter uses `research/source-repos/naturalcc/examples/webcode2m/scripts/evaluation/design2code/visual_score.py`.
+- The standalone adapter instruments text blocks in temporary HTML files, renders them with Playwright, recovers block boxes by pixel diffing, and matches candidate/reference blocks.
+- The manifest-aware evaluator does not pass raw/default route file paths for core visual-block scoring. It opens isolated Playwright pages, replays the same manifest state, extracts blocks from that browser state, and then feeds those block lists through the same matching/scoring logic.
 - Uses `open-clip-torch` through a small compatibility shim instead of adding the old `clip` stack.
 - Returns named JSON fields instead of the upstream tuple.
 - Replaces the upstream shell calls and `rm` cleanup with controlled Python subprocesses and `TemporaryDirectory`/`Path.unlink`.
@@ -423,7 +424,8 @@ Initial home-page results:
 
 Caveat:
 
-- This is now wired for experimentation, but it is still slower and more brittle than pixel/CLIP/text metrics. It should stay optional until we test it across more pages and states.
+- This is slower than screenshot/text metrics. In the manifest-aware evaluator it is valuable because it follows dropdown/hover/scroll/focus states instead of accidentally scoring the default page state.
+- Masked CLIP is not part of the current reward curriculum. The useful default visual-block fields are size, text, position, and text color.
 
 ### `element_block_pixelmatch_score(reference_html, candidate_html, reference_screenshot, candidate_screenshot, tmp_dir=None, device="cpu", debug=False, include_pairs=False, pixelmatch_threshold=0.1)`
 
@@ -521,11 +523,20 @@ Computed style groups:
 
 This is an extraction primitive, not a score.
 
+In the manifest-aware evaluator, CSSOM is captured from the already-open
+manifest state and stored in the per-capture artifact. That is the preferred
+substrate for core evaluation. The standalone function remains useful for
+single-file experiments and older CLI commands.
+
 ### `cssom_block_style_score(reference_html, candidate_html, reference_screenshot, candidate_screenshot, tmp_dir=None, device="cpu", debug=False, include_pairs=False, viewport=None, min_resolution_score=0.35)`
 
 Compares computed CSSOM styles over the matched visual-block pairs.
 
-This does not change `visual_block_score`. It reuses the Design2Code/WebCode2M matched pairs, resolves each block to a rendered DOM node inside its own page, then compares CSSOM style groups for those resolved nodes.
+This does not change `visual_block_score`. It reuses the Design2Code/WebCode2M matched pairs, resolves each block to a rendered DOM node, then compares CSSOM style groups for those resolved nodes.
+
+In the manifest-aware evaluator, the CSSOM snapshots and visual blocks come from
+the same replayed browser state. That is the important correction over the old
+raw/default HTML path.
 
 Output:
 

@@ -34,6 +34,20 @@ The current evaluator can:
 - compute reward curriculum V0 from `metrics.json`
 - produce Markdown/HTML reports with per-capture scores
 
+2026-05-20 additions:
+
+- LLM-backed manifest generation now works from Playwright-rendered route/control
+  inventory and can use either Claude Code or OpenAI.
+- Manifest prompts emphasize high-information hidden states, semantic intent, and
+  minimal non-duplicate captures.
+- The generator path replays manifests with failed optional capture pruning, so
+  a bad/flaky interaction state is removed from the oracle contract instead of
+  failing the whole generated site.
+- The generator validator ignores managed `screenshots/` output during repair
+  loops.
+- Animation V1 schemas and capture/evaluator hooks have started, with motion and
+  color as the only supported channels.
+
 Latest full validation output:
 
 ```text
@@ -92,6 +106,11 @@ evaluation manifest: what the grader scores
 ```
 
 For fair replication, disclosure and evaluation should usually match. If withheld states are scored, report them separately as generalization.
+
+For generated oracle sites, replay is now allowed to prune failed optional
+interaction captures. After pruning, the remaining manifest is the canonical
+oracle contract. This avoids grading candidates against an oracle state that
+could not be reliably replayed in the first place.
 
 ### Assets need explicit handoff
 
