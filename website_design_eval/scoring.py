@@ -759,6 +759,12 @@ def cssom_block_style_score(*args: Any, **kwargs: Any) -> dict[str, Any]:
     return _cssom_block_style_score(*args, **kwargs)
 
 
+def cssom_block_style_score_from_snapshots(*args: Any, **kwargs: Any) -> dict[str, Any]:
+    from .cssom import cssom_block_style_score_from_snapshots as _cssom_block_style_score_from_snapshots
+
+    return _cssom_block_style_score_from_snapshots(*args, **kwargs)
+
+
 def mobile_overflow_tags(*args: Any, **kwargs: Any) -> dict[str, Any]:
     from .diagnostics import mobile_overflow_tags as _mobile_overflow_tags
 

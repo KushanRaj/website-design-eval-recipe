@@ -19,7 +19,7 @@ from playwright.sync_api import Browser, Page
 from .block_visual import _score_bbox_geometry
 from .scoring import (
     _pick_torch_device,
-    cssom_block_style_score,
+    cssom_block_style_score_from_snapshots,
     dreamsim_distance,
     render_sanity_score,
     screenshot_size_match_score,
@@ -47,7 +47,7 @@ CONTROL_SELECTORS = ",".join(
 
 
 CSSOM_ARTIFACT_SCRIPT = """
-({ controlSelectors }) => {
+({ controlSelectors, normalizeWidth, normalizeHeight, screenshotWidth, screenshotHeight }) => {
   const styleProps = [
     'font-family', 'font-size', 'font-weight', 'line-height', 'letter-spacing',
     'text-align', 'text-transform', 'color', 'background-color',
@@ -139,6 +139,12 @@ CSSOM_ARTIFACT_SCRIPT = """
         width: rect.width,
         height: rect.height,
       },
+      bbox: [
+        left / normalizeWidth,
+        top / normalizeHeight,
+        rect.width / normalizeWidth,
+        rect.height / normalizeHeight,
+      ],
       style,
     });
   }
@@ -154,7 +160,20 @@ CSSOM_ARTIFACT_SCRIPT = """
       width: Math.max(document.documentElement.scrollWidth, document.body?.scrollWidth || 0, window.innerWidth),
       height: Math.max(document.documentElement.scrollHeight, document.body?.scrollHeight || 0, window.innerHeight),
     },
+    screenshot: {
+      width: screenshotWidth,
+      height: screenshotHeight,
+    },
+    normalize_size: {
+      width: normalizeWidth,
+      height: normalizeHeight,
+    },
     scroll: { x: window.scrollX, y: window.scrollY },
+    coordinate_space: {
+      bbox_px: "document_px",
+      bbox: "normalized_document_to_screenshot",
+      note: "bbox_px is document-space pixels; bbox is normalized by screenshot width/height for full-page visual-block matching.",
+    },
     elements,
     controls: elements.filter((el) => el.is_control),
     element_count: elements.length,
@@ -876,8 +895,17 @@ def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any
     return executed
 
 
-def _artifact_cssom(page: Page) -> dict[str, Any]:
-    snapshot = page.evaluate(CSSOM_ARTIFACT_SCRIPT, {"controlSelectors": CONTROL_SELECTORS})
+def _artifact_cssom(page: Page, screenshot_dimensions: dict[str, int]) -> dict[str, Any]:
+    snapshot = page.evaluate(
+        CSSOM_ARTIFACT_SCRIPT,
+        {
+            "controlSelectors": CONTROL_SELECTORS,
+            "normalizeWidth": screenshot_dimensions["width"],
+            "normalizeHeight": screenshot_dimensions["height"],
+            "screenshotWidth": screenshot_dimensions["width"],
+            "screenshotHeight": screenshot_dimensions["height"],
+        },
+    )
     return snapshot
 
 
@@ -897,7 +925,7 @@ def _artifact_from_page(
     with Image.open(screenshot_path) as image:
         screenshot_dimensions = {"width": image.width, "height": image.height}
     outer_html = page.evaluate("() => document.documentElement.outerHTML")
-    cssom = _artifact_cssom(page)
+    cssom = _artifact_cssom(page, screenshot_dimensions)
     artifact = {
         "capture_id": capture["id"],
         "side": side,
@@ -1121,19 +1149,16 @@ def _run_pair_metrics(
                     },
                 }
                 try:
-                    viewport = reference_artifact.get("viewport")
-                    viewport_tuple = None
-                    if isinstance(viewport, dict):
-                        viewport_tuple = (int(viewport["width"]), int(viewport["height"]))
-                    pair["cssom_block_style"] = cssom_block_style_score(
-                        reference_html_path,
-                        candidate_html_path,
-                        reference_screenshot,
-                        candidate_screenshot,
-                        device=config.visual_block_device,
-                        viewport=viewport_tuple,
-                        visual_block_result=visual,
-                    )
+                    reference_cssom = reference_artifact.get("cssom")
+                    candidate_cssom = candidate_artifact.get("cssom")
+                    if not reference_cssom or not candidate_cssom:
+                        pair["cssom_block_style"] = {"unsupported": True, "reason": "cssom_snapshot_missing"}
+                    else:
+                        pair["cssom_block_style"] = cssom_block_style_score_from_snapshots(
+                            reference_cssom,
+                            candidate_cssom,
+                            visual,
+                        )
                 except Exception as exc:
                     pair["cssom_block_style"] = _metric_error("cssom_block_style", exc)
             except Exception as exc:

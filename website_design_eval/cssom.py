@@ -388,7 +388,7 @@ def extract_cssom_snapshot(
     elements.push(payload);
     if (isControl) controls.push(payload);
   }
-  return {
+    return {
     url: window.location.href,
     viewport: {
       width: window.innerWidth,
@@ -402,6 +402,19 @@ def extract_cssom_snapshot(
     normalize_size: {
       width: normalizeWidth,
       height: normalizeHeight,
+    },
+    screenshot: {
+      width: normalizeWidth,
+      height: normalizeHeight,
+    },
+    scroll: {
+      x: window.scrollX,
+      y: window.scrollY,
+    },
+    coordinate_space: {
+      bbox_px: 'document_px',
+      bbox: 'normalized_document_to_screenshot',
+      note: 'bbox_px is document-space pixels; bbox is normalized by screenshot width/height for full-page visual-block matching.',
     },
     elements,
     controls,
@@ -543,54 +556,36 @@ def _score_cssom_pair(reference_node: dict[str, Any], candidate_node: dict[str, 
     }
 
 
-def cssom_block_style_score(
-    reference_html: PathLike,
-    candidate_html: PathLike,
-    reference_screenshot: PathLike,
-    candidate_screenshot: PathLike,
-    *,
-    tmp_dir: PathLike | None = None,
-    device: str = "cpu",
-    debug: bool = False,
-    include_pairs: bool = False,
-    viewport: tuple[int, int] | None = None,
-    min_resolution_score: float = 0.35,
-    visual_block_result: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    """Score computed CSS styles over existing visual-block matched pairs.
+def _snapshot_summary(snapshot: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "element_count": snapshot.get("element_count"),
+        "control_count": snapshot.get("control_count"),
+        "document": snapshot.get("document"),
+        "viewport": snapshot.get("viewport"),
+        "screenshot": snapshot.get("screenshot"),
+        "normalize_size": snapshot.get("normalize_size"),
+        "scroll": snapshot.get("scroll"),
+        "coordinate_space": snapshot.get("coordinate_space"),
+    }
 
-    The Design2Code/WebCode2M visual block score remains unchanged. This scorer
-    uses its matched pairs, resolves each block to a rendered DOM node inside
-    the same page, and compares CSSOM attributes for those resolved nodes.
+
+def cssom_block_style_score_from_snapshots(
+    reference_snapshot: dict[str, Any],
+    candidate_snapshot: dict[str, Any],
+    visual_block_result: dict[str, Any],
+    *,
+    include_pairs: bool = False,
+    min_resolution_score: float = 0.35,
+) -> dict[str, Any]:
+    """Score computed CSS styles from manifest-state CSSOM snapshots.
+
+    This function expects snapshots already extracted from the same browser
+    state as the screenshot. It does not open or render raw HTML files.
     """
 
-    from .block_visual import visual_block_score
-
-    if visual_block_result is None:
-        visual_block = visual_block_score(
-            reference_html,
-            candidate_html,
-            reference_screenshot,
-            candidate_screenshot,
-            tmp_dir=tmp_dir,
-            device=device,
-            debug=debug,
-            include_pairs=True,
-        )
-    else:
-        visual_block = visual_block_result
-        if "matched_pairs" not in visual_block:
-            raise ValueError("visual_block_result must include matched_pairs")
-    reference_snapshot = extract_cssom_snapshot(
-        reference_html,
-        screenshot_path=reference_screenshot,
-        viewport=viewport,
-    )
-    candidate_snapshot = extract_cssom_snapshot(
-        candidate_html,
-        screenshot_path=candidate_screenshot,
-        viewport=viewport,
-    )
+    visual_block = visual_block_result
+    if "matched_pairs" not in visual_block:
+        raise ValueError("visual_block_result must include matched_pairs")
 
     weighted_score = 0.0
     weighted_resolved_area = 0.0
@@ -691,20 +686,8 @@ def cssom_block_style_score(
         "unresolved_pair_count": len(unresolved_pairs),
         "weighted_reference_area": _round(weighted_resolved_area),
         "group_scores": group_scores,
-        "reference_snapshot": {
-            "element_count": reference_snapshot["element_count"],
-            "control_count": reference_snapshot["control_count"],
-            "document": reference_snapshot["document"],
-            "viewport": reference_snapshot["viewport"],
-            "normalize_size": reference_snapshot["normalize_size"],
-        },
-        "candidate_snapshot": {
-            "element_count": candidate_snapshot["element_count"],
-            "control_count": candidate_snapshot["control_count"],
-            "document": candidate_snapshot["document"],
-            "viewport": candidate_snapshot["viewport"],
-            "normalize_size": candidate_snapshot["normalize_size"],
-        },
+        "reference_snapshot": _snapshot_summary(reference_snapshot),
+        "candidate_snapshot": _snapshot_summary(candidate_snapshot),
         "visual_block": {
             key: visual_block[key]
             for key in (
@@ -726,3 +709,61 @@ def cssom_block_style_score(
         payload["resolved_pairs"] = resolved_pairs
         payload["unresolved_pairs"] = unresolved_pairs
     return payload
+
+
+def cssom_block_style_score(
+    reference_html: PathLike,
+    candidate_html: PathLike,
+    reference_screenshot: PathLike,
+    candidate_screenshot: PathLike,
+    *,
+    tmp_dir: PathLike | None = None,
+    device: str = "cpu",
+    debug: bool = False,
+    include_pairs: bool = False,
+    viewport: tuple[int, int] | None = None,
+    min_resolution_score: float = 0.35,
+    visual_block_result: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Legacy adapter that extracts CSSOM snapshots from HTML file paths.
+
+    Core evaluator paths should prefer cssom_block_style_score_from_snapshots()
+    so CSSOM scoring uses the already-captured manifest-state browser artifacts.
+    This wrapper is kept for CLI/research parity.
+    """
+
+    from .block_visual import visual_block_score
+
+    if visual_block_result is None:
+        visual_block = visual_block_score(
+            reference_html,
+            candidate_html,
+            reference_screenshot,
+            candidate_screenshot,
+            tmp_dir=tmp_dir,
+            device=device,
+            debug=debug,
+            include_pairs=True,
+        )
+    else:
+        visual_block = visual_block_result
+        if "matched_pairs" not in visual_block:
+            raise ValueError("visual_block_result must include matched_pairs")
+
+    reference_snapshot = extract_cssom_snapshot(
+        reference_html,
+        screenshot_path=reference_screenshot,
+        viewport=viewport,
+    )
+    candidate_snapshot = extract_cssom_snapshot(
+        candidate_html,
+        screenshot_path=candidate_screenshot,
+        viewport=viewport,
+    )
+    return cssom_block_style_score_from_snapshots(
+        reference_snapshot,
+        candidate_snapshot,
+        visual_block,
+        include_pairs=include_pairs,
+        min_resolution_score=min_resolution_score,
+    )

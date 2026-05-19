@@ -156,6 +156,18 @@ or equivalent.
 
 The metric may still reuse the existing CSS comparison logic, but the rendered state should come from the centralized Playwright capture, not a second default render from files.
 
+The CSSOM snapshot contract must be explicit because block-style scoring resolves visual blocks back to rendered DOM elements. Each element record should include:
+
+- `bbox_px`: document-space pixel box, normalized against full-page screenshot coordinates when the screenshot is full-page.
+- `bbox`: normalized `[x, y, width, height]` in the same coordinate space as visual-block boxes.
+- viewport width, height, and device pixel ratio.
+- document width and height.
+- screenshot width and height.
+- scroll offset at capture time.
+- a clear coordinate note: whether boxes are viewport-relative or document/full-page-relative.
+
+For the current full-page screenshot flow, prefer document/full-page coordinates so visual blocks, screenshots, and CSSOM element boxes are comparable without guessing.
+
 ## Visual Block Metrics
 
 Visual block must run in isolation because it mutates page text colors to recover block boxes.
@@ -189,6 +201,20 @@ Important constraints:
 - Do not call the old WebCode2M `html2screenshot.py` path in the core evaluator.
 - Do not pass raw route file paths into visual-block core scoring.
 - If the isolated replay cannot reproduce the capture state, mark visual block unsupported for that capture instead of returning a false zero.
+- Do not depend on transient resolver-stamp selectors such as `[data-wde-node-id="wde-49"]` during isolated replay.
+- In V1, re-run target resolution inside each isolated replay page instead of trying to persist page-local stamped selectors.
+
+The visual-block refactor should preserve upstream scoring fidelity. The goal is not to invent a new visual-block score. The goal is to replace only the browser IO layer:
+
+```text
+old:
+  HTML file -> WebCode2M html2screenshot.py -> recolored renders -> block lists
+
+new:
+  isolated Playwright manifest-state page -> recolored renders -> block lists
+```
+
+After block extraction, feed the resulting block lists into the existing WebCode2M/Design2Code merge, match, and scoring logic wherever possible. Add parity tests on static/default captures so that unchanged full-page captures still match the previous visual-block scores.
 
 ## Candidate Action Resolution And Intents
 
@@ -228,6 +254,10 @@ Example manifest intent:
 
 Control matching should not give full confidence just because two inputs share the same type. For example, any random `type="email"` input should not pass an email-focus capture. Type is one feature; it is not identity.
 
+When isolated replays are needed, the resolver should run again inside that isolated page. Persisting a transient stamped selector from the first page is not a stable replay strategy. The capture plan may record the original resolver evidence and confidence, but the isolated page should resolve the action target against its own rendered DOM.
+
+If intent and postcondition fields become first-class manifest fields, update the manifest schema before relying on them. The current manifest model is strict, so intent rollout should include an explicit schema migration rather than ad hoc extra fields.
+
 ## What We Defer
 
 Element-local scoring can come later.
@@ -248,6 +278,7 @@ DOM stamping cleanup can also come later unless it affects metrics. A clean impl
 
 - Split CSSOM extraction from CSSOM scoring.
 - Keep extraction in the Playwright capture step.
+- Store CSSOM boxes with both `bbox_px` and normalized `bbox`, plus viewport, document, screenshot, scroll, and coordinate-space metadata.
 - Change block-style CSSOM scoring to consume captured snapshots and matched blocks.
 - Remove file-path/default-render CSSOM calls from the core evaluator.
 
@@ -255,19 +286,27 @@ DOM stamping cleanup can also come later unless it affects metrics. A clean impl
 
 - Add a visual-block extractor that accepts a replayed Playwright page or a replay function.
 - In an isolated page/context, replay the same route, viewport, and manifest action state.
+- Re-run target resolution inside the isolated page rather than using transient stamped selectors from the normal capture page.
 - Inject color mutations into that isolated page.
 - Screenshot mutated states with Playwright.
 - Extract blocks from those mutated screenshots.
-- Compare blocks with the existing WebCode2M/Design2Code scoring logic where possible.
+- Feed extracted block lists into the existing WebCode2M/Design2Code merge, match, and scoring logic.
+- Add static/default parity tests against the current visual-block adapter.
 
-### Step 4: Tighten Candidate Control Resolution
+### Step 4: Manifest Intent Schema Migration
+
+- Extend the manifest schema for optional intent and postcondition fields before relying on them.
+- Keep existing selector/action manifests valid.
+- Record intent usage and postcondition checks in `candidate-capture-plan.json`.
+
+### Step 5: Tighten Candidate Control Resolution
 
 - Remove hard overrides such as `same input type = confidence 1.0`.
 - Require a combined match across role/tag/text/accessibility/name/id/label/geometry.
 - Verify that postconditions are met after action replay.
 - Record resolver confidence and postcondition confidence separately.
 
-### Step 5: Update Reports
+### Step 6: Update Reports
 
 The core report should make substrate source explicit:
 
@@ -285,4 +324,3 @@ The core report should make substrate source explicit:
 - CSSOM/block-style scores are computed from manifest-state CSSOM snapshots.
 - Candidate capture plan records exact selector matches, resolver matches, intent usage, postcondition checks, and unsupported reasons.
 - The evaluator remains framework-ready: React/Solid pages are evaluated through browser-rendered state, not source-code structure.
-
