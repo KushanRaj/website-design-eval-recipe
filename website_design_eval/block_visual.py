@@ -103,6 +103,11 @@ def _load_research_visual_score() -> Any:
     return module
 
 
+def _load_ocr_free_utils() -> Any:
+    _load_research_visual_score()
+    return sys.modules[f"{_PACKAGE_NAME}.ocr_free_utils"]
+
+
 def _build_get_blocks_ocr_free(utils: Any) -> Any:
     def get_blocks_ocr_free(html_path: PathLike, image_path: PathLike, tmp_dir: PathLike) -> list[dict[str, Any]]:
         p_html, p_html_1, p_png, p_png_1 = utils.get_itermediate_names(html_path, tmp_dir)
@@ -143,6 +148,52 @@ def _build_get_blocks_ocr_free(utils: Any) -> Any:
     return get_blocks_ocr_free
 
 
+VISUAL_BLOCK_RECOLOR_SCRIPT = """
+({ offset }) => {
+  const rgbToHex = (rgb) => rgb.map((value) => value.toString(16).padStart(2, '0').toUpperCase()).join('');
+  const colors = [];
+  for (let r = 10; r <= 250; r += 16) {
+    for (let g = 10; g <= 250; g += 16) {
+      for (let b = 10; b <= 250; b += 16) {
+        colors.push(rgbToHex([(r + offset) % 256, (g + offset) % 256, (b + offset) % 256]));
+      }
+    }
+  }
+  const popColor = () => {
+    const color = colors.pop();
+    if (!color) throw new Error('visual block color pool exhausted');
+    return `#${color}`;
+  };
+  const textTags = 'p,h1,h2,h3,h4,h5,h6,div,span,a,b,li,table,td,th,button,footer,header,figcaption';
+  for (const el of Array.from(document.querySelectorAll('*'))) {
+    el.style.setProperty('background-color', 'rgba(255, 255, 255, 0.0)', 'important');
+  }
+  for (const el of Array.from(document.querySelectorAll(textTags))) {
+    const color = popColor();
+    el.setAttribute('data-wde-visual-block-color', color);
+    el.style.setProperty('color', color, 'important');
+    el.style.setProperty('opacity', '1.0', 'important');
+  }
+
+  const directColor = (el) => el.getAttribute?.('data-wde-visual-block-color') || '';
+  const flatten = [];
+  const walk = (node, parentColor) => {
+    if (node.nodeType === Node.COMMENT_NODE) return;
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = (node.textContent || '').trim();
+      if (text) flatten.push([text, parentColor]);
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    const color = directColor(node) || parentColor;
+    for (const child of Array.from(node.childNodes)) walk(child, color);
+  };
+  if (document.body) walk(document.body, '#000000');
+  return flatten;
+}
+"""
+
+
 def _round(value: Any, digits: int = 6) -> float:
     return round(float(value), digits)
 
@@ -163,6 +214,14 @@ def _block_payload(block: dict[str, Any]) -> dict[str, Any]:
         "bbox": [_round(value) for value in block.get("bbox", [])],
         "color": [int(value) for value in block.get("color", [])],
         "area": _round(_block_area(block)),
+    }
+
+
+def _block_artifact_payload(block: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "text": str(block.get("text", "")),
+        "bbox": [float(value) for value in block.get("bbox", [])],
+        "color": [int(value) for value in block.get("color", [])],
     }
 
 
@@ -313,13 +372,12 @@ def _score_bbox_geometry(
     }
 
 
-def _run_visual_block_analysis(
+def _run_visual_block_analysis_from_blocks(
     module: Any,
-    reference_html: PathLike,
-    candidate_html: PathLike,
+    reference_blocks: list[dict[str, Any]],
+    candidate_blocks: list[dict[str, Any]],
     reference_screenshot: PathLike,
     candidate_screenshot: PathLike,
-    work_dir: Path,
     *,
     device: str,
     debug: bool,
@@ -327,8 +385,6 @@ def _run_visual_block_analysis(
     if module.CLIP_MODEL is None:
         module.CLIP_MODEL, module.CLIP_PREPROCESS = module.clip.load("ViT-B/32", device=device)
 
-    candidate_blocks = module.get_blocks_ocr_free(str(candidate_html), str(candidate_screenshot), str(work_dir))
-    reference_blocks = module.get_blocks_ocr_free(str(reference_html), str(reference_screenshot), str(work_dir))
     reference_blocks = module.merge_blocks_by_bbox(reference_blocks)
 
     if len(candidate_blocks) == 0 or len(reference_blocks) == 0:
@@ -483,6 +539,74 @@ def _run_visual_block_analysis(
     }
 
 
+def _run_visual_block_analysis(
+    module: Any,
+    reference_html: PathLike,
+    candidate_html: PathLike,
+    reference_screenshot: PathLike,
+    candidate_screenshot: PathLike,
+    work_dir: Path,
+    *,
+    device: str,
+    debug: bool,
+) -> dict[str, Any]:
+    candidate_blocks = module.get_blocks_ocr_free(str(candidate_html), str(candidate_screenshot), str(work_dir))
+    reference_blocks = module.get_blocks_ocr_free(str(reference_html), str(reference_screenshot), str(work_dir))
+    return _run_visual_block_analysis_from_blocks(
+        module,
+        reference_blocks,
+        candidate_blocks,
+        reference_screenshot,
+        candidate_screenshot,
+        device=device,
+        debug=debug,
+    )
+
+
+def _format_visual_block_result(
+    analysis: dict[str, Any],
+    *,
+    reference_screenshot: PathLike,
+    candidate_screenshot: PathLike,
+    device: str,
+    include_pairs: bool,
+    include_block_pixelmatch: bool,
+    pixelmatch_threshold: float,
+    source: str,
+    artifact_source: str,
+) -> dict[str, Any]:
+    result = {
+        "score": _round(analysis["score"]),
+        "weighted_area": _round(analysis["weighted_area"]),
+        "size": _round(analysis["size"]),
+        "text": _round(analysis["text"]),
+        "position": _round(analysis["position"]),
+        "text_color": _round(analysis["text_color"]),
+        "masked_clip": _round(analysis["masked_clip"]),
+        "reference_block_count": analysis["reference_block_count"],
+        "candidate_block_count": analysis["candidate_block_count"],
+        "matched_pair_count": analysis["matched_pair_count"],
+        "unmatched_reference_count": len(analysis["unmatched_reference_blocks"]),
+        "unmatched_candidate_count": len(analysis["unmatched_candidate_blocks"]),
+        "device": device,
+        "source": source,
+        "artifact_source": artifact_source,
+    }
+    if include_block_pixelmatch:
+        result["block_pixelmatch"] = _score_block_pixelmatch(
+            reference_screenshot,
+            candidate_screenshot,
+            analysis["matched_pairs"],
+            coverage_score=float(analysis["size"]),
+            threshold=pixelmatch_threshold,
+        )
+    if include_pairs:
+        result["matched_pairs"] = analysis["matched_pairs"]
+        result["unmatched_reference_blocks"] = analysis["unmatched_reference_blocks"]
+        result["unmatched_candidate_blocks"] = analysis["unmatched_candidate_blocks"]
+    return result
+
+
 def visual_block_score(
     reference_html: PathLike,
     candidate_html: PathLike,
@@ -517,41 +641,113 @@ def visual_block_score(
             device=device,
             debug=debug,
         )
-        result = {
-            "score": _round(analysis["score"]),
-            "weighted_area": _round(analysis["weighted_area"]),
-            "size": _round(analysis["size"]),
-            "text": _round(analysis["text"]),
-            "position": _round(analysis["position"]),
-            "text_color": _round(analysis["text_color"]),
-            "masked_clip": _round(analysis["masked_clip"]),
-            "reference_block_count": analysis["reference_block_count"],
-            "candidate_block_count": analysis["candidate_block_count"],
-            "matched_pair_count": analysis["matched_pair_count"],
-            "unmatched_reference_count": len(analysis["unmatched_reference_blocks"]),
-            "unmatched_candidate_count": len(analysis["unmatched_candidate_blocks"]),
-            "device": device,
-            "source": "research/source-repos/naturalcc/examples/webcode2m/scripts/evaluation/design2code",
-        }
-        if include_block_pixelmatch:
-            result["block_pixelmatch"] = _score_block_pixelmatch(
-                reference_screenshot,
-                candidate_screenshot,
-                analysis["matched_pairs"],
-                coverage_score=float(analysis["size"]),
-                threshold=pixelmatch_threshold,
-            )
-        if include_pairs:
-            result["matched_pairs"] = analysis["matched_pairs"]
-            result["unmatched_reference_blocks"] = analysis["unmatched_reference_blocks"]
-            result["unmatched_candidate_blocks"] = analysis["unmatched_candidate_blocks"]
-        return result
+        return _format_visual_block_result(
+            analysis,
+            reference_screenshot=reference_screenshot,
+            candidate_screenshot=candidate_screenshot,
+            device=device,
+            include_pairs=include_pairs,
+            include_block_pixelmatch=include_block_pixelmatch,
+            pixelmatch_threshold=pixelmatch_threshold,
+            source="research/source-repos/naturalcc/examples/webcode2m/scripts/evaluation/design2code",
+            artifact_source="legacy_file_render",
+        )
 
     if tmp_dir is not None:
         return run(Path(tmp_dir))
 
     with tempfile.TemporaryDirectory(prefix="visual-block-") as directory:
         return run(Path(directory))
+
+
+def extract_visual_blocks_from_playwright_page(
+    page: Any,
+    origin_screenshot: PathLike,
+    *,
+    screenshot_options: dict[str, Any],
+    tmp_dir: PathLike | None = None,
+) -> dict[str, Any]:
+    """Extract OCR-free visual blocks from an already replayed Playwright page.
+
+    The page is intentionally expected to be isolated: this function mutates text
+    colors in-place to mirror WebCode2M's OCR-free render IO.
+    """
+
+    utils = _load_ocr_free_utils()
+
+    def run(work_dir: Path) -> dict[str, Any]:
+        work_dir.mkdir(parents=True, exist_ok=True)
+        p_png = work_dir / "visual_block_recolor_0.png"
+        p_png_1 = work_dir / "visual_block_recolor_50.png"
+        html_text_color_tree = page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 0})
+        page.screenshot(**{**screenshot_options, "path": str(p_png)})
+        page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 50})
+        page.screenshot(**{**screenshot_options, "path": str(p_png_1)})
+
+        different_pixels = utils.find_different_pixels(p_png, p_png_1)
+        if different_pixels is None:
+            return {
+                "status": "empty",
+                "reason": "no_different_pixels",
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+            }
+        blocks = utils.get_blocks_from_image_diff_pixels(
+            str(origin_screenshot),
+            str(p_png),
+            html_text_color_tree,
+            different_pixels,
+        )
+        return {
+            "status": "ok",
+            "reason": None,
+            "blocks": [_block_artifact_payload(block) for block in blocks],
+            "block_count": len(blocks),
+            "artifact_source": "isolated_playwright_manifest_state",
+        }
+
+    if tmp_dir is not None:
+        return run(Path(tmp_dir))
+
+    with tempfile.TemporaryDirectory(prefix="visual-block-page-") as directory:
+        return run(Path(directory))
+
+
+def visual_block_score_from_blocks(
+    reference_blocks: list[dict[str, Any]],
+    candidate_blocks: list[dict[str, Any]],
+    reference_screenshot: PathLike,
+    candidate_screenshot: PathLike,
+    *,
+    device: str = "cpu",
+    debug: bool = False,
+    include_pairs: bool = False,
+    include_block_pixelmatch: bool = False,
+    pixelmatch_threshold: float = 0.1,
+    artifact_source: str = "isolated_playwright_manifest_state",
+) -> dict[str, Any]:
+    module = _load_research_visual_score()
+    analysis = _run_visual_block_analysis_from_blocks(
+        module,
+        deepcopy(reference_blocks),
+        deepcopy(candidate_blocks),
+        reference_screenshot,
+        candidate_screenshot,
+        device=device,
+        debug=debug,
+    )
+    return _format_visual_block_result(
+        analysis,
+        reference_screenshot=reference_screenshot,
+        candidate_screenshot=candidate_screenshot,
+        device=device,
+        include_pairs=include_pairs,
+        include_block_pixelmatch=include_block_pixelmatch,
+        pixelmatch_threshold=pixelmatch_threshold,
+        source="research/source-repos/naturalcc/examples/webcode2m/scripts/evaluation/design2code",
+        artifact_source=artifact_source,
+    )
 
 
 def element_block_pixelmatch_score(

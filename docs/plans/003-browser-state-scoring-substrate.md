@@ -216,6 +216,21 @@ new:
 
 After block extraction, feed the resulting block lists into the existing WebCode2M/Design2Code merge, match, and scoring logic wherever possible. Add parity tests on static/default captures so that unchanged full-page captures still match the previous visual-block scores.
 
+The implementation should be staged. First prove that the browser-state extractor can reproduce the legacy metric on static/default captures. Only after that should it become the source for action-state captures such as dropdowns and hovers.
+
+Stage 1 acceptance:
+
+- `home.desktop.full` and at least one non-home full-page capture are compared against the current visual-block adapter.
+- If scores or block counts differ, the difference must be explained and documented rather than silently treated as parity. Expected causes include the browser-state path loading CSS/assets and respecting real visibility/display state where the legacy `html2screenshot.py` default render did not.
+- The extracted block counts and matched-pair counts match or have an explained, documented difference.
+- CSSOM block-style score remains unchanged for these static/default captures because it receives the same visual-block pairs.
+
+Stage 2 acceptance:
+
+- `home.desktop.work-dropdown` no longer returns a false zero caused by default-state rendering.
+- The visual-block result records `artifact_source: isolated_playwright_manifest_state`.
+- If isolated replay fails, the metric is marked unsupported with a reason rather than scored as zero.
+
 ## Candidate Action Resolution And Intents
 
 The manifest may contain selectors, but candidate code may use different selectors. The evaluator therefore needs a candidate resolver.
@@ -284,14 +299,19 @@ DOM stamping cleanup can also come later unless it affects metrics. A clean impl
 
 ### Step 3: Refactor Visual Block To Isolated Playwright Replay
 
-- Add a visual-block extractor that accepts a replayed Playwright page or a replay function.
-- In an isolated page/context, replay the same route, viewport, and manifest action state.
+- Add a browser-state visual-block extractor behind a separate code path; do not replace the existing adapter in one step.
+- Port WebCode2M OCR-free render IO faithfully:
+  - assign unique text colors
+  - render twice with different color offsets
+  - diff the recolored screenshots
+  - build the HTML text-color tree / equivalent text-color mapping
+  - recover block boxes from the original manifest-state screenshot
+- Use isolated Playwright pages for the recolored renders.
+- In the isolated page/context, replay the same route, viewport, and manifest action state.
 - Re-run target resolution inside the isolated page rather than using transient stamped selectors from the normal capture page.
-- Inject color mutations into that isolated page.
-- Screenshot mutated states with Playwright.
-- Extract blocks from those mutated screenshots.
 - Feed extracted block lists into the existing WebCode2M/Design2Code merge, match, and scoring logic.
-- Add static/default parity tests against the current visual-block adapter.
+- First run static/default parity tests against the current visual-block adapter.
+- Only after parity is understood, enable the new extractor for action-state captures such as dropdown and hover.
 
 ### Step 4: Manifest Intent Schema Migration
 

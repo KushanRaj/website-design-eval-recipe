@@ -735,6 +735,12 @@ def visual_block_score(*args: Any, **kwargs: Any) -> dict[str, Any]:
     return _visual_block_score(*args, **kwargs)
 
 
+def visual_block_score_from_blocks(*args: Any, **kwargs: Any) -> dict[str, Any]:
+    from .block_visual import visual_block_score_from_blocks as _visual_block_score_from_blocks
+
+    return _visual_block_score_from_blocks(*args, **kwargs)
+
+
 def element_block_pixelmatch_score(*args: Any, **kwargs: Any) -> dict[str, Any]:
     from .block_visual import element_block_pixelmatch_score as _element_block_pixelmatch_score
 

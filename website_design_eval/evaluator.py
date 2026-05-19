@@ -16,14 +16,17 @@ from typing import Any
 from PIL import Image
 from playwright.sync_api import Browser, Page
 
-from .block_visual import _score_bbox_geometry
+from .block_visual import (
+    _score_bbox_geometry,
+    extract_visual_blocks_from_playwright_page,
+    visual_block_score_from_blocks,
+)
 from .scoring import (
     _pick_torch_device,
     cssom_block_style_score_from_snapshots,
     dreamsim_distance,
     render_sanity_score,
     screenshot_size_match_score,
-    visual_block_score,
     vlm_judge_score,
     webcode2m_dom_score,
     webcode2m_text_score,
@@ -971,6 +974,50 @@ def _missing_artifact(
     return artifact
 
 
+def _extract_visual_blocks_for_artifact(
+    browser: Browser,
+    base_url: str,
+    capture: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    reference_actions: list[dict[str, Any]],
+    artifact: dict[str, Any],
+    *,
+    side: str,
+) -> dict[str, Any]:
+    defaults = manifest.get("defaults", {})
+    context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = context.new_page()
+    try:
+        _goto_capture(page, base_url, route, capture, defaults)
+        if side == "reference":
+            replay_actions = _execute_reference_actions(page, capture)
+        else:
+            replay_actions = _execute_candidate_actions(page, reference_actions)
+
+        screenshot_path = artifact.get("screenshot_path")
+        if not screenshot_path:
+            return {
+                "status": "unsupported",
+                "reason": "screenshot_missing",
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+                "replay_actions": replay_actions,
+            }
+
+        screenshot_options = _screenshot_options(defaults, capture, Path(screenshot_path))
+        visual_blocks = extract_visual_blocks_from_playwright_page(
+            page,
+            screenshot_path,
+            screenshot_options=screenshot_options,
+        )
+        visual_blocks["replay_actions"] = replay_actions
+        return visual_blocks
+    finally:
+        context.close()
+
+
 def _capture_reference(
     browser: Browser,
     base_url: str,
@@ -978,6 +1025,8 @@ def _capture_reference(
     manifest: dict[str, Any],
     route: dict[str, Any],
     artifact_dir: Path,
+    *,
+    include_visual_blocks: bool,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -987,6 +1036,27 @@ def _capture_reference(
         reference_actions = _execute_reference_actions(page, capture)
         artifact = _artifact_from_page(page, capture, defaults, artifact_dir, reference_actions, side="reference")
         artifact["route"] = route
+        if include_visual_blocks:
+            try:
+                artifact["visual_blocks"] = _extract_visual_blocks_for_artifact(
+                    browser,
+                    base_url,
+                    capture,
+                    manifest,
+                    route,
+                    reference_actions,
+                    artifact,
+                    side="reference",
+                )
+            except Exception as exc:
+                artifact["visual_blocks"] = {
+                    "status": "error",
+                    "reason": f"{type(exc).__name__}: {exc}",
+                    "blocks": [],
+                    "block_count": 0,
+                    "artifact_source": "isolated_playwright_manifest_state",
+                }
+                artifact["extraction_errors"].append({"metric": "visual_blocks", "message": artifact["visual_blocks"]["reason"]})
         _write_json(artifact_dir / f"{capture['id']}.json", artifact)
         return artifact, reference_actions
     finally:
@@ -1001,6 +1071,8 @@ def _capture_candidate(
     route: dict[str, Any],
     reference_actions: list[dict[str, Any]],
     artifact_dir: Path,
+    *,
+    include_visual_blocks: bool,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -1010,6 +1082,27 @@ def _capture_candidate(
         candidate_actions = _execute_candidate_actions(page, reference_actions)
         artifact = _artifact_from_page(page, capture, defaults, artifact_dir, candidate_actions, side="candidate")
         artifact["route"] = route
+        if include_visual_blocks:
+            try:
+                artifact["visual_blocks"] = _extract_visual_blocks_for_artifact(
+                    browser,
+                    base_url,
+                    capture,
+                    manifest,
+                    route,
+                    reference_actions,
+                    artifact,
+                    side="candidate",
+                )
+            except Exception as exc:
+                artifact["visual_blocks"] = {
+                    "status": "error",
+                    "reason": f"{type(exc).__name__}: {exc}",
+                    "blocks": [],
+                    "block_count": 0,
+                    "artifact_source": "isolated_playwright_manifest_state",
+                }
+                artifact["extraction_errors"].append({"metric": "visual_blocks", "message": artifact["visual_blocks"]["reason"]})
         _write_json(artifact_dir / f"{capture['id']}.json", artifact)
         return artifact, candidate_actions
     finally:
@@ -1112,13 +1205,13 @@ def _run_pair_metrics(
             pair["vlm_judge"] = _metric_error("vlm_judge", exc)
 
     if config.include_visual_block:
-        reference_html_path = reference_route.get("file_path")
-        candidate_html_path = candidate_route.get("file_path")
-        if reference_html_path and candidate_html_path:
+        reference_visual_blocks = reference_artifact.get("visual_blocks") or {}
+        candidate_visual_blocks = candidate_artifact.get("visual_blocks") or {}
+        if reference_visual_blocks.get("status") == "ok" and candidate_visual_blocks.get("status") == "ok":
             try:
-                visual = visual_block_score(
-                    reference_html_path,
-                    candidate_html_path,
+                visual = visual_block_score_from_blocks(
+                    reference_visual_blocks.get("blocks", []),
+                    candidate_visual_blocks.get("blocks", []),
                     reference_screenshot,
                     candidate_screenshot,
                     device=config.visual_block_device,
@@ -1166,9 +1259,19 @@ def _run_pair_metrics(
                 pair["bbox_geometry"] = {"unsupported": True, "reason": "visual_block_failed"}
                 pair["cssom_block_style"] = {"unsupported": True, "reason": "visual_block_failed"}
         else:
-            pair["visual_block"] = {"unsupported": True, "reason": "route_file_missing"}
-            pair["bbox_geometry"] = {"unsupported": True, "reason": "route_file_missing"}
-            pair["cssom_block_style"] = {"unsupported": True, "reason": "route_file_missing"}
+            reason = (
+                reference_visual_blocks.get("reason")
+                or candidate_visual_blocks.get("reason")
+                or "visual_block_artifact_missing"
+            )
+            pair["visual_block"] = {
+                "unsupported": True,
+                "reason": reason,
+                "reference_status": reference_visual_blocks.get("status"),
+                "candidate_status": candidate_visual_blocks.get("status"),
+            }
+            pair["bbox_geometry"] = {"unsupported": True, "reason": "visual_block_artifact_missing"}
+            pair["cssom_block_style"] = {"unsupported": True, "reason": "visual_block_artifact_missing"}
     else:
         pair["visual_block"] = {"unsupported": True, "reason": "visual block disabled"}
         pair["bbox_geometry"] = {"unsupported": True, "reason": "visual block disabled"}
@@ -1387,6 +1490,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                             reference_manifest,
                             reference_route,
                             reference_artifact_dir,
+                            include_visual_blocks=config.include_visual_block,
                         )
 
                     if candidate_route["status"] != "resolved":
@@ -1408,6 +1512,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                                 candidate_route,
                                 reference_actions,
                                 candidate_artifact_dir,
+                                include_visual_blocks=config.include_visual_block,
                             )
                         except Exception as exc:
                             candidate_artifact = _missing_artifact(
