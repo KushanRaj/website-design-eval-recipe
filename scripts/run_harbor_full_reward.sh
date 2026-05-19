@@ -27,6 +27,7 @@ BUILDX_BUILDER="${WDE_BUILDX_BUILDER:-default}"
 HARBOR_ENV="${WDE_HARBOR_ENV:-}"
 MODAL_SECRET_NAME="${WDE_MODAL_SECRET_NAME:-}"
 MODAL_ENVIRONMENT_NAME="${WDE_MODAL_ENVIRONMENT:-}"
+MODAL_REGISTRY_SECRET_NAME="${WDE_MODAL_REGISTRY_SECRET_NAME:-}"
 
 if [[ -n "$MODAL_ENVIRONMENT_NAME" ]]; then
   export MODAL_ENVIRONMENT="$MODAL_ENVIRONMENT_NAME"
@@ -82,6 +83,9 @@ if [[ -n "$HARBOR_ENV" ]]; then
 fi
 if [[ -n "$MODAL_SECRET_NAME" ]]; then
   environment_args+=(--ek "secrets=[\"$MODAL_SECRET_NAME\"]")
+fi
+if [[ -n "$MODAL_REGISTRY_SECRET_NAME" ]]; then
+  environment_args+=(--ek "registry_secret=\"$MODAL_REGISTRY_SECRET_NAME\"")
 fi
 if [[ -n "${WDE_HARBOR_OVERRIDE_MEMORY_MB:-}" ]]; then
   environment_args+=(--override-memory "$WDE_HARBOR_OVERRIDE_MEMORY_MB")
