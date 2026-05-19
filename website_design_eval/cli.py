@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 from typing import Any
 
+from .evaluator import EvaluateConfig, evaluate, print_functional_status
 from .scoring import (
     _pick_torch_device,
     accessibility_control_tags,
@@ -210,6 +212,24 @@ def main(argv: list[str] | None = None) -> int:
     websee_localize.add_argument("--viewport-width", type=int)
     websee_localize.add_argument("--viewport-height", type=int)
 
+    evaluate_parser = subparsers.add_parser(
+        "evaluate",
+        help="Run the manifest-aware evaluator on one reference/candidate folder pair",
+    )
+    evaluate_parser.add_argument("--reference-root", required=True)
+    evaluate_parser.add_argument("--reference-manifest", required=True)
+    evaluate_parser.add_argument("--candidate-root", required=True)
+    evaluate_parser.add_argument("--output-dir", required=True)
+    evaluate_parser.add_argument("--capture", action="append", default=None, help="Capture id to run; may be repeated")
+    evaluate_parser.add_argument("--skip-vlm", action="store_true")
+    evaluate_parser.add_argument("--vlm-model", default="gpt-5.4-mini")
+    evaluate_parser.add_argument("--dreamsim-type", default="ensemble")
+    evaluate_parser.add_argument("--dreamsim-device", default=None)
+    evaluate_parser.add_argument("--dreamsim-cache-dir", default=None)
+    evaluate_parser.add_argument("--skip-dreamsim", action="store_true")
+    evaluate_parser.add_argument("--visual-block-device", default="cpu")
+    evaluate_parser.add_argument("--no-visual-block", action="store_true")
+
     args = parser.parse_args(argv)
     if args.command == "pair":
         _print_json(score_screenshot_pair(args.reference, args.candidate, include_clip=args.clip))
@@ -394,6 +414,28 @@ def main(argv: list[str] | None = None) -> int:
                 viewport=viewport,
             )
         )
+        return 0
+    if args.command == "evaluate":
+        repo_root = Path(__file__).resolve().parents[1]
+        result = evaluate(
+            EvaluateConfig(
+                reference_root=Path(args.reference_root).resolve(),
+                reference_manifest=Path(args.reference_manifest).resolve(),
+                candidate_root=Path(args.candidate_root).resolve(),
+                output_dir=Path(args.output_dir).resolve(),
+                repo_root=repo_root,
+                skip_vlm=args.skip_vlm,
+                skip_dreamsim=args.skip_dreamsim,
+                vlm_model=args.vlm_model,
+                dreamsim_type=args.dreamsim_type,
+                dreamsim_device=args.dreamsim_device,
+                dreamsim_cache_dir=args.dreamsim_cache_dir,
+                visual_block_device=args.visual_block_device,
+                include_visual_block=not args.no_visual_block,
+                capture_filter=set(args.capture or []) or None,
+            )
+        )
+        print_functional_status(result)
         return 0
     parser.error(f"Unknown command: {args.command}")
     return 2
