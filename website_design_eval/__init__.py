@@ -1,4 +1,5 @@
 from .reward import build_reward_markdown, compute_reward, compute_reward_from_file
+from .candidate_planner import generate_candidate_manifest
 from .manifest_generator import generate_manifest
 from .scoring import (
     bbox_geometry_score,
@@ -43,6 +44,7 @@ __all__ = [
     "build_reward_markdown",
     "compute_reward",
     "compute_reward_from_file",
+    "generate_candidate_manifest",
     "generate_manifest",
     "bbox_geometry_score",
     "accessibility_control_tags",

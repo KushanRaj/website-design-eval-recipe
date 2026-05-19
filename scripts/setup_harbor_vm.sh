@@ -28,10 +28,10 @@ EOF
   exit 1
 fi
 
-if [[ -z "${ANTHROPIC_API_KEY:-}" && -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]]; then
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
   cat >&2 <<'EOF'
-ANTHROPIC_API_KEY or CLAUDE_CODE_OAUTH_TOKEN is required for the default
-Claude Code Harbor agent. Put it in .env or export it before running setup.
+ANTHROPIC_API_KEY is required for the verifier-side candidate manifest planner.
+Put it in .env or export it before running setup.
 EOF
   exit 1
 fi

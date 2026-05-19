@@ -174,6 +174,7 @@ FROM mcr.microsoft.com/playwright/python:v1.60.0-noble
 
 RUN python -m pip install --no-cache-dir \\
     beautifulsoup4 \\
+    claude-agent-sdk \\
     lxml \\
     nltk \\
     numpy \\
@@ -295,6 +296,13 @@ def main(argv: list[str] | None = None) -> int:
     require_vlm = bool(metric_config.get("require_vlm", not skip_vlm))
     require_dreamsim = bool(metric_config.get("require_dreamsim", not skip_dreamsim))
     require_visual_block = bool(metric_config.get("require_visual_block", include_visual_block))
+    candidate_manifest_planner = (
+        os.environ.get("WDE_CANDIDATE_MANIFEST_PLANNER")
+        or metric_config.get("candidate_manifest_planner")
+        or None
+    )
+    if candidate_manifest_planner in {"", "none", "None"}:
+        candidate_manifest_planner = None
 
     if require_vlm and skip_vlm:
         raise RuntimeError("Full reward requires VLM, but WDE_SKIP_VLM/metric config disabled it.")
@@ -304,6 +312,8 @@ def main(argv: list[str] | None = None) -> int:
         raise RuntimeError("Full reward requires DreamSim, but WDE_SKIP_DREAMSIM/metric config disabled it.")
     if require_visual_block and not include_visual_block:
         raise RuntimeError("Full reward requires visual block, but WDE_INCLUDE_VISUAL_BLOCK/metric config disabled it.")
+    if candidate_manifest_planner == "claude-code" and not os.environ.get("ANTHROPIC_API_KEY"):
+        raise RuntimeError("Claude Code candidate manifest planning requires ANTHROPIC_API_KEY in the verifier environment.")
 
     repo_root = Path(os.environ.get("WDE_REPO_ROOT") or (image_repo_root if image_repo_root.exists() else vendor_dir)).resolve()
 
@@ -323,6 +333,15 @@ def main(argv: list[str] | None = None) -> int:
             visual_block_device=os.environ.get("WDE_VISUAL_BLOCK_DEVICE", metric_config.get("visual_block_device", "cpu")),
             include_visual_block=include_visual_block,
             capture_filter=capture_filter,
+            candidate_manifest_planner=candidate_manifest_planner,
+            candidate_manifest_model=os.environ.get(
+                "WDE_CANDIDATE_MANIFEST_MODEL",
+                metric_config.get("candidate_manifest_model", "opus"),
+            ),
+            candidate_manifest_claude_auth=os.environ.get(
+                "WDE_CANDIDATE_MANIFEST_CLAUDE_AUTH",
+                metric_config.get("candidate_manifest_claude_auth", "api"),
+            ),
         )
     )
 
@@ -428,6 +447,9 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "dreamsim_device": None,
             "dreamsim_cache_dir": None,
             "visual_block_device": "cpu",
+            "candidate_manifest_planner": None,
+            "candidate_manifest_model": "opus",
+            "candidate_manifest_claude_auth": "api",
             "weight_mode": "manifest",
             "notes": [
                 "Dependency-light development smoke mode only. Do not use for actual reward runs.",
@@ -448,6 +470,9 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "dreamsim_device": "cpu",
             "dreamsim_cache_dir": "/opt/wde/models/dreamsim",
             "visual_block_device": "cpu",
+            "candidate_manifest_planner": None,
+            "candidate_manifest_model": "opus",
+            "candidate_manifest_claude_auth": "api",
             "weight_mode": "manifest",
             "notes": [
                 "Local-only development profile. Do not use for actual reward runs.",
@@ -468,10 +493,13 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "dreamsim_device": "cpu",
             "dreamsim_cache_dir": "/opt/wde/models/dreamsim",
             "visual_block_device": "cpu",
+            "candidate_manifest_planner": "claude-code",
+            "candidate_manifest_model": "opus",
+            "candidate_manifest_claude_auth": "api",
             "weight_mode": "manifest",
             "notes": [
                 "Actual reward profile: API-backed VLM, DreamSim, and visual-block are all required.",
-                "Requires OPENAI_API_KEY and verifier network access.",
+                "Requires OPENAI_API_KEY, ANTHROPIC_API_KEY, and verifier network access.",
             ],
         }
     raise ValueError(f"Unknown metric profile: {metric_profile}")

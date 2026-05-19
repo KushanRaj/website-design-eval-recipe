@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .evaluator import EvaluateConfig, evaluate, print_functional_status
+from .candidate_planner import generate_candidate_manifest
 from .manifest_generator import ClaudeManifestGenerationError, generate_manifest
 from .reward import build_reward_markdown, compute_reward_from_file
 from .scoring import (
@@ -231,6 +232,14 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--skip-dreamsim", action="store_true")
     evaluate_parser.add_argument("--visual-block-device", default="cpu")
     evaluate_parser.add_argument("--no-visual-block", action="store_true")
+    evaluate_parser.add_argument("--candidate-manifest", default=None)
+    evaluate_parser.add_argument("--candidate-manifest-planner", choices=["claude-code"], default=None)
+    evaluate_parser.add_argument("--candidate-manifest-model", default="opus")
+    evaluate_parser.add_argument(
+        "--candidate-manifest-claude-auth",
+        choices=["api", "subscription"],
+        default="api",
+    )
 
     generate_manifest_parser = subparsers.add_parser(
         "generate-manifest",
@@ -251,6 +260,21 @@ def main(argv: list[str] | None = None) -> int:
         type=int,
         default=None,
         help="Optional maximum number of captures. Defaults to no fixed maximum.",
+    )
+
+    generate_candidate_manifest_parser = subparsers.add_parser(
+        "generate-candidate-manifest",
+        help="Use Claude Code to map an oracle manifest onto a candidate website folder",
+    )
+    generate_candidate_manifest_parser.add_argument("--oracle-manifest", required=True)
+    generate_candidate_manifest_parser.add_argument("--candidate-root", required=True)
+    generate_candidate_manifest_parser.add_argument("--output", required=True)
+    generate_candidate_manifest_parser.add_argument("--model", default="opus")
+    generate_candidate_manifest_parser.add_argument(
+        "--claude-auth",
+        choices=["api", "subscription"],
+        default="api",
+        help="Claude Code auth mode for candidate manifest planning.",
     )
 
     evaluate_auto_parser = subparsers.add_parser(
@@ -283,6 +307,8 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_auto_parser.add_argument("--skip-dreamsim", action="store_true")
     evaluate_auto_parser.add_argument("--visual-block-device", default="cpu")
     evaluate_auto_parser.add_argument("--no-visual-block", action="store_true")
+    evaluate_auto_parser.add_argument("--candidate-manifest-planner", choices=["claude-code"], default=None)
+    evaluate_auto_parser.add_argument("--candidate-manifest-model", default="opus")
 
     reward_parser = subparsers.add_parser(
         "reward",
@@ -501,6 +527,10 @@ def main(argv: list[str] | None = None) -> int:
                 visual_block_device=args.visual_block_device,
                 include_visual_block=not args.no_visual_block,
                 capture_filter=set(args.capture or []) or None,
+                candidate_manifest=Path(args.candidate_manifest).resolve() if args.candidate_manifest else None,
+                candidate_manifest_planner=args.candidate_manifest_planner,
+                candidate_manifest_model=args.candidate_manifest_model,
+                candidate_manifest_claude_auth=args.candidate_manifest_claude_auth,
             )
         )
         print_functional_status(result)
@@ -530,6 +560,35 @@ def main(argv: list[str] | None = None) -> int:
                 "inventory_source": result.get("inventory_source"),
                 "capture_count": result["capture_count"],
                 "capture_budget": result["capture_budget"],
+            }
+        )
+        return 0
+    if args.command == "generate-candidate-manifest":
+        repo_root = Path(__file__).resolve().parents[1]
+        try:
+            result = generate_candidate_manifest(
+                Path(args.oracle_manifest).resolve(),
+                Path(args.candidate_root).resolve(),
+                Path(args.output).resolve(),
+                model=args.model,
+                repo_root=repo_root,
+                backend="claude-code",
+                claude_auth=args.claude_auth,
+            )
+        except ClaudeManifestGenerationError as exc:
+            raise SystemExit(f"generate-candidate-manifest failed: {exc}") from None
+        _print_json(
+            {
+                "status": "generated",
+                "manifest": result["output_path"],
+                "backend": result["backend"],
+                "auth_mode": result.get("auth_mode"),
+                "model": result["model"],
+                "page_count": result["page_count"],
+                "inventory_source": result.get("inventory_source"),
+                "oracle_capture_count": result["oracle_capture_count"],
+                "capture_count": result["capture_count"],
+                "missing_capture_ids": result.get("missing_capture_ids", []),
             }
         )
         return 0
@@ -566,6 +625,9 @@ def main(argv: list[str] | None = None) -> int:
                 visual_block_device=args.visual_block_device,
                 include_visual_block=not args.no_visual_block,
                 capture_filter=set(args.capture or []) or None,
+                candidate_manifest_planner=args.candidate_manifest_planner,
+                candidate_manifest_model=args.candidate_manifest_model,
+                candidate_manifest_claude_auth=args.claude_auth,
             )
         )
         result["metadata"]["generated_manifest"] = manifest_result["output_path"]

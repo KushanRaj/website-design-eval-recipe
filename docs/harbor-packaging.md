@@ -18,8 +18,7 @@ The main split:
 ## One-VM Setup
 
 From a clean VM with this repo cloned, Docker running, Harbor installed, and
-`.env` containing `OPENAI_API_KEY` plus either `ANTHROPIC_API_KEY` or
-`CLAUDE_CODE_OAUTH_TOKEN`:
+`.env` containing `OPENAI_API_KEY` and `ANTHROPIC_API_KEY`:
 
 ```bash
 bash scripts/setup_harbor_vm.sh
@@ -180,10 +179,42 @@ The verifier writes:
 The full reward profile requires:
 
 - OpenAI VLM scoring (`OPENAI_API_KEY`)
+- Claude Code candidate capture planning (`ANTHROPIC_API_KEY`)
 - DreamSim ensemble
 - visual block scoring
 - rendered DOM/HTML metrics
 - screenshot size matching and pixel-level metrics surfaced in the report
+
+## Candidate Capture Planning
+
+For the dedicated evaluator-side contract, see
+`docs/candidate-manifest-planning.md`.
+
+The oracle manifest is frozen at dataset creation time. During evaluation, the
+full reward profile generates a candidate-side capture manifest with Claude Code
+before screenshots and metrics run.
+
+The planner receives:
+
+- the hidden oracle manifest as state/intent guidance
+- a Playwright-rendered inventory of the candidate routes, visible text,
+  controls, selectors, and layout boxes
+
+It outputs `generated-candidate-manifest.json` under the evaluator output
+directory. The evaluator then replays those candidate routes/actions directly.
+This is the layer that maps cases such as an oracle hover dropdown to a
+candidate click dropdown, or `/audio.html` to `/talks.html`, without exposing
+the oracle manifest to the coding agent.
+
+`tests/private/metric-config.json` controls this with:
+
+```json
+{
+  "candidate_manifest_planner": "claude-code",
+  "candidate_manifest_model": "opus",
+  "candidate_manifest_claude_auth": "api"
+}
+```
 
 ## Packaging Script
 

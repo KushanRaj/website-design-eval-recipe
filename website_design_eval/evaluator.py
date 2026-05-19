@@ -21,6 +21,7 @@ from .block_visual import (
     extract_visual_blocks_from_playwright_page,
     visual_block_score_from_blocks,
 )
+from .candidate_planner import generate_candidate_manifest
 from .scoring import (
     _pick_torch_device,
     cssom_block_style_score_from_snapshots,
@@ -558,6 +559,10 @@ class EvaluateConfig:
     visual_block_device: str = "cpu"
     include_visual_block: bool = True
     capture_filter: set[str] | None = None
+    candidate_manifest: Path | None = None
+    candidate_manifest_planner: str | None = None
+    candidate_manifest_model: str = "opus"
+    candidate_manifest_claude_auth: str = "api"
 
 
 def _route_for_capture(root: Path, capture: dict[str, Any]) -> dict[str, Any]:
@@ -974,6 +979,54 @@ def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any
     return executed
 
 
+def _execute_direct_manifest_actions(page: Page, capture: dict[str, Any]) -> list[dict[str, Any]]:
+    executed = []
+    for action in capture.get("actions") or []:
+        before = _page_state(page)
+        action_status = "completed"
+        failure = None
+        after = before
+        try:
+            _run_action(page, action)
+            after = _page_state(page)
+        except Exception as exc:
+            action_status = "failed"
+            failure = f"{type(exc).__name__}: {exc}"
+
+        coverage_scored = action.get("type") in {
+            "hover",
+            "click",
+            "focus",
+            "fill",
+            "press",
+            "scroll",
+            "scrollBy",
+            "waitForSelector",
+        }
+        executed.append(
+            {
+                "action": action,
+                "resolution": {
+                    "status": "resolved" if action_status == "completed" else "failed",
+                    "method": "candidate_manifest_direct_action",
+                    "requested_selector": action.get("selector"),
+                    "resolved_selector": action.get("selector"),
+                    "confidence": 1.0 if action_status == "completed" else 0.0,
+                    "failure_mode": None if action_status == "completed" else "candidate_manifest_action_failed",
+                    "matched_element": None,
+                },
+                "status": action_status,
+                "failure": failure,
+                "post_state": {"score": 1.0 if action_status == "completed" else 0.0, "checks": {"source": "candidate_manifest"}},
+                "coverage_scored": coverage_scored,
+                "coverage_contribution": 1.0 if coverage_scored and action_status == "completed" else 0.0 if coverage_scored else None,
+                "before_state": before,
+                "after_state": after,
+            }
+        )
+    return executed
+
+
 def _artifact_cssom(page: Page, screenshot_dimensions: dict[str, int]) -> dict[str, Any]:
     snapshot = page.evaluate(
         CSSOM_ARTIFACT_SCRIPT,
@@ -996,6 +1049,7 @@ def _artifact_from_page(
     actions: list[dict[str, Any]],
     *,
     side: str,
+    direct_candidate_actions: bool = False,
 ) -> dict[str, Any]:
     screenshot_dir = artifact_dir / "screenshots"
     screenshot_dir.mkdir(parents=True, exist_ok=True)
@@ -1069,6 +1123,8 @@ def _extract_visual_blocks_for_artifact(
         _goto_capture(page, base_url, route, capture, defaults)
         if side == "reference":
             replay_actions = _execute_reference_actions(page, capture)
+        elif direct_candidate_actions:
+            replay_actions = _execute_direct_manifest_actions(page, capture)
         else:
             replay_actions = _execute_candidate_actions(page, reference_actions)
 
@@ -1171,6 +1227,53 @@ def _capture_candidate(
                     reference_actions,
                     artifact,
                     side="candidate",
+                )
+            except Exception as exc:
+                artifact["visual_blocks"] = {
+                    "status": "error",
+                    "reason": f"{type(exc).__name__}: {exc}",
+                    "blocks": [],
+                    "block_count": 0,
+                    "artifact_source": "isolated_playwright_manifest_state",
+                }
+                artifact["extraction_errors"].append({"metric": "visual_blocks", "message": artifact["visual_blocks"]["reason"]})
+        _write_json(artifact_dir / f"{capture['id']}.json", artifact)
+        return artifact, candidate_actions
+    finally:
+        context.close()
+
+
+def _capture_candidate_from_manifest(
+    browser: Browser,
+    base_url: str,
+    capture: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    artifact_dir: Path,
+    *,
+    include_visual_blocks: bool,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    defaults = manifest.get("defaults", {})
+    context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = context.new_page()
+    try:
+        _goto_capture(page, base_url, route, capture, defaults)
+        candidate_actions = _execute_direct_manifest_actions(page, capture)
+        artifact = _artifact_from_page(page, capture, defaults, artifact_dir, candidate_actions, side="candidate")
+        artifact["route"] = route
+        artifact["capture_source"] = "candidate_manifest"
+        if include_visual_blocks:
+            try:
+                artifact["visual_blocks"] = _extract_visual_blocks_for_artifact(
+                    browser,
+                    base_url,
+                    capture,
+                    manifest,
+                    route,
+                    candidate_actions,
+                    artifact,
+                    side="candidate",
+                    direct_candidate_actions=True,
                 )
             except Exception as exc:
                 artifact["visual_blocks"] = {
@@ -1515,6 +1618,7 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
 
 
 def evaluate(config: EvaluateConfig) -> dict[str, Any]:
+    started = time.time()
     _load_dotenv(config.repo_root / ".env")
     if config.dreamsim_cache_dir is None:
         config.dreamsim_cache_dir = str(config.repo_root / ".cache" / "dreamsim")
@@ -1525,16 +1629,43 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
         for capture in reference_manifest.get("captures", [])
         if _enabled_capture(capture) and (not config.capture_filter or capture["id"] in config.capture_filter)
     ]
+    candidate_manifest_result: dict[str, Any] | None = None
+    candidate_manifest: dict[str, Any] | None = None
+    if config.candidate_manifest is not None:
+        candidate_manifest = _read_json(config.candidate_manifest)
+        candidate_manifest_result = {
+            "backend": "provided",
+            "output_path": str(config.candidate_manifest),
+            "capture_count": len(candidate_manifest.get("captures") or []),
+        }
+    elif config.candidate_manifest_planner:
+        if config.candidate_manifest_planner != "claude-code":
+            raise ValueError(f"Unknown candidate manifest planner: {config.candidate_manifest_planner}")
+        candidate_manifest_result = generate_candidate_manifest(
+            config.reference_manifest,
+            config.candidate_root,
+            config.output_dir / "generated-candidate-manifest.json",
+            model=config.candidate_manifest_model,
+            repo_root=config.repo_root,
+            backend=config.candidate_manifest_planner,
+            claude_auth=config.candidate_manifest_claude_auth,
+        )
+        candidate_manifest = candidate_manifest_result["manifest"]
+    candidate_captures_by_id = {
+        str(capture["id"]): capture
+        for capture in (candidate_manifest or {}).get("captures") or []
+        if isinstance(capture, dict) and capture.get("id")
+    }
 
     from playwright.sync_api import sync_playwright
 
-    started = time.time()
     reference_server = StaticServer.start(config.reference_root)
     candidate_server = StaticServer.start(config.candidate_root)
     candidate_plan: dict[str, Any] = {
         "reference_root": str(config.reference_root),
         "candidate_root": str(config.candidate_root),
         "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "candidate_manifest_planner": candidate_manifest_result,
         "captures": {},
     }
     result: dict[str, Any] = {
@@ -1549,6 +1680,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
             "dreamsim_type": config.dreamsim_type,
             "dreamsim_device": _pick_torch_device(config.dreamsim_device),
             "visual_block_device": config.visual_block_device,
+            "candidate_manifest_planner": candidate_manifest_result,
         },
         "captures": {},
     }
@@ -1560,7 +1692,19 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                 for capture in captures:
                     capture_id = capture["id"]
                     reference_route = _route_for_capture(config.reference_root, capture)
-                    candidate_route = _route_for_capture(config.candidate_root, capture)
+                    candidate_capture = candidate_captures_by_id.get(capture_id)
+                    if candidate_manifest is not None and candidate_capture is None:
+                        candidate_route = {
+                            "requested_path": capture.get("path") or capture.get("urlPath") or "/index.html",
+                            "resolved_path": None,
+                            "file_path": None,
+                            "confidence": 0.0,
+                            "status": "missing",
+                            "method": "candidate_manifest",
+                            "failure_mode": "candidate_manifest_capture_missing",
+                        }
+                    else:
+                        candidate_route = _route_for_capture(config.candidate_root, candidate_capture or capture)
                     reference_artifact_dir = config.output_dir / "artifacts" / "reference"
                     candidate_artifact_dir = config.output_dir / "artifacts" / "candidate"
 
@@ -1595,16 +1739,27 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                         candidate_actions: list[dict[str, Any]] = []
                     else:
                         try:
-                            candidate_artifact, candidate_actions = _capture_candidate(
-                                browser,
-                                candidate_server.base_url,
-                                capture,
-                                reference_manifest,
-                                candidate_route,
-                                reference_actions,
-                                candidate_artifact_dir,
-                                include_visual_blocks=config.include_visual_block,
-                            )
+                            if candidate_capture is not None:
+                                candidate_artifact, candidate_actions = _capture_candidate_from_manifest(
+                                    browser,
+                                    candidate_server.base_url,
+                                    candidate_capture,
+                                    reference_manifest,
+                                    candidate_route,
+                                    candidate_artifact_dir,
+                                    include_visual_blocks=config.include_visual_block,
+                                )
+                            else:
+                                candidate_artifact, candidate_actions = _capture_candidate(
+                                    browser,
+                                    candidate_server.base_url,
+                                    capture,
+                                    reference_manifest,
+                                    candidate_route,
+                                    reference_actions,
+                                    candidate_artifact_dir,
+                                    include_visual_blocks=config.include_visual_block,
+                                )
                         except Exception as exc:
                             candidate_artifact = _missing_artifact(
                                 capture,
@@ -1622,6 +1777,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                     )
                     candidate_plan["captures"][capture_id] = {
                         "capture": capture,
+                        "candidate_capture": candidate_capture,
                         "route_resolution": candidate_route,
                         "actions": candidate_actions,
                         "coverage": coverage,
@@ -1632,6 +1788,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                         "candidate_artifact": str(candidate_artifact_dir / f"{capture_id}.json"),
                         "reference_route": reference_route,
                         "candidate_route": candidate_route,
+                        "candidate_capture_source": "candidate_manifest" if candidate_capture is not None else "deterministic",
                         "coverage": coverage,
                         "metrics": {"status": "pending"},
                         "missing_reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),

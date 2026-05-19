@@ -29,14 +29,17 @@ if [[ -z "${OPENAI_API_KEY:-}" ]]; then
   exit 1
 fi
 
-if [[ "$AGENT" = "claude-code" && -z "${ANTHROPIC_API_KEY:-}" && -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]]; then
-  echo "ANTHROPIC_API_KEY or CLAUDE_CODE_OAUTH_TOKEN is required for claude-code." >&2
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+  echo "ANTHROPIC_API_KEY is required for candidate manifest planning in the verifier." >&2
   exit 1
 fi
 
-verifier_env=(--ve "OPENAI_API_KEY=$OPENAI_API_KEY")
+verifier_env=(--ve "OPENAI_API_KEY=$OPENAI_API_KEY" --ve "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY")
 if [[ -n "${OPENAI_BASE_URL:-}" ]]; then
   verifier_env+=(--ve "OPENAI_BASE_URL=$OPENAI_BASE_URL")
+fi
+if [[ -n "${ANTHROPIC_BASE_URL:-}" ]]; then
+  verifier_env+=(--ve "ANTHROPIC_BASE_URL=$ANTHROPIC_BASE_URL")
 fi
 
 agent_env=()
