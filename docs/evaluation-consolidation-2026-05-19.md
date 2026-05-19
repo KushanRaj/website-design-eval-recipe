@@ -45,8 +45,8 @@ Summary from that run:
 
 | Candidate | Coverage | DreamSim | VLM | Pixelmatch | Visual Block | Text Rouge | Reward | Wall Time |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 9 / 9 | 0.9321 | 0.8194 | 0.9181 | 0.9690 | 0.9164 | 0.8881 | 176.7s |
-| `claude-attempt-02-bad` | 8 / 9 | 0.5407 | 0.1560 | 0.6970 | 0.5205 | 0.2648 | 0.0840 | 185.5s |
+| `claude-attempt-01` | 9 / 9 | 0.9321 | 0.8194 | 0.9181 | 0.9690 | 0.9164 | 0.8906 | 176.7s |
+| `claude-attempt-02-bad` | 8 / 9 | 0.5407 | 0.1560 | 0.6970 | 0.5205 | 0.2648 | 0.0985 | 185.5s |
 
 The bad candidate's dropdown remains a coverage failure instead of being converted into a fake visual-block zero.
 
@@ -141,7 +141,13 @@ capture_score =
   (0.05 * foundation + 0.15 * content + 0.80 * specifics)
 ```
 
-Pass 1 is a low-weight foundation check, Pass 2 is rendered text content, and Pass 3 is visual/block/style/pixel/DreamSim specificity. DreamSim is counted in Pass 3 only after being multiplied by visual block size. The bad candidate scores `0.0840` on the latest run, which is much closer to the desired behavior than the earlier flat averages.
+Pass 1 is a low-weight deterministic foundation check, Pass 2 is rendered text plus broad visual fit, and Pass 3 is visual/block/style/pixel/DreamSim specificity. VLM and visual block size live in Pass 2, not Pass 1. DreamSim is counted in Pass 3 only after being multiplied by visual block size. The bad candidate scores `0.0985` on the latest run, which is much closer to the desired behavior than the earlier flat averages.
+
+## Determinism Expectation
+
+For a fixed reference folder, candidate folder, manifest, browser version, and runtime environment, rerunning the evaluator should produce identical screenshots, rendered `outerHTML`, CSSOM snapshots, visual blocks, pixelmatch, bbox geometry, CSSOM block-style, and rendered text/tree metrics.
+
+If any of those deterministic artifacts or scores change, treat it as an evaluator bug or a page-settling bug. The only expected drift is VLM judge output and very small DreamSim numeric drift when the model runtime/device changes.
 
 ## Worth Looking Into Next
 

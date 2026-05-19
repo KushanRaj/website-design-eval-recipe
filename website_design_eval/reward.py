@@ -65,16 +65,16 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
     screenshot_size = _metric(metrics, ["screenshot_size_match", "score"])
     vlm = _metric(metrics, ["vlm_judge", "overall"])
     visual_block_size = _metric(metrics, ["visual_block", "size"])
-    foundation = (
-        0.25 * coverage
-        + 0.20 * screenshot_size
-        + 0.30 * vlm
-        + 0.25 * visual_block_size
-    )
+    foundation = 0.50 * coverage + 0.50 * screenshot_size
 
     text_bleu = _metric(metrics, ["html_text", "bleu_1"])
     text_rouge = _metric(metrics, ["html_text", "rouge_1_recall"])
-    content = 0.50 * text_bleu + 0.50 * text_rouge
+    content = (
+        0.35 * text_bleu
+        + 0.35 * text_rouge
+        + 0.15 * vlm
+        + 0.15 * visual_block_size
+    )
 
     visual_block_text = _metric(metrics, ["visual_block", "text"])
     visual_block_position = _metric(metrics, ["visual_block", "position"])

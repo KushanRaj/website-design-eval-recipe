@@ -41,27 +41,27 @@ It asks whether the candidate showed up in roughly the right state:
 
 ```text
 foundation =
-  0.25 * manifest_coverage
-+ 0.20 * screenshot_size_match
-+ 0.30 * vlm_overall
-+ 0.25 * visual_block_size
+  0.50 * manifest_coverage
++ 0.50 * screenshot_size_match
 ```
 
-This is deliberately low weight. A poor page should not get meaningful reward merely because it routed to a page, matched screenshot dimensions, or got a nonzero broad VLM score.
+This is deliberately low weight. A poor page should not get meaningful reward merely because it routed to a page or matched screenshot dimensions.
 
-## Pass 2: Content
+## Pass 2: Content And Broad Fit
 
 Pass 2 is worth 15% of the final score.
 
-It checks rendered text content:
+It checks rendered text content plus broad visual/state adequacy:
 
 ```text
 content =
-  0.50 * rendered_text_bleu
-+ 0.50 * rendered_text_rouge
+  0.35 * rendered_text_bleu
++ 0.35 * rendered_text_rouge
++ 0.15 * vlm_overall
++ 0.15 * visual_block_size
 ```
 
-This is useful because text content varied meaningfully across the good and bad attempts. It is separate from tree metrics, which currently look too shallow.
+VLM and visual block size live here instead of Pass 1. They are stronger than pure attendance/size checks, but they should still not dominate the final reward. Text content remains the majority of Pass 2 because it varied meaningfully across the good and bad attempts.
 
 ## Pass 3: Specifics
 
@@ -143,15 +143,15 @@ metrics-results/reward-validation-2026-05-19/
 
 | Candidate | Coverage | Size Match | Pixelmatch | DreamSim | VLM | Visual Block | Text BLEU | Text ROUGE | Final Reward |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 1.0000 | 0.9474 | 0.9181 | 0.9321 | 0.8194 | 0.9690 | 0.8705 | 0.9164 | 0.8881 |
-| `claude-attempt-02-bad` | 0.8197 | 0.8361 | 0.6970 | 0.5407 | 0.1560 | 0.5205 | 0.2092 | 0.2648 | 0.0840 |
+| `claude-attempt-01` | 1.0000 | 0.9474 | 0.9181 | 0.9321 | 0.8194 | 0.9690 | 0.8705 | 0.9164 | 0.8906 |
+| `claude-attempt-02-bad` | 0.8197 | 0.8361 | 0.6970 | 0.5407 | 0.1560 | 0.5205 | 0.2092 | 0.2648 | 0.0985 |
 
 Contribution breakdown:
 
 | Candidate | Pass 1 / 0.05 | Pass 2 / 0.15 | Pass 3 / 0.80 | Final Reward |
 | --- | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 0.0465 | 0.1334 | 0.7082 | 0.8881 |
-| `claude-attempt-02-bad` | 0.0219 | 0.0329 | 0.0293 | 0.0840 |
+| `claude-attempt-01` | 0.0484 | 0.1340 | 0.7082 | 0.8906 |
+| `claude-attempt-02-bad` | 0.0412 | 0.0280 | 0.0293 | 0.0985 |
 
 The full comparison report is:
 
@@ -169,6 +169,28 @@ uv run website-design-eval reward metrics-results/<run>/<candidate>/metrics.json
 ```
 
 `--weight-mode manifest` uses capture weights from the manifest. `--weight-mode equal` ignores them. `--weight-mode suggested` applies the built-in defaults for old metric files that do not have weights.
+
+## Determinism Expectation
+
+For a fixed reference folder, candidate folder, manifest, browser version, and runtime environment, the browser-rendered artifacts should be deterministic:
+
+- screenshots
+- rendered `outerHTML`
+- CSSOM snapshots
+- visual blocks
+- pixelmatch
+- bbox geometry
+- CSSOM block-style
+- rendered text/tree metrics
+
+If those change across repeated runs, treat it as an evaluator bug or a page-settling bug.
+
+The only expected drift is:
+
+- VLM judge output, because it is API-backed model inference
+- very small DreamSim numeric drift if the model/runtime/device changes or nondeterministic kernels are used
+
+Reward computation from a fixed `metrics.json` should be exactly deterministic.
 
 ## Open Questions
 
