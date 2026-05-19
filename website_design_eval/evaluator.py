@@ -25,6 +25,7 @@ from .scoring import (
     _pick_torch_device,
     cssom_block_style_score_from_snapshots,
     dreamsim_distance,
+    pixelmatch_score,
     render_sanity_score,
     screenshot_size_match_score,
     vlm_judge_score,
@@ -1150,6 +1151,7 @@ def _run_pair_metrics(
         "reference_screenshot": reference_screenshot,
         "candidate_screenshot": candidate_screenshot,
         "screenshot_size_match": screenshot_size_match_score(reference_screenshot, candidate_screenshot),
+        "pixelmatch": pixelmatch_score(reference_screenshot, candidate_screenshot),
         "reference_render_sanity": render_sanity_score(reference_screenshot),
         "candidate_render_sanity": render_sanity_score(candidate_screenshot),
     }
@@ -1217,6 +1219,7 @@ def _run_pair_metrics(
                     device=config.visual_block_device,
                     include_pairs=True,
                     include_block_pixelmatch=False,
+                    include_masked_clip=False,
                 )
                 pair["visual_block"] = visual
                 pair["bbox_geometry"] = {
@@ -1324,6 +1327,7 @@ def _build_report(result: dict[str, Any]) -> str:
                 coverage.get("route_score"),
                 coverage.get("action_score"),
                 _get_metric(metrics, ["screenshot_size_match", "score"]),
+                _get_metric(metrics, ["pixelmatch", "score"]),
                 _get_metric(metrics, ["dreamsim", "distance"]),
                 _get_metric(metrics, ["dreamsim", "score"]),
                 _get_metric(metrics, ["vlm_judge", "overall"]),
@@ -1355,6 +1359,7 @@ def _build_report(result: dict[str, Any]) -> str:
                     ["missing_captures", summary["missing_capture_count"]],
                     ["manifest_coverage_score", summary["manifest_coverage_score"]],
                     ["mean_size_match", summary.get("mean_screenshot_size_match")],
+                    ["mean_pixelmatch", summary.get("mean_pixelmatch")],
                     ["mean_dreamsim_score", summary.get("mean_dreamsim_score")],
                     ["mean_vlm_overall", summary.get("mean_vlm_overall")],
                     ["mean_html_text_bleu_1", summary.get("mean_html_text_bleu_1")],
@@ -1372,6 +1377,7 @@ def _build_report(result: dict[str, Any]) -> str:
                     "Route",
                     "Action",
                     "Size",
+                    "Pixel",
                     "Dream Dist",
                     "Dream Score",
                     "VLM",
@@ -1398,6 +1404,7 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
     ]
     scored_metrics = [capture.get("metrics", {}) for capture in captures.values()]
     size_scores = [_get_metric(metric, ["screenshot_size_match", "score"]) for metric in scored_metrics]
+    pixel_scores = [_get_metric(metric, ["pixelmatch", "score"]) for metric in scored_metrics]
     dream_scores = [_get_metric(metric, ["dreamsim", "score"]) for metric in scored_metrics]
     vlm_scores = [_get_metric(metric, ["vlm_judge", "overall"]) for metric in scored_metrics]
     html_text_bleu_scores = [_get_metric(metric, ["html_text", "bleu_1"]) for metric in scored_metrics]
@@ -1414,6 +1421,7 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
         "missing_capture_count": sum(1 for score in coverage_scores if score <= 0),
         "manifest_coverage_score": _mean(coverage_scores) or 0.0,
         "mean_screenshot_size_match": _mean(numeric(size_scores)),
+        "mean_pixelmatch": _mean(numeric(pixel_scores)),
         "mean_dreamsim_score": _mean(numeric(dream_scores)),
         "mean_vlm_overall": _mean(numeric(vlm_scores)),
         "mean_html_text_bleu_1": _mean(numeric(html_text_bleu_scores)),
@@ -1589,6 +1597,7 @@ def print_functional_status(result: dict[str, Any]) -> None:
         "missing_captures": summary["missing_capture_count"],
         "manifest_coverage_score": summary["manifest_coverage_score"],
         "mean_screenshot_size_match": summary.get("mean_screenshot_size_match"),
+        "mean_pixelmatch": summary.get("mean_pixelmatch"),
         "mean_dreamsim_score": summary.get("mean_dreamsim_score"),
         "mean_vlm_overall": summary.get("mean_vlm_overall"),
         "mean_html_text_bleu_1": summary.get("mean_html_text_bleu_1"),

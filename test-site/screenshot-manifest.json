@@ -24,6 +24,7 @@
   "captures": [
     {
       "id": "home.desktop.full",
+      "weight": 1.0,
       "page": "home",
       "state": "full page",
       "path": "/index.html",
@@ -32,6 +33,7 @@
     },
     {
       "id": "governments.desktop.full",
+      "weight": 1.0,
       "page": "governments",
       "state": "full page",
       "path": "/governments.html",
@@ -40,6 +42,7 @@
     },
     {
       "id": "enterprises.desktop.full",
+      "weight": 1.0,
       "page": "enterprises",
       "state": "full page",
       "path": "/enterprises.html",
@@ -48,6 +51,7 @@
     },
     {
       "id": "schools.desktop.full",
+      "weight": 1.0,
       "page": "schools",
       "state": "full page",
       "path": "/schools.html",
@@ -56,6 +60,7 @@
     },
     {
       "id": "careers.desktop.full",
+      "weight": 1.0,
       "page": "careers",
       "state": "full page",
       "path": "/careers.html",
@@ -64,6 +69,7 @@
     },
     {
       "id": "contact.desktop.full",
+      "weight": 1.0,
       "page": "contact",
       "state": "full page",
       "path": "/contact.html",
@@ -72,6 +78,7 @@
     },
     {
       "id": "home.desktop.work-dropdown",
+      "weight": 0.25,
       "page": "home",
       "state": "work dropdown open",
       "path": "/index.html",
@@ -83,6 +90,7 @@
     },
     {
       "id": "home.desktop.work-section",
+      "weight": 0.5,
       "page": "home",
       "state": "scrolled to work cards",
       "path": "/index.html",
@@ -94,6 +102,7 @@
     },
     {
       "id": "contact.desktop.email-focused",
+      "weight": 0.5,
       "page": "contact",
       "state": "email field focused",
       "path": "/contact.html",

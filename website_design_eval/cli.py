@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .evaluator import EvaluateConfig, evaluate, print_functional_status
+from .reward import build_reward_markdown, compute_reward_from_file
 from .scoring import (
     _pick_torch_device,
     accessibility_control_tags,
@@ -230,6 +231,20 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--visual-block-device", default="cpu")
     evaluate_parser.add_argument("--no-visual-block", action="store_true")
 
+    reward_parser = subparsers.add_parser(
+        "reward",
+        help="Compute the reward curriculum score from a manifest-aware metrics JSON file",
+    )
+    reward_parser.add_argument("metrics", help="Path to evaluator metrics.json")
+    reward_parser.add_argument(
+        "--weight-mode",
+        choices=["manifest", "equal", "suggested"],
+        default="manifest",
+        help="Capture weighting source. manifest uses per-capture weights when present.",
+    )
+    reward_parser.add_argument("--output-json", help="Optional path to write reward JSON")
+    reward_parser.add_argument("--output-md", help="Optional path to write reward Markdown")
+
     args = parser.parse_args(argv)
     if args.command == "pair":
         _print_json(score_screenshot_pair(args.reference, args.candidate, include_clip=args.clip))
@@ -436,6 +451,18 @@ def main(argv: list[str] | None = None) -> int:
             )
         )
         print_functional_status(result)
+        return 0
+    if args.command == "reward":
+        reward = compute_reward_from_file(args.metrics, weight_mode=args.weight_mode)
+        if args.output_json:
+            output_json = Path(args.output_json)
+            output_json.parent.mkdir(parents=True, exist_ok=True)
+            output_json.write_text(json.dumps(reward, indent=2, sort_keys=True), encoding="utf-8")
+        if args.output_md:
+            output_md = Path(args.output_md)
+            output_md.parent.mkdir(parents=True, exist_ok=True)
+            output_md.write_text(build_reward_markdown(reward), encoding="utf-8")
+        _print_json(reward)
         return 0
     parser.error(f"Unknown command: {args.command}")
     return 2

@@ -1,3 +1,4 @@
+from .reward import build_reward_markdown, compute_reward, compute_reward_from_file
 from .scoring import (
     bbox_geometry_score,
     accessibility_control_tags,
@@ -38,6 +39,9 @@ from .scoring import (
 )
 
 __all__ = [
+    "build_reward_markdown",
+    "compute_reward",
+    "compute_reward_from_file",
     "bbox_geometry_score",
     "accessibility_control_tags",
     "clip_similarity",

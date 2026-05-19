@@ -382,3 +382,37 @@ screenshot_size_match_score
 ```
 
 Then full-page captures can be used for content/section completeness, while fixed-viewport captures remain better for local layout, scale, typography, and VLM judging.
+
+## Tuesday, 19 May 2026, 2:25 PM IST
+
+### Runtime speed note after browser-state evaluator
+
+The final validation run after the isolated Playwright visual-block refactor took about 300.8 seconds for two candidates:
+
+- `claude-attempt-01`: 164.2 seconds
+- `claude-attempt-02-bad`: 136.6 seconds
+
+The main bottleneck was not DreamSim. DreamSim was cached and ran on MPS; across 17 scored captures it took about 6.8 seconds.
+
+The real bottleneck was visual block:
+
+- visual block extraction: about 123.1 seconds
+- visual block matching/scoring: about 38.9 seconds
+- combined visual block time: about 162.1 seconds, or roughly 54% of the whole run
+
+VLM also mattered, but it was second-order:
+
+- VLM judge: about 49.2 seconds across 17 API calls
+- render sanity scans: about 45.4 seconds across 34 screenshots
+
+Important clarification: "cache reference artifacts once" is only a big win when evaluating many candidates against the same oracle. For a single candidate, the evaluator already computes each reference capture once inside that run. The remaining single-candidate cost is candidate capture, pair scoring, visual block replay, VLM, and image scans.
+
+So the realistic speedup plan is:
+
+1. For many candidates, add a batch evaluator so oracle artifacts are computed once globally and reused across all candidates.
+2. For a single candidate, avoid duplicate candidate/reference replay for visual block. Capture clean screenshot/outerHTML/CSSOM first, then mutate the same page for visual-block recoloring before closing it. This preserves the manifest state and removes the second isolated replay. If contamination is a concern, the clean artifacts are already captured before mutation.
+3. Make masked CLIP inside visual block optional or debug-only if it does not add enough signal.
+4. Parallelize independent VLM calls with a small concurrency limit.
+5. Make render sanity cheaper by downsampling or caching by screenshot hash/path.
+
+The important conceptual point: this is mostly not a reference-side issue for one candidate. It is a replay/scoring/runtime issue. Reference caching becomes important when the task is "evaluate N candidates against one oracle."

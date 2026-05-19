@@ -381,8 +381,9 @@ def _run_visual_block_analysis_from_blocks(
     *,
     device: str,
     debug: bool,
+    include_masked_clip: bool = True,
 ) -> dict[str, Any]:
-    if module.CLIP_MODEL is None:
+    if include_masked_clip and module.CLIP_MODEL is None:
         module.CLIP_MODEL, module.CLIP_PREPROCESS = module.clip.load("ViT-B/32", device=device)
 
     reference_blocks = module.merge_blocks_by_bbox(reference_blocks)
@@ -395,7 +396,7 @@ def _run_visual_block_analysis_from_blocks(
             "text": 0.0,
             "position": 0.0,
             "text_color": 0.0,
-            "masked_clip": 0.0,
+            "masked_clip": 0.0 if include_masked_clip else None,
             "matched_pairs": [],
             "unmatched_reference_blocks": [_block_payload(block) for block in reference_blocks],
             "unmatched_candidate_blocks": [_block_payload(block) for block in candidate_blocks],
@@ -487,32 +488,40 @@ def _run_visual_block_analysis_from_blocks(
         text = float(module.np.mean(matched_text_scores))
         position = float(module.np.mean(position_scores))
         text_color = float(module.np.mean(text_color_scores))
-        masked_clip = float(
-            module.calculate_clip_similarity_with_blocks(
-                str(candidate_screenshot),
-                str(reference_screenshot),
-                candidate_blocks,
-                reference_blocks,
-                device,
+        if include_masked_clip:
+            masked_clip: float | None = float(
+                module.calculate_clip_similarity_with_blocks(
+                    str(candidate_screenshot),
+                    str(reference_screenshot),
+                    candidate_blocks,
+                    reference_blocks,
+                    device,
+                )
             )
-        )
-        score = 0.2 * (size + text + position + text_color + masked_clip)
+            score = 0.2 * (size + text + position + text_color + masked_clip)
+        else:
+            masked_clip = None
+            score = 0.25 * (size + text + position + text_color)
     else:
         weighted_area = 0.0
         size = 0.0
         text = 0.0
         position = 0.0
         text_color = 0.0
-        masked_clip = float(
-            module.calculate_clip_similarity_with_blocks(
-                str(candidate_screenshot),
-                str(reference_screenshot),
-                candidate_blocks,
-                reference_blocks,
-                device,
+        if include_masked_clip:
+            masked_clip = float(
+                module.calculate_clip_similarity_with_blocks(
+                    str(candidate_screenshot),
+                    str(reference_screenshot),
+                    candidate_blocks,
+                    reference_blocks,
+                    device,
+                )
             )
-        )
-        score = 0.2 * masked_clip
+            score = 0.2 * masked_clip
+        else:
+            masked_clip = None
+            score = 0.0
 
     return {
         "score": score,
@@ -549,6 +558,7 @@ def _run_visual_block_analysis(
     *,
     device: str,
     debug: bool,
+    include_masked_clip: bool = True,
 ) -> dict[str, Any]:
     candidate_blocks = module.get_blocks_ocr_free(str(candidate_html), str(candidate_screenshot), str(work_dir))
     reference_blocks = module.get_blocks_ocr_free(str(reference_html), str(reference_screenshot), str(work_dir))
@@ -560,6 +570,7 @@ def _run_visual_block_analysis(
         candidate_screenshot,
         device=device,
         debug=debug,
+        include_masked_clip=include_masked_clip,
     )
 
 
@@ -582,7 +593,8 @@ def _format_visual_block_result(
         "text": _round(analysis["text"]),
         "position": _round(analysis["position"]),
         "text_color": _round(analysis["text_color"]),
-        "masked_clip": _round(analysis["masked_clip"]),
+        "masked_clip": _round(analysis["masked_clip"]) if analysis.get("masked_clip") is not None else None,
+        "masked_clip_skipped": analysis.get("masked_clip") is None,
         "reference_block_count": analysis["reference_block_count"],
         "candidate_block_count": analysis["candidate_block_count"],
         "matched_pair_count": analysis["matched_pair_count"],
@@ -619,6 +631,7 @@ def visual_block_score(
     include_pairs: bool = False,
     include_block_pixelmatch: bool = False,
     pixelmatch_threshold: float = 0.1,
+    include_masked_clip: bool = True,
 ) -> dict[str, Any]:
     """Run the checked-in WebCode2M/Design2Code OCR-free visual block metric.
 
@@ -640,6 +653,7 @@ def visual_block_score(
             work_dir,
             device=device,
             debug=debug,
+            include_masked_clip=include_masked_clip,
         )
         return _format_visual_block_result(
             analysis,
@@ -726,6 +740,7 @@ def visual_block_score_from_blocks(
     include_block_pixelmatch: bool = False,
     pixelmatch_threshold: float = 0.1,
     artifact_source: str = "isolated_playwright_manifest_state",
+    include_masked_clip: bool = True,
 ) -> dict[str, Any]:
     module = _load_research_visual_score()
     analysis = _run_visual_block_analysis_from_blocks(
@@ -736,6 +751,7 @@ def visual_block_score_from_blocks(
         candidate_screenshot,
         device=device,
         debug=debug,
+        include_masked_clip=include_masked_clip,
     )
     return _format_visual_block_result(
         analysis,
