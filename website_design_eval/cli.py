@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .evaluator import EvaluateConfig, evaluate, print_functional_status
+from .manifest_generator import ClaudeManifestGenerationError, generate_manifest
 from .reward import build_reward_markdown, compute_reward_from_file
 from .scoring import (
     _pick_torch_device,
@@ -231,6 +232,58 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--visual-block-device", default="cpu")
     evaluate_parser.add_argument("--no-visual-block", action="store_true")
 
+    generate_manifest_parser = subparsers.add_parser(
+        "generate-manifest",
+        help="Use an LLM to generate a screenshot manifest from a reference website folder",
+    )
+    generate_manifest_parser.add_argument("--reference-root", required=True)
+    generate_manifest_parser.add_argument("--output", required=True)
+    generate_manifest_parser.add_argument("--backend", choices=["claude-code", "openai"], default="claude-code")
+    generate_manifest_parser.add_argument("--model", default="opus")
+    generate_manifest_parser.add_argument(
+        "--claude-auth",
+        choices=["api", "subscription"],
+        default="api",
+        help="Claude Code auth mode. Use subscription to ignore Anthropic API keys and use the local Claude Code login.",
+    )
+    generate_manifest_parser.add_argument(
+        "--max-captures",
+        type=int,
+        default=None,
+        help="Optional maximum number of captures. Defaults to no fixed maximum.",
+    )
+
+    evaluate_auto_parser = subparsers.add_parser(
+        "evaluate-auto-manifest",
+        help="Generate a screenshot manifest from the reference folder, then evaluate a candidate folder",
+    )
+    evaluate_auto_parser.add_argument("--reference-root", required=True)
+    evaluate_auto_parser.add_argument("--candidate-root", required=True)
+    evaluate_auto_parser.add_argument("--output-dir", required=True)
+    evaluate_auto_parser.add_argument("--manifest-backend", choices=["claude-code", "openai"], default="claude-code")
+    evaluate_auto_parser.add_argument("--manifest-model", default="opus")
+    evaluate_auto_parser.add_argument(
+        "--claude-auth",
+        choices=["api", "subscription"],
+        default="api",
+        help="Claude Code auth mode for manifest generation.",
+    )
+    evaluate_auto_parser.add_argument(
+        "--max-captures",
+        type=int,
+        default=None,
+        help="Optional maximum number of captures. Defaults to no fixed maximum.",
+    )
+    evaluate_auto_parser.add_argument("--capture", action="append", default=None, help="Capture id to run; may be repeated")
+    evaluate_auto_parser.add_argument("--skip-vlm", action="store_true")
+    evaluate_auto_parser.add_argument("--vlm-model", default="gpt-5.4-mini")
+    evaluate_auto_parser.add_argument("--dreamsim-type", default="ensemble")
+    evaluate_auto_parser.add_argument("--dreamsim-device", default=None)
+    evaluate_auto_parser.add_argument("--dreamsim-cache-dir", default=None)
+    evaluate_auto_parser.add_argument("--skip-dreamsim", action="store_true")
+    evaluate_auto_parser.add_argument("--visual-block-device", default="cpu")
+    evaluate_auto_parser.add_argument("--no-visual-block", action="store_true")
+
     reward_parser = subparsers.add_parser(
         "reward",
         help="Compute the reward curriculum score from a manifest-aware metrics JSON file",
@@ -450,6 +503,75 @@ def main(argv: list[str] | None = None) -> int:
                 capture_filter=set(args.capture or []) or None,
             )
         )
+        print_functional_status(result)
+        return 0
+    if args.command == "generate-manifest":
+        repo_root = Path(__file__).resolve().parents[1]
+        try:
+            result = generate_manifest(
+                Path(args.reference_root).resolve(),
+                Path(args.output).resolve(),
+                model=args.model,
+                max_captures=args.max_captures,
+                repo_root=repo_root,
+                backend=args.backend,
+                claude_auth=args.claude_auth,
+            )
+        except ClaudeManifestGenerationError as exc:
+            raise SystemExit(f"generate-manifest failed: {exc}") from None
+        _print_json(
+            {
+                "status": "generated",
+                "manifest": result["output_path"],
+                "backend": result["backend"],
+                "auth_mode": result.get("auth_mode"),
+                "model": result["model"],
+                "page_count": result["page_count"],
+                "inventory_source": result.get("inventory_source"),
+                "capture_count": result["capture_count"],
+                "capture_budget": result["capture_budget"],
+            }
+        )
+        return 0
+    if args.command == "evaluate-auto-manifest":
+        repo_root = Path(__file__).resolve().parents[1]
+        output_dir = Path(args.output_dir).resolve()
+        output_dir.mkdir(parents=True, exist_ok=True)
+        manifest_path = output_dir / "generated-screenshot-manifest.json"
+        try:
+            manifest_result = generate_manifest(
+                Path(args.reference_root).resolve(),
+                manifest_path,
+                model=args.manifest_model,
+                max_captures=args.max_captures,
+                repo_root=repo_root,
+                backend=args.manifest_backend,
+                claude_auth=args.claude_auth,
+            )
+        except ClaudeManifestGenerationError as exc:
+            raise SystemExit(f"evaluate-auto-manifest failed during manifest generation: {exc}") from None
+        result = evaluate(
+            EvaluateConfig(
+                reference_root=Path(args.reference_root).resolve(),
+                reference_manifest=manifest_path,
+                candidate_root=Path(args.candidate_root).resolve(),
+                output_dir=output_dir,
+                repo_root=repo_root,
+                skip_vlm=args.skip_vlm,
+                skip_dreamsim=args.skip_dreamsim,
+                vlm_model=args.vlm_model,
+                dreamsim_type=args.dreamsim_type,
+                dreamsim_device=args.dreamsim_device,
+                dreamsim_cache_dir=args.dreamsim_cache_dir,
+                visual_block_device=args.visual_block_device,
+                include_visual_block=not args.no_visual_block,
+                capture_filter=set(args.capture or []) or None,
+            )
+        )
+        result["metadata"]["generated_manifest"] = manifest_result["output_path"]
+        result["metadata"]["generated_manifest_capture_budget"] = manifest_result["capture_budget"]
+        result["metadata"]["generated_manifest_inventory_source"] = manifest_result.get("inventory_source")
+        (output_dir / "metrics.json").write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")
         print_functional_status(result)
         return 0
     if args.command == "reward":

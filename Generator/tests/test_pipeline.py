@@ -18,7 +18,7 @@ class PipelineTests(unittest.IsolatedAsyncioTestCase):
                 output_root=tmp,
                 replay_manifest=False,
             )
-            pipeline = GeneratorPipeline(FakeRuntime(), output_root=tmp)
+            pipeline = GeneratorPipeline(FakeRuntime(), output_root=tmp, run_browser_checks=False)
             result = await pipeline.generate(request)
             self.assertEqual(len(result.packages), 1)
             package = result.packages[0]
@@ -34,7 +34,7 @@ class PipelineTests(unittest.IsolatedAsyncioTestCase):
                 max_concept_rounds=2,
                 replay_manifest=False,
             )
-            pipeline = GeneratorPipeline(FakeRuntime(concept_reject_rounds=1), output_root=tmp)
+            pipeline = GeneratorPipeline(FakeRuntime(concept_reject_rounds=1), output_root=tmp, run_browser_checks=False)
             result = await pipeline.generate(request)
             self.assertEqual(result.packages[0].accepted_concept.candidate_id, "concept-1")
 
@@ -47,7 +47,7 @@ class PipelineTests(unittest.IsolatedAsyncioTestCase):
                 max_concept_rounds=1,
                 replay_manifest=False,
             )
-            pipeline = GeneratorPipeline(FakeRuntime(concept_reject_rounds=2), output_root=tmp)
+            pipeline = GeneratorPipeline(FakeRuntime(concept_reject_rounds=2), output_root=tmp, run_browser_checks=False)
             with self.assertRaises(PipelineError):
                 await pipeline.generate(request)
 
@@ -60,7 +60,7 @@ class PipelineTests(unittest.IsolatedAsyncioTestCase):
                 max_builder_repair_rounds=1,
                 replay_manifest=False,
             )
-            pipeline = GeneratorPipeline(FakeRuntime(verifier_repair_rounds=1), output_root=tmp)
+            pipeline = GeneratorPipeline(FakeRuntime(verifier_repair_rounds=1), output_root=tmp, run_browser_checks=False)
             result = await pipeline.generate(request)
             self.assertEqual(result.packages[0].verifier_report.status, "approved")
 

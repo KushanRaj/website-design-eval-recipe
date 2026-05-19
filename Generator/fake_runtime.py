@@ -73,8 +73,9 @@ class FakeRuntime:
         system_prompt: str,
         user_prompt: str,
         output_model: type[T],
+        image_paths: list[Path] | None = None,
     ) -> T:
-        del system_prompt
+        del system_prompt, image_paths
         if output_model is DatasetPlan:
             return self._plan(user_prompt)  # type: ignore[return-value]
         if output_model is ConceptBatch:
@@ -143,7 +144,7 @@ class FakeRuntime:
         seed_id = self._seed_id(prompt)
         self._concept_calls += 1
         concepts = []
-        for index in range(6):
+        for index in range(2):
             concept = self._default_concept(seed_id)
             concept.candidate_id = f"concept-{index + 1}"
             concept.description = f"{concept.description} Candidate {index + 1}."

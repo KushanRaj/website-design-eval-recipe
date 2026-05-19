@@ -1,4 +1,5 @@
 from .reward import build_reward_markdown, compute_reward, compute_reward_from_file
+from .manifest_generator import generate_manifest
 from .scoring import (
     bbox_geometry_score,
     accessibility_control_tags,
@@ -42,6 +43,7 @@ __all__ = [
     "build_reward_markdown",
     "compute_reward",
     "compute_reward_from_file",
+    "generate_manifest",
     "bbox_geometry_score",
     "accessibility_control_tags",
     "clip_similarity",

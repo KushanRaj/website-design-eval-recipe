@@ -8,7 +8,7 @@ from typing import Any
 
 from .fake_runtime import FakeRuntime
 from .io import list_site_files, write_json
-from .manifest import manifest_from_concept, run_manifest_capture, write_manifest
+from .manifest import generate_oracle_manifest, manifest_from_browser_inventory, run_manifest_capture, write_manifest
 from .models import ConceptCandidate, GenerationRequest, SiteSeed
 from .pipeline import GeneratorPipeline
 from .runtime import ClaudeAgentRuntime
@@ -84,7 +84,7 @@ async def cmd_generate(args: argparse.Namespace) -> int:
     pipeline = GeneratorPipeline(
         _runtime(args),
         output_root=request.output_root,
-        run_browser_checks=args.browser_checks,
+        run_browser_checks=not args.no_browser_checks,
     )
     result = await pipeline.generate(request)
     _print_model(result)
@@ -93,7 +93,12 @@ async def cmd_generate(args: argparse.Namespace) -> int:
 
 async def cmd_verify(args: argparse.Namespace) -> int:
     concept = ConceptCandidate.model_validate_json(Path(args.concept).read_text(encoding="utf-8"))
-    report = deterministic_verify(args.site_dir, concept, run_browser_checks=args.browser_checks)
+    report = await asyncio.to_thread(
+        deterministic_verify,
+        args.site_dir,
+        concept,
+        run_browser_checks=not args.no_browser_checks,
+    )
     if args.out:
         write_json(args.out, report)
     _print_model(report)
@@ -102,7 +107,24 @@ async def cmd_verify(args: argparse.Namespace) -> int:
 
 async def cmd_manifest(args: argparse.Namespace) -> int:
     concept = ConceptCandidate.model_validate_json(Path(args.concept).read_text(encoding="utf-8"))
-    manifest = manifest_from_concept(concept, site_name=args.site_name)
+    if args.dry_run:
+        manifest = await asyncio.to_thread(
+            manifest_from_browser_inventory,
+            args.site_dir,
+            site_name=args.site_name,
+            max_captures=args.max_captures,
+        )
+    else:
+        manifest = await asyncio.to_thread(
+            generate_oracle_manifest,
+            args.site_dir,
+            site_name=args.site_name,
+            concept=concept,
+            model=args.manifest_model or args.model or "opus",
+            backend=args.backend,
+            max_captures=args.max_captures,
+            allow_fallback=not args.no_fallback,
+        )
     manifest_path = write_manifest(args.site_dir, manifest)
     if args.replay:
         run_manifest_capture(manifest_path)
@@ -145,18 +167,30 @@ def build_parser() -> argparse.ArgumentParser:
     generate.add_argument("--max-concept-rounds", type=int, default=2)
     generate.add_argument("--max-builder-repair-rounds", type=int, default=2)
     generate.add_argument("--no-replay", action="store_true")
-    generate.add_argument("--browser-checks", action="store_true")
+    generate.add_argument(
+        "--no-browser-checks",
+        action="store_true",
+        help="Skip Playwright-backed verifier metrics (overflow, accessibility, render sanity).",
+    )
 
     verify = subparsers.add_parser("verify", help="Run deterministic verification on a generated site")
     verify.add_argument("site_dir")
     verify.add_argument("--concept", required=True)
-    verify.add_argument("--browser-checks", action="store_true")
+    verify.add_argument(
+        "--no-browser-checks",
+        action="store_true",
+        help="Skip Playwright-backed verifier metrics.",
+    )
     verify.add_argument("--out")
 
-    manifest = subparsers.add_parser("manifest", help="Create/replay a fallback manifest for a site")
+    manifest = subparsers.add_parser("manifest", help="Create/replay a browser-state oracle manifest for a site")
     manifest.add_argument("site_dir")
     manifest.add_argument("--concept", required=True)
     manifest.add_argument("--site-name", default="generated-site")
+    manifest.add_argument("--backend", choices=["claude-code", "openai"], default="claude-code")
+    manifest.add_argument("--manifest-model", default=None)
+    manifest.add_argument("--max-captures", type=int, default=None)
+    manifest.add_argument("--no-fallback", action="store_true")
     manifest.add_argument("--replay", action="store_true")
     manifest.add_argument("--out")
     return parser

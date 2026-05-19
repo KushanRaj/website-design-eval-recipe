@@ -6,8 +6,6 @@ from typing import Iterable
 
 from pydantic import BaseModel
 
-from .models import WebsiteBundle
-
 ALLOWED_SUFFIXES = {
     ".html",
     ".css",
@@ -19,53 +17,32 @@ ALLOWED_SUFFIXES = {
 }
 
 
-class BundleValidationError(ValueError):
-    pass
+class SitePathError(ValueError):
+    """Raised when a generated site file is at a path or extension we won't accept."""
 
 
 def normalize_bundle_path(raw_path: str) -> str:
+    """Validate and normalize a relative path that the builder agent wrote.
+
+    Rejects absolute paths, traversal, empty segments, and unsupported file
+    types. The historical name 'bundle' is kept so older callers keep working;
+    the builder no longer ships a typed bundle, but the path-hygiene rules
+    are still useful when sanity-checking what the coding agent produced.
+    """
+
     normalized = raw_path.replace("\\", "/").strip()
     pure = PurePosixPath(normalized)
     if not normalized or pure.is_absolute():
-        raise BundleValidationError(f"bundle path must be relative: {raw_path!r}")
+        raise SitePathError(f"site path must be relative: {raw_path!r}")
     if any(part in {"", ".", ".."} for part in pure.parts):
-        raise BundleValidationError(f"bundle path cannot contain empty, dot, or parent parts: {raw_path!r}")
+        raise SitePathError(f"site path cannot contain empty, dot, or parent parts: {raw_path!r}")
     if pure.suffix.lower() not in ALLOWED_SUFFIXES:
-        raise BundleValidationError(f"unsupported bundle file type: {raw_path!r}")
+        raise SitePathError(f"unsupported site file type: {raw_path!r}")
     return pure.as_posix()
 
 
-def validate_bundle(bundle: WebsiteBundle) -> list[str]:
-    paths: list[str] = []
-    seen: set[str] = set()
-    for file in bundle.files:
-        path = normalize_bundle_path(file.path)
-        if path in seen:
-            raise BundleValidationError(f"duplicate bundle path: {path}")
-        seen.add(path)
-        paths.append(path)
-    if "index.html" not in seen:
-        raise BundleValidationError("bundle must include root index.html")
-    for asset in bundle.assets:
-        normalize_bundle_path(asset.path)
-        if asset.path not in seen:
-            raise BundleValidationError(f"asset path is declared but not included in files: {asset.path}")
-    return paths
-
-
-def write_website_bundle(bundle: WebsiteBundle, target_dir: str | Path, *, overwrite: bool = True) -> list[Path]:
-    paths = validate_bundle(bundle)
-    root = Path(target_dir)
-    root.mkdir(parents=True, exist_ok=True)
-    written: list[Path] = []
-    for file, normalized_path in zip(bundle.files, paths, strict=True):
-        destination = root / normalized_path
-        if destination.exists() and not overwrite:
-            raise BundleValidationError(f"refusing to overwrite existing file: {destination}")
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text(file.content, encoding="utf-8")
-        written.append(destination)
-    return written
+# Backwards-compatible alias for any caller still importing the old name.
+BundleValidationError = SitePathError
 
 
 def list_site_files(site_dir: str | Path) -> list[str]:

@@ -153,7 +153,7 @@ CSSOM_ARTIFACT_SCRIPT = """
     });
   }
   return {
-    url: window.location.href,
+    url: window.location.pathname + window.location.search + window.location.hash,
     title: document.title || '',
     viewport: {
       width: window.innerWidth,
@@ -202,7 +202,7 @@ PAGE_STATE_SCRIPT = """
   const active = document.activeElement;
   const activeRect = active ? active.getBoundingClientRect() : null;
   return {
-    url: window.location.href,
+    url: window.location.pathname + window.location.search + window.location.hash,
     title: document.title || '',
     visible_text: cleanText(document.body?.innerText || ''),
     visible_texts: Array.from(new Set(visibleTexts)),
@@ -353,7 +353,7 @@ VISIBLE_ANCESTOR_SCRIPT = """
     const cs = window.getComputedStyle(current);
     const rect = current.getBoundingClientRect();
     if (cs.display !== 'none' && cs.visibility !== 'hidden' && Number(cs.opacity) !== 0 && rect.width > 0 && rect.height > 0) {
-      const nodeId = `wde-ancestor-${Date.now()}-${index}`;
+      const nodeId = `wde-visible-ancestor-${index}`;
       current.setAttribute('data-wde-node-id', nodeId);
       return {
         selector: `[data-wde-node-id="${nodeId}"]`,
@@ -368,6 +368,59 @@ VISIBLE_ANCESTOR_SCRIPT = """
     index += 1;
   }
   return null;
+}
+"""
+
+
+REMOVE_EVALUATOR_ATTRIBUTES_SCRIPT = """
+() => {
+  for (const el of Array.from(document.querySelectorAll('[data-wde-node-id]'))) {
+    el.removeAttribute('data-wde-node-id');
+  }
+  for (const el of Array.from(document.querySelectorAll('[data-wde-manifest-id]'))) {
+    el.removeAttribute('data-wde-manifest-id');
+  }
+}
+"""
+
+
+STAMP_MANIFEST_ELEMENTS_SCRIPT = """
+() => {
+  const stampAttr = 'data-wde-manifest-id';
+  const cleanText = (value) => (value || '').replace(/\\s+/g, ' ').trim();
+  const cssEscape = (value) => window.CSS && CSS.escape
+    ? CSS.escape(value)
+    : String(value).replace(/[^a-zA-Z0-9_-]/g, '\\\\$&');
+  const slug = (value) => cleanText(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48) || 'element';
+  const accessibleName = (el) => {
+    const aria = el.getAttribute('aria-label');
+    if (aria) return cleanText(aria);
+    const labelledBy = el.getAttribute('aria-labelledby');
+    if (labelledBy) {
+      const text = labelledBy.split(/\\s+/).map((id) => document.getElementById(id)?.innerText || '').join(' ');
+      if (cleanText(text)) return cleanText(text);
+    }
+    if (el.id) {
+      const label = document.querySelector(`label[for="${cssEscape(el.id)}"]`);
+      if (label && cleanText(label.innerText)) return cleanText(label.innerText);
+    }
+    const closestLabel = el.closest('label');
+    if (closestLabel && cleanText(closestLabel.innerText)) return cleanText(closestLabel.innerText);
+    const alt = el.getAttribute('alt');
+    if (alt) return cleanText(alt);
+    const title = el.getAttribute('title');
+    if (title) return cleanText(title);
+    const value = el.getAttribute('value');
+    if (value && ['input', 'button'].includes(el.tagName.toLowerCase())) return cleanText(value);
+    return cleanText(el.innerText || el.textContent || '');
+  };
+
+  Array.from(document.querySelectorAll('*')).forEach((el, index) => {
+    if (el.hasAttribute(stampAttr)) return;
+    const tag = el.tagName.toLowerCase();
+    const label = accessibleName(el) || el.id || el.getAttribute('name') || tag;
+    el.setAttribute(stampAttr, `wde-${index}-${tag}-${slug(label)}`);
+  });
 }
 """
 
@@ -599,11 +652,20 @@ def _goto_capture(
     after_load_wait_ms = int(defaults.get("afterLoadWaitMs") or 0)
     if after_load_wait_ms:
         page.wait_for_timeout(after_load_wait_ms)
+    page.evaluate(STAMP_MANIFEST_ELEMENTS_SCRIPT)
+
+
+def _is_manifest_stamp_selector(selector: str | None) -> bool:
+    return bool(selector and "data-wde-manifest-id" in selector)
+
+
+def _is_coverage_scored_action(action: dict[str, Any]) -> bool:
+    return action.get("type") in {"hover", "click", "focus", "fill", "press", "scroll", "scrollBy"}
 
 
 def _selector_actionable(page: Page, selector: str, action_type: str) -> bool:
     try:
-        if page.locator(selector).count() <= 0:
+        if page.locator(selector).count() != 1:
             return False
         if action_type in {"hover", "click", "focus"}:
             return page.locator(selector).first.is_visible(timeout=250)
@@ -633,15 +695,13 @@ def _score_candidate_element(reference: dict[str, Any], candidate: dict[str, Any
             score += 0.15
         if candidate.get("tag") in {"section", "main", "article"}:
             score += 0.05
-    if action_type in {"click", "focus", "fill"} and reference.get("type") == candidate.get("type") and candidate.get("type"):
-        score = 1.0
     return round(float(min(score, 1.0)), 6)
 
 
 def _resolve_action(page: Page, action: dict[str, Any], reference_signature: dict[str, Any] | None) -> dict[str, Any]:
     selector = action.get("selector")
     action_type = action.get("type", "")
-    if selector and _selector_actionable(page, selector, action_type):
+    if selector and not _is_manifest_stamp_selector(selector) and _selector_actionable(page, selector, action_type):
         return {
             "status": "resolved",
             "method": "exact_selector",
@@ -652,7 +712,7 @@ def _resolve_action(page: Page, action: dict[str, Any], reference_signature: dic
             "matched_element": None,
         }
 
-    if selector and action_type == "hover":
+    if selector and not _is_manifest_stamp_selector(selector) and action_type == "hover":
         ancestor = _visible_ancestor(page, selector)
         if ancestor is not None:
             return {
@@ -860,8 +920,20 @@ def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any
     executed = []
     for reference_action in reference_actions:
         action = reference_action["action"]
+        coverage_scored = _is_coverage_scored_action(action)
         before = _page_state(page)
-        resolution = _resolve_action(page, action, reference_action.get("reference_signature"))
+        if action.get("type") in {"wait", "press", "scrollBy"} and not action.get("selector"):
+            resolution = {
+                "status": "resolved",
+                "method": "direct_non_selector_action",
+                "requested_selector": None,
+                "resolved_selector": None,
+                "confidence": 1.0,
+                "failure_mode": None,
+                "matched_element": None,
+            }
+        else:
+            resolution = _resolve_action(page, action, reference_action.get("reference_signature"))
         action_status = "skipped"
         failure = None
         post_state = {"score": 0.0, "checks": {"reason": "action_not_resolved"}}
@@ -883,7 +955,9 @@ def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any
                 failure = f"{type(exc).__name__}: {exc}"
                 action_status = "failed"
 
-        coverage = round(float(resolution.get("confidence", 0.0)) * float(post_state.get("score", 0.0)), 6)
+        coverage = None
+        if coverage_scored:
+            coverage = round(float(resolution.get("confidence", 0.0)) * float(post_state.get("score", 0.0)), 6)
         executed.append(
             {
                 "action": action,
@@ -891,6 +965,7 @@ def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any
                 "status": action_status,
                 "failure": failure,
                 "post_state": post_state,
+                "coverage_scored": coverage_scored,
                 "coverage_contribution": coverage,
                 "before_state": before,
                 "after_state": after,
@@ -925,6 +1000,7 @@ def _artifact_from_page(
     screenshot_dir = artifact_dir / "screenshots"
     screenshot_dir.mkdir(parents=True, exist_ok=True)
     screenshot_path = screenshot_dir / f"{capture['id']}.png"
+    page.evaluate(REMOVE_EVALUATOR_ATTRIBUTES_SCRIPT)
     page.screenshot(**_screenshot_options(defaults, capture, screenshot_path))
     with Image.open(screenshot_path) as image:
         screenshot_dimensions = {"width": image.width, "height": image.height}
@@ -1007,6 +1083,7 @@ def _extract_visual_blocks_for_artifact(
                 "replay_actions": replay_actions,
             }
 
+        page.evaluate(REMOVE_EVALUATOR_ATTRIBUTES_SCRIPT)
         screenshot_options = _screenshot_options(defaults, capture, Path(screenshot_path))
         visual_blocks = extract_visual_blocks_from_playwright_page(
             page,
@@ -1121,7 +1198,13 @@ def _capture_coverage(route: dict[str, Any], actions: list[dict[str, Any]], scre
     route_score = float(route.get("confidence", 0.0))
     if not actions:
         return {"score": route_score, "route_score": route_score, "action_score": None, "reason": None}
-    action_values = [float(action.get("coverage_contribution", 0.0)) for action in actions]
+    action_values = [
+        float(action.get("coverage_contribution", 0.0))
+        for action in actions
+        if action.get("coverage_scored", True) and action.get("coverage_contribution") is not None
+    ]
+    if not action_values:
+        return {"score": route_score, "route_score": route_score, "action_score": None, "reason": None}
     action_score = sum(action_values) / len(action_values)
     return {
         "score": round(route_score * action_score, 6),

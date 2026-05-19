@@ -101,6 +101,58 @@ function resolvePathFromManifest(manifestDir, value) {
   return path.resolve(manifestDir, value);
 }
 
+async function stampManifestElements(page) {
+  await page.evaluate(() => {
+    const stampAttr = "data-wde-manifest-id";
+    const cleanText = (value) => (value || "").replace(/\s+/g, " ").trim();
+    const cssEscape = (value) => window.CSS && CSS.escape
+      ? CSS.escape(value)
+      : String(value).replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+    const slug = (value) => cleanText(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48) || "element";
+    const accessibleName = (el) => {
+      const aria = el.getAttribute("aria-label");
+      if (aria) return cleanText(aria);
+      const labelledBy = el.getAttribute("aria-labelledby");
+      if (labelledBy) {
+        const text = labelledBy.split(/\s+/).map((id) => document.getElementById(id)?.innerText || "").join(" ");
+        if (cleanText(text)) return cleanText(text);
+      }
+      if (el.id) {
+        const label = document.querySelector(`label[for="${cssEscape(el.id)}"]`);
+        if (label && cleanText(label.innerText)) return cleanText(label.innerText);
+      }
+      const closestLabel = el.closest("label");
+      if (closestLabel && cleanText(closestLabel.innerText)) return cleanText(closestLabel.innerText);
+      const alt = el.getAttribute("alt");
+      if (alt) return cleanText(alt);
+      const title = el.getAttribute("title");
+      if (title) return cleanText(title);
+      const value = el.getAttribute("value");
+      if (value && ["input", "button"].includes(el.tagName.toLowerCase())) return cleanText(value);
+      return cleanText(el.innerText || el.textContent || "");
+    };
+
+    Array.from(document.querySelectorAll("*")).forEach((el, index) => {
+      if (el.hasAttribute(stampAttr)) return;
+      const tag = el.tagName.toLowerCase();
+      const label = accessibleName(el) || el.id || el.getAttribute("name") || tag;
+      el.setAttribute(stampAttr, `wde-${index}-${tag}-${slug(label)}`);
+    });
+  });
+}
+
+async function removeEvaluatorAttributes(page) {
+  await page.evaluate(() => {
+    for (const el of Array.from(document.querySelectorAll("[data-wde-manifest-id]"))) {
+      el.removeAttribute("data-wde-manifest-id");
+    }
+  });
+}
+
 async function runAction(page, action) {
   const settleMs = action.settleMs ?? 0;
 
@@ -218,6 +270,8 @@ async function main() {
         await page.waitForTimeout(defaults.afterLoadWaitMs);
       }
 
+      await stampManifestElements(page);
+
       for (const action of capture.actions ?? []) {
         await runAction(page, action);
       }
@@ -225,6 +279,7 @@ async function main() {
       const fileName = capture.file ?? `${capture.id}.png`;
       const outputPath = path.join(outputDir, fileName);
       await fs.mkdir(path.dirname(outputPath), { recursive: true });
+      await removeEvaluatorAttributes(page);
       await page.screenshot(screenshotOptions(defaults, capture, outputPath));
       console.log(`${capture.id} -> ${path.relative(process.cwd(), outputPath)}`);
     }

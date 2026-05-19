@@ -17,6 +17,7 @@ class GenerationRequest(StrictModel):
     output_root: str = "Generator/output"
     max_concept_rounds: int = Field(default=2, ge=1, le=10)
     max_builder_repair_rounds: int = Field(default=2, ge=0, le=10)
+    max_parallel_sites: int = Field(default=4, ge=1, le=32)
     replay_manifest: bool = True
     model: str | None = None
 
@@ -73,7 +74,7 @@ class ConceptCandidate(StrictModel):
 
 class ConceptBatch(StrictModel):
     seed_id: str = Field(min_length=1)
-    concepts: list[ConceptCandidate] = Field(min_length=1, max_length=10)
+    concepts: list[ConceptCandidate] = Field(min_length=1, max_length=4)
 
 
 class CriticCandidateScore(StrictModel):
@@ -98,26 +99,6 @@ class ConceptCritique(StrictModel):
         if self.best_candidate_id not in ids:
             raise ValueError("best_candidate_id must reference a scored candidate")
         return self
-
-
-class WebsiteFile(StrictModel):
-    path: str = Field(min_length=1)
-    content: str
-    kind: Literal["html", "css", "js", "json", "svg", "txt", "md"] | None = None
-
-
-class AssetSpec(StrictModel):
-    id: str = Field(min_length=1)
-    path: str = Field(min_length=1)
-    role: str = Field(min_length=1)
-
-
-class WebsiteBundle(StrictModel):
-    site_id: str = Field(min_length=1)
-    files: list[WebsiteFile] = Field(min_length=1)
-    assets: list[AssetSpec] = Field(default_factory=list)
-    reference_spec: dict[str, Any] = Field(default_factory=dict)
-    notes: list[str] = Field(default_factory=list)
 
 
 class BuildReport(StrictModel):
@@ -170,8 +151,10 @@ class CaptureAction(StrictModel):
 
 class CaptureSpec(StrictModel):
     id: str = Field(min_length=1)
+    weight: float | None = Field(default=None, ge=0.0)
     page: str | None = None
     state: str | None = None
+    intent: str | None = None
     path: str = Field(min_length=1)
     viewport: dict[str, int] = Field(default_factory=lambda: {"width": 1440, "height": 900})
     actions: list[CaptureAction] = Field(default_factory=list)

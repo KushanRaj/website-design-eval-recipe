@@ -149,6 +149,15 @@ For a fixed reference folder, candidate folder, manifest, browser version, and r
 
 If any of those deterministic artifacts or scores change, treat it as an evaluator bug or a page-settling bug. The only expected drift is VLM judge output and very small DreamSim numeric drift when the model runtime/device changes.
 
+Comparison of the existing previous full run and latest full run showed:
+
+- deterministic metric diffs: `0`
+- screenshot hash diffs: `0`
+- DreamSim diffs: `0`
+- VLM diffs: present, as expected for API-backed judging
+
+The comparison did expose non-score artifact noise: localhost ports in stored URLs and resolver `data-wde-node-id` stamping in captured `outerHTML`. The evaluator now stores path-only URLs in page-state/CSSOM artifacts, uses deterministic resolver selectors, and removes evaluator `data-wde-node-id` attributes before clean artifact capture and visual-block extraction.
+
 ## Worth Looking Into Next
 
 ### 1. Single-page visual-block mutation after clean artifact capture

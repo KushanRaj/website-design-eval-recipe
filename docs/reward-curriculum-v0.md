@@ -144,6 +144,7 @@ metrics-results/reward-validation-2026-05-19/
 | Candidate | Coverage | Size Match | Pixelmatch | DreamSim | VLM | Visual Block | Text BLEU | Text ROUGE | Final Reward |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | `claude-attempt-01` | 1.0000 | 0.9474 | 0.9181 | 0.9321 | 0.8194 | 0.9690 | 0.8705 | 0.9164 | 0.8906 |
+| `claude-attempt-03-moderate` | 0.8889 | 0.6899 | 0.8973 | 0.8224 | 0.6320 | 0.8316 | 0.6480 | 0.6684 | 0.5620 |
 | `claude-attempt-02-bad` | 0.8197 | 0.8361 | 0.6970 | 0.5407 | 0.1560 | 0.5205 | 0.2092 | 0.2648 | 0.0985 |
 
 Contribution breakdown:
@@ -151,7 +152,16 @@ Contribution breakdown:
 | Candidate | Pass 1 / 0.05 | Pass 2 / 0.15 | Pass 3 / 0.80 | Final Reward |
 | --- | ---: | ---: | ---: | ---: |
 | `claude-attempt-01` | 0.0484 | 0.1340 | 0.7082 | 0.8906 |
+| `claude-attempt-03-moderate` | 0.0397 | 0.0923 | 0.4300 | 0.5620 |
 | `claude-attempt-02-bad` | 0.0412 | 0.0280 | 0.0293 | 0.0985 |
+
+This gives a usable first gradient:
+
+```text
+bad 0.0985 < moderate 0.5620 < good 0.8906
+```
+
+The moderate reproduction is not uniformly moderate: it still misses the dropdown capture, but its full-page/contact/government states are much closer than the bad candidate.
 
 The full comparison report is:
 
@@ -191,6 +201,15 @@ The only expected drift is:
 - very small DreamSim numeric drift if the model/runtime/device changes or nondeterministic kernels are used
 
 Reward computation from a fixed `metrics.json` should be exactly deterministic.
+
+Existing-run comparison result:
+
+- deterministic metric diffs: `0`
+- screenshot hash diffs: `0`
+- DreamSim diffs: `0`
+- VLM diffs: present
+
+The raw artifact JSON had non-score noise from localhost ports and resolver `data-wde-node-id` attributes. The evaluator now normalizes stored URLs to path-only values and removes evaluator node-id attributes before clean artifact capture.
 
 ## Open Questions
 
