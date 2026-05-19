@@ -5,6 +5,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 IMAGE_NAME="${WDE_VERIFIER_IMAGE:-website-design-eval-verifier:latest}"
+PUSH_IMAGE="${WDE_PUSH_IMAGE:-0}"
+DOCKER_PLATFORM="${WDE_DOCKER_PLATFORM:-linux/amd64}"
 DREAMSIM_TYPE="${WDE_DREAMSIM_TYPE:-ensemble}"
 PRELOAD_MODELS="${WDE_PRELOAD_MODELS:-1}"
 VERIFY_MODEL_LOAD="${WDE_VERIFY_MODEL_LOAD:-1}"
@@ -53,13 +55,20 @@ cp "$SCRIPT_DIR/Dockerfile" "$CONTEXT_DIR/verifier-image/Dockerfile"
 cp "$SCRIPT_DIR/requirements.txt" "$CONTEXT_DIR/verifier-image/requirements.txt"
 cp "$SCRIPT_DIR/setup_models.py" "$CONTEXT_DIR/verifier-image/setup_models.py"
 
-docker build \
-  -f "$CONTEXT_DIR/verifier-image/Dockerfile" \
-  -t "$IMAGE_NAME" \
-  --build-arg "WDE_DREAMSIM_TYPE=$DREAMSIM_TYPE" \
-  --build-arg "WDE_PRELOAD_MODELS=$PRELOAD_MODELS" \
-  --build-arg "WDE_VERIFY_MODEL_LOAD=$VERIFY_MODEL_LOAD" \
-  "$CONTEXT_DIR"
+build_args=(
+  --platform "$DOCKER_PLATFORM"
+  -f "$CONTEXT_DIR/verifier-image/Dockerfile"
+  -t "$IMAGE_NAME"
+  --build-arg "WDE_DREAMSIM_TYPE=$DREAMSIM_TYPE"
+  --build-arg "WDE_PRELOAD_MODELS=$PRELOAD_MODELS"
+  --build-arg "WDE_VERIFY_MODEL_LOAD=$VERIFY_MODEL_LOAD"
+)
+
+if [[ "$PUSH_IMAGE" = "1" ]]; then
+  docker buildx build "${build_args[@]}" --push "$CONTEXT_DIR"
+else
+  docker buildx build "${build_args[@]}" --load "$CONTEXT_DIR"
+fi
 
 cat <<EOF
 Built Harbor verifier image: $IMAGE_NAME
@@ -69,6 +78,7 @@ Package a task against this image with:
     --source-root Generator/output/harbor-dataset \\
     --dataset-dir datasets/synthetic-website-replication \\
     --dataset-name proximal/synthetic-website-replication \\
+    --agent-base-image "website-design-eval-agent-claude:latest" \\
     --verifier-base-image "$IMAGE_NAME" \\
     --metric-profile full-vlm \\
     --verifier-allow-internet \\

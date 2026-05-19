@@ -63,7 +63,12 @@ def _write_text(path: Path, text: str, *, executable: bool = False) -> None:
         path.chmod(0o755)
 
 
-def _task_toml(task_name: str, *, verifier_allow_internet: bool = False) -> str:
+def _task_toml(
+    task_name: str,
+    *,
+    verifier_allow_internet: bool = False,
+    agent_memory_mb: int = 8192,
+) -> str:
     verifier_internet = "true" if verifier_allow_internet else "false"
     return f"""
 schema_version = "1.1"
@@ -87,7 +92,7 @@ timeout_sec = 1800
 build_timeout_sec = 600
 os = "linux"
 cpus = 2
-memory_mb = 4096
+memory_mb = {agent_memory_mb}
 storage_mb = 10240
 allow_internet = true
 workdir = "/app"
@@ -121,7 +126,18 @@ created as separate HTML files when the screenshots imply multiple routes.
 """
 
 
-def _readme_md(task_name: str, *, metric_profile: str, verifier_base_image: str | None) -> str:
+def _readme_md(
+    task_name: str,
+    *,
+    metric_profile: str,
+    verifier_base_image: str | None,
+    agent_base_image: str | None,
+) -> str:
+    agent_line = (
+        f"`environment/Dockerfile` inherits from the reusable agent image `{agent_base_image}`."
+        if agent_base_image
+        else "`environment/Dockerfile` uses the default Playwright base image."
+    )
     verifier_line = (
         f"`tests/Dockerfile` uses the reusable verifier image `{verifier_base_image}`."
         if verifier_base_image
@@ -140,6 +156,7 @@ oracle site.
 
 Metric profile: `{metric_profile}`.
 
+{agent_line}
 {verifier_line}
 
 Metric switches are in `tests/private/metric-config.json` and can be overridden
@@ -147,15 +164,16 @@ with `WDE_*` environment variables when running the verifier.
 """
 
 
-def _environment_dockerfile() -> str:
+def _environment_dockerfile(agent_base_image: str | None = None) -> str:
+    base_image = agent_base_image or "mcr.microsoft.com/playwright/python:v1.60.0-noble"
     return """
-FROM mcr.microsoft.com/playwright/python:v1.60.0-noble
+FROM {base_image}
 
 WORKDIR /app
 COPY workspace/ /app/
 
 RUN mkdir -p /app/site
-"""
+""".format(base_image=base_image)
 
 
 def _tests_dockerfile(verifier_base_image: str | None = None) -> str:
@@ -512,9 +530,11 @@ def package_task(
     task_name: str,
     force: bool,
     verifier_base_image: str | None = None,
+    agent_base_image: str | None = None,
     metric_profile: str = "lite",
     vendor_evaluator: bool | None = None,
     verifier_allow_internet: bool = False,
+    agent_memory_mb: int = 8192,
 ) -> None:
     site_dir = site_dir.resolve()
     task_dir = task_dir.resolve()
@@ -550,10 +570,25 @@ def package_task(
     if vendor_evaluator is None:
         vendor_evaluator = verifier_base_image is None
 
-    _write_text(task_dir / "README.md", _readme_md(task_name, metric_profile=metric_profile, verifier_base_image=verifier_base_image))
+    _write_text(
+        task_dir / "README.md",
+        _readme_md(
+            task_name,
+            metric_profile=metric_profile,
+            verifier_base_image=verifier_base_image,
+            agent_base_image=agent_base_image,
+        ),
+    )
     _write_text(task_dir / "instruction.md", _instruction_md())
-    _write_text(task_dir / "task.toml", _task_toml(task_name, verifier_allow_internet=verifier_allow_internet))
-    _write_text(task_dir / "environment" / "Dockerfile", _environment_dockerfile())
+    _write_text(
+        task_dir / "task.toml",
+        _task_toml(
+            task_name,
+            verifier_allow_internet=verifier_allow_internet,
+            agent_memory_mb=agent_memory_mb,
+        ),
+    )
+    _write_text(task_dir / "environment" / "Dockerfile", _environment_dockerfile(agent_base_image))
     _write_text(task_dir / "tests" / "Dockerfile", _tests_dockerfile(verifier_base_image))
     _write_text(task_dir / "tests" / "run_eval.py", _run_eval_py())
     _write_text(task_dir / "tests" / "test.sh", _test_sh(), executable=True)
@@ -585,6 +620,17 @@ def main() -> int:
         "--verifier-base-image",
         default=None,
         help="Reusable verifier Docker image to use as tests/Dockerfile base.",
+    )
+    parser.add_argument(
+        "--agent-base-image",
+        default=None,
+        help="Reusable preinstalled Claude Code image to use as environment/Dockerfile base.",
+    )
+    parser.add_argument(
+        "--agent-memory-mb",
+        type=int,
+        default=8192,
+        help="Task agent container memory in MB.",
     )
     parser.add_argument(
         "--metric-profile",
@@ -624,9 +670,11 @@ def main() -> int:
         task_name=args.task_name,
         force=args.force,
         verifier_base_image=args.verifier_base_image,
+        agent_base_image=args.agent_base_image,
         metric_profile=args.metric_profile,
         vendor_evaluator=vendor_evaluator,
         verifier_allow_internet=args.verifier_allow_internet,
+        agent_memory_mb=args.agent_memory_mb,
     )
     print(json.dumps({"task_dir": str((PROJECT_ROOT / args.task_dir).resolve()), "task_name": args.task_name}, indent=2))
     return 0

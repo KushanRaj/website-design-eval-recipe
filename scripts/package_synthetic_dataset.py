@@ -110,8 +110,10 @@ def package_dataset(
     task_prefix: str,
     description: str,
     verifier_base_image: str,
+    agent_base_image: str | None,
     metric_profile: str,
     verifier_allow_internet: bool,
+    agent_memory_mb: int,
     force: bool,
 ) -> dict[str, Any]:
     source_root = source_root.resolve()
@@ -136,9 +138,11 @@ def package_dataset(
             task_name=task_name,
             force=True,
             verifier_base_image=verifier_base_image,
+            agent_base_image=agent_base_image,
             metric_profile=metric_profile,
             vendor_evaluator=False,
             verifier_allow_internet=verifier_allow_internet,
+            agent_memory_mb=agent_memory_mb,
         )
         packaged.append(
             {
@@ -183,6 +187,8 @@ def main(argv: list[str] | None = None) -> int:
         default="Synthetic screenshot-only website replication dataset.",
     )
     parser.add_argument("--verifier-base-image", default="website-design-eval-verifier:latest")
+    parser.add_argument("--agent-base-image", default=None)
+    parser.add_argument("--agent-memory-mb", type=int, default=8192)
     parser.add_argument(
         "--metric-profile",
         choices=["lite", "full-local", "full-vlm"],
@@ -199,8 +205,10 @@ def main(argv: list[str] | None = None) -> int:
         task_prefix=args.task_prefix,
         description=args.description,
         verifier_base_image=args.verifier_base_image,
+        agent_base_image=args.agent_base_image,
         metric_profile=args.metric_profile,
         verifier_allow_internet=args.verifier_allow_internet,
+        agent_memory_mb=args.agent_memory_mb,
         force=args.force,
     )
     print(json.dumps(result, indent=2, sort_keys=True))

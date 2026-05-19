@@ -13,6 +13,7 @@ The main split:
 - `datasets/synthetic-website-replication/` is the local Harbor task set
   generated from that source dataset. It is build output, not hand-authored
   source.
+- `agent-image/` builds one reusable Claude Code image shared by every task.
 - `verifier-image/` builds one reusable evaluator image shared by every task.
 
 ## One-VM Setup
@@ -25,10 +26,12 @@ bash scripts/setup_harbor_vm.sh
 scripts/run_harbor_full_reward.sh
 ```
 
-`setup_harbor_vm.sh` does two things:
+`setup_harbor_vm.sh` does three things:
 
-1. Builds `website-design-eval-verifier:latest`.
-2. Packages all generated sites under `Generator/output/harbor-dataset/` into
+1. Builds `website-design-eval-agent-claude:latest` with Claude Code already
+   installed.
+2. Builds `website-design-eval-verifier:latest`.
+3. Packages all generated sites under `Generator/output/harbor-dataset/` into
    `datasets/synthetic-website-replication/`.
 
 The default run uses:
@@ -46,9 +49,16 @@ WDE_SYNTHETIC_SITE_ROOT=Generator/output/harbor-dataset
 WDE_HARBOR_DATASET_DIR=datasets/synthetic-website-replication
 WDE_HARBOR_DATASET_NAME=proximal/synthetic-website-replication
 WDE_HARBOR_AGENT=claude-code
+WDE_HARBOR_AGENT_IMPORT_PATH=harbor_preinstalled_claude:PreinstalledClaudeCode
 WDE_HARBOR_MODEL=claude-opus-4-7
 WDE_HARBOR_N_CONCURRENT=4
 ```
+
+When scaling on Modal, use the preinstalled import path. Harbor's built-in
+`claude-code` agent always runs its installer during setup, and we observed that
+installer being killed with exit `137` under concurrent runs. The
+preinstalled wrapper keeps the normal Claude execution path but changes setup to
+`claude --version` only.
 
 ## Harbor Layout
 
@@ -117,6 +127,32 @@ agent container to the verifier container through `artifacts = ["/app"]`, so
 the verifier receives the candidate site but the agent never receives hidden
 oracle files.
 
+## Reusable Agent Image
+
+There is one agent image for all tasks, not one agent image per task.
+
+`agent-image/build.sh` creates `website-design-eval-agent-claude:latest` and
+installs Claude Code at image-build time. Task `environment/Dockerfile` files
+then inherit from this image and only copy the public screenshot workspace:
+
+```dockerfile
+FROM website-design-eval-agent-claude:latest
+
+WORKDIR /app
+COPY workspace/ /app/
+
+RUN mkdir -p /app/site
+```
+
+At runtime, use:
+
+```bash
+WDE_HARBOR_AGENT_IMPORT_PATH=harbor_preinstalled_claude:PreinstalledClaudeCode
+```
+
+That wrapper fails loudly if `claude` is missing. It does not fall back to a
+runtime install, because runtime installs are the scaling failure mode.
+
 ## Reusable Verifier Image
 
 There is one verifier image for all tasks, not one verifier image per task.
@@ -139,15 +175,65 @@ python scripts/package_synthetic_dataset.py \
   --source-root Generator/output/harbor-dataset \
   --dataset-dir datasets/synthetic-website-replication \
   --dataset-name proximal/synthetic-website-replication \
+  --agent-base-image website-design-eval-agent-claude:latest \
   --verifier-base-image website-design-eval-verifier:latest \
   --metric-profile full-vlm \
   --verifier-allow-internet \
   --force
 ```
 
-For a remote VM pool, push the verifier image to a registry and pass that
-registry tag as `--verifier-base-image`. For the current one-VM path, a local
-Docker image is enough.
+For Modal or a remote VM pool, push both the agent and verifier images to a
+registry and pass those registry tags as `--agent-base-image` and
+`--verifier-base-image`. For the current one-VM path, local Docker images are
+enough.
+
+## Modal Scale Path
+
+The Modal path uses one dataset plus two registry images:
+
+```text
+ghcr.io/kushanraj/wde-agent-claude:latest
+ghcr.io/kushanraj/wde-verifier:latest
+```
+
+Build and optionally push both images:
+
+```bash
+WDE_IMAGE_NAMESPACE=ghcr.io/kushanraj \
+WDE_DOCKER_PLATFORM=linux/amd64 \
+WDE_PUSH_IMAGE=1 \
+bash scripts/build_harbor_images.sh
+```
+
+Package tasks against those image tags:
+
+```bash
+python scripts/package_synthetic_dataset.py \
+  --source-root Generator/output/harbor-dataset \
+  --dataset-dir datasets/synthetic-website-replication \
+  --dataset-name proximal/synthetic-website-replication \
+  --agent-base-image ghcr.io/kushanraj/wde-agent-claude:latest \
+  --verifier-base-image ghcr.io/kushanraj/wde-verifier:latest \
+  --metric-profile full-vlm \
+  --verifier-allow-internet \
+  --force
+```
+
+Run on Modal using the preinstalled agent and the Modal secret:
+
+```bash
+WDE_HARBOR_ENV=modal \
+WDE_MODAL_ENVIRONMENT=kushan-wde-evals \
+WDE_MODAL_SECRET_NAME=kushan-wde-api-keys \
+WDE_HARBOR_AGENT_IMPORT_PATH=harbor_preinstalled_claude:PreinstalledClaudeCode \
+WDE_HARBOR_MODEL=claude-opus-4-7 \
+WDE_HARBOR_N_CONCURRENT=2 \
+scripts/run_harbor_full_reward.sh datasets/synthetic-website-replication
+```
+
+Increase `WDE_HARBOR_N_CONCURRENT` after the first stable full run. The Modal
+secret supplies `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` to both the agent and
+separate verifier sandboxes through Harbor's Modal environment kwargs.
 
 ## Reward Contract
 
@@ -191,8 +277,8 @@ For the dedicated evaluator-side contract, see
 `docs/candidate-manifest-planning.md`.
 
 The oracle manifest is frozen at dataset creation time. During evaluation, the
-full reward profile generates a candidate-side capture manifest with Claude Code
-before screenshots and metrics run.
+full reward profile now generates a candidate-side capture manifest with Claude
+Code before screenshots and metrics run.
 
 The planner receives:
 
@@ -230,6 +316,29 @@ site it:
 The package step never regenerates screenshots. If a PNG is missing, packaging
 fails because that means the source dataset is incomplete.
 
+## Manifest Replay And Pruning
+
+The generator is responsible for producing a replayed, internally consistent
+source site before Harbor packaging starts.
+
+Current generator behavior:
+
+- generate the oracle manifest after verifier approval
+- replay the manifest with `scripts/capture-screenshots.mjs --prune-failed`
+- keep required no-action page captures strict
+- drop failed optional interaction captures from the manifest
+- write `_replay-report.json` under `site/screenshots/reference/`
+
+This means Harbor packaging treats the post-pruning manifest as canonical. If a
+flaky optional click/hover state fails replay, it should not remain in the
+manifest and then become a hidden Harbor mismatch. Broad visual design coverage
+is the goal; unreliable functional controls should be removed from the oracle
+capture contract unless they are essential to the task.
+
+The builder validation step also ignores managed `site/screenshots/` outputs.
+Those files are created by the generator replay process, not by the builder, and
+should not cause repair attempts to fail path/type validation.
+
 ## Current Readiness
 
 Current state is ready for a one-VM Harbor run over the 12 generated synthetic
@@ -239,9 +348,12 @@ sites after:
 bash scripts/setup_harbor_vm.sh
 ```
 
-Scale-out work still left:
+Scale-out checklist:
 
-- Push the verifier image to a registry for multiple VMs.
+- Push the agent and verifier images to a registry Modal can pull.
+- Package the dataset against those registry image tags.
+- Run with `WDE_HARBOR_AGENT_IMPORT_PATH` so Claude Code is not reinstalled per
+  trial.
 - Decide runtime concurrency from actual CPU/RAM/model/API throughput.
 - Add a small runbook for publishing the generated task set if we want a remote
   Harbor dataset rather than local `--path` execution.
