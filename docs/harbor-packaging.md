@@ -141,6 +141,16 @@ agent container to the verifier container through `artifacts = ["/app"]`, so
 the verifier receives the candidate site but the agent never receives hidden
 oracle files.
 
+Packaging must syntax-check the generated verifier wrapper before a dataset is
+run. A broken `tests/test.sh` prevents `run_eval.py` from starting, so the
+verifier exits without writing `reward.json` and Harbor reports
+`RewardFileNotFoundError` even though agent generation succeeded:
+
+```bash
+find datasets/synthetic-website-replication -path '*/tests/test.sh' -print0 |
+  xargs -0 -n1 bash -n
+```
+
 ## Reusable Agent Image
 
 There is one agent image for all tasks, not one agent image per task.
@@ -253,10 +263,140 @@ Run on Modal using the preinstalled agent and the Modal secret:
 WDE_HARBOR_ENV=modal \
 WDE_MODAL_ENVIRONMENT=kushan-wde-evals \
 WDE_MODAL_SECRET_NAME=kushan-wde-api-keys \
+WDE_MODAL_REGISTRY_SECRET_NAME=ghcr-secret \
 WDE_HARBOR_AGENT_IMPORT_PATH=harbor_preinstalled_claude:PreinstalledClaudeCode \
 WDE_HARBOR_MODEL=claude-opus-4-7 \
 WDE_HARBOR_N_CONCURRENT=2 \
 scripts/run_harbor_full_reward.sh datasets/synthetic-website-replication
+```
+
+### Modal + Private GHCR Images
+
+The Modal run needs two independent secret paths:
+
+- `WDE_MODAL_SECRET_NAME=kushan-wde-api-keys` injects API keys into the Modal
+  sandbox.
+- `WDE_MODAL_REGISTRY_SECRET_NAME=ghcr-secret` authenticates Modal image pulls
+  from private GHCR packages.
+
+The registry secret must exist in the same Modal environment used by the run:
+
+```bash
+modal secret create ghcr-secret \
+  --env kushan-wde-evals \
+  REGISTRY_USERNAME=... \
+  REGISTRY_PASSWORD=...
+```
+
+Important Harbor implementation detail: stock Harbor `0.7.1` does not pass
+`registry_secret` into `modal.Image.from_dockerfile(...)`. For task environment
+Dockerfiles like:
+
+```dockerfile
+FROM ghcr.io/kushanraj/wde-agent-claude:e18579c
+```
+
+that means Modal's build worker tries to pull the private base image
+anonymously and fails with:
+
+```text
+unable to retrieve auth token: invalid username/password: unauthorized
+```
+
+This is not a general GHCR outage, and it is not a verifier/runtime failure. In
+the observed EC2 failure, the verifier image path was fine, but every agent
+environment build failed while pulling
+`ghcr.io/kushanraj/wde-agent-claude:e18579c`.
+
+Until Harbor ships an upstream fix, the working adapter behavior is:
+
+1. If `registry_secret` is set and the task uses a Dockerfile, read the first
+   non-comment Dockerfile line.
+2. Require it to be `FROM ...`.
+3. Build the Modal image from that base with
+   `modal.Image.from_registry(base_image, secret=Secret.from_name(registry_secret))`.
+4. Apply the remaining Dockerfile commands with `dockerfile_commands(...)`.
+
+Check whether a VM has the patched behavior:
+
+```bash
+~/.local/share/uv/tools/harbor/bin/python - <<'PY'
+import harbor
+from pathlib import Path
+
+modal_file = Path(harbor.__file__).parent / "environments" / "modal.py"
+text = modal_file.read_text()
+print(modal_file)
+print("patched_private_from =", "Image.from_registry(" in text and "dockerfile_commands(" in text)
+PY
+```
+
+If the VM is unpatched, a fresh `harbor==0.7.1` install will still call
+`Image.from_dockerfile(...)` directly and private agent image pulls will fail
+even when `ghcr-secret` exists.
+
+### EC2 Controller Pattern
+
+For long runs, run Harbor from an EC2 `tmux` session as the controller and use
+Modal as the execution backend. That way the laptop can disconnect without
+killing the job.
+
+```bash
+cd ~/website-design-eval-recipe
+
+tmux kill-session -t wde-harbor 2>/dev/null || true
+
+cat > /tmp/run_wde_harbor.sh <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd ~/website-design-eval-recipe
+
+job="ec2-harbor-modal-full-reward-12-$(date +%Y%m%d-%H%M%S)"
+echo "$job" > /tmp/wde_latest_ec2_harbor_job
+mkdir -p "jobs/harbor-full-reward/$job"
+
+set -a
+source .env
+set +a
+
+export WDE_HARBOR_ENV=modal
+export WDE_MODAL_ENVIRONMENT=kushan-wde-evals
+export WDE_MODAL_SECRET_NAME=kushan-wde-api-keys
+export WDE_MODAL_REGISTRY_SECRET_NAME=ghcr-secret
+export WDE_HARBOR_AGENT_IMPORT_PATH=harbor_preinstalled_claude:PreinstalledClaudeCode
+export WDE_HARBOR_MODEL=claude-opus-4-7
+export WDE_HARBOR_N_CONCURRENT=12
+export WDE_HARBOR_JOB_NAME="$job"
+export WDE_HARBOR_JOBS_DIR=jobs/harbor-full-reward
+export WDE_HARBOR_TIMEOUT_MULTIPLIER=4.0
+export WDE_HARBOR_AGENT_TIMEOUT_MULTIPLIER=4.0
+export WDE_HARBOR_VERIFIER_TIMEOUT_MULTIPLIER=4.0
+export WDE_HARBOR_ENVIRONMENT_BUILD_TIMEOUT_MULTIPLIER=4.0
+
+start=$(date +%s)
+echo "[ec2-run] job=$job n_concurrent=12 started_at=$(date -Iseconds)" | tee "jobs/harbor-full-reward/$job/controller-ec2.log"
+
+scripts/run_harbor_full_reward.sh datasets/synthetic-website-replication --max-retries 1 2>&1 | tee -a "jobs/harbor-full-reward/$job/controller-ec2.log"
+
+code=${PIPESTATUS[0]}
+end=$(date +%s)
+echo "[ec2-run] job=$job exit_code=$code elapsed_seconds=$((end-start)) finished_at=$(date -Iseconds)" | tee -a "jobs/harbor-full-reward/$job/controller-ec2.log"
+exit "$code"
+EOF
+
+chmod +x /tmp/run_wde_harbor.sh
+tmux new-session -d -s wde-harbor /tmp/run_wde_harbor.sh
+```
+
+Monitor it from another machine:
+
+```bash
+ssh -i ~/.ssh/kushan-harbor.pem ec2-user@13.203.76.142 \
+  'tmux capture-pane -pt wde-harbor:0.0 -S -160'
+
+ssh -i ~/.ssh/kushan-harbor.pem ec2-user@13.203.76.142 \
+  'cd ~/website-design-eval-recipe && job=$(cat /tmp/wde_latest_ec2_harbor_job) && tail -120 "jobs/harbor-full-reward/$job/controller-ec2.log"'
 ```
 
 Increase `WDE_HARBOR_N_CONCURRENT` after the first stable full run. The Modal

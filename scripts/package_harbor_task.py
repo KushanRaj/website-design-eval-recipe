@@ -464,7 +464,6 @@ def main(argv: list[str] | None = None) -> int:
     logs_dir.mkdir(parents=True, exist_ok=True)
     _write_json(logs_dir / "metrics.json", metrics)
     _write_json(logs_dir / "reward-details.json", reward)
-    (logs_dir / "reward-report.md").write_text(build_reward_markdown(reward), encoding="utf-8")
 
     plan_path = eval_dir / "candidate-capture-plan.json"
     if plan_path.exists():
@@ -521,6 +520,13 @@ def main(argv: list[str] | None = None) -> int:
         if isinstance(value, (int, float)):
             reward_payload[key] = value
     _write_json(logs_dir / "reward.json", reward_payload)
+    try:
+        (logs_dir / "reward-report.md").write_text(
+            build_reward_markdown(reward),
+            encoding="utf-8",
+        )
+    except Exception as exc:
+        (logs_dir / "reward-report-error.txt").write_text(f"{type(exc).__name__}: {exc}\n", encoding="utf-8")
     print(json.dumps(reward_payload, indent=2, sort_keys=True))
     return 0
 
@@ -531,7 +537,7 @@ if __name__ == "__main__":
 
 
 def _test_sh() -> str:
-    return """
+    return r"""
 #!/usr/bin/env bash
 set -euo pipefail
 
