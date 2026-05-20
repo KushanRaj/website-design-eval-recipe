@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -126,12 +127,148 @@ def _reference_animation_evidence(
     return evidence
 
 
+_SOURCE_GLOBS = ("*.html", "*.css", "*.js", "*.jsx", "*.ts", "*.tsx")
+_MAX_ANIMATION_SOURCE_FILES = 24
+_MAX_ANIMATION_EVIDENCE_PER_FILE = 80
+
+
+def _line_number_for_offset(text: str, offset: int) -> int:
+    return text.count("\n", 0, max(offset, 0)) + 1
+
+
+def _nearby_source_snippet(lines: list[str], line_number: int, *, radius: int = 2) -> str:
+    start = max(1, line_number - radius)
+    end = min(len(lines), line_number + radius)
+    return "\n".join(f"{index}: {lines[index - 1]}" for index in range(start, end + 1))
+
+
+def _selector_context_for_css_rule(selector: str, body: str) -> list[str]:
+    selectors = [part.strip() for part in selector.split(",") if part.strip()]
+    tokens = []
+    for part in selectors:
+        tokens.extend(re.findall(r"[#.][A-Za-z_][\w-]*|\[[^\]]+\]|[A-Za-z][\w-]*", part))
+    properties = re.findall(r"([A-Za-z-]+)\s*:", body)
+    return sorted(set(tokens + properties))[:32]
+
+
+def _candidate_animation_static_inventory(root: Path) -> dict[str, Any]:
+    """Return compact static evidence for likely animation triggers/targets.
+
+    The browser inventory is intentionally visual-state oriented. Animation
+    planning also needs static clues: CSS transitions/animations, state classes,
+    and JS code that adds/removes/toggles those classes after events.
+    """
+
+    root = root.resolve()
+    files = []
+    for pattern in _SOURCE_GLOBS:
+        files.extend(path for path in root.rglob(pattern) if path.is_file())
+    files = sorted(
+        files,
+        key=lambda path: (0 if path.name in {"index.html", "styles.css", "script.js"} else 1, str(path.relative_to(root))),
+    )[:_MAX_ANIMATION_SOURCE_FILES]
+
+    evidence_files: list[dict[str, Any]] = []
+    total_css_rules = 0
+    total_js_mutations = 0
+    total_event_handlers = 0
+    for path in files:
+        rel = str(path.relative_to(root))
+        try:
+            text = path.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        if not text:
+            continue
+        lines = text.splitlines()
+        css_rules = []
+        js_mutations = []
+        event_handlers = []
+
+        if path.suffix.lower() in {".css", ".html", ".jsx", ".tsx"}:
+            for match in re.finditer(r"(?s)([^{}]+)\{([^{}]*(?:transition|animation|transform|opacity)[^{}]*)\}", text):
+                selector = " ".join(match.group(1).split())
+                body = " ".join(match.group(2).split())
+                if not selector or selector.startswith("@"):
+                    continue
+                line = _line_number_for_offset(text, match.start())
+                css_rules.append(
+                    {
+                        "selector": selector[:240],
+                        "line": line,
+                        "properties": _selector_context_for_css_rule(selector, body),
+                        "rule": f"{selector} {{ {body} }}"[:900],
+                    }
+                )
+                if len(css_rules) >= _MAX_ANIMATION_EVIDENCE_PER_FILE:
+                    break
+
+        if path.suffix.lower() in {".js", ".jsx", ".ts", ".tsx", ".html"}:
+            for match in re.finditer(
+                r"(?s)(?:addEventListener\s*\(\s*['\"](?P<event>click|mouseenter|mouseover|pointerenter|input|change|focus|keydown)['\"]|on(?P<onevent>click|mouseenter|mouseover|pointerenter|input|change|focus|keydown)\s*=)",
+                text,
+            ):
+                line = _line_number_for_offset(text, match.start())
+                event_handlers.append(
+                    {
+                        "event": match.group("event") or match.group("onevent"),
+                        "line": line,
+                        "snippet": _nearby_source_snippet(lines, line, radius=3)[:1000],
+                    }
+                )
+                if len(event_handlers) >= _MAX_ANIMATION_EVIDENCE_PER_FILE:
+                    break
+
+            for match in re.finditer(
+                r"(?s)(?P<receiver>[A-Za-z_$][\w$.\[\]'\"]{0,80})\.classList\.(?P<op>add|remove|toggle)\s*\((?P<args>[^)]{0,200})\)",
+                text,
+            ):
+                args = match.group("args")
+                classes = re.findall(r"['\"]([^'\"]+)['\"]", args)
+                line = _line_number_for_offset(text, match.start())
+                js_mutations.append(
+                    {
+                        "operation": match.group("op"),
+                        "receiver": match.group("receiver"),
+                        "classes": classes[:8],
+                        "line": line,
+                        "snippet": _nearby_source_snippet(lines, line, radius=3)[:1000],
+                    }
+                )
+                if len(js_mutations) >= _MAX_ANIMATION_EVIDENCE_PER_FILE:
+                    break
+
+        if css_rules or js_mutations or event_handlers:
+            total_css_rules += len(css_rules)
+            total_js_mutations += len(js_mutations)
+            total_event_handlers += len(event_handlers)
+            evidence_files.append(
+                {
+                    "path": rel,
+                    "css_transition_animation_rules": css_rules,
+                    "js_class_mutations": js_mutations,
+                    "js_event_handlers": event_handlers,
+                }
+            )
+
+    return {
+        "source": "static_css_js_animation_scan",
+        "root": str(root),
+        "file_count": len(evidence_files),
+        "total_css_transition_animation_rules": total_css_rules,
+        "total_js_class_mutations": total_js_mutations,
+        "total_js_event_handlers": total_event_handlers,
+        "files": evidence_files,
+    }
+
+
 def _candidate_planner_prompt(
     *,
     oracle_captures: list[dict[str, Any]],
     oracle_animations: list[dict[str, Any]],
     oracle_animation_evidence: list[dict[str, Any]],
     candidate_inventory: dict[str, Any],
+    candidate_animation_inventory: dict[str, Any],
     output_path: Path,
 ) -> str:
     return f"""
@@ -159,14 +296,21 @@ For each oracle animation:
 - Preserve the oracle animation intent, channels, timeline, and viewport.
 - Choose the candidate route/path, trigger selector/action, and target
   selector(s) that best reproduce the same animated element/state.
+- First inspect the Candidate static animation inventory. CSS transition,
+  animation, transform, opacity, color, background-color, and border-color rules
+  are strong evidence of candidate animation targets. JS addEventListener and
+  classList.add/remove/toggle snippets are strong evidence of candidate triggers
+  and state classes.
 - The trigger selector and target selector may be different elements.
 - Use the oracle animation evidence to distinguish similarly named elements.
   For example, if the oracle target evidence is a large card and the trigger is
   a map marker, choose the candidate card as the target even when the marker is
   also clickable.
 - If the corresponding candidate animation cannot be identified from the
-  candidate inventory and source files, omit that animation. The evaluator will
-  score it as missing animation coverage.
+  candidate inventory, static animation inventory, and source files, omit that
+  animation and include a top-level missingAnimations entry with the oracle id
+  and a concrete reason. The evaluator will score it as missing animation
+  coverage.
 
 Do not invent routes or selectors. Use only paths and selector_candidates shown
 in the candidate browser inventory. Prefer selector_candidates with count=1.
@@ -191,6 +335,9 @@ Oracle animation target/trigger evidence:
 
 Candidate browser-rendered inventory:
 {json.dumps(candidate_inventory, indent=2)}
+
+Candidate static animation inventory:
+{json.dumps(candidate_animation_inventory, indent=2)}
 """.strip()
 
 
@@ -203,6 +350,7 @@ async def _generate_candidate_manifest_claude_code_async(
     oracle_animations: list[dict[str, Any]],
     oracle_animation_evidence: list[dict[str, Any]],
     candidate_inventory: dict[str, Any],
+    candidate_animation_inventory: dict[str, Any],
     auth_mode: ClaudeAuthMode,
 ) -> dict[str, Any]:
     from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, ResultMessage, TextBlock, query
@@ -232,6 +380,7 @@ async def _generate_candidate_manifest_claude_code_async(
         oracle_animations=oracle_animations,
         oracle_animation_evidence=oracle_animation_evidence,
         candidate_inventory=candidate_inventory,
+        candidate_animation_inventory=candidate_animation_inventory,
         output_path=output_path,
     )
     prompt_path = output_path.with_name(f"{output_path.stem}.prompt.txt")
@@ -259,6 +408,12 @@ async def _generate_candidate_manifest_claude_code_async(
                     "max_turns": 16,
                     "candidate_root": str(candidate_root),
                     "output_path": str(output_path),
+                    "candidate_animation_evidence": {
+                        "file_count": candidate_animation_inventory.get("file_count"),
+                        "css_rules": candidate_animation_inventory.get("total_css_transition_animation_rules"),
+                        "js_class_mutations": candidate_animation_inventory.get("total_js_class_mutations"),
+                        "js_event_handlers": candidate_animation_inventory.get("total_js_event_handlers"),
+                    },
                 },
             )
             break
@@ -276,11 +431,13 @@ async def _generate_candidate_manifest_claude_code_async(
     if parsed is None:
         raise RuntimeError("Claude Code candidate planning did not return a manifest")
 
-    sanitized = _sanitize_manifest_with_inventory(
-        candidate_root,
-        parsed,
-        max_captures=None,
-        inventory=candidate_inventory,
+    sanitized = await asyncio.to_thread(
+        lambda: _sanitize_manifest_with_inventory(
+            candidate_root,
+            parsed,
+            max_captures=None,
+            inventory=candidate_inventory,
+        )
     )
     oracle_by_id = {str(capture["id"]): capture for capture in oracle_captures if capture.get("id")}
     candidate_by_id = {str(capture["id"]): capture for capture in sanitized.get("captures") or []}
@@ -336,6 +493,17 @@ async def _generate_candidate_manifest_claude_code_async(
     manifest["site"]["root"] = _manifest_site_root(candidate_root, output_path)
     manifest["captures"] = aligned_captures
     manifest["animations"] = aligned_animations
+    manifest["missingAnimations"] = parsed.get("missingAnimations") if isinstance(parsed.get("missingAnimations"), list) else []
+    manifest["__candidate_animation_inventory"] = {
+        key: candidate_animation_inventory.get(key)
+        for key in (
+            "source",
+            "file_count",
+            "total_css_transition_animation_rules",
+            "total_js_class_mutations",
+            "total_js_event_handlers",
+        )
+    }
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(manifest, indent=2, sort_keys=False), encoding="utf-8")
     return {
@@ -354,6 +522,7 @@ async def _generate_candidate_manifest_claude_code_async(
         "missing_animation_ids": [
             animation_id for animation_id in oracle_animations_by_id if animation_id not in candidate_animations_by_id
         ],
+        "candidate_animation_inventory": manifest["__candidate_animation_inventory"],
     }
 
 
@@ -387,6 +556,7 @@ def generate_candidate_manifest(
     reference_inventory = _browser_inventory(Path(reference_root).resolve()) if reference_root else None
     oracle_animation_evidence = _reference_animation_evidence(oracle_animations, reference_inventory)
     inventory = _browser_inventory(root)
+    candidate_animation_inventory = _candidate_animation_static_inventory(root)
     return asyncio.run(
         _generate_candidate_manifest_claude_code_async(
             candidate_root=root,
@@ -396,6 +566,7 @@ def generate_candidate_manifest(
             oracle_animations=oracle_animations,
             oracle_animation_evidence=oracle_animation_evidence,
             candidate_inventory=inventory,
+            candidate_animation_inventory=candidate_animation_inventory,
             auth_mode=claude_auth,
         )
     )

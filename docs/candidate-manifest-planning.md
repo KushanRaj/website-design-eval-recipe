@@ -38,6 +38,11 @@ Inputs to the planner:
   - controls
   - selector candidates
   - layout boxes
+- static candidate animation inventory:
+  - CSS transition/animation rules
+  - transform/opacity/color/background/border-color rules
+  - JS `addEventListener` snippets
+  - JS `classList.add/remove/toggle` snippets
 
 Output from the planner:
 
@@ -56,6 +61,8 @@ cases like these are handled:
 - oracle selector names do not need to exist in the candidate
 - oracle animation target is a large card while the candidate has both a
   clickable map marker and a clickable card with similar text
+- oracle animation target is `div[aria-label="Specimen detail"]`, while the
+  candidate uses `#detail-content` plus `.show` transitions
 
 The evaluator then replays the generated candidate manifest directly.
 
@@ -69,6 +76,11 @@ There are two separate browser uses in this flow:
   Python sync Playwright to serve the site, visit routes, and extract visible
   text, controls, selector candidates, and layout boxes. The surrounding Claude
   Code SDK call is async, but the inventory collection itself is not.
+- **Static animation inventory:** `generate-candidate-manifest` also scans the
+  candidate source tree before calling Claude Code. It summarizes likely
+  animation targets and triggers from CSS transitions/animations and JS event
+  handlers/class mutations. This is deliberately static: it is meant to give
+  the planner strong hints before the evaluator does any timeline capture.
 - **Evaluator replay/capture:** after the candidate manifest exists, the main
   evaluator capture path uses Python async Playwright. It replays the reference
   and candidate states, captures screenshots, rendered `outerHTML`, CSSOM, and
