@@ -25,7 +25,7 @@ from .block_visual import (
     _score_bbox_geometry,
     extract_visual_blocks_from_async_playwright_page,
     extract_visual_blocks_from_playwright_page,
-    visual_block_score_from_blocks,
+    visual_block_match_from_blocks,
 )
 from .candidate_planner import generate_candidate_manifest
 from .cssom import _color_similarity
@@ -1828,6 +1828,7 @@ def _extract_visual_blocks_for_artifact(
     *,
     side: str,
     direct_candidate_actions: bool = False,
+    config: EvaluateConfig | None = None,
 ) -> dict[str, Any]:
     defaults = manifest.get("defaults", {})
     context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -1876,10 +1877,23 @@ def _extract_visual_blocks_for_artifact(
 
         page.evaluate(REMOVE_EVALUATOR_ATTRIBUTES_SCRIPT)
         screenshot_options = _screenshot_options(defaults, capture, Path(screenshot_path))
+
+        def progress_callback(event: str, **fields: Any) -> None:
+            if config is None:
+                return
+            _progress(
+                config,
+                event,
+                capture_id=capture["id"],
+                side=side,
+                **fields,
+            )
+
         visual_blocks = extract_visual_blocks_from_playwright_page(
             page,
             screenshot_path,
             screenshot_options=screenshot_options,
+            progress_callback=progress_callback,
         )
         visual_blocks["replay_actions"] = replay_actions
         return visual_blocks
@@ -1896,6 +1910,7 @@ def _capture_reference(
     artifact_dir: Path,
     *,
     include_visual_blocks: bool,
+    config: EvaluateConfig | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -1916,6 +1931,7 @@ def _capture_reference(
                     reference_actions,
                     artifact,
                     side="reference",
+                    config=config,
                 )
             except Exception as exc:
                 artifact["visual_blocks"] = {
@@ -1942,6 +1958,7 @@ def _capture_candidate(
     artifact_dir: Path,
     *,
     include_visual_blocks: bool,
+    config: EvaluateConfig | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -1962,6 +1979,7 @@ def _capture_candidate(
                     reference_actions,
                     artifact,
                     side="candidate",
+                    config=config,
                 )
             except Exception as exc:
                 artifact["visual_blocks"] = {
@@ -1987,6 +2005,7 @@ def _capture_candidate_from_manifest(
     artifact_dir: Path,
     *,
     include_visual_blocks: bool,
+    config: EvaluateConfig | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -2009,6 +2028,7 @@ def _capture_candidate_from_manifest(
                     artifact,
                     side="candidate",
                     direct_candidate_actions=True,
+                    config=config,
                 )
             except Exception as exc:
                 artifact["visual_blocks"] = {
@@ -2455,6 +2475,7 @@ async def _extract_visual_blocks_for_artifact_async(
     *,
     side: str,
     direct_candidate_actions: bool = False,
+    config: EvaluateConfig | None = None,
 ) -> dict[str, Any]:
     defaults = manifest.get("defaults", {})
     context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -2503,10 +2524,23 @@ async def _extract_visual_blocks_for_artifact_async(
 
         await page.evaluate(REMOVE_EVALUATOR_ATTRIBUTES_SCRIPT)
         screenshot_options = _screenshot_options(defaults, capture, Path(screenshot_path))
+
+        def progress_callback(event: str, **fields: Any) -> None:
+            if config is None:
+                return
+            _progress(
+                config,
+                event,
+                capture_id=capture["id"],
+                side=side,
+                **fields,
+            )
+
         visual_blocks = await extract_visual_blocks_from_async_playwright_page(
             page,
             screenshot_path,
             screenshot_options=screenshot_options,
+            progress_callback=progress_callback,
         )
         visual_blocks["replay_actions"] = replay_actions
         return visual_blocks
@@ -2523,6 +2557,7 @@ async def _capture_reference_async(
     artifact_dir: Path,
     *,
     include_visual_blocks: bool,
+    config: EvaluateConfig | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -2543,6 +2578,7 @@ async def _capture_reference_async(
                     reference_actions,
                     artifact,
                     side="reference",
+                    config=config,
                 )
             except Exception as exc:
                 artifact["visual_blocks"] = {
@@ -2569,6 +2605,7 @@ async def _capture_candidate_async(
     artifact_dir: Path,
     *,
     include_visual_blocks: bool,
+    config: EvaluateConfig | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -2589,6 +2626,7 @@ async def _capture_candidate_async(
                     reference_actions,
                     artifact,
                     side="candidate",
+                    config=config,
                 )
             except Exception as exc:
                 artifact["visual_blocks"] = {
@@ -2614,6 +2652,7 @@ async def _capture_candidate_from_manifest_async(
     artifact_dir: Path,
     *,
     include_visual_blocks: bool,
+    config: EvaluateConfig | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     defaults = manifest.get("defaults", {})
     context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
@@ -2636,6 +2675,7 @@ async def _capture_candidate_from_manifest_async(
                     artifact,
                     side="candidate",
                     direct_candidate_actions=True,
+                    config=config,
                 )
             except Exception as exc:
                 artifact["visual_blocks"] = {
@@ -2762,16 +2802,14 @@ def _run_pair_metrics(
         candidate_visual_blocks = candidate_artifact.get("visual_blocks") or {}
         if reference_visual_blocks.get("status") == "ok" and candidate_visual_blocks.get("status") == "ok":
             try:
-                visual = visual_block_score_from_blocks(
+                visual = visual_block_match_from_blocks(
                     reference_visual_blocks.get("blocks", []),
                     candidate_visual_blocks.get("blocks", []),
-                    reference_screenshot,
-                    candidate_screenshot,
                     device=config.visual_block_device,
                     include_pairs=True,
-                    include_block_pixelmatch=True,
-                    include_masked_clip=False,
                 )
+                visual["score_skipped"] = True
+                visual["score_skip_reason"] = "visual_block_score_disabled"
                 pair["visual_block"] = visual
                 pair["bbox_geometry"] = {
                     **_score_bbox_geometry(
@@ -2943,22 +2981,20 @@ async def _run_pair_metrics_async(
             try:
                 with _ProgressTimer(
                     config,
-                    "visual_block",
+                    "visual_block_match",
                     capture_id=capture_id,
                     reference_block_count=reference_visual_blocks.get("block_count"),
                     candidate_block_count=candidate_visual_blocks.get("block_count"),
                 ):
                     visual = await asyncio.to_thread(
-                        visual_block_score_from_blocks,
+                        visual_block_match_from_blocks,
                         reference_visual_blocks.get("blocks", []),
                         candidate_visual_blocks.get("blocks", []),
-                        reference_screenshot,
-                        candidate_screenshot,
                         device=config.visual_block_device,
                         include_pairs=True,
-                        include_block_pixelmatch=True,
-                        include_masked_clip=False,
                     )
+                visual["score_skipped"] = True
+                visual["score_skip_reason"] = "visual_block_score_disabled"
                 pair["visual_block"] = visual
                 with _ProgressTimer(config, "bbox_geometry", capture_id=capture_id):
                     pair["bbox_geometry"] = {
@@ -3081,6 +3117,7 @@ async def _evaluate_capture_async(
                     reference_route,
                     reference_artifact_dir,
                     include_visual_blocks=config.include_visual_block,
+                    config=config,
                 )
 
         if candidate_route["status"] != "resolved":
@@ -3104,6 +3141,7 @@ async def _evaluate_capture_async(
                             candidate_route,
                             candidate_artifact_dir,
                             include_visual_blocks=config.include_visual_block,
+                            config=config,
                         )
                 else:
                     with _ProgressTimer(config, "candidate_capture", capture_id=capture_id, source="deterministic"):
@@ -3116,6 +3154,7 @@ async def _evaluate_capture_async(
                             reference_actions,
                             candidate_artifact_dir,
                             include_visual_blocks=config.include_visual_block,
+                            config=config,
                         )
             except Exception as exc:
                 candidate_artifact = _missing_artifact(

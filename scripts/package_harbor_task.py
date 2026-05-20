@@ -394,7 +394,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     require_vlm = bool(metric_config.get("require_vlm", not skip_vlm))
     require_dreamsim = bool(metric_config.get("require_dreamsim", not skip_dreamsim))
-    require_visual_block = bool(metric_config.get("require_visual_block", include_visual_block))
+    require_visual_block = bool(metric_config.get("require_visual_block", False))
     candidate_manifest_planner = (
         os.environ.get("WDE_CANDIDATE_MANIFEST_PLANNER")
         or metric_config.get("candidate_manifest_planner")
@@ -451,12 +451,8 @@ def main(argv: list[str] | None = None) -> int:
     if require_dreamsim:
         _require_capture_metric(metrics, ["dreamsim", "score"], "dreamsim.score")
     if require_visual_block:
-        _require_capture_metric(
-            metrics,
-            ["visual_block", "score"],
-            "visual_block.score",
-            allow_unsupported=True,
-        )
+        _require_capture_metric(metrics, ["bbox_geometry", "score"], "bbox_geometry.score", allow_unsupported=True)
+        _require_capture_metric(metrics, ["cssom_block_style", "score"], "cssom_block_style.score", allow_unsupported=True)
 
     weight_mode = os.environ.get("WDE_WEIGHT_MODE", metric_config.get("weight_mode", "manifest"))
     reward = compute_reward(metrics, weight_mode=weight_mode)
@@ -638,7 +634,7 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "include_visual_block": True,
             "require_vlm": False,
             "require_dreamsim": True,
-            "require_visual_block": True,
+            "require_visual_block": False,
             "vlm_model": "gpt-5.4-mini",
             "dreamsim_type": "ensemble",
             "dreamsim_device": "cpu",
@@ -663,7 +659,7 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "include_visual_block": True,
             "require_vlm": True,
             "require_dreamsim": True,
-            "require_visual_block": True,
+            "require_visual_block": False,
             "vlm_model": "gpt-5.4-mini",
             "dreamsim_type": "ensemble",
             "dreamsim_device": "cpu",
@@ -676,7 +672,7 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "vlm_concurrency": 4,
             "weight_mode": "manifest",
             "notes": [
-                "Actual reward profile: API-backed VLM, DreamSim, and visual-block are all required.",
+                "Actual reward profile: API-backed VLM and DreamSim are required. Visual-block matching is used for bbox/CSSOM but visual_block.score is not a reward component.",
                 "Requires OPENAI_API_KEY, ANTHROPIC_API_KEY, and verifier network access.",
             ],
         }

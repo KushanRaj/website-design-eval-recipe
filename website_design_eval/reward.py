@@ -13,7 +13,7 @@ RAW_COMPONENT_WEIGHTS = {
     "html": 0.10,
     "vlm": 0.20,
     "pixel_match": 0.05,
-    "visual_block": 0.20,
+    "visual_block": 0.0,
     "bbox_geometry": 0.10,
     "cssom_style": 0.10,
     "dreamsim": 0.10,
@@ -156,7 +156,7 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
     vlm = _optional_metric(metrics, ["vlm_judge", "overall"])
     global_pixelmatch = _optional_metric(metrics, ["pixelmatch", "score"])
     block_pixelmatch = _optional_metric(metrics, ["visual_block", "block_pixelmatch", "score"])
-    pixel_match = _mean_available([global_pixelmatch, block_pixelmatch])
+    pixel_match = global_pixelmatch
     visual_block = _optional_metric(metrics, ["visual_block", "score"])
     bbox_geometry = _optional_metric(metrics, ["bbox_geometry", "score"])
     cssom_style = _optional_metric(metrics, ["cssom_block_style", "score"])
@@ -422,7 +422,8 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
             ),
             "gate_text": (
                 "If screenshot_size, html, or vlm is below its threshold, "
-                "pixel_match, visual_block, bbox_geometry, cssom_style, and dreamsim contribute zero."
+                "pixel_match, bbox_geometry, cssom_style, and dreamsim contribute zero; "
+                "visual_block.score is diagnostic-only and has zero reward weight."
             ),
             "unavailable_component_text": (
                 "Missing, skipped, errored, or unsupported component scores are removed from that "
@@ -497,7 +498,7 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
             "+ 0.10 * html",
             "+ 0.20 * vlm",
             "+ 0.05 * pixel_match",
-            "+ 0.20 * visual_block",
+            "+ 0.00 * visual_block",
             "+ 0.10 * bbox_geometry",
             "+ 0.10 * cssom_style",
             "+ 0.10 * dreamsim",
@@ -507,7 +508,8 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
             "from that capture denominator when gates pass. Numeric 0 is still a real 0.",
             "",
             "If screenshot_size < 0.40, html < 0.40, or vlm < 0.40,",
-            "then pixel_match, visual_block, bbox_geometry, cssom_style, and dreamsim contribute 0.",
+            "then pixel_match, bbox_geometry, cssom_style, and dreamsim contribute 0.",
+            "visual_block.score is not computed for reward; visual-block matching is only used by bbox/CSSOM.",
             "```",
             "",
             "## Summary",

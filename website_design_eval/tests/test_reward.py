@@ -159,7 +159,7 @@ class SimpleWeightedRewardTests(unittest.TestCase):
         self.assertAlmostEqual(capture["pixel_match"], 1.0)
         self.assertAlmostEqual(capture["score"], expected, places=6)
 
-    def test_pixel_match_component_averages_global_and_block_pixelmatch(self) -> None:
+    def test_pixel_match_component_uses_global_pixelmatch_only(self) -> None:
         reward = compute_reward(
             {
                 "captures": {
@@ -180,8 +180,8 @@ class SimpleWeightedRewardTests(unittest.TestCase):
 
         capture = reward["captures"][0]
 
-        self.assertAlmostEqual(capture["pixel_match"], 0.75)
-        self.assertAlmostEqual(capture["pixel_match_contribution"], COMPONENT_WEIGHTS["pixel_match"] * 0.75, places=6)
+        self.assertAlmostEqual(capture["pixel_match"], 1.0)
+        self.assertAlmostEqual(capture["pixel_match_contribution"], COMPONENT_WEIGHTS["pixel_match"], places=6)
 
     def test_bbox_and_cssom_components_are_separate(self) -> None:
         reward = compute_reward(
@@ -242,7 +242,7 @@ class SimpleWeightedRewardTests(unittest.TestCase):
         self.assertIsNone(capture["bbox_geometry"])
         self.assertIsNone(capture["cssom_style"])
 
-    def test_numeric_zero_visual_block_is_still_a_real_zero(self) -> None:
+    def test_visual_block_has_zero_reward_weight(self) -> None:
         reward = compute_reward(
             {
                 "captures": {
@@ -270,7 +270,8 @@ class SimpleWeightedRewardTests(unittest.TestCase):
         )
 
         self.assertEqual(capture["unavailable_components"], [])
-        self.assertAlmostEqual(capture["component_denominator"], 0.9)
+        self.assertAlmostEqual(capture["component_denominator"], 0.7)
+        self.assertAlmostEqual(capture["visual_block_contribution"], 0.0)
         self.assertAlmostEqual(capture["score"], expected, places=6)
 
     def test_animation_is_weighted_like_another_manifest_item(self) -> None:

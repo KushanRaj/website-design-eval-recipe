@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 import types
 from copy import deepcopy
 from difflib import SequenceMatcher
@@ -20,6 +21,29 @@ PathLike = str | os.PathLike[str]
 _PACKAGE_NAME = "_website_design_eval_webcode2m_design2code"
 _VISUAL_SCORE_MODULE = None
 _OPEN_CLIP_CACHE: dict[tuple[str, str], tuple[Any, Any]] = {}
+
+
+def _emit_progress(progress_callback: Any | None, event: str, **fields: Any) -> None:
+    if progress_callback is None:
+        return
+    try:
+        progress_callback(event, **fields)
+    except Exception:
+        pass
+
+
+def _stage_start(progress_callback: Any | None, event: str, **fields: Any) -> float:
+    _emit_progress(progress_callback, f"{event}_start", **fields)
+    return time.time()
+
+
+def _stage_end(progress_callback: Any | None, event: str, started: float, **fields: Any) -> None:
+    _emit_progress(
+        progress_callback,
+        f"{event}_end",
+        elapsed_seconds=round(time.time() - started, 3),
+        **fields,
+    )
 
 
 def _project_root() -> Path:
@@ -490,6 +514,7 @@ def _run_visual_block_analysis_from_blocks(
     device: str,
     debug: bool,
     include_masked_clip: bool = True,
+    compute_aggregate_score: bool = True,
 ) -> dict[str, Any]:
     if include_masked_clip and module.CLIP_MODEL is None:
         module.CLIP_MODEL, module.CLIP_PREPROCESS = module.clip.load("ViT-B/32", device=device)
@@ -498,7 +523,7 @@ def _run_visual_block_analysis_from_blocks(
 
     if len(candidate_blocks) == 0 or len(reference_blocks) == 0:
         return {
-            "score": 0.0,
+            "score": 0.0 if compute_aggregate_score else None,
             "weighted_area": 0.0,
             "size": 0.0,
             "text": 0.0,
@@ -596,7 +621,10 @@ def _run_visual_block_analysis_from_blocks(
         text = float(module.np.mean(matched_text_scores))
         position = float(module.np.mean(position_scores))
         text_color = float(module.np.mean(text_color_scores))
-        if include_masked_clip:
+        if not compute_aggregate_score:
+            masked_clip = None
+            score = None
+        elif include_masked_clip:
             masked_clip: float | None = float(
                 module.calculate_clip_similarity_with_blocks(
                     str(candidate_screenshot),
@@ -616,7 +644,10 @@ def _run_visual_block_analysis_from_blocks(
         text = 0.0
         position = 0.0
         text_color = 0.0
-        if include_masked_clip:
+        if not compute_aggregate_score:
+            masked_clip = None
+            score = None
+        elif include_masked_clip:
             masked_clip = float(
                 module.calculate_clip_similarity_with_blocks(
                     str(candidate_screenshot),
@@ -695,7 +726,7 @@ def _format_visual_block_result(
     artifact_source: str,
 ) -> dict[str, Any]:
     result = {
-        "score": _round(analysis["score"]),
+        "score": _round(analysis["score"]) if analysis.get("score") is not None else None,
         "weighted_area": _round(analysis["weighted_area"]),
         "size": _round(analysis["size"]),
         "text": _round(analysis["text"]),
@@ -788,6 +819,7 @@ def extract_visual_blocks_from_playwright_page(
     *,
     screenshot_options: dict[str, Any],
     tmp_dir: PathLike | None = None,
+    progress_callback: Any | None = None,
 ) -> dict[str, Any]:
     """Extract OCR-free visual blocks from an already replayed Playwright page.
 
@@ -795,28 +827,46 @@ def extract_visual_blocks_from_playwright_page(
     colors in-place to mirror WebCode2M's OCR-free render IO.
     """
 
+    started = _stage_start(progress_callback, "visual_block_extract_load_utils")
     utils = _load_ocr_free_utils()
+    _stage_end(progress_callback, "visual_block_extract_load_utils", started)
 
     def run(work_dir: Path) -> dict[str, Any]:
+        total_started = _stage_start(progress_callback, "visual_block_extract_total")
         work_dir.mkdir(parents=True, exist_ok=True)
         p_png = work_dir / "visual_block_recolor_0.png"
         p_png_1 = work_dir / "visual_block_recolor_50.png"
         capture_options = {key: value for key, value in screenshot_options.items() if key != "path"}
+
+        started = _stage_start(progress_callback, "visual_block_extract_recolor_offset_0")
         html_text_color_tree = page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 0})
+        _stage_end(progress_callback, "visual_block_extract_recolor_offset_0", started)
+
+        started = _stage_start(progress_callback, "visual_block_extract_screenshot_offset_0")
         _settle_visual_block_page(page)
         page.screenshot(**{**capture_options, "path": str(p_png)})
+        _stage_end(progress_callback, "visual_block_extract_screenshot_offset_0", started)
+
+        started = _stage_start(progress_callback, "visual_block_extract_recolor_offset_50")
         page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 50})
+        _stage_end(progress_callback, "visual_block_extract_recolor_offset_50", started)
+
+        started = _stage_start(progress_callback, "visual_block_extract_screenshot_offset_50")
         _settle_visual_block_page(page)
         page.screenshot(**{**capture_options, "path": str(p_png_1)})
+        _stage_end(progress_callback, "visual_block_extract_screenshot_offset_50", started)
 
+        started = _stage_start(progress_callback, "visual_block_extract_normalize_inputs")
         origin_for_blocks, normalization = _normalize_visual_block_inputs(
             origin_screenshot,
             p_png,
             p_png_1,
             work_dir,
         )
+        _stage_end(progress_callback, "visual_block_extract_normalize_inputs", started)
 
         if tuple(normalization["sizes"]["offset_0"]) != tuple(normalization["sizes"]["offset_50"]):
+            _stage_end(progress_callback, "visual_block_extract_total", total_started, status="empty", reason="recolor_screenshot_size_mismatch")
             return {
                 "status": "empty",
                 "reason": "recolor_screenshot_size_mismatch",
@@ -827,8 +877,11 @@ def extract_visual_blocks_from_playwright_page(
                 "visual_block_normalization": normalization,
             }
 
+        started = _stage_start(progress_callback, "visual_block_extract_diff_pixels")
         different_pixels = utils.find_different_pixels(p_png, p_png_1)
+        _stage_end(progress_callback, "visual_block_extract_diff_pixels", started)
         if different_pixels is None:
+            _stage_end(progress_callback, "visual_block_extract_total", total_started, status="empty", reason="no_different_pixels")
             return {
                 "status": "empty",
                 "reason": "no_different_pixels",
@@ -838,12 +891,15 @@ def extract_visual_blocks_from_playwright_page(
                 "screenshot_options_source": "manifest_screenshot_options",
                 "visual_block_normalization": normalization,
             }
+        started = _stage_start(progress_callback, "visual_block_extract_recover_blocks")
         blocks = utils.get_blocks_from_image_diff_pixels(
             str(origin_for_blocks),
             str(p_png),
             html_text_color_tree,
             different_pixels,
         )
+        _stage_end(progress_callback, "visual_block_extract_recover_blocks", started, block_count=len(blocks))
+        _stage_end(progress_callback, "visual_block_extract_total", total_started, status="ok", block_count=len(blocks))
         return {
             "status": "ok",
             "reason": None,
@@ -867,31 +923,50 @@ async def extract_visual_blocks_from_async_playwright_page(
     *,
     screenshot_options: dict[str, Any],
     tmp_dir: PathLike | None = None,
+    progress_callback: Any | None = None,
 ) -> dict[str, Any]:
     """Async Playwright variant of OCR-free visual block extraction."""
 
+    started = _stage_start(progress_callback, "visual_block_extract_load_utils")
     utils = _load_ocr_free_utils()
+    _stage_end(progress_callback, "visual_block_extract_load_utils", started)
 
     async def run(work_dir: Path) -> dict[str, Any]:
+        total_started = _stage_start(progress_callback, "visual_block_extract_total")
         work_dir.mkdir(parents=True, exist_ok=True)
         p_png = work_dir / "visual_block_recolor_0.png"
         p_png_1 = work_dir / "visual_block_recolor_50.png"
         capture_options = {key: value for key, value in screenshot_options.items() if key != "path"}
+
+        started = _stage_start(progress_callback, "visual_block_extract_recolor_offset_0")
         html_text_color_tree = await page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 0})
+        _stage_end(progress_callback, "visual_block_extract_recolor_offset_0", started)
+
+        started = _stage_start(progress_callback, "visual_block_extract_screenshot_offset_0")
         await _settle_visual_block_page_async(page)
         await page.screenshot(**{**capture_options, "path": str(p_png)})
+        _stage_end(progress_callback, "visual_block_extract_screenshot_offset_0", started)
+
+        started = _stage_start(progress_callback, "visual_block_extract_recolor_offset_50")
         await page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 50})
+        _stage_end(progress_callback, "visual_block_extract_recolor_offset_50", started)
+
+        started = _stage_start(progress_callback, "visual_block_extract_screenshot_offset_50")
         await _settle_visual_block_page_async(page)
         await page.screenshot(**{**capture_options, "path": str(p_png_1)})
+        _stage_end(progress_callback, "visual_block_extract_screenshot_offset_50", started)
 
+        started = _stage_start(progress_callback, "visual_block_extract_normalize_inputs")
         origin_for_blocks, normalization = _normalize_visual_block_inputs(
             origin_screenshot,
             p_png,
             p_png_1,
             work_dir,
         )
+        _stage_end(progress_callback, "visual_block_extract_normalize_inputs", started)
 
         if tuple(normalization["sizes"]["offset_0"]) != tuple(normalization["sizes"]["offset_50"]):
+            _stage_end(progress_callback, "visual_block_extract_total", total_started, status="empty", reason="recolor_screenshot_size_mismatch")
             return {
                 "status": "empty",
                 "reason": "recolor_screenshot_size_mismatch",
@@ -902,8 +977,11 @@ async def extract_visual_blocks_from_async_playwright_page(
                 "visual_block_normalization": normalization,
             }
 
+        started = _stage_start(progress_callback, "visual_block_extract_diff_pixels")
         different_pixels = utils.find_different_pixels(p_png, p_png_1)
+        _stage_end(progress_callback, "visual_block_extract_diff_pixels", started)
         if different_pixels is None:
+            _stage_end(progress_callback, "visual_block_extract_total", total_started, status="empty", reason="no_different_pixels")
             return {
                 "status": "empty",
                 "reason": "no_different_pixels",
@@ -913,12 +991,15 @@ async def extract_visual_blocks_from_async_playwright_page(
                 "screenshot_options_source": "manifest_screenshot_options",
                 "visual_block_normalization": normalization,
             }
+        started = _stage_start(progress_callback, "visual_block_extract_recover_blocks")
         blocks = utils.get_blocks_from_image_diff_pixels(
             str(origin_for_blocks),
             str(p_png),
             html_text_color_tree,
             different_pixels,
         )
+        _stage_end(progress_callback, "visual_block_extract_recover_blocks", started, block_count=len(blocks))
+        _stage_end(progress_callback, "visual_block_extract_total", total_started, status="ok", block_count=len(blocks))
         return {
             "status": "ok",
             "reason": None,
@@ -969,6 +1050,48 @@ def visual_block_score_from_blocks(
         include_pairs=include_pairs,
         include_block_pixelmatch=include_block_pixelmatch,
         pixelmatch_threshold=pixelmatch_threshold,
+        source="research/source-repos/naturalcc/examples/webcode2m/scripts/evaluation/design2code",
+        artifact_source=artifact_source,
+    )
+
+
+def visual_block_match_from_blocks(
+    reference_blocks: list[dict[str, Any]],
+    candidate_blocks: list[dict[str, Any]],
+    *,
+    device: str = "cpu",
+    debug: bool = False,
+    include_pairs: bool = True,
+    artifact_source: str = "isolated_playwright_manifest_state",
+) -> dict[str, Any]:
+    """Match visual blocks without computing the visual-block aggregate score.
+
+    The core evaluator still needs matched pairs for bbox and CSSOM scoring, but
+    the scalar reward no longer uses the visual-block aggregate or block
+    pixelmatch. This keeps the shared matching substrate while avoiding the
+    extra reward metric computation.
+    """
+
+    module = _load_research_visual_score()
+    analysis = _run_visual_block_analysis_from_blocks(
+        module,
+        deepcopy(reference_blocks),
+        deepcopy(candidate_blocks),
+        "",
+        "",
+        device=device,
+        debug=debug,
+        include_masked_clip=False,
+        compute_aggregate_score=False,
+    )
+    return _format_visual_block_result(
+        analysis,
+        reference_screenshot="",
+        candidate_screenshot="",
+        device=device,
+        include_pairs=include_pairs,
+        include_block_pixelmatch=False,
+        pixelmatch_threshold=0.1,
         source="research/source-repos/naturalcc/examples/webcode2m/scripts/evaluation/design2code",
         artifact_source=artifact_source,
     )

@@ -14,12 +14,12 @@ Raw requested weights:
 | Rendered HTML | 0.10 |
 | VLM | 0.20 |
 | Pixel match | 0.05 |
-| Visual block | 0.20 |
+| Visual block | 0.00 |
 | BBox geometry | 0.10 |
 | CSSOM style | 0.10 |
 | DreamSim | 0.10 |
 
-These sum to `0.90`, so the implementation normalizes by `0.90` when all
+These sum to `0.70`, so the implementation normalizes by `0.70` when all
 components are available:
 
 ```text
@@ -30,11 +30,11 @@ capture_reward =
     + 0.10 * html
     + 0.20 * vlm
     + 0.05 * pixel_match
-    + 0.20 * visual_block
+    + 0.00 * visual_block
     + 0.10 * bbox_geometry
     + 0.10 * cssom_style
     + 0.10 * dreamsim
-  ) / 0.90
+  ) / 0.70
 ```
 
 The final reward is the manifest-weighted mean of `capture_reward` across
@@ -87,10 +87,10 @@ vlm =
   web2code_style_vlm.overall
 
 pixel_match =
-  mean_available(global_pixelmatch.score, visual_block.block_pixelmatch.score)
+  global_pixelmatch.score
 
 visual_block =
-  visual_block.score
+  not computed for reward
 
 bbox_geometry =
   bbox_geometry.score
@@ -102,12 +102,12 @@ dreamsim =
   dreamsim.score
 ```
 
-`global_pixelmatch` is screenshot-level pixel match. `visual_block.block_pixelmatch`
-is the matched-block crop pixel match from the visual-block correspondence.
+`global_pixelmatch` is screenshot-level pixel match. Matched-block crop
+pixelmatch is not computed in the core reward path.
 
-`visual_block.score` is the visual-block aggregate excluding masked CLIP in the
-current core path. It uses the block size/text/position/text-color agreement
-from the Playwright-captured state.
+`visual_block.score` is intentionally excluded from the reward. The evaluator
+still performs visual-block extraction/matching when needed so BBox geometry and
+CSSOM style can reuse the matched visible block pairs.
 
 ## Important Behavior
 
