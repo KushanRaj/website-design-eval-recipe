@@ -89,7 +89,7 @@ if [[ -n "$MODAL_REGISTRY_SECRET_NAME" ]]; then
   environment_args+=(--ek "registry_secret=\"$MODAL_REGISTRY_SECRET_NAME\"")
 fi
 if [[ -n "${WDE_HARBOR_OVERRIDE_MEMORY_MB:-}" ]]; then
-  environment_args+=(--override-memory "$WDE_HARBOR_OVERRIDE_MEMORY_MB")
+  environment_args+=(--override-memory-mb "$WDE_HARBOR_OVERRIDE_MEMORY_MB")
 fi
 if [[ -n "${WDE_HARBOR_OVERRIDE_CPUS:-}" ]]; then
   environment_args+=(--override-cpus "$WDE_HARBOR_OVERRIDE_CPUS")
