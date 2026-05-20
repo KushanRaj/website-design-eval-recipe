@@ -115,7 +115,6 @@ async def _generate_candidate_manifest_claude_code_async(
         tools=["Read", "LS", "Glob", "Grep"],
         allowed_tools=["Read", "LS", "Glob", "Grep"],
         disallowed_tools=["Bash", "Write", "Edit", "MultiEdit", "NotebookEdit"],
-        permission_mode="bypassPermissions",
         setting_sources=[],
         output_format={"type": "json_schema", "schema": MANIFEST_OUTPUT_SCHEMA},
         env=_claude_subprocess_env(auth_mode),
