@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Synthetic Website Replication Task Exhibition</title>
+<style>
+@page { size: A4 landscape; margin: 10mm 11mm; }
+* { box-sizing: border-box; }
+html { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #121a24; font-size: 11pt; line-height: 1.36; }
+body { margin: 0; background: white; }
+.page { break-after: page; min-height: 188mm; display: flex; flex-direction: column; gap: 12px; }
+.page:last-child { break-after: auto; }
+.kicker { color: #526174; font-size: 10pt; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+h1 { font-size: 36pt; line-height: 1.02; margin: 0; max-width: 900px; letter-spacing: 0; }
+h2 { font-size: 22pt; line-height: 1.08; margin: 0 0 4px; letter-spacing: 0; }
+h3 { font-size: 13.5pt; margin: 0 0 6px; }
+p { margin: 0 0 8px; max-width: 980px; }
+.lede { font-size: 15.5pt; max-width: 950px; color: #263241; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.card { border: 1px solid #cfd8e3; border-radius: 8px; padding: 13px 15px; background: #fbfcfe; }
+.callout { border-left: 5px solid #2563eb; padding: 10px 14px; background: #f4f7ff; border-radius: 6px; }
+.good { border-left-color: #16a34a; background: #f0fdf4; }
+.warn { border-left-color: #f97316; background: #fff7ed; }
+.metric-strip { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 8px; }
+.chip { border: 1px solid #cbd5e1; border-radius: 999px; padding: 5px 9px; background: #f8fafc; font-size: 9.5pt; white-space: nowrap; }
+.chip strong { font-weight: 850; }
+table { border-collapse: collapse; width: 100%; font-size: 8.6pt; }
+th, td { border: 1px solid #d3dbe6; padding: 5px 6px; vertical-align: top; }
+th { background: #edf2f7; text-align: left; font-weight: 850; }
+tr:nth-child(even) td { background: #fbfcfe; }
+.figure { width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 5px; }
+.figure img { display: block; max-width: 100%; max-height: 128mm; margin: 0 auto; object-fit: contain; }
+.figure.atlas img { max-height: 128mm; }
+.caption { font-size: 9pt; color: #475569; margin-top: 6px; }
+.evidence .figure img { max-height: 130mm; }
+.evidence .analysis { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; align-items: start; }
+.tour-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.tour-card { border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 6px; }
+.tour-card img { display: block; width: 100%; max-height: 82mm; object-fit: contain; }
+.tour-card .caption { margin: 5px 2px 0; }
+ul { margin: 4px 0 0 18px; padding: 0; }
+li { margin: 3px 0; }
+.small { font-size: 9.5pt; color: #475569; }
+.big-number { font-size: 30pt; font-weight: 850; line-height: 1; }
+.footer-note { margin-top: auto; color: #64748b; font-size: 9pt; }
+</style>
+</head>
+<body>
+<section class="page">
+  <div class="kicker">Proximal work trial exhibition</div>
+  <h1>Synthetic website replication tasks: diversity, quality, and agent behavior</h1>
+  <p class="lede">This document shows the task set as an environment design artifact: generated multi-page websites, screenshot-only agent inputs, hidden oracle manifests, and browser-state grading. The focus here is not the reward internals; it is whether the generated tasks are varied, realistic, and useful for observing how coding agents reproduce website designs.</p>
+  <div class="grid3">
+    <div class="card"><div class="big-number">14</div><strong>packaged Harbor tasks</strong><p class="small">All with hidden oracle sites and screenshot manifests.</p></div>
+    <div class="card"><div class="big-number">187</div><strong>public reference screenshots</strong><p class="small">Full pages plus meaningful states, exposed to the agent as numbered images.</p></div>
+    <div class="card"><div class="big-number">2</div><strong>animation-marked tasks</strong><p class="small">Marine biology and gemology include V1 animation captures.</p></div>
+  </div>
+  <div class="callout"><strong>Core claim</strong> The task set is diverse not only by topic, but by page grammar: dashboards, catalogs, booking flows, financial calculators, sports standings, scientific profiles, editorial music pages, maps, filters, tabs, accordions, and selected states.</div>
+  <div class="footer-note">The agent sees only `/app/reference/screenshots/*.png`. Oracle source, replay manifest, metric config, and evaluator internals stay hidden under verifier-only task assets.</div>
+</section>
+
+<section class="page">
+  <h2>1. Task atlas: generated, not crawled</h2>
+  <p>Each task is a synthetic oracle website generated from scratch, then frozen into screenshots and hidden replay metadata. This avoids crawling existing websites while still creating realistic browsing surfaces.</p>
+  <div class="figure atlas"><img src="assets/task-atlas-reference-grid.jpg"><div class="caption">First reference screenshot for each of the 14 packaged tasks. Counts shown are public screenshots available to the agent.</div></div>
+</section>
+
+<section class="page">
+  <h2>2. Diversity overview</h2>
+  <table>
+    <tr><th>Task</th><th>Domain</th><th>Screenshots</th><th>Animation</th><th>Why it adds useful variety</th></tr>
+    <tr><td>botanical-garden-nursery</td><td>garden / nursery</td><td>15</td><td>No</td><td>Plant retail, visiting, membership, garden map, workshops, seasonal content.</td></tr>
+    <tr><td>curling-federation</td><td>sports federation</td><td>11</td><td>No</td><td>Standings, results, brackets, athlete directory, rules, clubs.</td></tr>
+    <tr><td>gemology-reference-database</td><td>reference database</td><td>17</td><td>Yes</td><td>Dense educational/reference pages: minerals, cuts, glossary, grading, provenance.</td></tr>
+    <tr><td>indie-record-label</td><td>music / label</td><td>11</td><td>No</td><td>Editorial/zine branding, releases, artists, catalog, tour, shop.</td></tr>
+    <tr><td>lutherie-guild</td><td>craft / guild</td><td>9</td><td>No</td><td>Artisanal workshop, materials, apprenticeship, exhibitions, journal pages.</td></tr>
+    <tr><td>marine-biology-reference-portal</td><td>science reference</td><td>8</td><td>Yes</td><td>Taxonomy, habitat, conservation, field guide, publication-heavy pages.</td></tr>
+    <tr><td>podcast-network</td><td>media network</td><td>17</td><td>No</td><td>Episode archive, channel filters, audio/player surfaces, live events.</td></tr>
+    <tr><td>regional-credit-union</td><td>financial services</td><td>12</td><td>No</td><td>Calculators, sign-in flows, governance, branch finder, reading room.</td></tr>
+    <tr><td>site-01-education-k12</td><td>K-12 education</td><td>18</td><td>No</td><td>Institutional dashboard, lunch/calendar/board/academics/portal states.</td></tr>
+    <tr><td>site-04-science-research-institute</td><td>research institute</td><td>11</td><td>No</td><td>People, publications, data, expeditions, careers, newsroom.</td></tr>
+    <tr><td>site-05-retail-marketplace-vintage</td><td>vintage marketplace</td><td>11</td><td>No</td><td>Browse, lot detail, cart, account, picker, activity log.</td></tr>
+    <tr><td>storm-chasers-community</td><td>weather community</td><td>10</td><td>No</td><td>Ops dashboards, logs, spotters, gear, gallery, roster, events.</td></tr>
+    <tr><td>tabletop-gaming-cafe</td><td>hospitality / gaming</td><td>17</td><td>No</td><td>Menu, booking steps, events, game library, reviews, membership.</td></tr>
+    <tr><td>zen-center</td><td>nonprofit / community</td><td>11</td><td>No</td><td>Schedule, teachers, visits, audio, donations, application flows.</td></tr>
+  </table>
+</section>
+
+<section class="page">
+  <h2>3. What the agent generally does</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Strengths</h3>
+      <ul>
+        <li>Usually creates the expected page count and route scaffold.</li>
+        <li>Often captures global art direction: palette, mood, nav, hero/footer.</li>
+        <li>Builds recognizable components: cards, grids, menus, dashboards, filters, forms.</li>
+        <li>Can reproduce strong static views when the page grammar is obvious.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Failure modes</h3>
+      <ul>
+        <li>Card density, spacing, and row/column geometry drift.</li>
+        <li>Stateful views are missed or only cosmetically implied.</li>
+        <li>Rendered text/content structure changes even when the page looks plausible.</li>
+        <li>Custom diagrams, maps, rosters, brackets, and inventory walls are approximated.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout good"><strong>Why this is useful for RL</strong> The task set produces a spectrum rather than a binary outcome. Good candidates preserve structure and states; medium candidates reproduce the vibe but miss local details; weak candidates look plausible while failing layout/content fidelity.</div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: podcast channel directory</h2>
+  <p>For the exhibition view, these screenshots are browser captures from the oracle site and the generated candidate site, not reward-cropped figures. They show the breadth of surfaces the agent is asked to reconstruct from screenshots alone.</p>
+  <div class="tour-card"><img src="assets/pair-podcast-channels-browser.jpg"><div class="caption"><strong>Podcast network.</strong> The candidate preserves the dark media-network identity and channel/list structure, with drift in spacing, list density, and copy hierarchy.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: podcast live surface</h2>
+  <div class="tour-card"><img src="assets/pair-podcast-live-browser.jpg"><div class="caption"><strong>Podcast live page.</strong> This is a richer media/event page with calendar-like blocks and neon accent language; the candidate keeps the broad interaction surface but changes proportions.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: science people directory</h2>
+  <div class="tour-card"><img src="assets/pair-science-people-browser.jpg"><div class="caption"><strong>Science institute.</strong> The agent reconstructs the directory surface and sidebar grammar, but changes the card sizing and exact personnel grid.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: science data system</h2>
+  <div class="tour-card"><img src="assets/pair-science-data-browser.jpg"><div class="caption"><strong>Science data page.</strong> Both pages keep the publication/data portal grammar, but local table rhythm, badges, and right-column metadata differ.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: storm operations dashboard</h2>
+  <div class="tour-card"><img src="assets/pair-storm-home-browser.jpg"><div class="caption"><strong>Storm operations dashboard.</strong> The generated site preserves the dark radar/operations feel and dashboard blocks, while redrawing the exact map, telemetry and alert layout.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: storm gear comparison</h2>
+  <div class="tour-card"><img src="assets/pair-storm-gear-browser.jpg"><div class="caption"><strong>Storm gear comparison.</strong> Dense technical UI stresses repeated panels, icons, tables and side instrumentation; the candidate gets the genre, but reinterprets many local blocks.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: zen schedule</h2>
+  <div class="tour-card"><img src="assets/pair-zen-schedule-browser.jpg"><div class="caption"><strong>Zen center schedule.</strong> This task is visually quiet and typography-heavy; the candidate matches the broad page mood while changing exact schedule density and alignment.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: credit-union sign in</h2>
+  <div class="tour-card"><img src="assets/pair-regional-signin-browser.jpg"><div class="caption"><strong>Regional credit union.</strong> The sign-in flow is a conventional form page where the model captures the identity and form layout, but shifts spacing and text density.</div></div>
+</section>
+
+<section class="page evidence">
+  <h2>4. Strong reproduction: institutional dashboard</h2>
+  <div class="figure"><img src="assets/pair-k12-high.jpg"></div>
+  <div class="analysis"><p>The K-12 task is a good high-end example: the agent keeps the dashboard grammar, side navigation, cards, footer, and school-specific density.</p><div class="metric-strip"><span class="chip"><strong>reward</strong> 0.678</span><span class="chip"><strong>coverage</strong> 0.957</span><span class="chip"><strong>HTML</strong> 0.634</span><span class="chip"><strong>CSSOM</strong> 0.646</span></div></div>
+</section>
+
+<section class="page evidence">
+  <h2>5. Strong state reproduction: botanical map</h2>
+  <div class="figure"><img src="assets/pair-botanical-state.jpg"></div>
+  <div class="analysis"><p>This task demonstrates that the dataset is not just homepage screenshots. The highlighted garden-map state requires preserving a specific browser-visible state.</p><div class="metric-strip"><span class="chip"><strong>capture score</strong> 0.810</span><span class="chip"><strong>visual block</strong> 0.951</span><span class="chip"><strong>CSSOM</strong> 0.863</span></div></div>
+</section>
+
+<section class="page evidence">
+  <h2>6. Commerce task: vintage marketplace</h2>
+  <div class="figure"><img src="assets/pair-retail-browse.jpg"></div>
+  <div class="analysis"><p>The marketplace task stresses browse grids, filter/control density, product cards, account/cart conventions, and state-specific density variants.</p><div class="metric-strip"><span class="chip"><strong>reward</strong> 0.620</span><span class="chip"><strong>coverage</strong> 0.882</span><span class="chip"><strong>HTML</strong> 0.507</span><span class="chip"><strong>CSSOM</strong> 0.589</span></div></div>
+</section>
+
+<section class="page evidence">
+  <h2>7. Workflow task: booking state geometry</h2>
+  <div class="figure"><img src="assets/pair-tabletop-booking.jpg"></div>
+  <div class="analysis"><p>The tabletop task shows why multi-state tasks matter. The candidate includes the contact form, but keeps previous-step content and changes the page geometry.</p><div class="metric-strip"><span class="chip"><strong>capture score</strong> 0.534</span><span class="chip"><strong>VB text</strong> 0.939</span><span class="chip"><strong>VB size</strong> 0.061</span><span class="chip"><strong>BBox</strong> 0.026</span></div></div>
+</section>
+
+<section class="page evidence">
+  <h2>8. Sports task: local density is hard</h2>
+  <div class="figure"><img src="assets/pair-curling-density.jpg"></div>
+  <div class="analysis"><p>The agent recognizes the federation/roster domain, but redesigns card density, header geometry, footer/page proportions, and information hierarchy.</p><div class="metric-strip"><span class="chip"><strong>reward</strong> 0.414</span><span class="chip"><strong>athletes capture</strong> 0.218</span><span class="chip"><strong>HTML</strong> 0.346</span><span class="chip"><strong>BBox</strong> 0.119</span></div></div>
+</section>
+
+<section class="page evidence">
+  <h2>9. Low-end example: plausible mood, weak fidelity</h2>
+  <div class="figure"><img src="assets/pair-lutherie-low.jpg"></div>
+  <div class="analysis"><p>The lutherie task is useful because broad mood is preserved while exact typography, copy structure, and geometry are not. It shows why a task set needs stricter local metrics.</p><div class="metric-strip"><span class="chip"><strong>reward</strong> 0.194</span><span class="chip"><strong>DreamSim</strong> 0.849</span><span class="chip"><strong>HTML</strong> 0.279</span><span class="chip"><strong>CSSOM</strong> 0.271</span></div></div>
+</section>
+
+<section class="page evidence">
+  <h2>10. Looks right at a glance, but structure drifts</h2>
+  <div class="figure"><img src="assets/pair-indie-plausible.jpg"></div>
+  <div class="analysis"><p>The indie-label task shows a common model behavior: produce a compelling genre page, but miss rendered content structure and local page-specific details.</p><div class="metric-strip"><span class="chip"><strong>reward</strong> 0.261</span><span class="chip"><strong>VLM</strong> 0.652</span><span class="chip"><strong>visual block</strong> 0.768</span><span class="chip"><strong>HTML</strong> 0.314</span></div></div>
+</section>
+
+<section class="page">
+  <h2>11. What this demonstrates</h2>
+  <div class="grid2">
+    <div>
+      <h3>Task quality</h3>
+      <ul>
+        <li>Every task has at least 5 pages, and most have 10+ screenshots.</li>
+        <li>State coverage makes tasks richer than static page matching.</li>
+        <li>The hidden verifier boundary is clean: screenshot-only for the agent, oracle assets only for the verifier.</li>
+        <li>The set covers institutional, editorial, commerce, nonprofit, media, sports, science, and operational UI.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Agent behavior</h3>
+      <ul>
+        <li>Strong at broad visual identity and page scaffolding.</li>
+        <li>Weaker at exact density, CSS geometry, custom diagrams, and repeated component consistency.</li>
+        <li>Weakest at alternate states and specific interaction captures.</li>
+        <li>The reward spectrum broadly matches human intuition: better reproductions score higher, plausible rewrites score lower.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><strong>Final read</strong> This task set is a credible first dataset for the work trial: diverse generated websites, clean Harbor packaging, screenshot-only agent inputs, hidden replay evidence, and a reward surface that exposes meaningful reproduction failures.</div>
+</section>
+</body>
+</html>

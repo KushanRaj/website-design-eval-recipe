@@ -1,6 +1,6 @@
 # Evaluation Progress Report
 
-Last updated: 2026-05-20
+Last updated: 2026-05-21
 
 ## Current State
 
@@ -16,9 +16,9 @@ browser-state evaluator and a synthetic-site generation pipeline.
 | Screenshot replay | Working | `scripts/capture-screenshots.mjs` replays static captures and optional animation captures. |
 | Failed-state pruning | Working | Generator replay can prune failed optional captures instead of failing the whole seed. |
 | Manifest-aware evaluator | Working | Serves reference/candidate folders, captures browser-state artifacts with Python async Playwright, writes `candidate-capture-plan.json`, and computes metrics. |
-| Reward curriculum | Working V0 | `website-design-eval reward` computes the current weighted pass/fail curriculum. |
+| Reward curriculum | Working V0 | `website-design-eval reward` computes the current weighted capture reward. |
 | Harbor packaging | Working local path | Synthetic generated sites can be packaged into Harbor tasks with hidden verifier inputs. |
-| Animation V1 | Prototype/early integration | Schema, prompt support, capture replay, and evaluator scoring hooks exist; not yet part of final reward. |
+| Animation V1 | Integrated V1 | Static captures and animation captures are both manifest items in the current reward. |
 
 ## Files Of Interest
 
@@ -48,7 +48,7 @@ candidate site folder
   -> resolve route and candidate action/state
   -> capture browser-rendered artifacts
   -> score artifacts
-  -> compute reward curriculum
+  -> compute weighted reward
 ```
 
 The browser-rendered manifest state is the source of truth:
@@ -142,13 +142,15 @@ Default/currently useful metrics:
 - DreamSim
 - Web2Code-style VLM judge
 - rendered HTML text BLEU/ROUGE
-- visual block core: size, text, position, text color
 - bbox geometry over matched visual blocks
 - CSSOM block-style over matched visual blocks
-- pixelmatch as a later-pass exactness signal
+- global pixelmatch as an exactness signal
+- animation motion/color rows when present in the manifest
 
 Collected but not counted in reward V0:
 
+- visual-block aggregate score
+- visual-block matched-block pixelmatch
 - rendered HTML tree BLEU/ROUGE/F1
 - SSIM
 - MSE / MAE
@@ -163,48 +165,61 @@ measure generic HTML skeleton overlap and do not separate good/bad attempts well
 
 ## Reward Curriculum V0
 
-The current reward is intentionally a curriculum, not a flat average:
+The current reward is a direct weighted score per manifest item, with coverage
+applied once as the outer multiplier:
 
 ```text
-capture_score =
-  manifest_coverage *
-  (0.05 * foundation + 0.15 * content + 0.80 * specifics)
+capture_reward =
+  coverage *
+  weighted_mean_available(
+    screenshot_size_match,
+    rendered_html,
+    vlm,
+    global_pixelmatch,
+    bbox_geometry,
+    cssom_style,
+    dreamsim
+  )
 ```
 
-Passes:
+Important current behavior:
 
-- Pass 1 foundation: manifest coverage and screenshot size match.
-- Pass 2 content/broad fit: rendered text, VLM, visual block size.
-- Pass 3 specifics: visual block quality, CSSOM, bbox geometry, pixelmatch, and DreamSim gated by visual block size.
-
-Latest recorded gradient:
-
-```text
-bad 0.0985 < moderate 0.5620 < good 0.8906
-```
+- Visual-block aggregate scoring is not computed for reward.
+- Visual-block matching is still computed when needed, because bbox geometry and
+  CSSOM style use the matched visible-block pairs.
+- Matched-block crop pixelmatch is not computed in the core reward path.
+- `pixel_match` means screenshot-level global pixelmatch.
+- If a metric is unavailable, skipped, or unsupported, its weight is removed
+  from that manifest item's denominator. A real numeric `0.0` remains a real
+  zero.
+- Static screenshots and animation checks are both manifest items; animations
+  reuse bbox geometry, global/target pixelmatch, and CSSOM-style channels where
+  applicable.
 
 Full details live in `docs/reward-curriculum-v0.md`.
 
 ## Animation V1
 
-Animation work has started, but it is still separate from the final static
-reward.
+Animation work is now part of the synthetic dataset path and the current reward
+surface.
 
-Implemented/planned shape:
+Implemented shape:
 
 - concepts can carry structured `animations`
 - manifests can include top-level `animations`
 - the capture script records animation frames and `timeline.json`
 - evaluator hooks score motion/color channels from browser-observed timelines
+- packaged Harbor tasks include animation metadata and hidden replay evidence
+  when the generated oracle has animation captures
 
 V1 only supports:
 
 - `motion`: bbox IoU and movement-weighted motion delta
 - `color`: target-box pixelmatch and CSSOM color comparison
 
-Full-page DreamSim/CLIP/SSIM are diagnostics only for animation. Animation
-intent must come from the concept/oracle side; the evaluator should not infer
-animation intent from pixels alone.
+Full-page DreamSim/CLIP/SSIM are not animation reward channels. Animation intent
+comes from the concept/oracle side; the evaluator should not infer animation
+intent from pixels alone.
 
 ## Harbor Status
 
@@ -216,7 +231,7 @@ Generator/output/harbor-dataset/
   -> datasets/synthetic-website-replication/
 ```
 
-Packaged tasks expose numbered screenshots and assets to the agent. Hidden
+Packaged tasks expose numbered screenshots to the agent. Hidden
 verifier inputs contain the oracle site, manifest, and metric config.
 
 Important rule: packaging never regenerates screenshots. It only copies and
@@ -230,8 +245,6 @@ validates them. If a manifest capture survives pruning, its PNG must exist.
   becomes a meaningful bottleneck; this is separate from the already-async
   evaluator capture path.
 - Improve candidate action resolution with stronger intent/postcondition use.
-- Decide whether animation captures become part of the Harbor task package now
-  or remain an experimental track.
-- Add batch-level reference artifact caching if we start evaluating many
-  candidates against the same oracle.
+- Keep comparing EC2-local and Modal-backed Harbor runs under explicit resource
+  overrides before deciding the default task resource contract.
 - Run more controlled reproductions before locking reward weights.

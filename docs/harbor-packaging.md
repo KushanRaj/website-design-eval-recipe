@@ -270,6 +270,72 @@ WDE_HARBOR_N_CONCURRENT=2 \
 scripts/run_harbor_full_reward.sh datasets/synthetic-website-replication
 ```
 
+### Resource Overrides
+
+Packaged tasks declare conservative default resources:
+
+```toml
+[environment]
+cpus = 2
+memory_mb = 8192
+
+[verifier.environment]
+cpus = 2
+memory_mb = 8192
+```
+
+Those defaults are intentionally portable, but they are too small for stress
+testing the full verifier. Visual-block extraction and matching are especially
+sensitive to CPU contention because they drive Playwright screenshots,
+temporary recolored renders, image diffing, block recovery, and block matching.
+
+On a large EC2 instance, do not assume Docker is using the whole machine just
+because the host has many cores. Harbor still follows the task resource config
+unless overridden. In the observed scale runs, the EC2 host had `32` vCPUs and
+`123 GiB` RAM, but the verifier containers were still configured as `2` CPU /
+`8 GiB` tasks until we explicitly overrode them.
+
+For experimental throughput runs, use larger resource overrides:
+
+```bash
+export WDE_HARBOR_OVERRIDE_CPUS=8
+export WDE_HARBOR_OVERRIDE_MEMORY_MB=32768
+export WDE_CAPTURE_CONCURRENCY=4
+```
+
+Harbor prints warnings such as:
+
+```text
+Overriding CPU count to 8 alters the task from its intended configuration.
+Overriding memory to 32768 MB alters the task from its intended configuration.
+```
+
+That warning means the run is no longer using the resource contract declared in
+`task.toml`; it is a benchmark reproducibility warning, not an execution error.
+For our private scaling experiments, this is expected. For a public benchmark
+submission, either use the declared task resources or update the task resource
+contract itself and regenerate the dataset.
+
+Recommended current experiment settings:
+
+```bash
+# EC2-local control run on a large host
+export WDE_HARBOR_N_CONCURRENT=8
+export WDE_HARBOR_OVERRIDE_CPUS=8
+export WDE_HARBOR_OVERRIDE_MEMORY_MB=32768
+export WDE_CAPTURE_CONCURRENCY=4
+
+# Modal-backed run
+export WDE_HARBOR_N_CONCURRENT=14
+export WDE_HARBOR_OVERRIDE_CPUS=8
+export WDE_HARBOR_OVERRIDE_MEMORY_MB=32768
+export WDE_CAPTURE_CONCURRENCY=4
+```
+
+If visual-block timings are still unstable, reduce `WDE_CAPTURE_CONCURRENCY` to
+`1` or `2` before reducing task concurrency. That isolates whether the slowdown
+is intra-verifier contention or cross-task contention.
+
 ### Modal + Private GHCR Images
 
 The Modal run needs two independent secret paths:
@@ -403,6 +469,19 @@ Increase `WDE_HARBOR_N_CONCURRENT` after the first stable full run. The Modal
 secret supplies `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` to both the agent and
 separate verifier sandboxes through Harbor's Modal environment kwargs.
 
+For resource-heavy runs, prefer naming the tmux sessions and job directories
+after the resource profile, for example:
+
+```text
+wde_local_bigres_14
+wde_modal_bigres_14
+ec2-local-harbor-matchonly-bigres-14-YYYYMMDD-HHMMSS
+ec2-modal-harbor-matchonly-bigres-14-YYYYMMDD-HHMMSS
+```
+
+This makes it possible to compare default-resource runs against big-resource
+runs without guessing which artifact directory used which resource contract.
+
 ## Modal-Owned Run
 
 The local Harbor command is useful for development, but the disconnect-safe path
@@ -484,6 +563,19 @@ If `verifier_entry` is absent, the verifier container never reached `test.sh`.
 If `verifier_entry` exists but `evaluator_process_start` is absent, the wrapper
 failed before invoking the evaluator. If `vlm_judge_start` exists without
 `vlm_judge_end`, the VLM call for that capture is the live blocker.
+
+When Claude Code candidate manifest planning is enabled, the evaluator also
+writes these files under `/logs/verifier/eval/`:
+
+```text
+generated-candidate-manifest.prompt.txt
+generated-candidate-manifest.claude-transcript.jsonl
+```
+
+The prompt file records the exact oracle/candidate planning prompt. The JSONL
+transcript records Claude SDK messages and errors, which is the first place to
+look if planning fails with a turn-limit error or returns an incomplete
+structured output.
 
 `reward.json` is flat and numeric so Harbor can consume it directly:
 

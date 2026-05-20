@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Website Design Evaluation Reward Report</title><style>
+@page { size: A4 landscape; margin: 10mm 11mm; }
+* { box-sizing: border-box; }
+html { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #121a24; font-size: 11pt; line-height: 1.36; }
+body { margin: 0; background: white; }
+.page { break-after: page; min-height: 188mm; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.page:last-child { break-after: auto; }
+.kicker { color: #526174; font-size: 10pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+h1 { font-size: 36pt; line-height: 1.02; margin: 0; max-width: 780px; letter-spacing: 0; }
+h2 { font-size: 22pt; line-height: 1.08; margin: 0 0 4px; letter-spacing: 0; }
+h3 { font-size: 14pt; margin: 0 0 6px; }
+p { margin: 0 0 8px; max-width: 960px; }
+.lede { font-size: 16pt; max-width: 920px; color: #263241; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.card { border: 1px solid #cfd8e3; border-radius: 8px; padding: 13px 15px; background: #fbfcfe; }
+.callout { border-left: 5px solid #2563eb; padding: 10px 14px; background: #f4f7ff; border-radius: 6px; }
+.callout strong { display: block; margin-bottom: 4px; }
+.metric-strip { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 8px; }
+.chip { border: 1px solid #cbd5e1; border-radius: 999px; padding: 5px 9px; background: #f8fafc; font-size: 9.5pt; white-space: nowrap; }
+.chip strong { font-weight: 800; }
+table { border-collapse: collapse; width: 100%; font-size: 8.8pt; }
+.leaderboard { font-size: 8.2pt; }
+.leaderboard td, .leaderboard th { padding: 5px 6px; }
+th, td { border: 1px solid #d3dbe6; padding: 6px 7px; vertical-align: top; }
+th { background: #edf2f7; text-align: left; font-weight: 800; }
+tr:nth-child(even) td { background: #fbfcfe; }
+.figure { width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 4px; }
+.figure img { display: block; max-width: 100%; max-height: 133mm; margin: 0 auto; object-fit: contain; }
+.figure.tall img { max-height: 145mm; }
+.figure.honesty img { max-height: 112mm; }
+.caption { font-size: 9pt; color: #475569; margin-top: 6px; }
+.evidence-page { gap: 9px; }
+.evidence-page .figure img { max-height: 132mm; }
+.evidence-page .analysis { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; align-items: start; }
+ul { margin: 4px 0 0 18px; padding: 0; }
+li { margin: 3px 0; }
+.small { font-size: 9.5pt; color: #475569; }
+.footer-note { margin-top: auto; color: #64748b; font-size: 9pt; }
+.big-number { font-size: 30pt; font-weight: 850; line-height: 1; }
+.split-title { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; }
+.warning { border-left-color: #dc2626; background: #fff5f5; }
+.good { border-left-color: #16a34a; background: #f0fdf4; }
+</style></head>
+<body>
+<section class="page">
+  <div class="kicker">Proximal work trial report</div>
+  <h1>Website design evaluation: reward, metrics, and agent behavior</h1>
+  <p class="lede">We built a browser-state evaluator for screenshot-to-code website reproduction. The main finding is clear: broad visual similarity is not enough. The reward needs rendered HTML, CSSOM, visual blocks, and state coverage to distinguish faithful reproduction from a plausible page in the same genre.</p>
+  <div class="grid3">
+    <div class="card"><div class="big-number">12</div><strong>synthetic websites</strong><p class="small">Multi-page tasks generated as a first dataset for Harbor evaluation.</p></div>
+    <div class="card"><div class="big-number">153</div><strong>capture rows</strong><p class="small">Full-page and stateful captures: dropdowns, filters, tabs, accordions, selected nodes.</p></div>
+    <div class="card"><div class="big-number">0.194-0.678</div><strong>reward spread</strong><p class="small">Enough separation to inspect what the reward is actually learning.</p></div>
+  </div>
+  <div class="callout"><strong>Core insight</strong> DreamSim and global pixelmatch often stay high for weak candidates. The metrics that separate good from bad are rendered HTML, CSSOM, visual-block geometry, bbox layout, and state coverage.</div>
+  <div class="footer-note">Run analyzed: ec2-local-harbor-full-reward-12-20260520-120454. Candidate generation used Claude Code / Opus. Evaluation artifacts are browser-rendered screenshots, DOM, CSSOM, and block geometry.</div>
+</section>
+
+<section class="page">
+  <h2>1. What we built</h2>
+  <div class="grid2">
+    <div>
+      <p>The evaluator treats the browser as the source of truth. For each oracle capture, it serves the reference and candidate pages, replays the capture state, then extracts screenshots, rendered DOM/outerHTML, CSSOM, visual blocks, and layout boxes from that live page state.</p>
+      <p>This matters because future candidates may be plain HTML, React, Solid, Tailwind, or a build system. The reward should not care about source shape. It should care about what the browser renders.</p>
+      <div class="callout good"><strong>Design principle</strong> The oracle manifest defines what is fair to score. If a dropdown, filter, tab, or selected state is in the oracle manifest, then we evaluate whether the candidate can reproduce that visible state.</div>
+    </div>
+    <div class="card">
+      <h3>Pipeline</h3>
+      <ol>
+        <li>Generate synthetic oracle website.</li>
+        <li>Capture oracle screenshots and state manifest.</li>
+        <li>Give only screenshots to the coding agent.</li>
+        <li>Agent builds candidate website.</li>
+        <li>Evaluator generates candidate capture plan and replays states.</li>
+        <li>Reward combines coverage, visual, DOM, CSSOM, VLM, and geometry metrics.</li>
+      </ol>
+      <p class="small">The run was analytically valid: metrics completed for all 12 trials. Some trials hit an old markdown report writer bug after metrics completed; that bug does not affect the score data used here.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>2. Reward overview</h2>
+  <div class="grid2">
+    <div>
+      <p>The scalar reward is a weighted score per manifest capture. Coverage is applied once as the outer multiplier. Unsupported evaluator components are removed from the available denominator; numeric zeros remain real zeros.</p>
+      <table>
+        <tr><th>Component</th><th>Weight</th><th>Role</th></tr>
+        <tr><td>Screenshot size match</td><td>0.05</td><td>Cheap rendering/page-length guard.</td></tr>
+        <tr><td>Rendered HTML</td><td>0.10</td><td>Content and DOM structure.</td></tr>
+        <tr><td>VLM</td><td>0.20</td><td>Human-like visual judgement.</td></tr>
+        <tr><td>Pixel match</td><td>0.05</td><td>Global + blockwise pixel fidelity.</td></tr>
+        <tr><td>Visual block aggregate</td><td>0.00</td><td>Reported as evidence; not directly weighted in the current scalar reward.</td></tr>
+        <tr><td>BBox geometry</td><td>0.10</td><td>Block shape and placement, derived from visual-block matching.</td></tr>
+        <tr><td>CSSOM style</td><td>0.10</td><td>Computed style fidelity over matched visual blocks.</td></tr>
+        <tr><td>DreamSim</td><td>0.10</td><td>Broad perceptual similarity.</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="callout"><strong>Gate</strong> A capture must pass screenshot size, rendered HTML, and VLM thresholds before the more specific components contribute. This prevents a page with the wrong content or broken rendering from receiving high credit because one visual metric is high.</div>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>3. Trial-level reward results</h2>
+  <p>The spread is meaningful: the best candidate is about 3.5x the lowest reward. DreamSim remains high for weak candidates, while rendered HTML, CSSOM, and visual-block/geometry metrics separate fidelity.</p>
+  <table class="leaderboard">
+    <tr><th>Trial</th><th>Reward</th><th>Coverage</th><th>HTML</th><th>CSSOM</th><th>VB</th><th>Read</th></tr>
+
+        <tr><td>site-01-education-k12</td><td>0.678</td><td>0.957</td><td>0.634</td><td>0.646</td><td>0.855</td><td>Best overall. Structure, content, and styling line up.</td></tr>
+<tr><td>site-05-retail-marketplace</td><td>0.620</td><td>0.882</td><td>0.507</td><td>0.589</td><td>0.767</td><td>Good visual system; missing density states.</td></tr>
+<tr><td>botanical-garden-nursery</td><td>0.607</td><td>0.975</td><td>0.477</td><td>0.622</td><td>0.831</td><td>Strong visual blocks; one state miss.</td></tr>
+<tr><td>site-04-science-research</td><td>0.599</td><td>0.959</td><td>0.496</td><td>0.452</td><td>0.750</td><td>Good broad reproduction; weaker style/geometry.</td></tr>
+<tr><td>podcast-network</td><td>0.596</td><td>0.944</td><td>0.473</td><td>0.509</td><td>0.759</td><td>Good page vibe; state gaps remain.</td></tr>
+<tr><td>storm-chasers-community</td><td>0.576</td><td>0.882</td><td>0.541</td><td>0.519</td><td>0.748</td><td>Decent static structure.</td></tr>
+<tr><td>regional-credit-union</td><td>0.569</td><td>1.000</td><td>0.485</td><td>0.521</td><td>0.809</td><td>Coverage complete; local branch-state geometry failed.</td></tr>
+<tr><td>tabletop-gaming-cafe</td><td>0.556</td><td>0.850</td><td>0.496</td><td>0.494</td><td>0.711</td><td>Low coverage from missed interaction states.</td></tr>
+<tr><td>zen-center</td><td>0.548</td><td>0.943</td><td>0.438</td><td>0.575</td><td>0.801</td><td>High broad visual scores; HTML gate catches drift.</td></tr>
+<tr><td>curling-federation</td><td>0.414</td><td>0.947</td><td>0.382</td><td>0.503</td><td>0.776</td><td>Same domain, wrong density/card system.</td></tr>
+<tr><td>indie-record-label</td><td>0.261</td><td>1.000</td><td>0.314</td><td>0.420</td><td>0.768</td><td>Plausible vibe, weak rendered content structure.</td></tr>
+<tr><td>lutherie-guild</td><td>0.194</td><td>1.000</td><td>0.279</td><td>0.271</td><td>0.699</td><td>DreamSim high, real structure/style low.</td></tr>
+  </table>
+</section>
+
+<section class="page evidence-page">
+  <h2>Reward honesty check: does 0.6 look better than 0.2?</h2>
+  <div class="figure honesty"><img src="assets/reward-honesty-gradient.jpg"><div class="caption">A quick ordered read: high reward preserves page grammar and local structure; mid/high reward keeps the system but loses some density/state detail; low reward preserves mood while failing concrete reproduction.</div></div>
+  <p><strong>Short answer: yes, directionally.</strong> The 0.6-0.7 candidates are visibly more faithful than the 0.2 candidates. The high-reward pages preserve the original page type, repeated components, content density, nav/sidebar/footer grammar, and browser-rendered structure. The low-reward pages may still be attractive, but they are closer to a genre rewrite than a reproduction. A 0.6 is not pixel-perfect; it is a candidate that cleared more of the browser-state reproduction checks.</p>
+  <div class="metric-strip"><span class="chip"><strong>0.6+</strong> retained page grammar</span><span class="chip"><strong>0.4-0.6</strong> broad match with local drift</span><span class="chip"><strong>0.2-ish</strong> vibe without faithful reproduction</span></div>
+</section>
+
+<section class="page evidence-page">
+  <h2>4. Evidence: high reward requires page grammar, not just resemblance</h2>
+  <div class="figure tall"><img src="assets/pair-k12-high.jpg"><div class="caption">K-12 school site: strongest overall candidate. It preserves dashboard-like layout, side rail, dense cards, palette, footer, and enough rendered content structure.</div></div>
+  <div class="analysis">
+    <div><p>The highest-scoring task is not merely attractive. It keeps the page grammar: repeated structures, content density, navigation, and styling survive the reproduction.</p></div>
+    <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.678</span><span class="chip"><strong>HTML</strong> 0.634</span><span class="chip"><strong>CSSOM</strong> 0.646</span><span class="chip"><strong>visual block</strong> 0.855</span><span class="chip"><strong>coverage</strong> 0.957</span></div>
+  </div>
+</section>
+
+<section class="page evidence-page">
+  <h2>5. Evidence: DreamSim over-credits broad aesthetic resemblance</h2>
+  <div class="figure tall"><img src="assets/pair-lutherie-low.jpg"><div class="caption">Lutherie guild: parchment mood and central composition survive, but actual structure, typography, copy, and layout fidelity are poor.</div></div>
+  <div class="analysis">
+    <div><p>This is the cleanest warning against making DreamSim a primary reward driver. The broad aesthetic family is right, but the reproduction is not faithful.</p></div>
+    <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.194</span><span class="chip"><strong>DreamSim</strong> 0.849</span><span class="chip"><strong>HTML</strong> 0.279</span><span class="chip"><strong>CSSOM</strong> 0.271</span><span class="chip"><strong>BBox</strong> 0.143</span></div>
+  </div>
+</section>
+
+<section class="page evidence-page">
+  <h2>6. Evidence: plausible visual clone, weak rendered structure</h2>
+  <div class="figure tall"><img src="assets/pair-indie-plausible.jpg"><div class="caption">Indie record label: the candidate has the right vibe, but content structure and page-specific details drift.</div></div>
+  <div class="analysis">
+    <div><p>A judge or perceptual model can be tempted by a plausible page. Rendered HTML and CSSOM prevent over-crediting by checking whether the actual browser-rendered structure is close.</p></div>
+    <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.261</span><span class="chip"><strong>VLM</strong> 0.652</span><span class="chip"><strong>visual block</strong> 0.768</span><span class="chip"><strong>HTML</strong> 0.314</span><span class="chip"><strong>CSSOM</strong> 0.420</span></div>
+  </div>
+</section>
+
+<section class="page evidence-page">
+  <h2>7. Evidence: visual block works when visible blocks align</h2>
+  <div class="figure tall"><img src="assets/pair-botanical-state.jpg"><div class="caption">Botanical garden map state: labels, cards, map area, and highlighted state structure mostly align.</div></div>
+  <div class="analysis">
+    <div><p>This is the intended use case for visual block scoring. Once visible blocks correspond, the metric checks whether the same pieces exist with similar area, text, placement, and style.</p></div>
+    <div class="metric-strip"><span class="chip"><strong>capture score</strong> 0.810</span><span class="chip"><strong>VB</strong> 0.951</span><span class="chip"><strong>VB size</strong> 0.992</span><span class="chip"><strong>block PM</strong> 0.606</span><span class="chip"><strong>CSSOM</strong> 0.863</span></div>
+  </div>
+</section>
+
+<section class="page evidence-page">
+  <h2>8. Evidence: text can match while geometry is wrong</h2>
+  <div class="figure tall"><img src="assets/pair-tabletop-booking.jpg"><div class="caption">Tabletop booking contact state: the contact-form text is present, but the candidate keeps the previous add-ons step above it and changes the reservation-panel geometry.</div></div>
+  <div class="analysis">
+    <div><p>This case explains why visual block cannot be reduced to text. The candidate includes much of the right form content, but the block area, local pixels, BBox, and CSSOM show that the state layout is wrong.</p></div>
+    <div class="metric-strip"><span class="chip"><strong>capture score</strong> 0.534</span><span class="chip"><strong>HTML</strong> 0.613</span><span class="chip"><strong>VB text</strong> 0.939</span><span class="chip"><strong>VB size</strong> 0.061</span><span class="chip"><strong>block PM</strong> 0.027</span><span class="chip"><strong>BBox</strong> 0.026</span><span class="chip"><strong>CSSOM</strong> 0.047</span></div>
+  </div>
+</section>
+
+<section class="page evidence-page">
+  <h2>9. Evidence: local density matters</h2>
+  <div class="figure tall"><img src="assets/pair-curling-density.jpg"><div class="caption">Curling athlete directory: the page identity is correct, but card density, header geometry, filter/sidebar treatment, player count layout, and footer/page geometry differ.</div></div>
+  <div class="analysis">
+    <div><p>This is the case for local fidelity metrics. Broad screenshot identity and visual-block aggregate can still recognize the page, but HTML, CSSOM, BBox, and blockwise pixelmatch correctly penalize density and layout drift.</p></div>
+    <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.414</span><span class="chip"><strong>athletes capture</strong> 0.218</span><span class="chip"><strong>DreamSim</strong> 0.766</span><span class="chip"><strong>HTML</strong> 0.346</span><span class="chip"><strong>BBox</strong> 0.119</span><span class="chip"><strong>CSSOM</strong> 0.369</span></div>
+  </div>
+</section>
+
+<section class="page evidence-page">
+  <h2>10. Evidence: agents reproduce vibe better than states</h2>
+  <div class="figure tall"><img src="assets/pair-tabletop-booking.jpg"><div class="caption">Tabletop cafe: cheerful domain style is present, but multiple requested state captures are missing.</div></div>
+  <div class="analysis">
+    <div><p>The agent is stronger at static page construction than interaction-state reproduction. Missing filters, toggles, accordions, selected nodes, and alternate views should remain first-class reward failures.</p></div>
+    <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.556</span><span class="chip"><strong>coverage</strong> 0.850</span><span class="chip"><strong>missing</strong> 4/17 states</span><span class="chip"><strong>visual style</strong> plausible</span></div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>11. Metric usefulness</h2>
+  <table>
+    <tr><th>Metric</th><th>Usefulness</th><th>Evidence</th><th>How to use it</th></tr>
+    <tr><td>Rendered HTML</td><td>Very strong</td><td>Trial corr 0.933</td><td>Best discriminator for content, section, and repeated DOM structure drift.</td></tr>
+<tr><td>CSSOM</td><td>Very strong</td><td>Trial corr 0.840</td><td>Catches browser-computed style: typography, spacing, color, layout.</td></tr>
+<tr><td>Visual block aggregate</td><td>Strong</td><td>Capture corr 0.587</td><td>Useful visible-block fidelity signal, but must be read with submetrics.</td></tr>
+<tr><td>Visual block size</td><td>Strong</td><td>Capture corr 0.558</td><td>Tells whether the same visual block area exists. This catches missing/reshaped components.</td></tr>
+<tr><td>Visual block text</td><td>Strong but incomplete</td><td>Capture corr 0.516</td><td>Good content-block signal; can overcredit when text appears in the wrong geometry.</td></tr>
+<tr><td>Blockwise pixelmatch</td><td>Useful local check</td><td>Capture corr 0.407</td><td>Compares pixels inside matched blocks, avoiding many whole-page false positives.</td></tr>
+<tr><td>BBox geometry</td><td>Useful but harsh</td><td>Capture corr 0.456</td><td>Good for card density and placement; not reliable alone.</td></tr>
+<tr><td>VLM judge</td><td>Useful sanity signal</td><td>Trial corr 0.409</td><td>Sees human-facing quality, but can overrate plausible wrong structure.</td></tr>
+<tr><td>DreamSim</td><td>Broad only</td><td>Compressed 0.747-0.862</td><td>Good catastrophic mismatch guard, weak final reward driver.</td></tr>
+<tr><td>Global pixelmatch</td><td>Debug only</td><td>Trial corr ~0</td><td>Too sensitive to whitespace/page size and too forgiving when backgrounds dominate.</td></tr>
+<tr><td>Masked CLIP</td><td>Do not use yet</td><td>Skipped/null</td><td>No evidence it adds useful signal; avoid CLIP forward passes for now.</td></tr>
+  </table>
+  <div class="callout warning"><strong>Important</strong> DreamSim and global pixelmatch are not wrong metrics; they are wrong as dominant reward drivers. They are useful as guards or diagnostics, while rendered HTML/CSSOM/visual block carry the real fidelity signal.</div>
+</section>
+
+<section class="page">
+  <h2>12. Visual block breakdown</h2>
+  <p>Visual block is useful because it decomposes visible text/content blocks. The aggregate score is less informative than the submetrics.</p>
+  <table>
+    <tr><th>Submetric</th><th>Range</th><th>Mean</th><th>Capture-score corr</th><th>Interpretation</th></tr>
+    <tr><td>Size</td><td>0.038-0.997</td><td>0.668</td><td>0.558</td><td>Whether the same visible block area exists.</td></tr>
+<tr><td>Text</td><td>0.697-1.000</td><td>0.908</td><td>0.516</td><td>Whether matched blocks contain similar text.</td></tr>
+<tr><td>Position</td><td>0.254-0.966</td><td>0.861</td><td>0.313</td><td>Whether the block lands in a similar location.</td></tr>
+<tr><td>Text color</td><td>0.731-0.968</td><td>0.845</td><td>0.158</td><td>Mostly diagnostic; weak reward driver.</td></tr>
+<tr><td>Block pixelmatch</td><td>0.006-0.713</td><td>0.316</td><td>0.407</td><td>Local pixel fidelity inside matched blocks.</td></tr>
+  </table>
+  <div class="grid2">
+    <div class="callout good"><strong>What worked</strong> Size and text were the strongest visual-block submetrics. Size catches whether the same visible block area exists; text catches whether the block content is similar.</div>
+    <div class="callout"><strong>What is niche</strong> Text color is useful for diagnosis but weak as a reward driver. Blockwise pixelmatch is more useful than global pixelmatch because it focuses on matched local components.</div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>13. Agent insights and reward implications</h2>
+  <div class="grid2">
+    <div>
+      <h3>What the agent does well</h3>
+      <ul>
+        <li>Creates plausible page scaffolds and routes.</li>
+        <li>Captures broad art direction: palette, mood, hero/footer, domain feel.</li>
+        <li>Builds recognizable components such as cards, grids, sidebars, dashboards, menus, and editorial sections.</li>
+      </ul>
+      <h3>Where it struggles</h3>
+      <ul>
+        <li>Exact card density, spacing, row/column geometry, and local alignment.</li>
+        <li>Rendered text/content structure and repeated DOM patterns.</li>
+        <li>Stateful captures: filters, accordions, selected nodes, tabs, toggles, compare states.</li>
+        <li>Custom diagrams/assets such as maps, brackets, rosters, botanical drawings, and audio panels.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Reward changes</h3>
+      <ul>
+        <li>Keep rendered HTML and CSSOM central.</li>
+        <li>Keep visual block, but always report size/text/position/color/block-pixelmatch.</li>
+        <li>Use blockwise pixelmatch, not global pixelmatch, as the local pixel signal.</li>
+        <li>Keep VLM as a sanity signal, paired with deterministic browser-rendered artifacts.</li>
+        <li>Keep DreamSim small: good guard, weak fine-grained reward.</li>
+        <li>Treat state misses as first-class reward events, not evaluator noise.</li>
+      </ul>
+      <div class="callout"><strong>Final read</strong> The reward is directionally working because it does not simply reward broad visual similarity. Weak candidates can look plausible, but final reward drops when rendered HTML, CSSOM, visual block size, bbox geometry, or state coverage fail.</div>
+    </div>
+  </div>
+</section>
+</body></html>

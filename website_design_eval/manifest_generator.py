@@ -8,7 +8,7 @@ import asyncio
 import inspect
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from urllib.parse import urldefrag, urljoin, urlparse
 
 from bs4 import BeautifulSoup
@@ -814,6 +814,35 @@ def _selector_unique_in_source(root: Path, path: str, selector: str) -> bool:
         return False
 
 
+def _rendered_selector_count(root: Path, path: str, selector: str) -> int | None:
+    try:
+        from playwright.sync_api import sync_playwright
+
+        server = StaticServer.start(root)
+        try:
+            with sync_playwright() as playwright:
+                browser = playwright.chromium.launch(headless=True)
+                try:
+                    context = browser.new_context(
+                        viewport=MANIFEST_VIEWPORT,
+                        device_scale_factor=1,
+                    )
+                    page = context.new_page()
+                    page.goto(f"{server.base_url.rstrip('/')}/{path.lstrip('/')}", wait_until="networkidle", timeout=30000)
+                    page.wait_for_timeout(100)
+                    count = page.evaluate(
+                        "(selector) => document.querySelectorAll(selector).length",
+                        selector,
+                    )
+                    return int(count)
+                finally:
+                    browser.close()
+        finally:
+            server.close()
+    except Exception:
+        return None
+
+
 def _context_block(context: dict[str, Any] | None) -> str:
     if not context:
         return ""
@@ -1329,6 +1358,39 @@ def _sanitize_manifest_with_inventory(
     inventory_paths = _inventory_paths(inventory or {})
     inventory_selectors = _inventory_selectors_by_path(inventory or {})
     inventory_selector_counts = _inventory_selector_counts_by_path(inventory or {})
+    rendered_selector_count_cache: dict[tuple[str, str], int | None] = {}
+
+    def rendered_selector_count(path: str, selector: str) -> int | None:
+        cache_key = (path, selector)
+        if cache_key not in rendered_selector_count_cache:
+            rendered_selector_count_cache[cache_key] = _rendered_selector_count(root, path, selector)
+        return rendered_selector_count_cache[cache_key]
+
+    def selector_status(path: str, selector: str | None) -> dict[str, Any]:
+        if not selector:
+            return {"ok": False, "reason": "missing_selector", "selector": selector}
+        selector_count = inventory_selector_counts.get(path, {}).get(selector)
+        rendered_count = None
+        if selector_count is None:
+            rendered_count = rendered_selector_count(path, selector)
+            if rendered_count is not None:
+                selector_count = rendered_count
+        selector_known = (
+            selector in inventory_selectors.get(path, set())
+            or _selector_exists(root, path, selector)
+            or (rendered_count is not None and rendered_count > 0)
+        )
+        selector_unique = selector_count == 1 or (selector_count is None and _selector_unique_in_source(root, path, selector))
+        if not selector_known:
+            return {"ok": False, "reason": "selector_not_found", "selector": selector, "selector_count": selector_count}
+        if not selector_unique:
+            return {"ok": False, "reason": "selector_not_unique", "selector": selector, "selector_count": selector_count}
+        return {
+            "ok": True,
+            "selector": selector,
+            "selector_count": selector_count,
+            "source": "rendered_dom" if rendered_count is not None else "inventory_or_source",
+        }
 
     captures = []
     seen_ids = set()
@@ -1382,10 +1444,7 @@ def _sanitize_manifest_with_inventory(
             if cleaned["type"] in {"hover", "click", "focus", "fill", "scroll", "scrollBy", "press"}:
                 raw_effect_action_count += 1
             if selector:
-                selector_count = inventory_selector_counts.get(path, {}).get(selector)
-                selector_known = selector in inventory_selectors.get(path, set()) or _selector_exists(root, path, selector)
-                selector_unique = selector_count == 1 or (selector_count is None and _selector_unique_in_source(root, path, selector))
-                if not selector_known or not selector_unique:
+                if not selector_status(path, selector).get("ok"):
                     continue
             if cleaned["type"] not in {"wait", "press", "scrollBy"}:
                 kept_state_action_count += 1
@@ -1415,6 +1474,7 @@ def _sanitize_manifest_with_inventory(
         inventory_paths=inventory_paths,
         inventory_selectors=inventory_selectors,
         inventory_selector_counts=inventory_selector_counts,
+        rendered_selector_count=rendered_selector_count,
         diagnostics=animation_diagnostics,
     )
     manifest["__diagnostics"] = {
@@ -1433,6 +1493,7 @@ def _sanitize_animations(
     inventory_paths: set[str],
     inventory_selectors: dict[str, set[str]],
     inventory_selector_counts: dict[str, dict[str, int]],
+    rendered_selector_count: Callable[[str, str], int | None] | None = None,
     diagnostics: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     if not isinstance(raw_animations, list):
@@ -1451,18 +1512,40 @@ def _sanitize_animations(
         "border-bottom-color",
         "border-left-color",
     ]
+    if rendered_selector_count is None:
+        rendered_selector_count_cache: dict[tuple[str, str], int | None] = {}
+
+        def rendered_selector_count(path: str, selector: str) -> int | None:
+            cache_key = (path, selector)
+            if cache_key not in rendered_selector_count_cache:
+                rendered_selector_count_cache[cache_key] = _rendered_selector_count(root, path, selector)
+            return rendered_selector_count_cache[cache_key]
 
     def selector_status(path: str, selector: str | None) -> dict[str, Any]:
         if not selector:
             return {"ok": False, "reason": "missing_selector", "selector": selector}
         selector_count = inventory_selector_counts.get(path, {}).get(selector)
-        selector_known = selector in inventory_selectors.get(path, set()) or _selector_exists(root, path, selector)
+        rendered_count = None
+        if selector_count is None:
+            rendered_count = rendered_selector_count(path, selector)
+            if rendered_count is not None:
+                selector_count = rendered_count
+        selector_known = (
+            selector in inventory_selectors.get(path, set())
+            or _selector_exists(root, path, selector)
+            or (rendered_count is not None and rendered_count > 0)
+        )
         selector_unique = selector_count == 1 or (selector_count is None and _selector_unique_in_source(root, path, selector))
         if not selector_known:
             return {"ok": False, "reason": "selector_not_found", "selector": selector, "selector_count": selector_count}
         if not selector_unique:
             return {"ok": False, "reason": "selector_not_unique", "selector": selector, "selector_count": selector_count}
-        return {"ok": True, "selector": selector, "selector_count": selector_count}
+        return {
+            "ok": True,
+            "selector": selector,
+            "selector_count": selector_count,
+            "source": "rendered_dom" if rendered_count is not None else "inventory_or_source",
+        }
 
     def selector_ok(path: str, selector: str | None) -> bool:
         return bool(selector_status(path, selector).get("ok"))
