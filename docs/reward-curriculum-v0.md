@@ -19,7 +19,8 @@ Raw requested weights:
 | CSSOM style | 0.10 |
 | DreamSim | 0.10 |
 
-These sum to `0.90`, so the implementation normalizes by `0.90`:
+These sum to `0.90`, so the implementation normalizes by `0.90` when all
+components are available:
 
 ```text
 capture_reward =
@@ -38,6 +39,11 @@ capture_reward =
 
 The final reward is the manifest-weighted mean of `capture_reward` across
 captures.
+
+If a component is missing, skipped, errored, or unsupported, the reward removes
+that component's weight from the capture denominator and renormalizes the
+remaining available components. This is evaluator-failure handling, not a free
+pass for bad outputs: a numeric score of `0.0` is still treated as a real zero.
 
 ## Gate
 
@@ -97,7 +103,8 @@ from the Playwright-captured state.
 - DreamSim and global pixelmatch are not multiplied by visual-block size.
 - BBox geometry and CSSOM style are separate components at 0.10 raw weight
   each. They are not averaged into a hidden combined 0.20 component.
-- Unsupported/missing metric components score `0` for that component only.
+- Unsupported/missing metric components are removed from that capture's
+  denominator when gates pass. Numeric zero remains a real zero.
 - Unsupported visual block does not suppress DreamSim or other global metrics
   unless one of the explicit gate inputs fails.
 

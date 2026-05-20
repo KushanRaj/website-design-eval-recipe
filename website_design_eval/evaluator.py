@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import re
 import threading
 import time
+from contextlib import nullcontext
 from dataclasses import dataclass
 from datetime import datetime
 from difflib import SequenceMatcher
@@ -14,10 +16,14 @@ from pathlib import Path
 from typing import Any
 
 from PIL import Image
+from playwright.async_api import Browser as AsyncBrowser
+from playwright.async_api import Page as AsyncPage
+from playwright.async_api import async_playwright
 from playwright.sync_api import Browser, Page
 
 from .block_visual import (
     _score_bbox_geometry,
+    extract_visual_blocks_from_async_playwright_page,
     extract_visual_blocks_from_playwright_page,
     visual_block_score_from_blocks,
 )
@@ -586,6 +592,8 @@ class EvaluateConfig:
     candidate_manifest_planner: str | None = None
     candidate_manifest_model: str = "opus"
     candidate_manifest_claude_auth: str = "api"
+    capture_concurrency: int = 4
+    vlm_concurrency: int = 4
 
 
 def _route_for_capture(
@@ -956,7 +964,13 @@ def _resolve_action(page: Page, action: dict[str, Any], reference_signature: dic
     }
 
 
-def _run_action(page: Page, action: dict[str, Any], selector: str | None = None) -> None:
+def _run_action(
+    page: Page,
+    action: dict[str, Any],
+    selector: str | None = None,
+    *,
+    scroll_strategy: str = "playwright",
+) -> None:
     action_type = action.get("type")
     resolved_selector = selector or action.get("selector")
     settle_ms = int(action.get("settleMs") or 0)
@@ -980,7 +994,29 @@ def _run_action(page: Page, action: dict[str, Any], selector: str | None = None)
         )
     elif action_type == "scroll":
         if resolved_selector:
-            page.locator(resolved_selector).first.scroll_into_view_if_needed(timeout=3000)
+            if scroll_strategy == "dom_nearest":
+                page.evaluate(
+                    """(selector) => {
+                      const el = document.querySelector(selector);
+                      if (!el) throw new Error(`No element matches selector: ${selector}`);
+                      el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                    }""",
+                    resolved_selector,
+                )
+            elif scroll_strategy == "playwright_with_dom_nearest_fallback":
+                try:
+                    page.locator(resolved_selector).first.scroll_into_view_if_needed(timeout=3000)
+                except Exception:
+                    page.evaluate(
+                        """(selector) => {
+                          const el = document.querySelector(selector);
+                          if (!el) throw new Error(`No element matches selector: ${selector}`);
+                          el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                        }""",
+                        resolved_selector,
+                    )
+            else:
+                page.locator(resolved_selector).first.scroll_into_view_if_needed(timeout=3000)
         else:
             page.evaluate(
                 "({ x, y }) => window.scrollTo(x || 0, y || 0)",
@@ -1066,7 +1102,12 @@ def _validate_post_state(
     return {"score": 1.0, "checks": {"reason": "no_reference_postcondition_detected"}}
 
 
-def _execute_reference_actions(page: Page, capture: dict[str, Any]) -> list[dict[str, Any]]:
+def _execute_reference_actions(
+    page: Page,
+    capture: dict[str, Any],
+    *,
+    scroll_strategy: str = "playwright",
+) -> list[dict[str, Any]]:
     executed = []
     for action in capture.get("actions") or []:
         before = _page_state(page)
@@ -1074,7 +1115,7 @@ def _execute_reference_actions(page: Page, capture: dict[str, Any]) -> list[dict
         status = "resolved"
         failure = None
         try:
-            _run_action(page, action)
+            _run_action(page, action, scroll_strategy=scroll_strategy)
         except Exception as exc:
             status = "failed"
             failure = f"{type(exc).__name__}: {exc}"
@@ -1093,7 +1134,12 @@ def _execute_reference_actions(page: Page, capture: dict[str, Any]) -> list[dict
     return executed
 
 
-def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _execute_candidate_actions(
+    page: Page,
+    reference_actions: list[dict[str, Any]],
+    *,
+    scroll_strategy: str = "playwright",
+) -> list[dict[str, Any]]:
     executed = []
     for reference_action in reference_actions:
         action = reference_action["action"]
@@ -1118,7 +1164,12 @@ def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any
 
         if resolution["status"] == "resolved":
             try:
-                _run_action(page, action, selector=resolution.get("resolved_selector"))
+                _run_action(
+                    page,
+                    action,
+                    selector=resolution.get("resolved_selector"),
+                    scroll_strategy=scroll_strategy,
+                )
                 after = _page_state(page)
                 post_state = _validate_post_state(
                     action,
@@ -1151,7 +1202,12 @@ def _execute_candidate_actions(page: Page, reference_actions: list[dict[str, Any
     return executed
 
 
-def _execute_direct_manifest_actions(page: Page, capture: dict[str, Any]) -> list[dict[str, Any]]:
+def _execute_direct_manifest_actions(
+    page: Page,
+    capture: dict[str, Any],
+    *,
+    scroll_strategy: str = "playwright",
+) -> list[dict[str, Any]]:
     executed = []
     for action in capture.get("actions") or []:
         before = _page_state(page)
@@ -1159,7 +1215,7 @@ def _execute_direct_manifest_actions(page: Page, capture: dict[str, Any]) -> lis
         failure = None
         after = before
         try:
-            _run_action(page, action)
+            _run_action(page, action, scroll_strategy=scroll_strategy)
             after = _page_state(page)
         except Exception as exc:
             action_status = "failed"
@@ -1721,11 +1777,33 @@ def _extract_visual_blocks_for_artifact(
     try:
         _goto_capture(page, base_url, route, capture, defaults)
         if side == "reference":
-            replay_actions = _execute_reference_actions(page, capture)
+            replay_actions = _execute_reference_actions(
+                page,
+                capture,
+                scroll_strategy="playwright_with_dom_nearest_fallback",
+            )
         elif direct_candidate_actions:
-            replay_actions = _execute_direct_manifest_actions(page, capture)
+            replay_actions = _execute_direct_manifest_actions(
+                page,
+                capture,
+                scroll_strategy="playwright_with_dom_nearest_fallback",
+            )
         else:
-            replay_actions = _execute_candidate_actions(page, reference_actions)
+            replay_actions = _execute_candidate_actions(
+                page,
+                reference_actions,
+                scroll_strategy="playwright_with_dom_nearest_fallback",
+            )
+        replay_failure = _visual_block_replay_failure(replay_actions)
+        if replay_failure:
+            return {
+                "status": "unsupported",
+                "reason": replay_failure,
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+                "replay_actions": replay_actions,
+            }
 
         screenshot_path = artifact.get("screenshot_path")
         if not screenshot_path:
@@ -1889,6 +1967,633 @@ def _capture_candidate_from_manifest(
         context.close()
 
 
+def _visual_block_replay_failure(actions: list[dict[str, Any]]) -> str | None:
+    for index, action in enumerate(actions):
+        status = action.get("status")
+        if status in {"failed", "post_state_failed", "skipped"}:
+            return f"replay_action_{index}_{status}"
+        if action.get("coverage_scored") and action.get("coverage_contribution") == 0:
+            return f"replay_action_{index}_zero_coverage"
+    return None
+
+
+async def _page_state_async(page: AsyncPage) -> dict[str, Any]:
+    return await page.evaluate(PAGE_STATE_SCRIPT)
+
+
+async def _element_signature_async(page: AsyncPage, selector: str) -> dict[str, Any] | None:
+    return await page.evaluate(ELEMENT_SIGNATURE_SCRIPT, {"selector": selector})
+
+
+async def _candidate_elements_async(page: AsyncPage) -> list[dict[str, Any]]:
+    return await page.evaluate(CANDIDATE_ELEMENTS_SCRIPT)
+
+
+async def _visible_ancestor_async(page: AsyncPage, selector: str) -> dict[str, Any] | None:
+    return await page.evaluate(VISIBLE_ANCESTOR_SCRIPT, {"selector": selector})
+
+
+async def _goto_capture_async(
+    page: AsyncPage,
+    base_url: str,
+    route: dict[str, Any],
+    capture: dict[str, Any],
+    defaults: dict[str, Any],
+) -> None:
+    viewport = capture.get("viewport") or defaults.get("viewport")
+    if viewport:
+        await page.set_viewport_size({"width": int(viewport["width"]), "height": int(viewport["height"])})
+    color_scheme = capture.get("colorScheme") or defaults.get("colorScheme")
+    if color_scheme:
+        await page.emulate_media(color_scheme=color_scheme)
+    await page.goto(
+        _route_url(base_url, route.get("resolved_path")),
+        wait_until=capture.get("waitUntil") or defaults.get("waitUntil") or "networkidle",
+        timeout=int(capture.get("timeoutMs") or defaults.get("timeoutMs") or 30000),
+    )
+    after_load_wait_ms = int(defaults.get("afterLoadWaitMs") or 0)
+    if after_load_wait_ms:
+        await page.wait_for_timeout(after_load_wait_ms)
+    await page.evaluate(STAMP_MANIFEST_ELEMENTS_SCRIPT)
+
+
+async def _selector_actionable_async(page: AsyncPage, selector: str, action_type: str) -> bool:
+    try:
+        locator = page.locator(selector)
+        if await locator.count() != 1:
+            return False
+        if action_type in {"hover", "click", "focus"}:
+            return await locator.first.is_visible(timeout=250)
+        return True
+    except Exception:
+        return False
+
+
+async def _resolve_action_async(
+    page: AsyncPage,
+    action: dict[str, Any],
+    reference_signature: dict[str, Any] | None,
+) -> dict[str, Any]:
+    selector = action.get("selector")
+    action_type = action.get("type", "")
+    if selector and not _is_manifest_stamp_selector(selector) and await _selector_actionable_async(page, selector, action_type):
+        return {
+            "status": "resolved",
+            "method": "exact_selector",
+            "requested_selector": selector,
+            "resolved_selector": selector,
+            "confidence": 1.0,
+            "failure_mode": None,
+            "matched_element": None,
+        }
+
+    if selector and not _is_manifest_stamp_selector(selector) and action_type == "hover":
+        ancestor = await _visible_ancestor_async(page, selector)
+        if ancestor is not None:
+            return {
+                "status": "resolved",
+                "method": "visible_ancestor_of_exact_selector",
+                "requested_selector": selector,
+                "resolved_selector": ancestor["selector"],
+                "confidence": 1.0,
+                "failure_mode": None,
+                "matched_element": ancestor,
+            }
+
+    if not selector or reference_signature is None:
+        return {
+            "status": "unsupported",
+            "method": None,
+            "requested_selector": selector,
+            "resolved_selector": None,
+            "confidence": 0.0,
+            "failure_mode": "selector_missing_or_reference_signature_unavailable",
+            "matched_element": None,
+        }
+
+    candidates = [
+        element
+        for element in await _candidate_elements_async(page)
+        if element.get("visible") or action_type == "scroll"
+    ]
+    scored = [
+        (_score_candidate_element(reference_signature, candidate, action_type), candidate)
+        for candidate in candidates
+    ]
+    scored.sort(key=lambda item: item[0], reverse=True)
+    if not scored:
+        return {
+            "status": "unsupported",
+            "method": "element_match",
+            "requested_selector": selector,
+            "resolved_selector": None,
+            "confidence": 0.0,
+            "failure_mode": "no_candidate_elements",
+            "matched_element": None,
+        }
+    best_score, best_element = scored[0]
+    threshold = 0.25 if action_type == "scroll" else 0.3 if action_type == "hover" else 0.45
+    if best_score < threshold:
+        return {
+            "status": "unsupported",
+            "method": "element_match",
+            "requested_selector": selector,
+            "resolved_selector": None,
+            "confidence": best_score,
+            "failure_mode": "no_candidate_element_above_threshold",
+            "matched_element": best_element,
+        }
+    return {
+        "status": "resolved",
+        "method": "element_match",
+        "requested_selector": selector,
+        "resolved_selector": best_element["selector"],
+        "confidence": best_score,
+        "failure_mode": None,
+        "matched_element": best_element,
+    }
+
+
+async def _run_action_async(
+    page: AsyncPage,
+    action: dict[str, Any],
+    selector: str | None = None,
+    *,
+    scroll_strategy: str = "playwright",
+) -> None:
+    action_type = action.get("type")
+    resolved_selector = selector or action.get("selector")
+    settle_ms = int(action.get("settleMs") or 0)
+
+    if action_type == "hover":
+        await page.locator(resolved_selector).first.hover(timeout=3000)
+    elif action_type == "click":
+        await page.locator(resolved_selector).first.click(timeout=3000)
+    elif action_type == "focus":
+        await page.locator(resolved_selector).first.focus(timeout=3000)
+    elif action_type == "fill":
+        await page.locator(resolved_selector).first.fill(str(action.get("value") or ""), timeout=3000)
+    elif action_type == "press":
+        await page.keyboard.press(str(action.get("key")))
+    elif action_type == "wait":
+        await page.wait_for_timeout(int(action.get("ms") or 0))
+    elif action_type == "waitForSelector":
+        await page.locator(resolved_selector).first.wait_for(
+            state=action.get("state") or "visible",
+            timeout=int(action.get("timeoutMs") or 3000),
+        )
+    elif action_type == "scroll":
+        if resolved_selector:
+            if scroll_strategy == "dom_nearest":
+                await page.evaluate(
+                    """(selector) => {
+                      const el = document.querySelector(selector);
+                      if (!el) throw new Error(`No element matches selector: ${selector}`);
+                      el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                    }""",
+                    resolved_selector,
+                )
+            elif scroll_strategy == "playwright_with_dom_nearest_fallback":
+                try:
+                    await page.locator(resolved_selector).first.scroll_into_view_if_needed(timeout=3000)
+                except Exception:
+                    await page.evaluate(
+                        """(selector) => {
+                          const el = document.querySelector(selector);
+                          if (!el) throw new Error(`No element matches selector: ${selector}`);
+                          el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                        }""",
+                        resolved_selector,
+                    )
+            else:
+                await page.locator(resolved_selector).first.scroll_into_view_if_needed(timeout=3000)
+        else:
+            await page.evaluate(
+                "({ x, y }) => window.scrollTo(x || 0, y || 0)",
+                {"x": action.get("x", 0), "y": action.get("y", 0)},
+            )
+    elif action_type == "scrollBy":
+        await page.evaluate(
+            "({ x, y }) => window.scrollBy(x || 0, y || 0)",
+            {"x": action.get("x", 0), "y": action.get("y", 0)},
+        )
+    else:
+        raise ValueError(f"Unknown action type: {action_type}")
+
+    if settle_ms:
+        await page.wait_for_timeout(settle_ms)
+
+
+async def _execute_reference_actions_async(
+    page: AsyncPage,
+    capture: dict[str, Any],
+    *,
+    scroll_strategy: str = "playwright",
+) -> list[dict[str, Any]]:
+    executed = []
+    for action in capture.get("actions") or []:
+        before = await _page_state_async(page)
+        signature = await _element_signature_async(page, action["selector"]) if action.get("selector") else None
+        status = "resolved"
+        failure = None
+        try:
+            await _run_action_async(page, action, scroll_strategy=scroll_strategy)
+        except Exception as exc:
+            status = "failed"
+            failure = f"{type(exc).__name__}: {exc}"
+        after = await _page_state_async(page)
+        executed.append(
+            {
+                "action": action,
+                "status": status,
+                "failure": failure,
+                "reference_signature": signature,
+                "before_state": before,
+                "after_state": after,
+                "visible_text_delta": _visible_text_delta(before, after),
+            }
+        )
+    return executed
+
+
+async def _execute_candidate_actions_async(
+    page: AsyncPage,
+    reference_actions: list[dict[str, Any]],
+    *,
+    scroll_strategy: str = "playwright",
+) -> list[dict[str, Any]]:
+    executed = []
+    for reference_action in reference_actions:
+        action = reference_action["action"]
+        coverage_scored = _is_coverage_scored_action(action)
+        before = await _page_state_async(page)
+        if action.get("type") in {"wait", "press", "scrollBy"} and not action.get("selector"):
+            resolution = {
+                "status": "resolved",
+                "method": "direct_non_selector_action",
+                "requested_selector": None,
+                "resolved_selector": None,
+                "confidence": 1.0,
+                "failure_mode": None,
+                "matched_element": None,
+            }
+        else:
+            resolution = await _resolve_action_async(page, action, reference_action.get("reference_signature"))
+        action_status = "skipped"
+        failure = None
+        post_state = {"score": 0.0, "checks": {"reason": "action_not_resolved"}}
+        after = before
+
+        if resolution["status"] == "resolved":
+            try:
+                await _run_action_async(
+                    page,
+                    action,
+                    selector=resolution.get("resolved_selector"),
+                    scroll_strategy=scroll_strategy,
+                )
+                after = await _page_state_async(page)
+                post_state = _validate_post_state(
+                    action,
+                    reference_action["before_state"],
+                    reference_action["after_state"],
+                    before,
+                    after,
+                )
+                action_status = "completed" if post_state["score"] > 0 else "post_state_failed"
+            except Exception as exc:
+                failure = f"{type(exc).__name__}: {exc}"
+                action_status = "failed"
+
+        coverage = None
+        if coverage_scored:
+            coverage = round(float(resolution.get("confidence", 0.0)) * float(post_state.get("score", 0.0)), 6)
+        executed.append(
+            {
+                "action": action,
+                "resolution": resolution,
+                "status": action_status,
+                "failure": failure,
+                "post_state": post_state,
+                "coverage_scored": coverage_scored,
+                "coverage_contribution": coverage,
+                "before_state": before,
+                "after_state": after,
+            }
+        )
+    return executed
+
+
+async def _execute_direct_manifest_actions_async(
+    page: AsyncPage,
+    capture: dict[str, Any],
+    *,
+    scroll_strategy: str = "playwright",
+) -> list[dict[str, Any]]:
+    executed = []
+    for action in capture.get("actions") or []:
+        before = await _page_state_async(page)
+        action_status = "completed"
+        failure = None
+        after = before
+        try:
+            await _run_action_async(page, action, scroll_strategy=scroll_strategy)
+            after = await _page_state_async(page)
+        except Exception as exc:
+            action_status = "failed"
+            failure = f"{type(exc).__name__}: {exc}"
+
+        coverage_scored = action.get("type") in {
+            "hover",
+            "click",
+            "focus",
+            "fill",
+            "press",
+            "scroll",
+            "scrollBy",
+            "waitForSelector",
+        }
+        executed.append(
+            {
+                "action": action,
+                "resolution": {
+                    "status": "resolved" if action_status == "completed" else "failed",
+                    "method": "candidate_manifest_direct_action",
+                    "requested_selector": action.get("selector"),
+                    "resolved_selector": action.get("selector"),
+                    "confidence": 1.0 if action_status == "completed" else 0.0,
+                    "failure_mode": None if action_status == "completed" else "candidate_manifest_action_failed",
+                    "matched_element": None,
+                },
+                "status": action_status,
+                "failure": failure,
+                "post_state": {"score": 1.0 if action_status == "completed" else 0.0, "checks": {"source": "candidate_manifest"}},
+                "coverage_scored": coverage_scored,
+                "coverage_contribution": 1.0 if coverage_scored and action_status == "completed" else 0.0 if coverage_scored else None,
+                "before_state": before,
+                "after_state": after,
+            }
+        )
+    return executed
+
+
+async def _artifact_cssom_async(page: AsyncPage, screenshot_dimensions: dict[str, int]) -> dict[str, Any]:
+    return await page.evaluate(
+        CSSOM_ARTIFACT_SCRIPT,
+        {
+            "controlSelectors": CONTROL_SELECTORS,
+            "normalizeWidth": screenshot_dimensions["width"],
+            "normalizeHeight": screenshot_dimensions["height"],
+            "screenshotWidth": screenshot_dimensions["width"],
+            "screenshotHeight": screenshot_dimensions["height"],
+        },
+    )
+
+
+async def _artifact_from_page_async(
+    page: AsyncPage,
+    capture: dict[str, Any],
+    defaults: dict[str, Any],
+    artifact_dir: Path,
+    actions: list[dict[str, Any]],
+    *,
+    side: str,
+) -> dict[str, Any]:
+    screenshot_dir = artifact_dir / "screenshots"
+    screenshot_dir.mkdir(parents=True, exist_ok=True)
+    screenshot_path = screenshot_dir / f"{capture['id']}.png"
+    await page.evaluate(REMOVE_EVALUATOR_ATTRIBUTES_SCRIPT)
+    await page.screenshot(**_screenshot_options(defaults, capture, screenshot_path))
+    with Image.open(screenshot_path) as image:
+        screenshot_dimensions = {"width": image.width, "height": image.height}
+    outer_html = await page.evaluate("() => document.documentElement.outerHTML")
+    cssom = await _artifact_cssom_async(page, screenshot_dimensions)
+    artifact = {
+        "capture_id": capture["id"],
+        "side": side,
+        "page": capture.get("page"),
+        "state": capture.get("state"),
+        "viewport": _capture_viewport(capture, {"defaults": defaults}),
+        "actions": actions,
+        "screenshot_path": str(screenshot_path),
+        "screenshot_dimensions": screenshot_dimensions,
+        "outer_html": outer_html,
+        "cssom": cssom,
+        "extraction_errors": [],
+        "missing_reason": None,
+    }
+    _write_json(artifact_dir / f"{capture['id']}.json", artifact)
+    return artifact
+
+
+async def _extract_visual_blocks_for_artifact_async(
+    browser: AsyncBrowser,
+    base_url: str,
+    capture: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    reference_actions: list[dict[str, Any]],
+    artifact: dict[str, Any],
+    *,
+    side: str,
+    direct_candidate_actions: bool = False,
+) -> dict[str, Any]:
+    defaults = manifest.get("defaults", {})
+    context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = await context.new_page()
+    try:
+        await _goto_capture_async(page, base_url, route, capture, defaults)
+        if side == "reference":
+            replay_actions = await _execute_reference_actions_async(
+                page,
+                capture,
+                scroll_strategy="playwright_with_dom_nearest_fallback",
+            )
+        elif direct_candidate_actions:
+            replay_actions = await _execute_direct_manifest_actions_async(
+                page,
+                capture,
+                scroll_strategy="playwright_with_dom_nearest_fallback",
+            )
+        else:
+            replay_actions = await _execute_candidate_actions_async(
+                page,
+                reference_actions,
+                scroll_strategy="playwright_with_dom_nearest_fallback",
+            )
+        replay_failure = _visual_block_replay_failure(replay_actions)
+        if replay_failure:
+            return {
+                "status": "unsupported",
+                "reason": replay_failure,
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+                "replay_actions": replay_actions,
+            }
+
+        screenshot_path = artifact.get("screenshot_path")
+        if not screenshot_path:
+            return {
+                "status": "unsupported",
+                "reason": "screenshot_missing",
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+                "replay_actions": replay_actions,
+            }
+
+        await page.evaluate(REMOVE_EVALUATOR_ATTRIBUTES_SCRIPT)
+        screenshot_options = _screenshot_options(defaults, capture, Path(screenshot_path))
+        visual_blocks = await extract_visual_blocks_from_async_playwright_page(
+            page,
+            screenshot_path,
+            screenshot_options=screenshot_options,
+        )
+        visual_blocks["replay_actions"] = replay_actions
+        return visual_blocks
+    finally:
+        await context.close()
+
+
+async def _capture_reference_async(
+    browser: AsyncBrowser,
+    base_url: str,
+    capture: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    artifact_dir: Path,
+    *,
+    include_visual_blocks: bool,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    defaults = manifest.get("defaults", {})
+    context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = await context.new_page()
+    try:
+        await _goto_capture_async(page, base_url, route, capture, defaults)
+        reference_actions = await _execute_reference_actions_async(page, capture)
+        artifact = await _artifact_from_page_async(page, capture, defaults, artifact_dir, reference_actions, side="reference")
+        artifact["route"] = route
+        if include_visual_blocks:
+            try:
+                artifact["visual_blocks"] = await _extract_visual_blocks_for_artifact_async(
+                    browser,
+                    base_url,
+                    capture,
+                    manifest,
+                    route,
+                    reference_actions,
+                    artifact,
+                    side="reference",
+                )
+            except Exception as exc:
+                artifact["visual_blocks"] = {
+                    "status": "error",
+                    "reason": f"{type(exc).__name__}: {exc}",
+                    "blocks": [],
+                    "block_count": 0,
+                    "artifact_source": "isolated_playwright_manifest_state",
+                }
+                artifact["extraction_errors"].append({"metric": "visual_blocks", "message": artifact["visual_blocks"]["reason"]})
+        _write_json(artifact_dir / f"{capture['id']}.json", artifact)
+        return artifact, reference_actions
+    finally:
+        await context.close()
+
+
+async def _capture_candidate_async(
+    browser: AsyncBrowser,
+    base_url: str,
+    capture: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    reference_actions: list[dict[str, Any]],
+    artifact_dir: Path,
+    *,
+    include_visual_blocks: bool,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    defaults = manifest.get("defaults", {})
+    context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = await context.new_page()
+    try:
+        await _goto_capture_async(page, base_url, route, capture, defaults)
+        candidate_actions = await _execute_candidate_actions_async(page, reference_actions)
+        artifact = await _artifact_from_page_async(page, capture, defaults, artifact_dir, candidate_actions, side="candidate")
+        artifact["route"] = route
+        if include_visual_blocks:
+            try:
+                artifact["visual_blocks"] = await _extract_visual_blocks_for_artifact_async(
+                    browser,
+                    base_url,
+                    capture,
+                    manifest,
+                    route,
+                    reference_actions,
+                    artifact,
+                    side="candidate",
+                )
+            except Exception as exc:
+                artifact["visual_blocks"] = {
+                    "status": "error",
+                    "reason": f"{type(exc).__name__}: {exc}",
+                    "blocks": [],
+                    "block_count": 0,
+                    "artifact_source": "isolated_playwright_manifest_state",
+                }
+                artifact["extraction_errors"].append({"metric": "visual_blocks", "message": artifact["visual_blocks"]["reason"]})
+        _write_json(artifact_dir / f"{capture['id']}.json", artifact)
+        return artifact, candidate_actions
+    finally:
+        await context.close()
+
+
+async def _capture_candidate_from_manifest_async(
+    browser: AsyncBrowser,
+    base_url: str,
+    capture: dict[str, Any],
+    manifest: dict[str, Any],
+    route: dict[str, Any],
+    artifact_dir: Path,
+    *,
+    include_visual_blocks: bool,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    defaults = manifest.get("defaults", {})
+    context = await browser.new_context(device_scale_factor=defaults.get("deviceScaleFactor", 1))
+    page = await context.new_page()
+    try:
+        await _goto_capture_async(page, base_url, route, capture, defaults)
+        candidate_actions = await _execute_direct_manifest_actions_async(page, capture)
+        artifact = await _artifact_from_page_async(page, capture, defaults, artifact_dir, candidate_actions, side="candidate")
+        artifact["route"] = route
+        artifact["capture_source"] = "candidate_manifest"
+        if include_visual_blocks:
+            try:
+                artifact["visual_blocks"] = await _extract_visual_blocks_for_artifact_async(
+                    browser,
+                    base_url,
+                    capture,
+                    manifest,
+                    route,
+                    candidate_actions,
+                    artifact,
+                    side="candidate",
+                    direct_candidate_actions=True,
+                )
+            except Exception as exc:
+                artifact["visual_blocks"] = {
+                    "status": "error",
+                    "reason": f"{type(exc).__name__}: {exc}",
+                    "blocks": [],
+                    "block_count": 0,
+                    "artifact_source": "isolated_playwright_manifest_state",
+                }
+                artifact["extraction_errors"].append({"metric": "visual_blocks", "message": artifact["visual_blocks"]["reason"]})
+        _write_json(artifact_dir / f"{capture['id']}.json", artifact)
+        return artifact, candidate_actions
+    finally:
+        await context.close()
+
+
 def _capture_coverage(route: dict[str, Any], actions: list[dict[str, Any]], screenshot_path: str | None) -> dict[str, Any]:
     if route.get("status") != "resolved" or not screenshot_path:
         return {
@@ -1922,6 +2627,8 @@ def _run_pair_metrics(
     reference_route: dict[str, Any],
     candidate_route: dict[str, Any],
     config: EvaluateConfig,
+    *,
+    vlm_semaphore: threading.Semaphore | None = None,
 ) -> dict[str, Any]:
     reference_screenshot = reference_artifact.get("screenshot_path")
     candidate_screenshot = candidate_artifact.get("screenshot_path")
@@ -1987,7 +2694,8 @@ def _run_pair_metrics(
         pair["vlm_judge"] = {"skipped": True, "reason": "OPENAI_API_KEY unavailable"}
     else:
         try:
-            pair["vlm_judge"] = vlm_judge_score(reference_screenshot, candidate_screenshot, model=config.vlm_model)
+            with vlm_semaphore or nullcontext():
+                pair["vlm_judge"] = vlm_judge_score(reference_screenshot, candidate_screenshot, model=config.vlm_model)
         except Exception as exc:
             pair["vlm_judge"] = _metric_error("vlm_judge", exc)
 
@@ -2065,6 +2773,491 @@ def _run_pair_metrics(
         pair["bbox_geometry"] = {"unsupported": True, "reason": "visual block disabled"}
         pair["cssom_block_style"] = {"unsupported": True, "reason": "visual block disabled"}
     return pair
+
+
+async def _run_pair_metrics_async(
+    reference_artifact: dict[str, Any],
+    candidate_artifact: dict[str, Any],
+    reference_route: dict[str, Any],
+    candidate_route: dict[str, Any],
+    config: EvaluateConfig,
+    *,
+    vlm_semaphore: asyncio.Semaphore,
+    dreamsim_semaphore: asyncio.Semaphore,
+) -> dict[str, Any]:
+    reference_screenshot = reference_artifact.get("screenshot_path")
+    candidate_screenshot = candidate_artifact.get("screenshot_path")
+    if not reference_screenshot or not candidate_screenshot:
+        return {
+            "status": "missing",
+            "reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
+        }
+
+    pair: dict[str, Any] = {
+        "status": "scored",
+        "reference_screenshot": reference_screenshot,
+        "candidate_screenshot": candidate_screenshot,
+        "screenshot_size_match": screenshot_size_match_score(reference_screenshot, candidate_screenshot),
+        "pixelmatch": pixelmatch_score(reference_screenshot, candidate_screenshot),
+        "reference_render_sanity": render_sanity_score(reference_screenshot),
+        "candidate_render_sanity": render_sanity_score(candidate_screenshot),
+    }
+    reference_html = reference_artifact.get("outer_html")
+    candidate_html = candidate_artifact.get("outer_html")
+    if reference_html and candidate_html:
+        try:
+            pair["html_text"] = {
+                **webcode2m_text_score(reference_html, candidate_html),
+                "artifact_source": "rendered_outer_html",
+            }
+        except Exception as exc:
+            pair["html_text"] = _metric_error("html_text", exc)
+        try:
+            pair["html_tree"] = {
+                **webcode2m_dom_score(reference_html, candidate_html),
+                "artifact_source": "rendered_outer_html",
+            }
+        except Exception as exc:
+            pair["html_tree"] = _metric_error("html_tree", exc)
+    else:
+        pair["html_text"] = {"unsupported": True, "reason": "rendered_outer_html_missing"}
+        pair["html_tree"] = {"unsupported": True, "reason": "rendered_outer_html_missing"}
+
+    if config.skip_dreamsim:
+        pair["dreamsim"] = {"skipped": True, "reason": "--skip-dreamsim"}
+    else:
+        try:
+            async with dreamsim_semaphore:
+                distance = await asyncio.to_thread(
+                    dreamsim_distance,
+                    reference_screenshot,
+                    candidate_screenshot,
+                    device=config.dreamsim_device,
+                    dreamsim_type=config.dreamsim_type,
+                    cache_dir=config.dreamsim_cache_dir,
+                )
+            pair["dreamsim"] = {
+                "distance": distance,
+                "score": _score_from_dreamsim(distance),
+                "dreamsim_type": config.dreamsim_type,
+                "device": _pick_torch_device(config.dreamsim_device),
+            }
+        except Exception as exc:
+            pair["dreamsim"] = _metric_error("dreamsim", exc)
+
+    if config.skip_vlm:
+        pair["vlm_judge"] = {"skipped": True, "reason": "--skip-vlm"}
+    elif not os.environ.get("OPENAI_API_KEY"):
+        pair["vlm_judge"] = {"skipped": True, "reason": "OPENAI_API_KEY unavailable"}
+    else:
+        try:
+            async with vlm_semaphore:
+                pair["vlm_judge"] = await asyncio.to_thread(
+                    vlm_judge_score,
+                    reference_screenshot,
+                    candidate_screenshot,
+                    model=config.vlm_model,
+                )
+        except Exception as exc:
+            pair["vlm_judge"] = _metric_error("vlm_judge", exc)
+
+    if config.include_visual_block:
+        reference_visual_blocks = reference_artifact.get("visual_blocks") or {}
+        candidate_visual_blocks = candidate_artifact.get("visual_blocks") or {}
+        if reference_visual_blocks.get("status") == "ok" and candidate_visual_blocks.get("status") == "ok":
+            try:
+                visual = await asyncio.to_thread(
+                    visual_block_score_from_blocks,
+                    reference_visual_blocks.get("blocks", []),
+                    candidate_visual_blocks.get("blocks", []),
+                    reference_screenshot,
+                    candidate_screenshot,
+                    device=config.visual_block_device,
+                    include_pairs=True,
+                    include_block_pixelmatch=True,
+                    include_masked_clip=False,
+                )
+                pair["visual_block"] = visual
+                pair["bbox_geometry"] = {
+                    **_score_bbox_geometry(
+                        visual.get("matched_pairs", []),
+                        coverage_score=float(visual.get("size", 0.0)),
+                    ),
+                    "visual_block": {
+                        key: visual.get(key)
+                        for key in (
+                            "score",
+                            "size",
+                            "text",
+                            "position",
+                            "text_color",
+                            "masked_clip",
+                            "reference_block_count",
+                            "candidate_block_count",
+                            "matched_pair_count",
+                            "unmatched_reference_count",
+                            "unmatched_candidate_count",
+                        )
+                    },
+                }
+                try:
+                    reference_cssom = reference_artifact.get("cssom")
+                    candidate_cssom = candidate_artifact.get("cssom")
+                    if not reference_cssom or not candidate_cssom:
+                        pair["cssom_block_style"] = {"unsupported": True, "reason": "cssom_snapshot_missing"}
+                    else:
+                        pair["cssom_block_style"] = cssom_block_style_score_from_snapshots(
+                            reference_cssom,
+                            candidate_cssom,
+                            visual,
+                        )
+                except Exception as exc:
+                    pair["cssom_block_style"] = _metric_error("cssom_block_style", exc)
+            except Exception as exc:
+                pair["visual_block"] = _metric_error("visual_block", exc)
+                pair["bbox_geometry"] = {"unsupported": True, "reason": "visual_block_failed"}
+                pair["cssom_block_style"] = {"unsupported": True, "reason": "visual_block_failed"}
+        else:
+            reason = (
+                reference_visual_blocks.get("reason")
+                or candidate_visual_blocks.get("reason")
+                or "visual_block_artifact_missing"
+            )
+            pair["visual_block"] = {
+                "unsupported": True,
+                "reason": reason,
+                "reference_status": reference_visual_blocks.get("status"),
+                "candidate_status": candidate_visual_blocks.get("status"),
+            }
+            pair["bbox_geometry"] = {"unsupported": True, "reason": "visual_block_artifact_missing"}
+            pair["cssom_block_style"] = {"unsupported": True, "reason": "visual_block_artifact_missing"}
+    else:
+        pair["visual_block"] = {"unsupported": True, "reason": "visual block disabled"}
+        pair["bbox_geometry"] = {"unsupported": True, "reason": "visual block disabled"}
+        pair["cssom_block_style"] = {"unsupported": True, "reason": "visual block disabled"}
+    return pair
+
+
+async def _evaluate_capture_async(
+    browser: AsyncBrowser,
+    capture: dict[str, Any],
+    *,
+    config: EvaluateConfig,
+    reference_manifest: dict[str, Any],
+    candidate_manifest: dict[str, Any] | None,
+    candidate_captures_by_id: dict[str, dict[str, Any]],
+    candidate_route_inventory: list[dict[str, Any]],
+    reference_base_url: str,
+    candidate_base_url: str,
+    reference_artifact_dir: Path,
+    candidate_artifact_dir: Path,
+    capture_semaphore: asyncio.Semaphore,
+    vlm_semaphore: asyncio.Semaphore,
+    dreamsim_semaphore: asyncio.Semaphore,
+) -> tuple[str, dict[str, Any], dict[str, Any]]:
+    capture_id = capture["id"]
+    reference_route = _route_for_capture(config.reference_root, capture)
+    candidate_capture = candidate_captures_by_id.get(capture_id)
+    if candidate_manifest is not None and candidate_capture is None:
+        candidate_route = {
+            "requested_path": capture.get("path") or capture.get("urlPath") or "/index.html",
+            "resolved_path": None,
+            "file_path": None,
+            "confidence": 0.0,
+            "status": "missing",
+            "method": "candidate_manifest",
+            "failure_mode": "candidate_manifest_capture_missing",
+        }
+    else:
+        candidate_route = _route_for_capture(
+            config.candidate_root,
+            candidate_capture or capture,
+            route_inventory=candidate_route_inventory,
+        )
+
+    async with capture_semaphore:
+        if reference_route["status"] != "resolved":
+            reference_artifact = _missing_artifact(
+                capture,
+                reference_artifact_dir,
+                side="reference",
+                reason=reference_route["failure_mode"] or "reference_route_missing",
+                route=reference_route,
+            )
+            reference_actions: list[dict[str, Any]] = []
+        else:
+            reference_artifact, reference_actions = await _capture_reference_async(
+                browser,
+                reference_base_url,
+                capture,
+                reference_manifest,
+                reference_route,
+                reference_artifact_dir,
+                include_visual_blocks=config.include_visual_block,
+            )
+
+        if candidate_route["status"] != "resolved":
+            candidate_artifact = _missing_artifact(
+                capture,
+                candidate_artifact_dir,
+                side="candidate",
+                reason=candidate_route["failure_mode"] or "candidate_route_missing",
+                route=candidate_route,
+            )
+            candidate_actions: list[dict[str, Any]] = []
+        else:
+            try:
+                if candidate_capture is not None:
+                    candidate_artifact, candidate_actions = await _capture_candidate_from_manifest_async(
+                        browser,
+                        candidate_base_url,
+                        candidate_capture,
+                        reference_manifest,
+                        candidate_route,
+                        candidate_artifact_dir,
+                        include_visual_blocks=config.include_visual_block,
+                    )
+                else:
+                    candidate_artifact, candidate_actions = await _capture_candidate_async(
+                        browser,
+                        candidate_base_url,
+                        capture,
+                        reference_manifest,
+                        candidate_route,
+                        reference_actions,
+                        candidate_artifact_dir,
+                        include_visual_blocks=config.include_visual_block,
+                    )
+            except Exception as exc:
+                candidate_artifact = _missing_artifact(
+                    capture,
+                    candidate_artifact_dir,
+                    side="candidate",
+                    reason=f"candidate_capture_failed: {type(exc).__name__}: {exc}",
+                    route=candidate_route,
+                )
+                candidate_actions = []
+
+    coverage = _capture_coverage(
+        candidate_route,
+        candidate_actions,
+        candidate_artifact.get("screenshot_path"),
+    )
+    plan_payload = {
+        "capture": capture,
+        "candidate_capture": candidate_capture,
+        "route_resolution": candidate_route,
+        "actions": candidate_actions,
+        "coverage": coverage,
+    }
+    result_payload = {
+        "capture": capture,
+        "reference_artifact": str(reference_artifact_dir / f"{capture_id}.json"),
+        "candidate_artifact": str(candidate_artifact_dir / f"{capture_id}.json"),
+        "reference_route": reference_route,
+        "candidate_route": candidate_route,
+        "candidate_capture_source": "candidate_manifest" if candidate_capture is not None else "deterministic",
+        "coverage": coverage,
+        "metrics": {"status": "pending"},
+        "missing_reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
+    }
+
+    if coverage["score"] <= 0:
+        result_payload["metrics"] = {
+            "status": "unsupported",
+            "reason": coverage.get("reason") or candidate_artifact.get("missing_reason"),
+            "reference_screenshot": reference_artifact.get("screenshot_path"),
+            "candidate_screenshot": candidate_artifact.get("screenshot_path"),
+        }
+    else:
+        result_payload["metrics"] = await _run_pair_metrics_async(
+            reference_artifact,
+            candidate_artifact,
+            reference_route,
+            candidate_route,
+            config,
+            vlm_semaphore=vlm_semaphore,
+            dreamsim_semaphore=dreamsim_semaphore,
+        )
+
+    return capture_id, plan_payload, result_payload
+
+
+async def _evaluate_captures_async(
+    captures: list[dict[str, Any]],
+    *,
+    config: EvaluateConfig,
+    reference_manifest: dict[str, Any],
+    candidate_manifest: dict[str, Any] | None,
+    candidate_captures_by_id: dict[str, dict[str, Any]],
+    candidate_route_inventory: list[dict[str, Any]],
+    reference_base_url: str,
+    candidate_base_url: str,
+    reference_artifact_dir: Path,
+    candidate_artifact_dir: Path,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    capture_semaphore = asyncio.Semaphore(max(1, int(config.capture_concurrency)))
+    vlm_semaphore = asyncio.Semaphore(max(1, int(config.vlm_concurrency)))
+    dreamsim_semaphore = asyncio.Semaphore(1)
+    tasks: dict[str, asyncio.Task[tuple[str, dict[str, Any], dict[str, Any]]]] = {}
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch(headless=True)
+        try:
+            async with asyncio.TaskGroup() as task_group:
+                for capture in captures:
+                    tasks[capture["id"]] = task_group.create_task(
+                        _evaluate_capture_async(
+                            browser,
+                            capture,
+                            config=config,
+                            reference_manifest=reference_manifest,
+                            candidate_manifest=candidate_manifest,
+                            candidate_captures_by_id=candidate_captures_by_id,
+                            candidate_route_inventory=candidate_route_inventory,
+                            reference_base_url=reference_base_url,
+                            candidate_base_url=candidate_base_url,
+                            reference_artifact_dir=reference_artifact_dir,
+                            candidate_artifact_dir=candidate_artifact_dir,
+                            capture_semaphore=capture_semaphore,
+                            vlm_semaphore=vlm_semaphore,
+                            dreamsim_semaphore=dreamsim_semaphore,
+                        )
+                    )
+        finally:
+            await browser.close()
+
+    plan_rows: dict[str, Any] = {}
+    result_rows: dict[str, Any] = {}
+    for capture in captures:
+        capture_id, plan_payload, result_payload = tasks[capture["id"]].result()
+        plan_rows[capture_id] = plan_payload
+        result_rows[capture_id] = result_payload
+    return plan_rows, result_rows
+
+
+def _evaluate_animations_sync(
+    animations: list[dict[str, Any]],
+    *,
+    config: EvaluateConfig,
+    reference_manifest: dict[str, Any],
+    candidate_manifest: dict[str, Any] | None,
+    candidate_animations_by_id: dict[str, dict[str, Any]],
+    candidate_route_inventory: list[dict[str, Any]],
+    reference_base_url: str,
+    candidate_base_url: str,
+    reference_artifact_dir: Path,
+    candidate_artifact_dir: Path,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    from playwright.sync_api import sync_playwright
+
+    plan_rows: dict[str, Any] = {}
+    result_rows: dict[str, Any] = {}
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        try:
+            for animation in animations:
+                animation_id = animation["id"]
+                reference_route = _route_for_capture(config.reference_root, animation)
+                candidate_animation = candidate_animations_by_id.get(animation_id)
+                if candidate_manifest is not None and candidate_animation is None:
+                    candidate_route = {
+                        "requested_path": animation.get("path") or animation.get("urlPath") or "/index.html",
+                        "resolved_path": None,
+                        "file_path": None,
+                        "confidence": 0.0,
+                        "status": "missing",
+                        "method": "candidate_manifest",
+                        "failure_mode": "candidate_manifest_animation_missing",
+                    }
+                else:
+                    candidate_route = _route_for_capture(
+                        config.candidate_root,
+                        candidate_animation or animation,
+                        route_inventory=candidate_route_inventory,
+                    )
+
+                if reference_route["status"] != "resolved":
+                    reference_artifact = {
+                        "animation_id": animation_id,
+                        "side": "reference",
+                        "missing_reason": reference_route["failure_mode"] or "reference_route_missing",
+                        "timeline": [],
+                    }
+                    reference_target_resolutions = []
+                    reference_trigger_signature = None
+                    _write_json(reference_artifact_dir / "animations" / animation_id / "timeline.json", reference_artifact)
+                else:
+                    try:
+                        reference_artifact, reference_target_resolutions, reference_trigger_signature = _capture_reference_animation(
+                            browser,
+                            reference_base_url,
+                            animation,
+                            reference_manifest,
+                            reference_route,
+                            reference_artifact_dir,
+                        )
+                    except Exception as exc:
+                        reference_artifact = {
+                            "animation_id": animation_id,
+                            "side": "reference",
+                            "missing_reason": f"reference_animation_capture_failed: {type(exc).__name__}: {exc}",
+                            "timeline": [],
+                        }
+                        reference_target_resolutions = []
+                        reference_trigger_signature = None
+                        _write_json(reference_artifact_dir / "animations" / animation_id / "timeline.json", reference_artifact)
+
+                if candidate_route["status"] != "resolved":
+                    candidate_artifact = {
+                        "animation_id": animation_id,
+                        "side": "candidate",
+                        "missing_reason": candidate_route["failure_mode"] or "candidate_route_missing",
+                        "timeline": [],
+                    }
+                    candidate_target_resolutions = []
+                    _write_json(candidate_artifact_dir / "animations" / animation_id / "timeline.json", candidate_artifact)
+                else:
+                    try:
+                        candidate_artifact, candidate_target_resolutions = _capture_candidate_animation(
+                            browser,
+                            candidate_base_url,
+                            candidate_animation or animation,
+                            reference_manifest,
+                            candidate_route,
+                            reference_target_resolutions,
+                            reference_trigger_signature,
+                            candidate_artifact_dir,
+                        )
+                    except Exception as exc:
+                        candidate_artifact = {
+                            "animation_id": animation_id,
+                            "side": "candidate",
+                            "missing_reason": f"candidate_animation_capture_failed: {type(exc).__name__}: {exc}",
+                            "timeline": [],
+                        }
+                        candidate_target_resolutions = []
+                        _write_json(candidate_artifact_dir / "animations" / animation_id / "timeline.json", candidate_artifact)
+
+                plan_rows[animation_id] = {
+                    "animation": animation,
+                    "candidate_animation": candidate_animation,
+                    "route_resolution": candidate_route,
+                    "target_resolutions": candidate_target_resolutions,
+                }
+                result_rows[animation_id] = {
+                    "animation": animation,
+                    "candidate_animation": candidate_animation,
+                    "reference_artifact": str(reference_artifact_dir / "animations" / animation_id / "timeline.json"),
+                    "candidate_artifact": str(candidate_artifact_dir / "animations" / animation_id / "timeline.json"),
+                    "reference_route": reference_route,
+                    "candidate_route": candidate_route,
+                    "candidate_animation_source": "candidate_manifest" if candidate_animation is not None else "deterministic",
+                    "metrics": _score_animation_pair(reference_artifact, candidate_artifact),
+                    "missing_reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
+                }
+        finally:
+            browser.close()
+    return plan_rows, result_rows
 
 
 def _md_table(headers: list[str], rows: list[list[Any]]) -> str:
@@ -2312,6 +3505,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
             config.output_dir / "generated-candidate-manifest.json",
             model=config.candidate_manifest_model,
             repo_root=config.repo_root,
+            reference_root=config.reference_root,
             backend=config.candidate_manifest_planner,
             claude_auth=config.candidate_manifest_claude_auth,
         )
@@ -2321,8 +3515,11 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
         for capture in (candidate_manifest or {}).get("captures") or []
         if isinstance(capture, dict) and capture.get("id")
     }
-
-    from playwright.sync_api import sync_playwright
+    candidate_animations_by_id = {
+        str(animation["id"]): animation
+        for animation in (candidate_manifest or {}).get("animations") or []
+        if isinstance(animation, dict) and animation.get("id")
+    }
 
     reference_server = StaticServer.start(config.reference_root)
     candidate_server = StaticServer.start(config.candidate_root)
@@ -2352,235 +3549,52 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
             "dreamsim_device": _pick_torch_device(config.dreamsim_device),
             "visual_block_device": config.visual_block_device,
             "candidate_manifest_planner": candidate_manifest_result,
+            "capture_concurrency": config.capture_concurrency,
+            "vlm_concurrency": config.vlm_concurrency,
         },
         "captures": {},
         "animations": {},
     }
 
     try:
-        with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(headless=True)
-            try:
-                for capture in captures:
-                    capture_id = capture["id"]
-                    reference_route = _route_for_capture(config.reference_root, capture)
-                    candidate_capture = candidate_captures_by_id.get(capture_id)
-                    if candidate_manifest is not None and candidate_capture is None:
-                        candidate_route = {
-                            "requested_path": capture.get("path") or capture.get("urlPath") or "/index.html",
-                            "resolved_path": None,
-                            "file_path": None,
-                            "confidence": 0.0,
-                            "status": "missing",
-                            "method": "candidate_manifest",
-                            "failure_mode": "candidate_manifest_capture_missing",
-                        }
-                    else:
-                        candidate_route = _route_for_capture(
-                            config.candidate_root,
-                            candidate_capture or capture,
-                            route_inventory=candidate_route_inventory,
-                        )
-                    reference_artifact_dir = config.output_dir / "artifacts" / "reference"
-                    candidate_artifact_dir = config.output_dir / "artifacts" / "candidate"
+        reference_artifact_dir = config.output_dir / "artifacts" / "reference"
+        candidate_artifact_dir = config.output_dir / "artifacts" / "candidate"
+        if captures:
+            capture_plan_rows, capture_result_rows = asyncio.run(
+                _evaluate_captures_async(
+                    captures,
+                    config=config,
+                    reference_manifest=reference_manifest,
+                    candidate_manifest=candidate_manifest,
+                    candidate_captures_by_id=candidate_captures_by_id,
+                    candidate_route_inventory=candidate_route_inventory,
+                    reference_base_url=reference_server.base_url,
+                    candidate_base_url=candidate_server.base_url,
+                    reference_artifact_dir=reference_artifact_dir,
+                    candidate_artifact_dir=candidate_artifact_dir,
+                )
+            )
+            candidate_plan["captures"].update(capture_plan_rows)
+            result["captures"].update(capture_result_rows)
 
-                    if reference_route["status"] != "resolved":
-                        reference_artifact = _missing_artifact(
-                            capture,
-                            reference_artifact_dir,
-                            side="reference",
-                            reason=reference_route["failure_mode"] or "reference_route_missing",
-                            route=reference_route,
-                        )
-                        reference_actions: list[dict[str, Any]] = []
-                    else:
-                        reference_artifact, reference_actions = _capture_reference(
-                            browser,
-                            reference_server.base_url,
-                            capture,
-                            reference_manifest,
-                            reference_route,
-                            reference_artifact_dir,
-                            include_visual_blocks=config.include_visual_block,
-                        )
-
-                    if candidate_route["status"] != "resolved":
-                        candidate_artifact = _missing_artifact(
-                            capture,
-                            candidate_artifact_dir,
-                            side="candidate",
-                            reason=candidate_route["failure_mode"] or "candidate_route_missing",
-                            route=candidate_route,
-                        )
-                        candidate_actions: list[dict[str, Any]] = []
-                    else:
-                        try:
-                            if candidate_capture is not None:
-                                candidate_artifact, candidate_actions = _capture_candidate_from_manifest(
-                                    browser,
-                                    candidate_server.base_url,
-                                    candidate_capture,
-                                    reference_manifest,
-                                    candidate_route,
-                                    candidate_artifact_dir,
-                                    include_visual_blocks=config.include_visual_block,
-                                )
-                            else:
-                                candidate_artifact, candidate_actions = _capture_candidate(
-                                    browser,
-                                    candidate_server.base_url,
-                                    capture,
-                                    reference_manifest,
-                                    candidate_route,
-                                    reference_actions,
-                                    candidate_artifact_dir,
-                                    include_visual_blocks=config.include_visual_block,
-                                )
-                        except Exception as exc:
-                            candidate_artifact = _missing_artifact(
-                                capture,
-                                candidate_artifact_dir,
-                                side="candidate",
-                                reason=f"candidate_capture_failed: {type(exc).__name__}: {exc}",
-                                route=candidate_route,
-                            )
-                            candidate_actions = []
-
-                    coverage = _capture_coverage(
-                        candidate_route,
-                        candidate_actions,
-                        candidate_artifact.get("screenshot_path"),
-                    )
-                    candidate_plan["captures"][capture_id] = {
-                        "capture": capture,
-                        "candidate_capture": candidate_capture,
-                        "route_resolution": candidate_route,
-                        "actions": candidate_actions,
-                        "coverage": coverage,
-                    }
-                    result["captures"][capture_id] = {
-                        "capture": capture,
-                        "reference_artifact": str(reference_artifact_dir / f"{capture_id}.json"),
-                        "candidate_artifact": str(candidate_artifact_dir / f"{capture_id}.json"),
-                        "reference_route": reference_route,
-                        "candidate_route": candidate_route,
-                        "candidate_capture_source": "candidate_manifest" if candidate_capture is not None else "deterministic",
-                        "coverage": coverage,
-                        "metrics": {"status": "pending"},
-                        "missing_reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
-                    }
-                for animation in animations:
-                    animation_id = animation["id"]
-                    reference_route = _route_for_capture(config.reference_root, animation)
-                    candidate_route = _route_for_capture(
-                        config.candidate_root,
-                        animation,
-                        route_inventory=candidate_route_inventory,
-                    )
-                    reference_artifact_dir = config.output_dir / "artifacts" / "reference"
-                    candidate_artifact_dir = config.output_dir / "artifacts" / "candidate"
-
-                    if reference_route["status"] != "resolved":
-                        reference_artifact = {
-                            "animation_id": animation_id,
-                            "side": "reference",
-                            "missing_reason": reference_route["failure_mode"] or "reference_route_missing",
-                            "timeline": [],
-                        }
-                        reference_target_resolutions = []
-                        reference_trigger_signature = None
-                        _write_json(reference_artifact_dir / "animations" / animation_id / "timeline.json", reference_artifact)
-                    else:
-                        try:
-                            reference_artifact, reference_target_resolutions, reference_trigger_signature = _capture_reference_animation(
-                                browser,
-                                reference_server.base_url,
-                                animation,
-                                reference_manifest,
-                                reference_route,
-                                reference_artifact_dir,
-                            )
-                        except Exception as exc:
-                            reference_artifact = {
-                                "animation_id": animation_id,
-                                "side": "reference",
-                                "missing_reason": f"reference_animation_capture_failed: {type(exc).__name__}: {exc}",
-                                "timeline": [],
-                            }
-                            reference_target_resolutions = []
-                            reference_trigger_signature = None
-                            _write_json(reference_artifact_dir / "animations" / animation_id / "timeline.json", reference_artifact)
-
-                    if candidate_route["status"] != "resolved":
-                        candidate_artifact = {
-                            "animation_id": animation_id,
-                            "side": "candidate",
-                            "missing_reason": candidate_route["failure_mode"] or "candidate_route_missing",
-                            "timeline": [],
-                        }
-                        candidate_target_resolutions = []
-                        _write_json(candidate_artifact_dir / "animations" / animation_id / "timeline.json", candidate_artifact)
-                    else:
-                        try:
-                            candidate_artifact, candidate_target_resolutions = _capture_candidate_animation(
-                                browser,
-                                candidate_server.base_url,
-                                animation,
-                                reference_manifest,
-                                candidate_route,
-                                reference_target_resolutions,
-                                reference_trigger_signature,
-                                candidate_artifact_dir,
-                            )
-                        except Exception as exc:
-                            candidate_artifact = {
-                                "animation_id": animation_id,
-                                "side": "candidate",
-                                "missing_reason": f"candidate_animation_capture_failed: {type(exc).__name__}: {exc}",
-                                "timeline": [],
-                            }
-                            candidate_target_resolutions = []
-                            _write_json(candidate_artifact_dir / "animations" / animation_id / "timeline.json", candidate_artifact)
-
-                    candidate_plan["animations"][animation_id] = {
-                        "animation": animation,
-                        "route_resolution": candidate_route,
-                        "target_resolutions": candidate_target_resolutions,
-                    }
-                    result["animations"][animation_id] = {
-                        "animation": animation,
-                        "reference_artifact": str(reference_artifact_dir / "animations" / animation_id / "timeline.json"),
-                        "candidate_artifact": str(candidate_artifact_dir / "animations" / animation_id / "timeline.json"),
-                        "reference_route": reference_route,
-                        "candidate_route": candidate_route,
-                        "metrics": _score_animation_pair(reference_artifact, candidate_artifact),
-                        "missing_reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
-                    }
-            finally:
-                browser.close()
+        if animations:
+            animation_plan_rows, animation_result_rows = _evaluate_animations_sync(
+                animations,
+                config=config,
+                reference_manifest=reference_manifest,
+                candidate_manifest=candidate_manifest,
+                candidate_animations_by_id=candidate_animations_by_id,
+                candidate_route_inventory=candidate_route_inventory,
+                reference_base_url=reference_server.base_url,
+                candidate_base_url=candidate_server.base_url,
+                reference_artifact_dir=reference_artifact_dir,
+                candidate_artifact_dir=candidate_artifact_dir,
+            )
+            candidate_plan["animations"].update(animation_plan_rows)
+            result["animations"].update(animation_result_rows)
     finally:
         reference_server.close()
         candidate_server.close()
-
-    for capture_payload in result["captures"].values():
-        reference_artifact = _read_json(Path(capture_payload["reference_artifact"]))
-        candidate_artifact = _read_json(Path(capture_payload["candidate_artifact"]))
-        coverage = capture_payload["coverage"]
-        if coverage["score"] <= 0:
-            capture_payload["metrics"] = {
-                "status": "unsupported",
-                "reason": coverage.get("reason") or candidate_artifact.get("missing_reason"),
-                "reference_screenshot": reference_artifact.get("screenshot_path"),
-                "candidate_screenshot": candidate_artifact.get("screenshot_path"),
-            }
-        else:
-            capture_payload["metrics"] = _run_pair_metrics(
-                reference_artifact,
-                candidate_artifact,
-                capture_payload["reference_route"],
-                capture_payload["candidate_route"],
-                config,
-            )
 
     result["summary"] = _summarize(result)
     result["metadata"]["elapsed_seconds"] = round(time.time() - started, 3)

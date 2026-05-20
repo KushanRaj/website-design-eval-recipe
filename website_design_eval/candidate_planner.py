@@ -43,9 +43,94 @@ def _oracle_capture_prior(reference_manifest: dict[str, Any]) -> list[dict[str, 
     return captures
 
 
+def _oracle_animation_prior(reference_manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    animations = []
+    for animation in reference_manifest.get("animations") or []:
+        if not isinstance(animation, dict) or not _enabled_capture(animation):
+            continue
+        animations.append(
+            {
+                key: animation[key]
+                for key in ("id", "kind", "weight", "page", "path", "viewport", "trigger", "timeline", "targets")
+                if key in animation
+            }
+        )
+    return animations
+
+
+def _reference_animation_evidence(
+    oracle_animations: list[dict[str, Any]],
+    reference_inventory: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    if not reference_inventory:
+        return []
+    pages_by_path = {
+        page.get("path"): page
+        for page in reference_inventory.get("pages") or []
+        if isinstance(page, dict) and page.get("path")
+    }
+    evidence = []
+    for animation in oracle_animations:
+        page = pages_by_path.get(animation.get("path"))
+        if not page:
+            continue
+        elements = []
+        for group in ("controls", "interaction_candidates", "sections"):
+            for element in page.get(group) or []:
+                if isinstance(element, dict):
+                    compact = {
+                        key: element.get(key)
+                        for key in (
+                            "selector",
+                            "tag",
+                            "role",
+                            "class_name",
+                            "text",
+                            "accessible_name",
+                            "bbox_px",
+                        )
+                        if element.get(key) not in (None, "")
+                    }
+                    compact["source_group"] = group
+                    elements.append(compact)
+
+        selectors = set()
+        trigger = animation.get("trigger") or {}
+        if trigger.get("selector"):
+            selectors.add(str(trigger["selector"]))
+        for target in animation.get("targets") or []:
+            if isinstance(target, dict) and target.get("selector"):
+                selectors.add(str(target["selector"]))
+
+        matches = []
+        seen = set()
+        for element in elements:
+            selector = element.get("selector")
+            if selector in selectors and selector not in seen:
+                matches.append(element)
+                seen.add(selector)
+
+        evidence.append(
+            {
+                "id": animation.get("id"),
+                "path": animation.get("path"),
+                "trigger_selector": trigger.get("selector"),
+                "target_selectors": [
+                    target.get("selector")
+                    for target in animation.get("targets") or []
+                    if isinstance(target, dict) and target.get("selector")
+                ],
+                "matched_reference_elements": matches,
+            }
+        )
+    return evidence
+
+
 def _candidate_planner_prompt(
     *,
     oracle_captures: list[dict[str, Any]],
+    oracle_animations: list[dict[str, Any]],
+    oracle_animation_evidence: list[dict[str, Any]],
     candidate_inventory: dict[str, Any],
     output_path: Path,
 ) -> str:
@@ -69,6 +154,20 @@ For each oracle capture:
 - If the visible state cannot be reproduced from the candidate inventory, omit
   that capture. The evaluator will score it as missing coverage.
 
+For each oracle animation:
+- Preserve the oracle animation id exactly.
+- Preserve the oracle animation intent, channels, timeline, and viewport.
+- Choose the candidate route/path, trigger selector/action, and target
+  selector(s) that best reproduce the same animated element/state.
+- The trigger selector and target selector may be different elements.
+- Use the oracle animation evidence to distinguish similarly named elements.
+  For example, if the oracle target evidence is a large card and the trigger is
+  a map marker, choose the candidate card as the target even when the marker is
+  also clickable.
+- If the corresponding candidate animation cannot be identified from the
+  candidate inventory and source files, omit that animation. The evaluator will
+  score it as missing animation coverage.
+
 Do not invent routes or selectors. Use only paths and selector_candidates shown
 in the candidate browser inventory. Prefer selector_candidates with count=1.
 Prefer data_attr, id, name, aria_label, and semantic selectors over nth_path.
@@ -84,6 +183,12 @@ The caller will write the output to:
 Oracle captures to align:
 {json.dumps(oracle_captures, indent=2)}
 
+Oracle animations to align:
+{json.dumps(oracle_animations, indent=2)}
+
+Oracle animation target/trigger evidence:
+{json.dumps(oracle_animation_evidence, indent=2)}
+
 Candidate browser-rendered inventory:
 {json.dumps(candidate_inventory, indent=2)}
 """.strip()
@@ -95,6 +200,8 @@ async def _generate_candidate_manifest_claude_code_async(
     output_path: Path,
     model: str,
     oracle_captures: list[dict[str, Any]],
+    oracle_animations: list[dict[str, Any]],
+    oracle_animation_evidence: list[dict[str, Any]],
     candidate_inventory: dict[str, Any],
     auth_mode: ClaudeAuthMode,
 ) -> dict[str, Any]:
@@ -122,6 +229,8 @@ async def _generate_candidate_manifest_claude_code_async(
 
     prompt = _candidate_planner_prompt(
         oracle_captures=oracle_captures,
+        oracle_animations=oracle_animations,
+        oracle_animation_evidence=oracle_animation_evidence,
         candidate_inventory=candidate_inventory,
         output_path=output_path,
     )
@@ -173,10 +282,45 @@ async def _generate_candidate_manifest_claude_code_async(
         merged["candidate_path"] = candidate_capture.get("path")
         aligned_captures.append(merged)
 
+    oracle_animations_by_id = {
+        str(animation["id"]): animation for animation in oracle_animations if animation.get("id")
+    }
+    candidate_animations_by_id = {
+        str(animation["id"]): animation
+        for animation in sanitized.get("animations") or []
+        if isinstance(animation, dict) and animation.get("id")
+    }
+    aligned_animations = []
+    for animation_id, oracle_animation in oracle_animations_by_id.items():
+        candidate_animation = candidate_animations_by_id.get(animation_id)
+        if not candidate_animation:
+            continue
+        merged = dict(candidate_animation)
+        for key in ("id", "kind", "weight", "page", "viewport", "timeline", "enabled"):
+            if key in oracle_animation:
+                merged[key] = oracle_animation[key]
+        merged["oracle_path"] = oracle_animation.get("path")
+        merged["candidate_path"] = candidate_animation.get("path")
+
+        oracle_targets = oracle_animation.get("targets") or []
+        candidate_targets = candidate_animation.get("targets") or []
+        merged_targets = []
+        for index, candidate_target in enumerate(candidate_targets):
+            oracle_target = oracle_targets[index] if index < len(oracle_targets) else {}
+            merged_target = dict(candidate_target)
+            for key in ("name", "channels", "track"):
+                if key in oracle_target:
+                    merged_target[key] = oracle_target[key]
+            merged_targets.append(merged_target)
+        if merged_targets:
+            merged["targets"] = merged_targets
+        aligned_animations.append(merged)
+
     manifest = dict(sanitized)
     manifest["site"] = dict(manifest.get("site") or {})
     manifest["site"]["root"] = _manifest_site_root(candidate_root, output_path)
     manifest["captures"] = aligned_captures
+    manifest["animations"] = aligned_animations
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(manifest, indent=2, sort_keys=False), encoding="utf-8")
     return {
@@ -190,6 +334,11 @@ async def _generate_candidate_manifest_claude_code_async(
         "oracle_capture_count": len(oracle_captures),
         "capture_count": len(aligned_captures),
         "missing_capture_ids": [capture_id for capture_id in oracle_by_id if capture_id not in candidate_by_id],
+        "oracle_animation_count": len(oracle_animations),
+        "animation_count": len(aligned_animations),
+        "missing_animation_ids": [
+            animation_id for animation_id in oracle_animations_by_id if animation_id not in candidate_animations_by_id
+        ],
     }
 
 
@@ -200,6 +349,7 @@ def generate_candidate_manifest(
     *,
     model: str = "opus",
     repo_root: PathLike | None = None,
+    reference_root: PathLike | None = None,
     backend: str = "claude-code",
     claude_auth: ClaudeAuthMode = "api",
 ) -> dict[str, Any]:
@@ -218,6 +368,9 @@ def generate_candidate_manifest(
     output = Path(output_path).resolve()
     reference_manifest = json.loads(Path(oracle_manifest_path).read_text(encoding="utf-8"))
     oracle_captures = _oracle_capture_prior(reference_manifest)
+    oracle_animations = _oracle_animation_prior(reference_manifest)
+    reference_inventory = _browser_inventory(Path(reference_root).resolve()) if reference_root else None
+    oracle_animation_evidence = _reference_animation_evidence(oracle_animations, reference_inventory)
     inventory = _browser_inventory(root)
     return asyncio.run(
         _generate_candidate_manifest_claude_code_async(
@@ -225,6 +378,8 @@ def generate_candidate_manifest(
             output_path=output,
             model=model,
             oracle_captures=oracle_captures,
+            oracle_animations=oracle_animations,
+            oracle_animation_evidence=oracle_animation_evidence,
             candidate_inventory=inventory,
             auth_mode=claude_auth,
         )

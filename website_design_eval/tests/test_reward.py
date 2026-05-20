@@ -13,9 +13,9 @@ def _capture_payload(
     vlm: float = 1.0,
     global_pixelmatch: float = 1.0,
     block_pixelmatch: float | None = None,
-    visual_block: float = 1.0,
-    bbox: float = 1.0,
-    cssom: float = 1.0,
+    visual_block: float | None = 1.0,
+    bbox: float | None = 1.0,
+    cssom: float | None = 1.0,
     dreamsim: float = 1.0,
 ) -> dict:
     return {
@@ -27,12 +27,16 @@ def _capture_payload(
             "html_tree": {"tree_bleu": html, "f1": html},
             "vlm_judge": {"overall": vlm},
             "pixelmatch": {"score": global_pixelmatch},
-            "visual_block": {
-                "score": visual_block,
-                **({"block_pixelmatch": {"score": block_pixelmatch}} if block_pixelmatch is not None else {}),
-            },
-            "bbox_geometry": {"score": bbox},
-            "cssom_block_style": {"score": cssom},
+            "visual_block": (
+                {
+                    "score": visual_block,
+                    **({"block_pixelmatch": {"score": block_pixelmatch}} if block_pixelmatch is not None else {}),
+                }
+                if visual_block is not None
+                else {"unsupported": True, "reason": "test_visual_block_unsupported"}
+            ),
+            "bbox_geometry": {"score": bbox} if bbox is not None else {"unsupported": True, "reason": "test_bbox_unsupported"},
+            "cssom_block_style": {"score": cssom} if cssom is not None else {"unsupported": True, "reason": "test_cssom_unsupported"},
             "dreamsim": {"score": dreamsim},
         },
     }
@@ -179,6 +183,64 @@ class SimpleWeightedRewardTests(unittest.TestCase):
         self.assertAlmostEqual(capture["cssom_style"], 0.0)
         self.assertAlmostEqual(capture["bbox_geometry_contribution"], COMPONENT_WEIGHTS["bbox_geometry"], places=6)
         self.assertAlmostEqual(capture["cssom_style_contribution"], 0.0)
+        self.assertAlmostEqual(capture["score"], expected, places=6)
+
+    def test_unsupported_visual_block_components_are_renormalized_not_zeroed(self) -> None:
+        reward = compute_reward(
+            {
+                "captures": {
+                    "visual-block-unsupported": _capture_payload(
+                        screenshot_size=1.0,
+                        html=1.0,
+                        vlm=1.0,
+                        global_pixelmatch=1.0,
+                        visual_block=None,
+                        bbox=None,
+                        cssom=None,
+                        dreamsim=1.0,
+                    )
+                }
+            }
+        )
+
+        capture = reward["captures"][0]
+
+        self.assertEqual(capture["unavailable_components"], ["visual_block", "bbox_geometry", "cssom_style"])
+        self.assertAlmostEqual(capture["component_denominator"], 0.5)
+        self.assertAlmostEqual(capture["score"], 1.0)
+        self.assertIsNone(capture["visual_block"])
+        self.assertIsNone(capture["bbox_geometry"])
+        self.assertIsNone(capture["cssom_style"])
+
+    def test_numeric_zero_visual_block_is_still_a_real_zero(self) -> None:
+        reward = compute_reward(
+            {
+                "captures": {
+                    "visual-block-zero": _capture_payload(
+                        screenshot_size=1.0,
+                        html=1.0,
+                        vlm=1.0,
+                        global_pixelmatch=1.0,
+                        visual_block=0.0,
+                        bbox=0.0,
+                        cssom=0.0,
+                        dreamsim=1.0,
+                    )
+                }
+            }
+        )
+
+        capture = reward["captures"][0]
+        expected = (
+            COMPONENT_WEIGHTS["screenshot_size"]
+            + COMPONENT_WEIGHTS["html"]
+            + COMPONENT_WEIGHTS["vlm"]
+            + COMPONENT_WEIGHTS["pixel_match"]
+            + COMPONENT_WEIGHTS["dreamsim"]
+        )
+
+        self.assertEqual(capture["unavailable_components"], [])
+        self.assertAlmostEqual(capture["component_denominator"], 0.9)
         self.assertAlmostEqual(capture["score"], expected, places=6)
 
 

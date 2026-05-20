@@ -12,10 +12,10 @@ browser-state evaluator and a synthetic-site generation pipeline.
 | Reference test site | Working | Static BrightPath education site in `test-site/`. |
 | Reproductions | Working | Good, bad, and moderate attempts under `reproductions/`. |
 | Screenshot manifest | Working | Full pages plus meaningful page states, with per-capture weights and intent strings. |
-| Manifest generator | Working | `website-design-eval generate-manifest` uses Playwright-rendered inventory and Claude Code/OpenAI backends. |
+| Manifest generator | Working | `website-design-eval generate-manifest` uses Playwright-rendered inventory and Claude Code/OpenAI backends. The inventory helper is currently Python sync Playwright. |
 | Screenshot replay | Working | `scripts/capture-screenshots.mjs` replays static captures and optional animation captures. |
 | Failed-state pruning | Working | Generator replay can prune failed optional captures instead of failing the whole seed. |
-| Manifest-aware evaluator | Working | Serves reference/candidate folders, captures browser-state artifacts, writes `candidate-capture-plan.json`, and computes metrics. |
+| Manifest-aware evaluator | Working | Serves reference/candidate folders, captures browser-state artifacts with Python async Playwright, writes `candidate-capture-plan.json`, and computes metrics. |
 | Reward curriculum | Working V0 | `website-design-eval reward` computes the current weighted pass/fail curriculum. |
 | Harbor packaging | Working local path | Synthetic generated sites can be packaged into Harbor tasks with hidden verifier inputs. |
 | Animation V1 | Prototype/early integration | Schema, prompt support, capture replay, and evaluator scoring hooks exist; not yet part of final reward. |
@@ -67,6 +67,14 @@ Raw source files are still inputs for serving and debugging. They are not the
 main scoring substrate. This keeps the evaluator compatible with static HTML
 today and React/Solid later.
 
+Implementation note: the screenshot/capture evaluator path now uses Python
+async Playwright and runs captures through an `asyncio.TaskGroup` with
+`EvaluateConfig.capture_concurrency`. The isolated visual-block replay for
+static captures also uses async Playwright. Non-browser scoring that is still
+synchronous, such as DreamSim, VLM client calls, and visual-block pair scoring,
+runs outside the browser path and may be dispatched to worker threads. The
+experimental animation evaluator path still uses Python sync Playwright.
+
 ## Manifest Generation
 
 The manifest generator now works from a Playwright-rendered browser inventory.
@@ -90,6 +98,14 @@ intent = semantic state the evaluator should look for in a candidate
 For candidate evaluation, exact selectors may not exist. The evaluator uses the
 oracle manifest as an intent/coverage guide and resolves candidate routes/actions
 against rendered browser state.
+
+Runtime note: oracle manifest generation and candidate manifest planning both
+build route/control inventories through the shared `_browser_inventory` helper
+in `website_design_eval/manifest_generator.py`. That helper currently uses
+Python sync Playwright. The Claude Code calls around it are async, but inventory
+collection itself has not yet been ported. After the candidate manifest is
+produced, normal evaluator replay/capture uses the async Playwright evaluator
+path.
 
 ## Screenshot Replay And Pruning
 
@@ -210,6 +226,9 @@ validates them. If a manifest capture survives pruning, its PNG must exist.
 
 - Keep testing generated oracle manifests on more sites and prune low-value/flaky
   replay states.
+- Port `_browser_inventory` to async Playwright if manifest generation/planning
+  becomes a meaningful bottleneck; this is separate from the already-async
+  evaluator capture path.
 - Improve candidate action resolution with stronger intent/postcondition use.
 - Decide whether animation captures become part of the Harbor task package now
   or remain an experimental track.

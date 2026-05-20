@@ -9,6 +9,11 @@ Current deltas from this first plan:
 
 - visual-block extraction from isolated Playwright manifest-state pages is now
   implemented rather than merely planned/unsupported
+- static screenshot/capture evaluation now uses Python async Playwright with
+  per-capture task-group execution; the experimental animation evaluator path
+  still uses sync Playwright
+- manifest inventory generation for oracle/candidate manifest planning still
+  uses the shared sync Playwright `_browser_inventory` helper
 - rendered `outerHTML` text/tree metrics are captured and reported
 - reward curriculum V0 is defined in `docs/reward-curriculum-v0.md`
 - pixelmatch is included as a later-pass precision signal in reward V0

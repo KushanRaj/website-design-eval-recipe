@@ -34,12 +34,8 @@ def _number(value: Any, default: float = 0.0) -> float:
 
 
 def _metric(payload: dict[str, Any], path: list[str], default: float = 0.0) -> float:
-    current: Any = payload
-    for key in path:
-        if not isinstance(current, dict):
-            return default
-        current = current.get(key)
-    return _number(current, default)
+    value = _optional_metric(payload, path)
+    return value if value is not None else default
 
 
 def _optional_metric(payload: dict[str, Any], path: list[str]) -> float | None:
@@ -47,14 +43,16 @@ def _optional_metric(payload: dict[str, Any], path: list[str]) -> float | None:
     for key in path:
         if not isinstance(current, dict):
             return None
+        if current.get("unsupported") or current.get("skipped") or current.get("error"):
+            return None
         current = current.get(key)
     return float(current) if isinstance(current, int | float) else None
 
 
-def _mean_available(values: list[float | None]) -> float:
+def _mean_available(values: list[float | None]) -> float | None:
     available = [value for value in values if value is not None]
     if not available:
-        return 0.0
+        return None
     return sum(available) / len(available)
 
 
@@ -77,22 +75,44 @@ def _capture_weight(capture_id: str, capture_payload: dict[str, Any], mode: str)
     raise ValueError(f"Unknown weight mode: {mode}")
 
 
-def _component_contributions(components: dict[str, float], *, gate_passed: bool) -> dict[str, float]:
-    active_components = set(RAW_COMPONENT_WEIGHTS)
-    if not gate_passed:
-        active_components = set(GATE_THRESHOLDS)
-    return {
-        key: components[key] * COMPONENT_WEIGHTS[key] if key in active_components else 0.0
-        for key in RAW_COMPONENT_WEIGHTS
+def _component_contributions(
+    components: dict[str, float | None],
+    *,
+    gate_passed: bool,
+) -> tuple[dict[str, float], float]:
+    available_components = {
+        key
+        for key, value in components.items()
+        if key in RAW_COMPONENT_WEIGHTS and value is not None
     }
+    active_components = set(available_components)
+    denominator = sum(RAW_COMPONENT_WEIGHTS[key] for key in active_components)
+    if not gate_passed:
+        active_components = available_components & set(GATE_THRESHOLDS)
+        denominator = RAW_COMPONENT_TOTAL
+    if denominator <= 0:
+        return {key: 0.0 for key in RAW_COMPONENT_WEIGHTS}, 0.0
+    return (
+        {
+            key: float(components[key]) * RAW_COMPONENT_WEIGHTS[key] / denominator
+            if key in active_components
+            else 0.0
+            for key in RAW_COMPONENT_WEIGHTS
+        },
+        denominator,
+    )
 
 
-def _gate_failures(components: dict[str, float]) -> list[str]:
+def _gate_failures(components: dict[str, float | None]) -> list[str]:
     return [
         key
         for key, threshold in GATE_THRESHOLDS.items()
-        if components.get(key, 0.0) < threshold
+        if components.get(key) is not None and float(components[key]) < threshold
     ]
+
+
+def _rounded_or_none(value: float | None) -> float | None:
+    return round(value, 6) if value is not None else None
 
 
 def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
@@ -119,7 +139,7 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
             "reason": reason or capture_payload.get("missing_reason"),
         }
 
-    screenshot_size = _metric(metrics, ["screenshot_size_match", "score"])
+    screenshot_size = _optional_metric(metrics, ["screenshot_size_match", "score"])
     html = _mean_available(
         [
             _optional_metric(metrics, ["html_text", "bleu_1"]),
@@ -128,14 +148,14 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
             _optional_metric(metrics, ["html_tree", "f1"]),
         ]
     )
-    vlm = _metric(metrics, ["vlm_judge", "overall"])
+    vlm = _optional_metric(metrics, ["vlm_judge", "overall"])
     global_pixelmatch = _optional_metric(metrics, ["pixelmatch", "score"])
     block_pixelmatch = _optional_metric(metrics, ["visual_block", "block_pixelmatch", "score"])
     pixel_match = _mean_available([global_pixelmatch, block_pixelmatch])
-    visual_block = _metric(metrics, ["visual_block", "score"])
-    bbox_geometry = _metric(metrics, ["bbox_geometry", "score"])
-    cssom_style = _metric(metrics, ["cssom_block_style", "score"])
-    dreamsim = _metric(metrics, ["dreamsim", "score"])
+    visual_block = _optional_metric(metrics, ["visual_block", "score"])
+    bbox_geometry = _optional_metric(metrics, ["bbox_geometry", "score"])
+    cssom_style = _optional_metric(metrics, ["cssom_block_style", "score"])
+    dreamsim = _optional_metric(metrics, ["dreamsim", "score"])
 
     components = {
         "screenshot_size": screenshot_size,
@@ -149,26 +169,37 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
     }
     gate_failures = _gate_failures(components)
     gate_passed = not gate_failures
-    contributions = _component_contributions(components, gate_passed=gate_passed)
+    contributions, component_denominator = _component_contributions(components, gate_passed=gate_passed)
     score_before_coverage = sum(contributions.values())
     score = coverage * score_before_coverage
+    unavailable_components = [
+        key
+        for key in RAW_COMPONENT_WEIGHTS
+        if components.get(key) is None
+    ]
 
     return {
         "coverage": round(coverage, 6),
-        "screenshot_size": round(screenshot_size, 6),
-        "html": round(html, 6),
-        "vlm": round(vlm, 6),
+        "screenshot_size": _rounded_or_none(screenshot_size),
+        "html": _rounded_or_none(html),
+        "vlm": _rounded_or_none(vlm),
         "global_pixelmatch": round(global_pixelmatch, 6) if global_pixelmatch is not None else None,
         "block_pixelmatch": round(block_pixelmatch, 6) if block_pixelmatch is not None else None,
-        "pixel_match": round(pixel_match, 6),
-        "visual_block": round(visual_block, 6),
-        "bbox_geometry": round(bbox_geometry, 6),
-        "cssom_style": round(cssom_style, 6),
-        "dreamsim": round(dreamsim, 6),
+        "pixel_match": _rounded_or_none(pixel_match),
+        "visual_block": _rounded_or_none(visual_block),
+        "bbox_geometry": _rounded_or_none(bbox_geometry),
+        "cssom_style": _rounded_or_none(cssom_style),
+        "dreamsim": _rounded_or_none(dreamsim),
         "gate_passed": gate_passed,
         "gate_failures": gate_failures,
+        "unavailable_components": unavailable_components,
+        "component_denominator": round(component_denominator, 6),
         "raw_component_score": round(
-            sum(RAW_COMPONENT_WEIGHTS[key] * components[key] for key in RAW_COMPONENT_WEIGHTS),
+            sum(
+                RAW_COMPONENT_WEIGHTS[key] * float(components[key])
+                for key in RAW_COMPONENT_WEIGHTS
+                if components.get(key) is not None
+            ),
             6,
         ),
         "score_before_coverage": round(score_before_coverage, 6),
@@ -193,6 +224,18 @@ def _weighted_mean(rows: list[dict[str, Any]], key: str) -> float:
     return sum(_number(row.get(key)) * row["weight"] for row in rows) / denominator
 
 
+def _weighted_mean_available(rows: list[dict[str, Any]], key: str) -> float | None:
+    available = [row for row in rows if row.get(key) is not None]
+    denominator = sum(row["weight"] for row in available)
+    if denominator <= 0:
+        return None
+    return sum(float(row[key]) * row["weight"] for row in available) / denominator
+
+
+def _summary_score(rows: list[dict[str, Any]], key: str) -> float | None:
+    return _rounded_or_none(_weighted_mean_available(rows, key))
+
+
 def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") -> dict[str, Any]:
     rows = []
     for capture_id, capture_payload in metrics.get("captures", {}).items():
@@ -204,16 +247,16 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
         "score": round(_weighted_mean(rows, "score"), 6),
         "score_before_coverage": round(_weighted_mean(rows, "score_before_coverage"), 6),
         "coverage": round(_weighted_mean(rows, "coverage"), 6),
-        "screenshot_size": round(_weighted_mean(rows, "screenshot_size"), 6),
-        "html": round(_weighted_mean(rows, "html"), 6),
-        "vlm": round(_weighted_mean(rows, "vlm"), 6),
-        "global_pixelmatch": round(_weighted_mean(rows, "global_pixelmatch"), 6),
-        "block_pixelmatch": round(_weighted_mean(rows, "block_pixelmatch"), 6),
-        "pixel_match": round(_weighted_mean(rows, "pixel_match"), 6),
-        "visual_block": round(_weighted_mean(rows, "visual_block"), 6),
-        "bbox_geometry": round(_weighted_mean(rows, "bbox_geometry"), 6),
-        "cssom_style": round(_weighted_mean(rows, "cssom_style"), 6),
-        "dreamsim": round(_weighted_mean(rows, "dreamsim"), 6),
+        "screenshot_size": _summary_score(rows, "screenshot_size"),
+        "html": _summary_score(rows, "html"),
+        "vlm": _summary_score(rows, "vlm"),
+        "global_pixelmatch": _summary_score(rows, "global_pixelmatch"),
+        "block_pixelmatch": _summary_score(rows, "block_pixelmatch"),
+        "pixel_match": _summary_score(rows, "pixel_match"),
+        "visual_block": _summary_score(rows, "visual_block"),
+        "bbox_geometry": _summary_score(rows, "bbox_geometry"),
+        "cssom_style": _summary_score(rows, "cssom_style"),
+        "dreamsim": _summary_score(rows, "dreamsim"),
         "screenshot_size_contribution": round(_weighted_mean(rows, "screenshot_size_contribution"), 6),
         "html_contribution": round(_weighted_mean(rows, "html_contribution"), 6),
         "vlm_contribution": round(_weighted_mean(rows, "vlm_contribution"), 6),
@@ -231,6 +274,10 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
         "normalized_component_weights": {
             key: round(value, 6) for key, value in COMPONENT_WEIGHTS.items()
         },
+        "unavailable_component_counts": {
+            key: sum(1 for row in rows if key in row.get("unavailable_components", []))
+            for key in RAW_COMPONENT_WEIGHTS
+        },
     }
     return {
         "metadata": {
@@ -245,6 +292,10 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
             "gate_text": (
                 "If screenshot_size, html, or vlm is below its threshold, "
                 "pixel_match, visual_block, bbox_geometry, cssom_style, and dreamsim contribute zero."
+            ),
+            "unavailable_component_text": (
+                "Missing, skipped, errored, or unsupported component scores are removed from that "
+                "capture's available denominator when gates pass; numeric zero remains a real zero."
             ),
         },
         "summary": summary,
@@ -290,6 +341,8 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
             row["bbox_geometry"],
             row["cssom_style"],
             row["dreamsim"],
+            row["component_denominator"],
+            ",".join(row.get("unavailable_components", [])),
             row["gate_passed"],
             row["score_before_coverage"],
             row["score"],
@@ -318,6 +371,9 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
             "+ 0.10 * dreamsim",
             f") / {RAW_COMPONENT_TOTAL:.2f}",
             "",
+            "If a component is missing/skipped/errored/unsupported, remove its weight",
+            "from that capture denominator when gates pass. Numeric 0 is still a real 0.",
+            "",
             "If screenshot_size < 0.40, html < 0.40, or vlm < 0.40,",
             "then pixel_match, visual_block, bbox_geometry, cssom_style, and dreamsim contribute 0.",
             "```",
@@ -341,6 +397,7 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
                     ["cssom_style", summary["cssom_style"]],
                     ["dreamsim", summary["dreamsim"]],
                     ["gate_pass_count", summary["gate_pass_count"]],
+                    ["unavailable_component_counts", summary["unavailable_component_counts"]],
                     ["weight_mode", summary["weight_mode"]],
                     ["scored_capture_count", summary["scored_capture_count"]],
                     ["capture_count", summary["capture_count"]],
@@ -362,6 +419,8 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
                     "BBox",
                     "CSSOM",
                     "DreamSim",
+                    "Denom",
+                    "Unavailable",
                     "Gate",
                     "Before Coverage",
                     "Score",

@@ -29,6 +29,8 @@ planner before it captures screenshots or scores metrics.
 Inputs to the planner:
 
 - hidden oracle manifest, used as state/intent guidance
+- reference-side animation evidence from the hidden oracle site, used to expose
+  the rendered target/trigger element shape, text, class, and bounding box
 - candidate website root, served locally
 - Playwright-rendered candidate inventory:
   - routes
@@ -43,13 +45,36 @@ Output from the planner:
 
 The generated manifest preserves oracle capture IDs, but maps each capture to
 the candidate route and candidate action that should reach the same visible
-state. This is where cases like these are handled:
+state. It also preserves oracle animation IDs while mapping animation routes,
+triggers, and target selectors onto the candidate implementation. This is where
+cases like these are handled:
 
 - oracle path `/audio.html` maps to candidate path `/talks.html`
 - oracle hover dropdown maps to candidate click dropdown
 - oracle selector names do not need to exist in the candidate
+- oracle animation target is a large card while the candidate has both a
+  clickable map marker and a clickable card with similar text
 
 The evaluator then replays the generated candidate manifest directly.
+
+## Runtime Implementation Notes
+
+There are two separate browser uses in this flow:
+
+- **Manifest planning inventory:** `generate-manifest` and
+  `generate-candidate-manifest` call the shared `_browser_inventory` helper in
+  `website_design_eval/manifest_generator.py`. That helper currently uses
+  Python sync Playwright to serve the site, visit routes, and extract visible
+  text, controls, selector candidates, and layout boxes. The surrounding Claude
+  Code SDK call is async, but the inventory collection itself is not.
+- **Evaluator replay/capture:** after the candidate manifest exists, the main
+  evaluator capture path uses Python async Playwright. It replays the reference
+  and candidate states, captures screenshots, rendered `outerHTML`, CSSOM, and
+  isolated visual-block artifacts from the async browser path.
+
+The older deterministic fallback route/action resolver is still present for
+debugging or runs without `candidate_manifest_planner`, but Harbor `full-vlm`
+uses Claude Code-backed candidate manifest planning.
 
 ## Important Boundary
 
@@ -57,6 +82,8 @@ Manifest planning is not the final visual reward. The planner is only deciding:
 
 - which candidate route corresponds to each oracle capture
 - which candidate action should be attempted for that state
+- which candidate route, trigger, and target element correspond to each oracle
+  animation
 
 If the action executes but the resulting screenshot is wrong, the normal visual,
 DOM, CSSOM, visual-block, VLM, and reward metrics should punish that. The
@@ -125,3 +152,8 @@ when no candidate manifest planner is configured.
 
 For the full Harbor reward path, candidate capture planning is Claude
 Code-backed.
+
+Also do not say "all Playwright usage is async." The current precise statement
+is: evaluator screenshot/capture replay is async Playwright; manifest inventory
+generation and the experimental animation evaluator path still use sync
+Playwright.

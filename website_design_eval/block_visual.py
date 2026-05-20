@@ -244,6 +244,17 @@ def _settle_visual_block_page(page: Any) -> None:
         return
 
 
+async def _settle_visual_block_page_async(page: Any) -> None:
+    try:
+        await page.evaluate(
+            """() => new Promise((resolve) => {
+              requestAnimationFrame(() => requestAnimationFrame(resolve));
+            })"""
+        )
+    except Exception:
+        return
+
+
 def _normalize_image_to_size(path: Path, target_size: tuple[int, int]) -> bool:
     current_size = _read_image_size(path)
     if current_size == target_size:
@@ -848,6 +859,81 @@ def extract_visual_blocks_from_playwright_page(
 
     with tempfile.TemporaryDirectory(prefix="visual-block-page-") as directory:
         return run(Path(directory))
+
+
+async def extract_visual_blocks_from_async_playwright_page(
+    page: Any,
+    origin_screenshot: PathLike,
+    *,
+    screenshot_options: dict[str, Any],
+    tmp_dir: PathLike | None = None,
+) -> dict[str, Any]:
+    """Async Playwright variant of OCR-free visual block extraction."""
+
+    utils = _load_ocr_free_utils()
+
+    async def run(work_dir: Path) -> dict[str, Any]:
+        work_dir.mkdir(parents=True, exist_ok=True)
+        p_png = work_dir / "visual_block_recolor_0.png"
+        p_png_1 = work_dir / "visual_block_recolor_50.png"
+        capture_options = {key: value for key, value in screenshot_options.items() if key != "path"}
+        html_text_color_tree = await page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 0})
+        await _settle_visual_block_page_async(page)
+        await page.screenshot(**{**capture_options, "path": str(p_png)})
+        await page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 50})
+        await _settle_visual_block_page_async(page)
+        await page.screenshot(**{**capture_options, "path": str(p_png_1)})
+
+        origin_for_blocks, normalization = _normalize_visual_block_inputs(
+            origin_screenshot,
+            p_png,
+            p_png_1,
+            work_dir,
+        )
+
+        if tuple(normalization["sizes"]["offset_0"]) != tuple(normalization["sizes"]["offset_50"]):
+            return {
+                "status": "empty",
+                "reason": "recolor_screenshot_size_mismatch",
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+                "screenshot_options_source": "manifest_screenshot_options",
+                "visual_block_normalization": normalization,
+            }
+
+        different_pixels = utils.find_different_pixels(p_png, p_png_1)
+        if different_pixels is None:
+            return {
+                "status": "empty",
+                "reason": "no_different_pixels",
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+                "screenshot_options_source": "manifest_screenshot_options",
+                "visual_block_normalization": normalization,
+            }
+        blocks = utils.get_blocks_from_image_diff_pixels(
+            str(origin_for_blocks),
+            str(p_png),
+            html_text_color_tree,
+            different_pixels,
+        )
+        return {
+            "status": "ok",
+            "reason": None,
+            "blocks": [_block_artifact_payload(block) for block in blocks],
+            "block_count": len(blocks),
+            "artifact_source": "isolated_playwright_manifest_state",
+            "screenshot_options_source": "manifest_screenshot_options",
+            "visual_block_normalization": normalization,
+        }
+
+    if tmp_dir is not None:
+        return await run(Path(tmp_dir))
+
+    with tempfile.TemporaryDirectory(prefix="visual-block-page-") as directory:
+        return await run(Path(directory))
 
 
 def visual_block_score_from_blocks(

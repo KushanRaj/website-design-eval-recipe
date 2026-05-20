@@ -240,6 +240,8 @@ def main(argv: list[str] | None = None) -> int:
         choices=["api", "subscription"],
         default="api",
     )
+    evaluate_parser.add_argument("--capture-concurrency", type=int, default=4)
+    evaluate_parser.add_argument("--vlm-concurrency", type=int, default=4)
 
     generate_manifest_parser = subparsers.add_parser(
         "generate-manifest",
@@ -267,6 +269,11 @@ def main(argv: list[str] | None = None) -> int:
         help="Use Claude Code to map an oracle manifest onto a candidate website folder",
     )
     generate_candidate_manifest_parser.add_argument("--oracle-manifest", required=True)
+    generate_candidate_manifest_parser.add_argument(
+        "--reference-root",
+        default=None,
+        help="Optional oracle site root used to provide reference-side animation target evidence.",
+    )
     generate_candidate_manifest_parser.add_argument("--candidate-root", required=True)
     generate_candidate_manifest_parser.add_argument("--output", required=True)
     generate_candidate_manifest_parser.add_argument("--model", default="opus")
@@ -309,6 +316,8 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_auto_parser.add_argument("--no-visual-block", action="store_true")
     evaluate_auto_parser.add_argument("--candidate-manifest-planner", choices=["claude-code"], default=None)
     evaluate_auto_parser.add_argument("--candidate-manifest-model", default="opus")
+    evaluate_auto_parser.add_argument("--capture-concurrency", type=int, default=4)
+    evaluate_auto_parser.add_argument("--vlm-concurrency", type=int, default=4)
 
     reward_parser = subparsers.add_parser(
         "reward",
@@ -531,6 +540,8 @@ def main(argv: list[str] | None = None) -> int:
                 candidate_manifest_planner=args.candidate_manifest_planner,
                 candidate_manifest_model=args.candidate_manifest_model,
                 candidate_manifest_claude_auth=args.candidate_manifest_claude_auth,
+                capture_concurrency=args.capture_concurrency,
+                vlm_concurrency=args.vlm_concurrency,
             )
         )
         print_functional_status(result)
@@ -572,6 +583,7 @@ def main(argv: list[str] | None = None) -> int:
                 Path(args.output).resolve(),
                 model=args.model,
                 repo_root=repo_root,
+                reference_root=Path(args.reference_root).resolve() if args.reference_root else None,
                 backend="claude-code",
                 claude_auth=args.claude_auth,
             )
@@ -589,6 +601,9 @@ def main(argv: list[str] | None = None) -> int:
                 "oracle_capture_count": result["oracle_capture_count"],
                 "capture_count": result["capture_count"],
                 "missing_capture_ids": result.get("missing_capture_ids", []),
+                "oracle_animation_count": result.get("oracle_animation_count", 0),
+                "animation_count": result.get("animation_count", 0),
+                "missing_animation_ids": result.get("missing_animation_ids", []),
             }
         )
         return 0
@@ -628,6 +643,8 @@ def main(argv: list[str] | None = None) -> int:
                 candidate_manifest_planner=args.candidate_manifest_planner,
                 candidate_manifest_model=args.candidate_manifest_model,
                 candidate_manifest_claude_auth=args.claude_auth,
+                capture_concurrency=args.capture_concurrency,
+                vlm_concurrency=args.vlm_concurrency,
             )
         )
         result["metadata"]["generated_manifest"] = manifest_result["output_path"]

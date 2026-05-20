@@ -232,6 +232,13 @@ def _bool_env(name: str, default: bool) -> bool:
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _int_env(name: str, default: int) -> int:
+    raw = os.environ.get(name)
+    if raw is None or not raw.strip():
+        return default
+    return int(raw)
+
+
 def _read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -400,6 +407,8 @@ def main(argv: list[str] | None = None) -> int:
                 "WDE_CANDIDATE_MANIFEST_CLAUDE_AUTH",
                 metric_config.get("candidate_manifest_claude_auth", "api"),
             ),
+            capture_concurrency=_int_env("WDE_CAPTURE_CONCURRENCY", int(metric_config.get("capture_concurrency", 4))),
+            vlm_concurrency=_int_env("WDE_VLM_CONCURRENCY", int(metric_config.get("vlm_concurrency", 4))),
         )
     )
 
@@ -527,6 +536,8 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "candidate_manifest_planner": None,
             "candidate_manifest_model": "opus",
             "candidate_manifest_claude_auth": "api",
+            "capture_concurrency": 4,
+            "vlm_concurrency": 4,
             "weight_mode": "manifest",
             "notes": [
                 "Dependency-light development smoke mode only. Do not use for actual reward runs.",
@@ -550,6 +561,8 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "candidate_manifest_planner": None,
             "candidate_manifest_model": "opus",
             "candidate_manifest_claude_auth": "api",
+            "capture_concurrency": 4,
+            "vlm_concurrency": 4,
             "weight_mode": "manifest",
             "notes": [
                 "Local-only development profile. Do not use for actual reward runs.",
@@ -573,6 +586,8 @@ def _metric_config(metric_profile: str) -> dict[str, Any]:
             "candidate_manifest_planner": "claude-code",
             "candidate_manifest_model": "opus",
             "candidate_manifest_claude_auth": "api",
+            "capture_concurrency": 4,
+            "vlm_concurrency": 4,
             "weight_mode": "manifest",
             "notes": [
                 "Actual reward profile: API-backed VLM, DreamSim, and visual-block are all required.",

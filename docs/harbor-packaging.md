@@ -187,6 +187,20 @@ registry and pass those registry tags as `--agent-base-image` and
 `--verifier-base-image`. For the current one-VM path, local Docker images are
 enough.
 
+The main screenshot/capture evaluator inside the verifier uses Python async
+Playwright and evaluates captures through an `asyncio.TaskGroup`. Tune local
+capture/API concurrency with:
+
+```bash
+WDE_CAPTURE_CONCURRENCY=4
+WDE_VLM_CONCURRENCY=4
+```
+
+`WDE_CAPTURE_CONCURRENCY` limits concurrent browser capture jobs within one
+verifier process. `WDE_VLM_CONCURRENCY` limits concurrent VLM judge calls within
+that same process. DreamSim is still serialized inside a verifier process to
+avoid loading/forwarding the heavy model concurrently by accident.
+
 ## Modal Scale Path
 
 The Modal path uses one dataset plus two registry images:
@@ -291,6 +305,12 @@ directory. The evaluator then replays those candidate routes/actions directly.
 This is the layer that maps cases such as an oracle hover dropdown to a
 candidate click dropdown, or `/audio.html` to `/talks.html`, without exposing
 the oracle manifest to the coding agent.
+
+Implementation detail: the planner inventory currently uses the shared
+`_browser_inventory` helper, which is Python sync Playwright. That is separate
+from evaluator replay/capture, which is Python async Playwright. The generator's
+frozen reference screenshot replay is also separate: it uses
+`scripts/capture-screenshots.mjs`, not the Python evaluator runtime.
 
 `tests/private/metric-config.json` controls this with:
 
