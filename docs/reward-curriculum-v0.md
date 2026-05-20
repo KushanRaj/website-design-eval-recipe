@@ -1,237 +1,127 @@
-# Reward Curriculum V0
+# Simple Weighted Reward V1
 
-This is the current final-score proposal for the website design evaluator. It is intentionally a curriculum, not a flat average.
+This replaces the earlier pass/curriculum formula. The reward is now a direct
+weighted score per manifest capture, with coverage applied once as the outer
+multiplier.
 
-The school analogy is the right mental model: each capture has several exams. Passing the early exams matters, but early exams have small weight. A candidate that only does the basics well cannot receive a high final reward, because the high-value marks live in the later, more specific exams.
+## Formula
 
-Each pass has a 40% failure threshold. A failed pass does not erase the marks already earned in that pass, but it blocks eligibility for later passes:
+Raw requested weights:
 
-- Pass 1 score `< 0.40`: candidate can only receive Pass 1 contribution, so the maximum possible reward is 5%.
-- Pass 2 score `< 0.40`: candidate can receive Pass 1 and Pass 2 contribution, so the maximum possible reward is 20%.
-- Pass 1 and Pass 2 both `>= 0.40`: candidate is eligible for the Pass 3 contribution, making the full 100% possible.
+| Component | Raw weight |
+| --- | ---: |
+| Screenshot size match | 0.05 |
+| Rendered HTML | 0.10 |
+| VLM | 0.20 |
+| Pixel match | 0.05 |
+| Visual block | 0.20 |
+| BBox geometry | 0.10 |
+| CSSOM style | 0.10 |
+| DreamSim | 0.10 |
 
-## Included Metrics
-
-V0 counts:
-
-- manifest/state coverage
-- screenshot size match
-- DreamSim
-- Web2Code-style VLM overall score
-- rendered HTML text BLEU
-- rendered HTML text ROUGE
-- visual block size
-- visual block text
-- visual block position
-- visual block text color
-- bbox geometry
-- CSSOM block-style
-- pixelmatch as a local Pass 3 precision signal
-
-V0 does not count:
-
-- masked CLIP inside visual block
-- global CLIP
-- SSIM / MSE / MAE
-- raw code diff / AST score
-- WebSee / WebCoderBench diagnostics
-- tree BLEU / tree ROUGE / tree F1
-
-Tree metrics remain in reports for now, but they are not part of this reward. On the current examples they mostly measure generic HTML skeleton overlap, so they do not separate good and bad attempts cleanly enough.
-
-## Pass 1: Foundation
-
-Pass 1 is worth 5% of the final score.
-
-It asks whether the candidate showed up in roughly the right state:
+These sum to `0.90`, so the implementation normalizes by `0.90`:
 
 ```text
-foundation =
-  0.50 * manifest_coverage
-+ 0.50 * screenshot_size_match
-```
-
-This is deliberately low weight. A poor page should not get meaningful reward merely because it routed to a page or matched screenshot dimensions.
-
-If `foundation < 0.40`, Pass 2 and Pass 3 contributions are set to zero.
-
-## Pass 2: Content And Broad Fit
-
-Pass 2 is worth 15% of the final score.
-
-It checks rendered text content plus broad visual/state adequacy:
-
-```text
-content =
-  0.35 * rendered_text_bleu
-+ 0.35 * rendered_text_rouge
-+ 0.15 * vlm_overall
-+ 0.15 * visual_block_size
-```
-
-VLM and visual block size live here instead of Pass 1. They are stronger than pure attendance/size checks, but they should still not dominate the final reward. Text content remains the majority of Pass 2 because it varied meaningfully across the good and bad attempts.
-
-If `content < 0.40`, Pass 3 contribution is set to zero.
-
-## Pass 3: Specifics
-
-Pass 3 is worth 80% of the final score.
-
-It checks the details that should separate acceptable from excellent:
-
-```text
-visual_block_quality =
-  0.40 * visual_block_text
-+ 0.35 * visual_block_position
-+ 0.25 * visual_block_text_color
-
-visual_block_core =
-  visual_block_size * visual_block_quality
-
-local_layout_style =
-  visual_block_size *
-  (0.60 * cssom_block_style + 0.40 * bbox_geometry)
-
-pixel_precision =
-  visual_block_size * pixelmatch
-
-dreamsim_visual =
-  visual_block_size * dreamsim_score
-
-specifics =
-  0.35 * visual_block_core
-+ 0.30 * local_layout_style
-+ 0.20 * pixel_precision
-+ 0.15 * dreamsim_visual
-```
-
-Visual block size gates the block-level detail scores. If the page only matches a tiny fraction of the reference visual block area, it should not receive high reward because a few matched blocks have similar text or styling.
-
-DreamSim also belongs here, not in Pass 1. It remains a useful global perceptual signal, but it is multiplied by visual block size so a bad page cannot get too much reward from broad screenshot similarity alone.
-
-Pixelmatch belongs here, not in Pass 1. It is a local exactness signal after the page has already shown broad and block-level similarity.
-
-## Per-Capture Score
-
-```text
-capture_score =
-  manifest_coverage *
+capture_reward =
+  coverage *
   (
-    0.05 * foundation
-  + pass1_ok * 0.15 * content
-  + pass1_ok * pass2_ok * 0.80 * specifics
+      0.05 * screenshot_size_match
+    + 0.10 * html
+    + 0.20 * vlm
+    + 0.05 * pixel_match
+    + 0.20 * visual_block
+    + 0.10 * bbox_geometry
+    + 0.10 * cssom_style
+    + 0.10 * dreamsim
+  ) / 0.90
+```
+
+The final reward is the manifest-weighted mean of `capture_reward` across
+captures.
+
+## Gate
+
+Before using the expensive/specific components, the capture must pass the basic
+screening signals:
+
+```text
+screenshot_size_match >= 0.40
+html >= 0.40
+vlm >= 0.40
+```
+
+If any of these fail, only `screenshot_size_match`, `html`, and `vlm`
+contribute. `pixel_match`, `visual_block`, `bbox_geometry`, `cssom_style`, and
+`dreamsim` are set to zero for that capture.
+
+## Component Definitions
+
+```text
+html =
+  mean_available(
+    rendered_html_text_bleu_1,
+    rendered_html_text_rouge_1_recall,
+    rendered_dom_tree_bleu,
+    rendered_dom_tree_f1
   )
 
-where:
+vlm =
+  web2code_style_vlm.overall
 
-pass1_ok = foundation >= 0.40
-pass2_ok = content >= 0.40
+pixel_match =
+  mean_available(global_pixelmatch.score, visual_block.block_pixelmatch.score)
+
+visual_block =
+  visual_block.score
+
+bbox_geometry =
+  bbox_geometry.score
+
+cssom_style =
+  cssom_block_style.score
+
+dreamsim =
+  dreamsim.score
 ```
 
-Missing captures stay in the denominator. They receive score `0`; they are not dropped.
+`global_pixelmatch` is screenshot-level pixel match. `visual_block.block_pixelmatch`
+is the matched-block crop pixel match from the visual-block correspondence.
 
-## Manifest Weights
+`visual_block.score` is the visual-block aggregate excluding masked CLIP in the
+current core path. It uses the block size/text/position/text-color agreement
+from the Playwright-captured state.
 
-The manifest can assign each capture a weight:
+## Important Behavior
 
-```json
-{
-  "id": "home.desktop.work-dropdown",
-  "weight": 0.25
-}
-```
+- Coverage is applied once, outside the component sum.
+- DreamSim and global pixelmatch are not multiplied by visual-block size.
+- BBox geometry and CSSOM style are separate components at 0.10 raw weight
+  each. They are not averaged into a hidden combined 0.20 component.
+- Unsupported/missing metric components score `0` for that component only.
+- Unsupported visual block does not suppress DreamSim or other global metrics
+  unless one of the explicit gate inputs fails.
 
-Current defaults in `test-site/screenshot-manifest.json`:
+## Current Implementation
 
-| Capture type | Weight |
-| --- | ---: |
-| full unique page | 1.00 |
-| scrolled section | 0.50 |
-| focused form state | 0.50 |
-| dropdown / small interaction state | 0.25 |
-
-The dropdown is lower weight because it is mostly the same page with a small state change. Full unique pages get the largest weight.
-
-## Current Outputs
-
-Latest validation run:
+Code:
 
 ```text
-metrics-results/reward-validation-2026-05-19/
+website_design_eval/reward.py
 ```
 
-| Candidate | Coverage | Size Match | Pixelmatch | DreamSim | VLM | Visual Block | Text BLEU | Text ROUGE | Final Reward |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 1.0000 | 0.9474 | 0.9181 | 0.9321 | 0.8194 | 0.9690 | 0.8705 | 0.9164 | 0.8906 |
-| `claude-attempt-03-moderate` | 0.8889 | 0.6899 | 0.8973 | 0.8224 | 0.6320 | 0.8316 | 0.6480 | 0.6684 | 0.5620 |
-| `claude-attempt-02-bad` | 0.8197 | 0.8361 | 0.6970 | 0.5407 | 0.1560 | 0.5205 | 0.2092 | 0.2648 | 0.0985 |
-
-Contribution breakdown:
-
-| Candidate | Pass 1 / 0.05 | Pass 2 / 0.15 | Pass 3 / 0.80 | Final Reward |
-| --- | ---: | ---: | ---: | ---: |
-| `claude-attempt-01` | 0.0484 | 0.1340 | 0.7082 | 0.8906 |
-| `claude-attempt-03-moderate` | 0.0397 | 0.0923 | 0.4300 | 0.5620 |
-| `claude-attempt-02-bad` | 0.0412 | 0.0280 | 0.0293 | 0.0985 |
-
-This gives a usable first gradient:
+Tests:
 
 ```text
-bad 0.0985 < moderate 0.5620 < good 0.8906
+website_design_eval/tests/test_reward.py
 ```
 
-The moderate reproduction is not uniformly moderate: it still misses the dropdown capture, but its full-page/contact/government states are much closer than the bad candidate.
-
-The full comparison report is:
+Harbor reward wrapper:
 
 ```text
-metrics-results/reward-validation-2026-05-19/report.html
+scripts/package_harbor_task.py
 ```
 
-The executable form is:
-
-```bash
-uv run website-design-eval reward metrics-results/<run>/<candidate>/metrics.json \
-  --weight-mode manifest \
-  --output-json metrics-results/<run>/<candidate>/reward.json \
-  --output-md metrics-results/<run>/<candidate>/reward.md
-```
-
-`--weight-mode manifest` uses capture weights from the manifest. `--weight-mode equal` ignores them. `--weight-mode suggested` applies the built-in defaults for old metric files that do not have weights.
-
-## Determinism Expectation
-
-For a fixed reference folder, candidate folder, manifest, browser version, and runtime environment, the browser-rendered artifacts should be deterministic:
-
-- screenshots
-- rendered `outerHTML`
-- CSSOM snapshots
-- visual blocks
-- pixelmatch
-- bbox geometry
-- CSSOM block-style
-- rendered text/tree metrics
-
-If those change across repeated runs, treat it as an evaluator bug or a page-settling bug.
-
-The only expected drift is:
-
-- VLM judge output, because it is API-backed model inference
-- very small DreamSim numeric drift if the model/runtime/device changes or nondeterministic kernels are used
-
-Reward computation from a fixed `metrics.json` should be exactly deterministic.
-
-Existing-run comparison result:
-
-- deterministic metric diffs: `0`
-- screenshot hash diffs: `0`
-- DreamSim diffs: `0`
-- VLM diffs: present
-
-The raw artifact JSON had non-score noise from localhost ports and resolver `data-wde-node-id` attributes. The evaluator now normalizes stored URLs to path-only values and removes evaluator node-id attributes before clean artifact capture.
-
-## Open Questions
-
-- Pixelmatch is currently full-screenshot pixelmatch. The likely better version is local pixelmatch over matched visual blocks or element boxes.
-- VLM is counted as one broad foundation component for now. We still need more runs before deciding whether it should remain in the final reward.
-- Tree metrics are excluded from reward, but we should keep collecting them until we have enough examples to retire or redesign them.
+The wrapper writes `reward.json`, `reward-details.json`, and
+`reward-report.md`. `reward.json` includes the final reward and the major
+component summaries so the score can be inspected without opening the full
+details file.

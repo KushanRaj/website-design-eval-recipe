@@ -151,8 +151,10 @@ oracle site.
 
 - Public candidate inputs live in `environment/workspace/reference/screenshots/`.
 - Hidden verifier inputs live in `tests/private/`.
-- The verifier writes `reward.json`, `metrics.json`, and Markdown diagnostics
-  under `/logs/verifier`.
+- The verifier writes `reward.json`, `metrics.json`, Markdown diagnostics,
+  `artifact-index.json`, and full evaluator artifacts under `/logs/verifier`.
+  Screenshots are preserved under
+  `/logs/verifier/eval/artifacts/{{reference,candidate}}/screenshots/`.
 
 Metric profile: `{metric_profile}`.
 
@@ -237,6 +239,29 @@ def _read_json(path: Path) -> dict[str, Any]:
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def _relative_files(root: Path, pattern: str) -> list[str]:
+    if not root.exists():
+        return []
+    return sorted(str(path.relative_to(root)) for path in root.glob(pattern) if path.is_file())
+
+
+def _write_artifact_index(logs_dir: Path, eval_dir: Path) -> None:
+    _write_json(
+        logs_dir / "artifact-index.json",
+        {
+            "eval_dir": "eval",
+            "candidate_manifest": "eval/generated-candidate-manifest.json",
+            "candidate_capture_plan": "eval/candidate-capture-plan.json",
+            "metrics": "eval/metrics.json",
+            "functional_report": "eval/functional-report.md",
+            "reference_screenshots": _relative_files(logs_dir, "eval/artifacts/reference/screenshots/*.png"),
+            "candidate_screenshots": _relative_files(logs_dir, "eval/artifacts/candidate/screenshots/*.png"),
+            "reference_artifacts": _relative_files(logs_dir, "eval/artifacts/reference/*.json"),
+            "candidate_artifacts": _relative_files(logs_dir, "eval/artifacts/candidate/*.json"),
+        },
+    )
 
 
 def _capture_metric_value(metrics: dict[str, Any], capture_id: str, path: list[str]) -> Any:
@@ -404,6 +429,7 @@ def main(argv: list[str] | None = None) -> int:
     report_path = eval_dir / "functional-report.md"
     if report_path.exists():
         shutil.copyfile(report_path, logs_dir / "functional-report.md")
+    _write_artifact_index(logs_dir, eval_dir)
 
     summary = metrics.get("summary", {})
     reward_summary = reward.get("summary", {})
@@ -413,6 +439,19 @@ def main(argv: list[str] | None = None) -> int:
     }
     optional_numeric_fields = {
         "manifest_coverage": summary.get("manifest_coverage_score"),
+        "reward_before_coverage": reward_summary.get("score_before_coverage"),
+        "reward_component_coverage": reward_summary.get("coverage"),
+        "reward_component_screenshot_size": reward_summary.get("screenshot_size"),
+        "reward_component_html": reward_summary.get("html"),
+        "reward_component_vlm": reward_summary.get("vlm"),
+        "reward_component_global_pixelmatch": reward_summary.get("global_pixelmatch"),
+        "reward_component_block_pixelmatch": reward_summary.get("block_pixelmatch"),
+        "reward_component_pixel_match": reward_summary.get("pixel_match"),
+        "reward_component_visual_block": reward_summary.get("visual_block"),
+        "reward_component_bbox_geometry": reward_summary.get("bbox_geometry"),
+        "reward_component_cssom_style": reward_summary.get("cssom_style"),
+        "reward_component_dreamsim": reward_summary.get("dreamsim"),
+        "reward_gate_pass_count": reward_summary.get("gate_pass_count"),
         "screenshot_size_match": summary.get("mean_screenshot_size_match"),
         "pixelmatch": summary.get("mean_pixelmatch"),
         "dreamsim": summary.get("mean_dreamsim_score"),

@@ -7,11 +7,25 @@ from typing import Any
 
 
 PathLike = str | Path
-PASS_THRESHOLD = 0.40
-PASS_WEIGHTS = {
-    "foundation": 0.05,
-    "content": 0.15,
-    "specifics": 0.80,
+
+RAW_COMPONENT_WEIGHTS = {
+    "screenshot_size": 0.05,
+    "html": 0.10,
+    "vlm": 0.20,
+    "pixel_match": 0.05,
+    "visual_block": 0.20,
+    "bbox_geometry": 0.10,
+    "cssom_style": 0.10,
+    "dreamsim": 0.10,
+}
+RAW_COMPONENT_TOTAL = sum(RAW_COMPONENT_WEIGHTS.values())
+COMPONENT_WEIGHTS = {
+    key: value / RAW_COMPONENT_TOTAL for key, value in RAW_COMPONENT_WEIGHTS.items()
+}
+GATE_THRESHOLDS = {
+    "screenshot_size": 0.40,
+    "html": 0.40,
+    "vlm": 0.40,
 }
 
 
@@ -37,12 +51,11 @@ def _optional_metric(payload: dict[str, Any], path: list[str]) -> float | None:
     return float(current) if isinstance(current, int | float) else None
 
 
-def _weighted_available(components: list[tuple[float, float | None]]) -> float:
-    available = [(weight, value) for weight, value in components if value is not None]
-    denominator = sum(weight for weight, _value in available)
-    if denominator <= 0:
+def _mean_available(values: list[float | None]) -> float:
+    available = [value for value in values if value is not None]
+    if not available:
         return 0.0
-    return sum(weight * value for weight, value in available) / denominator
+    return sum(available) / len(available)
 
 
 def _suggested_capture_weight(capture_id: str) -> float:
@@ -64,120 +77,109 @@ def _capture_weight(capture_id: str, capture_payload: dict[str, Any], mode: str)
     raise ValueError(f"Unknown weight mode: {mode}")
 
 
+def _component_contributions(components: dict[str, float], *, gate_passed: bool) -> dict[str, float]:
+    active_components = set(RAW_COMPONENT_WEIGHTS)
+    if not gate_passed:
+        active_components = set(GATE_THRESHOLDS)
+    return {
+        key: components[key] * COMPONENT_WEIGHTS[key] if key in active_components else 0.0
+        for key in RAW_COMPONENT_WEIGHTS
+    }
+
+
+def _gate_failures(components: dict[str, float]) -> list[str]:
+    return [
+        key
+        for key, threshold in GATE_THRESHOLDS.items()
+        if components.get(key, 0.0) < threshold
+    ]
+
+
 def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
     coverage = _number((capture_payload.get("coverage") or {}).get("score"))
     metrics = capture_payload.get("metrics") or {}
     if not isinstance(metrics, dict) or metrics.get("status") == "unsupported":
-        foundation = 0.25 * coverage
-        foundation_passed = foundation >= PASS_THRESHOLD
+        reason = metrics.get("reason") if isinstance(metrics, dict) else None
         return {
-            "coverage": coverage,
-            "foundation": foundation,
-            "foundation_passed": foundation_passed,
-            "content": 0.0,
-            "content_passed": False,
-            "visual_block_core": 0.0,
-            "local_layout_style": 0.0,
-            "pixel_precision": None,
-            "specifics": 0.0,
-            "specifics_eligible": False,
-            "foundation_contribution": coverage * PASS_WEIGHTS["foundation"] * foundation,
-            "content_contribution": 0.0,
-            "specifics_contribution": 0.0,
-            "score": round(coverage * PASS_WEIGHTS["foundation"] * foundation, 6),
+            "coverage": round(coverage, 6),
+            "screenshot_size": 0.0,
+            "html": 0.0,
+            "vlm": 0.0,
+            "pixel_match": 0.0,
+            "visual_block": 0.0,
+            "bbox_geometry": 0.0,
+            "cssom_style": 0.0,
+            "dreamsim": 0.0,
+            "gate_passed": False,
+            "gate_failures": list(GATE_THRESHOLDS),
+            "raw_component_score": 0.0,
+            "score_before_coverage": 0.0,
+            "score": 0.0,
             "status": "unsupported",
-            "reason": metrics.get("reason") or capture_payload.get("missing_reason"),
+            "reason": reason or capture_payload.get("missing_reason"),
         }
 
     screenshot_size = _metric(metrics, ["screenshot_size_match", "score"])
-    vlm = _optional_metric(metrics, ["vlm_judge", "overall"])
-    visual_block_size_metric = _optional_metric(metrics, ["visual_block", "size"])
-    visual_block_size = visual_block_size_metric or 0.0
-    foundation = 0.50 * coverage + 0.50 * screenshot_size
-
-    text_bleu = _optional_metric(metrics, ["html_text", "bleu_1"])
-    text_rouge = _optional_metric(metrics, ["html_text", "rouge_1_recall"])
-    content = _weighted_available(
+    html = _mean_available(
         [
-            (0.35, text_bleu),
-            (0.35, text_rouge),
-            (0.15, vlm),
-            (0.15, visual_block_size_metric),
+            _optional_metric(metrics, ["html_text", "bleu_1"]),
+            _optional_metric(metrics, ["html_text", "rouge_1_recall"]),
+            _optional_metric(metrics, ["html_tree", "tree_bleu"]),
+            _optional_metric(metrics, ["html_tree", "f1"]),
         ]
     )
+    vlm = _metric(metrics, ["vlm_judge", "overall"])
+    global_pixelmatch = _optional_metric(metrics, ["pixelmatch", "score"])
+    block_pixelmatch = _optional_metric(metrics, ["visual_block", "block_pixelmatch", "score"])
+    pixel_match = _mean_available([global_pixelmatch, block_pixelmatch])
+    visual_block = _metric(metrics, ["visual_block", "score"])
+    bbox_geometry = _metric(metrics, ["bbox_geometry", "score"])
+    cssom_style = _metric(metrics, ["cssom_block_style", "score"])
+    dreamsim = _metric(metrics, ["dreamsim", "score"])
 
-    visual_block_text = _metric(metrics, ["visual_block", "text"])
-    visual_block_position = _metric(metrics, ["visual_block", "position"])
-    visual_block_text_color = _metric(metrics, ["visual_block", "text_color"])
-    visual_block_quality = (
-        0.40 * visual_block_text
-        + 0.35 * visual_block_position
-        + 0.25 * visual_block_text_color
-    )
-    visual_block_core = visual_block_size * visual_block_quality
-
-    bbox = _metric(metrics, ["bbox_geometry", "score"])
-    cssom = _metric(metrics, ["cssom_block_style", "score"])
-    local_layout_style = visual_block_size * (0.60 * cssom + 0.40 * bbox)
-    dreamsim_score = _metric(metrics, ["dreamsim", "score"])
-    dreamsim_visual = visual_block_size * dreamsim_score
-
-    raw_pixelmatch = None
-    pixel_precision = None
-    if isinstance(metrics.get("pixelmatch"), dict) and isinstance(metrics["pixelmatch"].get("score"), int | float):
-        raw_pixelmatch = float(metrics["pixelmatch"]["score"])
-        pixel_precision = visual_block_size * raw_pixelmatch
-        specifics = (
-            0.35 * visual_block_core
-            + 0.30 * local_layout_style
-            + 0.20 * pixel_precision
-            + 0.15 * dreamsim_visual
-        )
-        specifics_mode = "with_pixel_precision"
-    else:
-        specifics = (0.35 * visual_block_core + 0.30 * local_layout_style + 0.15 * dreamsim_visual) / 0.80
-        specifics_mode = "without_pixel_precision"
-
-    foundation_passed = foundation >= PASS_THRESHOLD
-    content_passed = content >= PASS_THRESHOLD
-    specifics_eligible = foundation_passed and content_passed
-
-    foundation_contribution = coverage * PASS_WEIGHTS["foundation"] * foundation
-    content_contribution = (
-        coverage * PASS_WEIGHTS["content"] * content
-        if foundation_passed
-        else 0.0
-    )
-    specifics_contribution = (
-        coverage * PASS_WEIGHTS["specifics"] * specifics
-        if specifics_eligible
-        else 0.0
-    )
-    score = foundation_contribution + content_contribution + specifics_contribution
+    components = {
+        "screenshot_size": screenshot_size,
+        "html": html,
+        "vlm": vlm,
+        "pixel_match": pixel_match,
+        "visual_block": visual_block,
+        "bbox_geometry": bbox_geometry,
+        "cssom_style": cssom_style,
+        "dreamsim": dreamsim,
+    }
+    gate_failures = _gate_failures(components)
+    gate_passed = not gate_failures
+    contributions = _component_contributions(components, gate_passed=gate_passed)
+    score_before_coverage = sum(contributions.values())
+    score = coverage * score_before_coverage
 
     return {
         "coverage": round(coverage, 6),
-        "screenshot_size_match": round(screenshot_size, 6),
-        "vlm": round(vlm, 6) if vlm is not None else None,
-        "visual_block_size": round(visual_block_size, 6),
-        "foundation": round(foundation, 6),
-        "foundation_passed": foundation_passed,
-        "text_bleu": round(text_bleu, 6) if text_bleu is not None else None,
-        "text_rouge": round(text_rouge, 6) if text_rouge is not None else None,
-        "content": round(content, 6),
-        "content_passed": content_passed,
-        "visual_block_core": round(visual_block_core, 6),
-        "local_layout_style": round(local_layout_style, 6),
-        "dreamsim_score": round(dreamsim_score, 6),
-        "dreamsim_visual": round(dreamsim_visual, 6),
-        "raw_pixelmatch": round(raw_pixelmatch, 6) if raw_pixelmatch is not None else None,
-        "pixel_precision": round(pixel_precision, 6) if pixel_precision is not None else None,
-        "specifics": round(specifics, 6),
-        "specifics_eligible": specifics_eligible,
-        "specifics_mode": specifics_mode,
-        "foundation_contribution": round(foundation_contribution, 6),
-        "content_contribution": round(content_contribution, 6),
-        "specifics_contribution": round(specifics_contribution, 6),
+        "screenshot_size": round(screenshot_size, 6),
+        "html": round(html, 6),
+        "vlm": round(vlm, 6),
+        "global_pixelmatch": round(global_pixelmatch, 6) if global_pixelmatch is not None else None,
+        "block_pixelmatch": round(block_pixelmatch, 6) if block_pixelmatch is not None else None,
+        "pixel_match": round(pixel_match, 6),
+        "visual_block": round(visual_block, 6),
+        "bbox_geometry": round(bbox_geometry, 6),
+        "cssom_style": round(cssom_style, 6),
+        "dreamsim": round(dreamsim, 6),
+        "gate_passed": gate_passed,
+        "gate_failures": gate_failures,
+        "raw_component_score": round(
+            sum(RAW_COMPONENT_WEIGHTS[key] * components[key] for key in RAW_COMPONENT_WEIGHTS),
+            6,
+        ),
+        "score_before_coverage": round(score_before_coverage, 6),
+        "screenshot_size_contribution": round(contributions["screenshot_size"], 6),
+        "html_contribution": round(contributions["html"], 6),
+        "vlm_contribution": round(contributions["vlm"], 6),
+        "pixel_match_contribution": round(contributions["pixel_match"], 6),
+        "visual_block_contribution": round(contributions["visual_block"], 6),
+        "bbox_geometry_contribution": round(contributions["bbox_geometry"], 6),
+        "cssom_style_contribution": round(contributions["cssom_style"], 6),
+        "dreamsim_contribution": round(contributions["dreamsim"], 6),
         "score": round(score, 6),
         "status": "scored",
         "reason": None,
@@ -200,26 +202,50 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
 
     summary = {
         "score": round(_weighted_mean(rows, "score"), 6),
-        "foundation": round(_weighted_mean(rows, "foundation"), 6),
-        "content": round(_weighted_mean(rows, "content"), 6),
-        "specifics": round(_weighted_mean(rows, "specifics"), 6),
-        "foundation_contribution": round(_weighted_mean(rows, "foundation_contribution"), 6),
-        "content_contribution": round(_weighted_mean(rows, "content_contribution"), 6),
-        "specifics_contribution": round(_weighted_mean(rows, "specifics_contribution"), 6),
+        "score_before_coverage": round(_weighted_mean(rows, "score_before_coverage"), 6),
+        "coverage": round(_weighted_mean(rows, "coverage"), 6),
+        "screenshot_size": round(_weighted_mean(rows, "screenshot_size"), 6),
+        "html": round(_weighted_mean(rows, "html"), 6),
+        "vlm": round(_weighted_mean(rows, "vlm"), 6),
+        "global_pixelmatch": round(_weighted_mean(rows, "global_pixelmatch"), 6),
+        "block_pixelmatch": round(_weighted_mean(rows, "block_pixelmatch"), 6),
+        "pixel_match": round(_weighted_mean(rows, "pixel_match"), 6),
+        "visual_block": round(_weighted_mean(rows, "visual_block"), 6),
+        "bbox_geometry": round(_weighted_mean(rows, "bbox_geometry"), 6),
+        "cssom_style": round(_weighted_mean(rows, "cssom_style"), 6),
+        "dreamsim": round(_weighted_mean(rows, "dreamsim"), 6),
+        "screenshot_size_contribution": round(_weighted_mean(rows, "screenshot_size_contribution"), 6),
+        "html_contribution": round(_weighted_mean(rows, "html_contribution"), 6),
+        "vlm_contribution": round(_weighted_mean(rows, "vlm_contribution"), 6),
+        "pixel_match_contribution": round(_weighted_mean(rows, "pixel_match_contribution"), 6),
+        "visual_block_contribution": round(_weighted_mean(rows, "visual_block_contribution"), 6),
+        "bbox_geometry_contribution": round(_weighted_mean(rows, "bbox_geometry_contribution"), 6),
+        "cssom_style_contribution": round(_weighted_mean(rows, "cssom_style_contribution"), 6),
+        "dreamsim_contribution": round(_weighted_mean(rows, "dreamsim_contribution"), 6),
         "capture_count": len(rows),
         "scored_capture_count": sum(1 for row in rows if row["status"] == "scored"),
-        "foundation_pass_count": sum(1 for row in rows if row.get("foundation_passed")),
-        "content_pass_count": sum(1 for row in rows if row.get("content_passed")),
-        "specifics_eligible_count": sum(1 for row in rows if row.get("specifics_eligible")),
-        "pass_threshold": PASS_THRESHOLD,
+        "gate_pass_count": sum(1 for row in rows if row.get("gate_passed")),
         "weight_mode": weight_mode,
-        "pixel_precision_included": any(row.get("pixel_precision") is not None for row in rows),
+        "gate_thresholds": GATE_THRESHOLDS,
+        "raw_component_weights": RAW_COMPONENT_WEIGHTS,
+        "normalized_component_weights": {
+            key: round(value, 6) for key, value in COMPONENT_WEIGHTS.items()
+        },
     }
     return {
         "metadata": {
             "generated_at": datetime.now().isoformat(timespec="seconds"),
             "source_metrics": metrics.get("metadata", {}),
-            "formula": "reward_curriculum_v0",
+            "formula": "reward_simple_weighted_v1",
+            "formula_text": (
+                "coverage * normalized_weighted_sum("
+                "screenshot_size=.05, html=.10, vlm=.20, pixel_match=.05, visual_block=.20, "
+                "bbox_geometry=.10, cssom_style=.10, dreamsim=.10)"
+            ),
+            "gate_text": (
+                "If screenshot_size, html, or vlm is below its threshold, "
+                "pixel_match, visual_block, bbox_geometry, cssom_style, and dreamsim contribute zero."
+            ),
         },
         "summary": summary,
         "captures": rows,
@@ -256,15 +282,16 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
             row["capture_id"],
             row["weight"],
             row["coverage"],
-            row["foundation"],
-            row.get("foundation_passed"),
-            row["content"],
-            row.get("content_passed"),
-            row["specifics"],
-            row.get("specifics_eligible"),
-            row.get("raw_pixelmatch"),
-            row.get("pixel_precision"),
-            row.get("dreamsim_visual"),
+            row["screenshot_size"],
+            row["html"],
+            row["vlm"],
+            row["pixel_match"],
+            row["visual_block"],
+            row["bbox_geometry"],
+            row["cssom_style"],
+            row["dreamsim"],
+            row["gate_passed"],
+            row["score_before_coverage"],
             row["score"],
             row["status"],
             row.get("reason"),
@@ -273,9 +300,27 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
     ]
     return "\n".join(
         [
-            "# Reward Curriculum V0 Report",
+            "# Simple Weighted Reward V1 Report",
             "",
             f"Generated at: `{reward['metadata']['generated_at']}`",
+            "",
+            "## Formula",
+            "",
+            "```text",
+            "capture_reward = coverage * (",
+            "  0.05 * screenshot_size",
+            "+ 0.10 * html",
+            "+ 0.20 * vlm",
+            "+ 0.05 * pixel_match",
+            "+ 0.20 * visual_block",
+            "+ 0.10 * bbox_geometry",
+            "+ 0.10 * cssom_style",
+            "+ 0.10 * dreamsim",
+            f") / {RAW_COMPONENT_TOTAL:.2f}",
+            "",
+            "If screenshot_size < 0.40, html < 0.40, or vlm < 0.40,",
+            "then pixel_match, visual_block, bbox_geometry, cssom_style, and dreamsim contribute 0.",
+            "```",
             "",
             "## Summary",
             "",
@@ -283,18 +328,22 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
                 ["Key", "Value"],
                 [
                     ["score", summary["score"]],
-                    ["foundation", summary["foundation"]],
-                    ["content", summary["content"]],
-                    ["specifics", summary["specifics"]],
-                    ["foundation_contribution", summary["foundation_contribution"]],
-                    ["content_contribution", summary["content_contribution"]],
-                    ["specifics_contribution", summary["specifics_contribution"]],
-                    ["pass_threshold", summary["pass_threshold"]],
-                    ["foundation_pass_count", summary["foundation_pass_count"]],
-                    ["content_pass_count", summary["content_pass_count"]],
-                    ["specifics_eligible_count", summary["specifics_eligible_count"]],
+                    ["score_before_coverage", summary["score_before_coverage"]],
+                    ["coverage", summary["coverage"]],
+                    ["screenshot_size", summary["screenshot_size"]],
+                    ["html", summary["html"]],
+                    ["vlm", summary["vlm"]],
+                    ["global_pixelmatch", summary["global_pixelmatch"]],
+                    ["block_pixelmatch", summary["block_pixelmatch"]],
+                    ["pixel_match", summary["pixel_match"]],
+                    ["visual_block", summary["visual_block"]],
+                    ["bbox_geometry", summary["bbox_geometry"]],
+                    ["cssom_style", summary["cssom_style"]],
+                    ["dreamsim", summary["dreamsim"]],
+                    ["gate_pass_count", summary["gate_pass_count"]],
                     ["weight_mode", summary["weight_mode"]],
-                    ["pixel_precision_included", summary["pixel_precision_included"]],
+                    ["scored_capture_count", summary["scored_capture_count"]],
+                    ["capture_count", summary["capture_count"]],
                 ],
             ),
             "",
@@ -305,15 +354,16 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
                     "Capture",
                     "Weight",
                     "Coverage",
-                    "Pass 1",
-                    "P1 Pass",
-                    "Pass 2",
-                    "P2 Pass",
-                    "Pass 3",
-                    "P3 Eligible",
-                    "Pixelmatch",
-                    "Pixel Precision",
-                    "DreamSim Visual",
+                    "Size",
+                    "HTML",
+                    "VLM",
+                    "Pixel",
+                    "Visual Block",
+                    "BBox",
+                    "CSSOM",
+                    "DreamSim",
+                    "Gate",
+                    "Before Coverage",
                     "Score",
                     "Status",
                     "Reason",

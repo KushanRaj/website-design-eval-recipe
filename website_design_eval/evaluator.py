@@ -2003,7 +2003,7 @@ def _run_pair_metrics(
                     candidate_screenshot,
                     device=config.visual_block_device,
                     include_pairs=True,
-                    include_block_pixelmatch=False,
+                    include_block_pixelmatch=True,
                     include_masked_clip=False,
                 )
                 pair["visual_block"] = visual

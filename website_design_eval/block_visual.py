@@ -225,6 +225,103 @@ def _block_artifact_payload(block: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _read_image_size(path: PathLike) -> tuple[int, int] | None:
+    try:
+        with Image.open(path) as image:
+            return int(image.width), int(image.height)
+    except Exception:
+        return None
+
+
+def _settle_visual_block_page(page: Any) -> None:
+    try:
+        page.evaluate(
+            """() => new Promise((resolve) => {
+              requestAnimationFrame(() => requestAnimationFrame(resolve));
+            })"""
+        )
+    except Exception:
+        return
+
+
+def _normalize_image_to_size(path: Path, target_size: tuple[int, int]) -> bool:
+    current_size = _read_image_size(path)
+    if current_size == target_size:
+        return False
+    if current_size is None:
+        return False
+
+    target_width, target_height = target_size
+    with Image.open(path) as image:
+        source = image.convert("RGB")
+        canvas = Image.new("RGB", target_size, (255, 255, 255))
+        crop_width = min(source.width, target_width)
+        crop_height = min(source.height, target_height)
+        canvas.paste(source.crop((0, 0, crop_width, crop_height)), (0, 0))
+        canvas.save(path)
+    return True
+
+
+def _normalize_visual_block_inputs(
+    origin_screenshot: PathLike,
+    p_png: Path,
+    p_png_1: Path,
+    work_dir: Path,
+) -> tuple[PathLike, dict[str, Any]]:
+    origin_size = _read_image_size(origin_screenshot)
+    recolor_0_size = _read_image_size(p_png)
+    recolor_50_size = _read_image_size(p_png_1)
+    original_sizes = {
+        "origin": list(origin_size or ()),
+        "offset_0": list(recolor_0_size or ()),
+        "offset_50": list(recolor_50_size or ()),
+    }
+    sizes = [size for size in (origin_size, recolor_0_size, recolor_50_size) if size is not None]
+    if not sizes:
+        return origin_screenshot, {
+            "normalization_mode": "none",
+            "target_size": None,
+            "original_sizes": original_sizes,
+            "sizes": original_sizes,
+            "normalized_origin_screenshot": False,
+            "normalized_recolor_screenshots": False,
+        }
+
+    target_size = (max(size[0] for size in sizes), max(size[1] for size in sizes))
+    normalized_origin_screenshot = False
+    normalized_recolor_screenshots = False
+    origin_for_blocks: PathLike = origin_screenshot
+
+    if origin_size is not None and origin_size != target_size:
+        origin_copy = work_dir / "visual_block_origin_normalized.png"
+        with Image.open(origin_screenshot) as image:
+            image.convert("RGB").save(origin_copy)
+        normalized_origin_screenshot = _normalize_image_to_size(origin_copy, target_size)
+        origin_for_blocks = origin_copy
+
+    if recolor_0_size is not None and recolor_0_size != target_size:
+        normalized_recolor_screenshots = _normalize_image_to_size(p_png, target_size) or normalized_recolor_screenshots
+    if recolor_50_size is not None and recolor_50_size != target_size:
+        normalized_recolor_screenshots = _normalize_image_to_size(p_png_1, target_size) or normalized_recolor_screenshots
+
+    sizes_after = {
+        "origin": list(_read_image_size(origin_for_blocks) or ()),
+        "offset_0": list(_read_image_size(p_png) or ()),
+        "offset_50": list(_read_image_size(p_png_1) or ()),
+    }
+    normalization_mode = "pad_to_largest_canvas" if (
+        normalized_origin_screenshot or normalized_recolor_screenshots
+    ) else "none"
+    return origin_for_blocks, {
+        "normalization_mode": normalization_mode,
+        "target_size": list(target_size),
+        "original_sizes": original_sizes,
+        "sizes": sizes_after,
+        "normalized_origin_screenshot": normalized_origin_screenshot,
+        "normalized_recolor_screenshots": normalized_recolor_screenshots,
+    }
+
+
 def _pixel_bbox(bbox: list[float] | tuple[float, ...], image_size: tuple[int, int]) -> tuple[int, int, int, int] | None:
     image_width, image_height = image_size
     x_ratio, y_ratio, width_ratio, height_ratio = bbox
@@ -693,10 +790,31 @@ def extract_visual_blocks_from_playwright_page(
         work_dir.mkdir(parents=True, exist_ok=True)
         p_png = work_dir / "visual_block_recolor_0.png"
         p_png_1 = work_dir / "visual_block_recolor_50.png"
+        capture_options = {key: value for key, value in screenshot_options.items() if key != "path"}
         html_text_color_tree = page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 0})
-        page.screenshot(**{**screenshot_options, "path": str(p_png)})
+        _settle_visual_block_page(page)
+        page.screenshot(**{**capture_options, "path": str(p_png)})
         page.evaluate(VISUAL_BLOCK_RECOLOR_SCRIPT, {"offset": 50})
-        page.screenshot(**{**screenshot_options, "path": str(p_png_1)})
+        _settle_visual_block_page(page)
+        page.screenshot(**{**capture_options, "path": str(p_png_1)})
+
+        origin_for_blocks, normalization = _normalize_visual_block_inputs(
+            origin_screenshot,
+            p_png,
+            p_png_1,
+            work_dir,
+        )
+
+        if tuple(normalization["sizes"]["offset_0"]) != tuple(normalization["sizes"]["offset_50"]):
+            return {
+                "status": "empty",
+                "reason": "recolor_screenshot_size_mismatch",
+                "blocks": [],
+                "block_count": 0,
+                "artifact_source": "isolated_playwright_manifest_state",
+                "screenshot_options_source": "manifest_screenshot_options",
+                "visual_block_normalization": normalization,
+            }
 
         different_pixels = utils.find_different_pixels(p_png, p_png_1)
         if different_pixels is None:
@@ -706,9 +824,11 @@ def extract_visual_blocks_from_playwright_page(
                 "blocks": [],
                 "block_count": 0,
                 "artifact_source": "isolated_playwright_manifest_state",
+                "screenshot_options_source": "manifest_screenshot_options",
+                "visual_block_normalization": normalization,
             }
         blocks = utils.get_blocks_from_image_diff_pixels(
-            str(origin_screenshot),
+            str(origin_for_blocks),
             str(p_png),
             html_text_color_tree,
             different_pixels,
@@ -719,6 +839,8 @@ def extract_visual_blocks_from_playwright_page(
             "blocks": [_block_artifact_payload(block) for block in blocks],
             "block_count": len(blocks),
             "artifact_source": "isolated_playwright_manifest_state",
+            "screenshot_options_source": "manifest_screenshot_options",
+            "visual_block_normalization": normalization,
         }
 
     if tmp_dir is not None:

@@ -2,100 +2,184 @@ from __future__ import annotations
 
 import unittest
 
-from website_design_eval.reward import compute_reward
+from website_design_eval.reward import COMPONENT_WEIGHTS, RAW_COMPONENT_WEIGHTS, compute_reward
 
 
 def _capture_payload(
     *,
     coverage: float = 1.0,
     screenshot_size: float = 1.0,
-    text: float = 1.0,
+    html: float = 1.0,
     vlm: float = 1.0,
-    visual_block_size: float = 1.0,
-    details: float = 1.0,
+    global_pixelmatch: float = 1.0,
+    block_pixelmatch: float | None = None,
+    visual_block: float = 1.0,
+    bbox: float = 1.0,
+    cssom: float = 1.0,
+    dreamsim: float = 1.0,
 ) -> dict:
     return {
         "coverage": {"score": coverage},
         "capture": {"weight": 1.0},
         "metrics": {
             "screenshot_size_match": {"score": screenshot_size},
-            "html_text": {"bleu_1": text, "rouge_1_recall": text},
+            "html_text": {"bleu_1": html, "rouge_1_recall": html},
+            "html_tree": {"tree_bleu": html, "f1": html},
             "vlm_judge": {"overall": vlm},
+            "pixelmatch": {"score": global_pixelmatch},
             "visual_block": {
-                "size": visual_block_size,
-                "text": details,
-                "position": details,
-                "text_color": details,
+                "score": visual_block,
+                **({"block_pixelmatch": {"score": block_pixelmatch}} if block_pixelmatch is not None else {}),
             },
-            "bbox_geometry": {"score": details},
-            "cssom_block_style": {"score": details},
-            "dreamsim": {"score": details},
-            "pixelmatch": {"score": details},
+            "bbox_geometry": {"score": bbox},
+            "cssom_block_style": {"score": cssom},
+            "dreamsim": {"score": dreamsim},
         },
     }
 
 
-class RewardCurriculumTests(unittest.TestCase):
-    def test_pass1_failure_blocks_later_contributions(self) -> None:
-        metrics = {
-            "captures": {
-                "failed-foundation": _capture_payload(
-                    coverage=0.30,
-                    screenshot_size=0.30,
-                    text=1.0,
-                    vlm=1.0,
-                    visual_block_size=1.0,
-                    details=1.0,
-                )
-            }
-        }
+class SimpleWeightedRewardTests(unittest.TestCase):
+    def test_perfect_capture_scores_one(self) -> None:
+        reward = compute_reward({"captures": {"perfect": _capture_payload()}})
 
-        reward = compute_reward(metrics)
         capture = reward["captures"][0]
 
-        self.assertFalse(capture["foundation_passed"])
-        self.assertTrue(capture["content_passed"])
-        self.assertFalse(capture["specifics_eligible"])
-        self.assertEqual(capture["content_contribution"], 0.0)
-        self.assertEqual(capture["specifics_contribution"], 0.0)
-        self.assertAlmostEqual(capture["score"], 0.0045)
-
-    def test_pass2_failure_blocks_pass3_but_keeps_pass1_and_pass2_marks(self) -> None:
-        metrics = {
-            "captures": {
-                "failed-content": _capture_payload(
-                    coverage=1.0,
-                    screenshot_size=1.0,
-                    text=0.0,
-                    vlm=0.0,
-                    visual_block_size=1.0,
-                    details=1.0,
-                )
-            }
-        }
-
-        reward = compute_reward(metrics)
-        capture = reward["captures"][0]
-
-        self.assertTrue(capture["foundation_passed"])
-        self.assertFalse(capture["content_passed"])
-        self.assertFalse(capture["specifics_eligible"])
-        self.assertEqual(capture["specifics_contribution"], 0.0)
-        self.assertAlmostEqual(capture["foundation_contribution"], 0.05)
-        self.assertAlmostEqual(capture["content_contribution"], 0.0225)
-        self.assertAlmostEqual(capture["score"], 0.0725)
-
-    def test_passing_first_two_passes_unlocks_specifics(self) -> None:
-        metrics = {"captures": {"passing": _capture_payload()}}
-
-        reward = compute_reward(metrics)
-        capture = reward["captures"][0]
-
-        self.assertTrue(capture["foundation_passed"])
-        self.assertTrue(capture["content_passed"])
-        self.assertTrue(capture["specifics_eligible"])
+        self.assertAlmostEqual(capture["score_before_coverage"], 1.0)
         self.assertAlmostEqual(capture["score"], 1.0)
-        self.assertAlmostEqual(capture["specifics_contribution"], 0.8)
+        self.assertEqual(reward["metadata"]["formula"], "reward_simple_weighted_v1")
+        self.assertTrue(capture["gate_passed"])
+        self.assertAlmostEqual(RAW_COMPONENT_WEIGHTS["pixel_match"], 0.05)
+        self.assertAlmostEqual(RAW_COMPONENT_WEIGHTS["bbox_geometry"], 0.10)
+        self.assertAlmostEqual(RAW_COMPONENT_WEIGHTS["cssom_style"], 0.10)
+
+    def test_coverage_is_only_outer_multiplier(self) -> None:
+        reward = compute_reward({"captures": {"half-covered": _capture_payload(coverage=0.5)}})
+
+        capture = reward["captures"][0]
+
+        self.assertAlmostEqual(capture["score_before_coverage"], 1.0)
+        self.assertAlmostEqual(capture["score"], 0.5)
+
+    def test_gate_failure_blocks_advanced_components(self) -> None:
+        reward = compute_reward(
+            {
+                "captures": {
+                    "failed-vlm": _capture_payload(
+                        screenshot_size=1.0,
+                        html=1.0,
+                        vlm=0.39,
+                        global_pixelmatch=1.0,
+                        visual_block=1.0,
+                        bbox=1.0,
+                        cssom=1.0,
+                        dreamsim=1.0,
+                    )
+                }
+            }
+        )
+
+        capture = reward["captures"][0]
+        expected = (
+            COMPONENT_WEIGHTS["screenshot_size"]
+            + COMPONENT_WEIGHTS["html"]
+            + COMPONENT_WEIGHTS["vlm"] * 0.39
+        )
+
+        self.assertFalse(capture["gate_passed"])
+        self.assertEqual(capture["gate_failures"], ["vlm"])
+        self.assertAlmostEqual(capture["pixel_match_contribution"], 0.0)
+        self.assertAlmostEqual(capture["visual_block_contribution"], 0.0)
+        self.assertAlmostEqual(capture["bbox_geometry_contribution"], 0.0)
+        self.assertAlmostEqual(capture["cssom_style_contribution"], 0.0)
+        self.assertAlmostEqual(capture["dreamsim_contribution"], 0.0)
+        self.assertAlmostEqual(capture["score"], expected, places=6)
+
+    def test_global_dreamsim_and_pixelmatch_are_not_visual_block_gated_when_gate_passes(self) -> None:
+        reward = compute_reward(
+            {
+                "captures": {
+                    "no-visual-block": _capture_payload(
+                        screenshot_size=1.0,
+                        html=1.0,
+                        vlm=1.0,
+                        global_pixelmatch=1.0,
+                        visual_block=0.0,
+                        bbox=0.0,
+                        cssom=0.0,
+                        dreamsim=1.0,
+                    )
+                }
+            }
+        )
+
+        capture = reward["captures"][0]
+        expected = (
+            COMPONENT_WEIGHTS["screenshot_size"]
+            + COMPONENT_WEIGHTS["html"]
+            + COMPONENT_WEIGHTS["vlm"]
+            + COMPONENT_WEIGHTS["pixel_match"]
+            + COMPONENT_WEIGHTS["dreamsim"]
+        )
+
+        self.assertAlmostEqual(capture["dreamsim"], 1.0)
+        self.assertAlmostEqual(capture["pixel_match"], 1.0)
+        self.assertAlmostEqual(capture["score"], expected, places=6)
+
+    def test_pixel_match_component_averages_global_and_block_pixelmatch(self) -> None:
+        reward = compute_reward(
+            {
+                "captures": {
+                    "mixed-pixel": _capture_payload(
+                        screenshot_size=1.0,
+                        html=1.0,
+                        vlm=1.0,
+                        global_pixelmatch=1.0,
+                        block_pixelmatch=0.5,
+                        visual_block=0.0,
+                        bbox=0.0,
+                        cssom=0.0,
+                        dreamsim=0.0,
+                    )
+                }
+            }
+        )
+
+        capture = reward["captures"][0]
+
+        self.assertAlmostEqual(capture["pixel_match"], 0.75)
+        self.assertAlmostEqual(capture["pixel_match_contribution"], COMPONENT_WEIGHTS["pixel_match"] * 0.75, places=6)
+
+    def test_bbox_and_cssom_components_are_separate(self) -> None:
+        reward = compute_reward(
+            {
+                "captures": {
+                    "mixed-layout": _capture_payload(
+                        screenshot_size=1.0,
+                        html=1.0,
+                        vlm=1.0,
+                        global_pixelmatch=0.0,
+                        visual_block=0.0,
+                        bbox=1.0,
+                        cssom=0.0,
+                        dreamsim=0.0,
+                    )
+                }
+            }
+        )
+
+        capture = reward["captures"][0]
+        expected = (
+            COMPONENT_WEIGHTS["screenshot_size"]
+            + COMPONENT_WEIGHTS["html"]
+            + COMPONENT_WEIGHTS["vlm"]
+            + COMPONENT_WEIGHTS["bbox_geometry"]
+        )
+
+        self.assertAlmostEqual(capture["bbox_geometry"], 1.0)
+        self.assertAlmostEqual(capture["cssom_style"], 0.0)
+        self.assertAlmostEqual(capture["bbox_geometry_contribution"], COMPONENT_WEIGHTS["bbox_geometry"], places=6)
+        self.assertAlmostEqual(capture["cssom_style_contribution"], 0.0)
+        self.assertAlmostEqual(capture["score"], expected, places=6)
 
 
 if __name__ == "__main__":
