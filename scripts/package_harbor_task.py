@@ -249,8 +249,16 @@ def _capture_metric_value(metrics: dict[str, Any], capture_id: str, path: list[s
     return current
 
 
-def _require_capture_metric(metrics: dict[str, Any], path: list[str], label: str) -> None:
+def _require_capture_metric(
+    metrics: dict[str, Any],
+    path: list[str],
+    label: str,
+    *,
+    allow_unsupported: bool = False,
+    require_any: bool = True,
+) -> None:
     missing: list[str] = []
+    present = 0
     for capture_id, capture in (metrics.get("captures") or {}).items():
         coverage = ((capture.get("coverage") or {}).get("score") or 0)
         if not isinstance(coverage, (int, float)) or coverage <= 0:
@@ -258,11 +266,18 @@ def _require_capture_metric(metrics: dict[str, Any], path: list[str], label: str
         capture_metrics = capture.get("metrics") or {}
         if not isinstance(capture_metrics, dict) or capture_metrics.get("status") == "unsupported":
             continue
+        root_metric = capture_metrics.get(path[0]) if path else None
+        if allow_unsupported and isinstance(root_metric, dict) and root_metric.get("unsupported") is True:
+            continue
         value = _capture_metric_value(metrics, capture_id, path)
         if not isinstance(value, (int, float)):
             missing.append(capture_id)
+        else:
+            present += 1
     if missing:
         raise RuntimeError(f"Required metric {label} is missing for captures: {missing}")
+    if require_any and present == 0:
+        raise RuntimeError(f"Required metric {label} did not produce any numeric capture scores")
 
 
 def _candidate_root(explicit: str | None) -> Path:
@@ -368,7 +383,12 @@ def main(argv: list[str] | None = None) -> int:
     if require_dreamsim:
         _require_capture_metric(metrics, ["dreamsim", "score"], "dreamsim.score")
     if require_visual_block:
-        _require_capture_metric(metrics, ["visual_block", "score"], "visual_block.score")
+        _require_capture_metric(
+            metrics,
+            ["visual_block", "score"],
+            "visual_block.score",
+            allow_unsupported=True,
+        )
 
     weight_mode = os.environ.get("WDE_WEIGHT_MODE", metric_config.get("weight_mode", "manifest"))
     reward = compute_reward(metrics, weight_mode=weight_mode)
