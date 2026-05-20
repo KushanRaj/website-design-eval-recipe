@@ -36,6 +36,10 @@ tr:nth-child(even) td { background: #fbfcfe; }
 .caption { font-size: 9pt; color: #475569; margin-top: 6px; }
 .evidence .figure img { max-height: 130mm; }
 .evidence .analysis { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; align-items: start; }
+.tour-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.tour-card { border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 6px; }
+.tour-card img { display: block; width: 100%; max-height: 82mm; object-fit: contain; }
+.tour-card .caption { margin: 5px 2px 0; }
 ul { margin: 4px 0 0 18px; padding: 0; }
 li { margin: 3px 0; }
 .small { font-size: 9.5pt; color: #475569; }
@@ -107,6 +111,47 @@ li { margin: 3px 0; }
     </div>
   </div>
   <div class="callout good"><strong>Why this is useful for RL</strong> The task set produces a spectrum rather than a binary outcome. Good candidates preserve structure and states; medium candidates reproduce the vibe but miss local details; weak candidates look plausible while failing layout/content fidelity.</div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: podcast channel directory</h2>
+  <p>For the exhibition view, these screenshots are browser captures from the oracle site and the generated candidate site, not reward-cropped figures. They show the breadth of surfaces the agent is asked to reconstruct from screenshots alone.</p>
+  <div class="tour-card"><img src="assets/pair-podcast-channels-browser.jpg"><div class="caption"><strong>Podcast network.</strong> The candidate preserves the dark media-network identity and channel/list structure, with drift in spacing, list density, and copy hierarchy.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: podcast live surface</h2>
+  <div class="tour-card"><img src="assets/pair-podcast-live-browser.jpg"><div class="caption"><strong>Podcast live page.</strong> This is a richer media/event page with calendar-like blocks and neon accent language; the candidate keeps the broad interaction surface but changes proportions.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: science people directory</h2>
+  <div class="tour-card"><img src="assets/pair-science-people-browser.jpg"><div class="caption"><strong>Science institute.</strong> The agent reconstructs the directory surface and sidebar grammar, but changes the card sizing and exact personnel grid.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: science data system</h2>
+  <div class="tour-card"><img src="assets/pair-science-data-browser.jpg"><div class="caption"><strong>Science data page.</strong> Both pages keep the publication/data portal grammar, but local table rhythm, badges, and right-column metadata differ.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: storm operations dashboard</h2>
+  <div class="tour-card"><img src="assets/pair-storm-home-browser.jpg"><div class="caption"><strong>Storm operations dashboard.</strong> The generated site preserves the dark radar/operations feel and dashboard blocks, while redrawing the exact map, telemetry and alert layout.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: storm gear comparison</h2>
+  <div class="tour-card"><img src="assets/pair-storm-gear-browser.jpg"><div class="caption"><strong>Storm gear comparison.</strong> Dense technical UI stresses repeated panels, icons, tables and side instrumentation; the candidate gets the genre, but reinterprets many local blocks.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: zen schedule</h2>
+  <div class="tour-card"><img src="assets/pair-zen-schedule-browser.jpg"><div class="caption"><strong>Zen center schedule.</strong> This task is visually quiet and typography-heavy; the candidate matches the broad page mood while changing exact schedule density and alignment.</div></div>
+</section>
+
+<section class="page">
+  <h2>Browser tour: credit-union sign in</h2>
+  <div class="tour-card"><img src="assets/pair-regional-signin-browser.jpg"><div class="caption"><strong>Regional credit union.</strong> The sign-in flow is a conventional form page where the model captures the identity and form layout, but shifts spacing and text density.</div></div>
 </section>
 
 <section class="page evidence">
