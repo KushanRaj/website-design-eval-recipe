@@ -126,12 +126,48 @@ def _reference_animation_evidence(
     return evidence
 
 
+def _html_path_to_spa_probe(path: str) -> str | None:
+    if not path:
+        return None
+    path = path if path.startswith("/") else f"/{path}"
+    if path in {"/", "/index.html"}:
+        return "/"
+    if path.endswith(".html"):
+        return path[:-5] or "/"
+    return path
+
+
+def _candidate_route_probes(
+    oracle_captures: list[dict[str, Any]],
+    oracle_animations: list[dict[str, Any]],
+) -> list[str]:
+    probes: list[str] = ["/", "/index.html"]
+    for item in [*oracle_captures, *oracle_animations]:
+        path = item.get("path") or item.get("urlPath")
+        if not isinstance(path, str) or not path:
+            continue
+        normalized = path if path.startswith("/") else f"/{path}"
+        probes.append(normalized)
+        spa_probe = _html_path_to_spa_probe(normalized)
+        if spa_probe:
+            probes.append(spa_probe)
+    seen: set[str] = set()
+    unique: list[str] = []
+    for probe in probes:
+        if probe not in seen:
+            seen.add(probe)
+            unique.append(probe)
+    return unique
+
+
 def _candidate_planner_prompt(
     *,
     oracle_captures: list[dict[str, Any]],
     oracle_animations: list[dict[str, Any]],
     oracle_animation_evidence: list[dict[str, Any]],
     candidate_inventory: dict[str, Any],
+    candidate_framework: str,
+    candidate_serve_mode: str,
     output_path: Path,
 ) -> str:
     return f"""
@@ -141,6 +177,14 @@ The oracle manifest below is already frozen at dataset creation time. Your job i
 not to make a new oracle manifest. Your job is to inspect the candidate website
 inventory and produce a candidate manifest whose captures align to the oracle
 captures by id.
+
+Candidate framework: {candidate_framework}
+Candidate serve mode: {candidate_serve_mode}
+
+If the candidate serve mode is "spa", candidate routes may be idiomatic client
+routes such as /minerals instead of /minerals.html. Use browser-rendered route
+inventory and oracle-path probes to choose the candidate path that renders the
+same page/state. Do not require the candidate to mimic static .html filenames.
 
 For each oracle capture:
 - Preserve the oracle capture id exactly.
@@ -165,8 +209,8 @@ For each oracle animation:
   a map marker, choose the candidate card as the target even when the marker is
   also clickable.
 - If the corresponding candidate animation cannot be identified from the
-  candidate inventory and source files, omit that animation. The evaluator will
-  score it as missing animation coverage.
+  candidate browser inventory and source files, omit that animation. The
+  evaluator will score it as missing animation coverage.
 
 Do not invent routes or selectors. Use only paths and selector_candidates shown
 in the candidate browser inventory. Prefer selector_candidates with count=1.
@@ -203,6 +247,8 @@ async def _generate_candidate_manifest_claude_code_async(
     oracle_animations: list[dict[str, Any]],
     oracle_animation_evidence: list[dict[str, Any]],
     candidate_inventory: dict[str, Any],
+    candidate_framework: str,
+    candidate_serve_mode: str,
     auth_mode: ClaudeAuthMode,
 ) -> dict[str, Any]:
     from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, ResultMessage, TextBlock, query
@@ -218,7 +264,7 @@ async def _generate_candidate_manifest_claude_code_async(
         ),
         model=model,
         cwd=candidate_root,
-        max_turns=8,
+        max_turns=16,
         tools=["Read", "LS", "Glob", "Grep"],
         allowed_tools=["Read", "LS", "Glob", "Grep"],
         disallowed_tools=["Bash", "Write", "Edit", "MultiEdit", "NotebookEdit"],
@@ -232,8 +278,16 @@ async def _generate_candidate_manifest_claude_code_async(
         oracle_animations=oracle_animations,
         oracle_animation_evidence=oracle_animation_evidence,
         candidate_inventory=candidate_inventory,
+        candidate_framework=candidate_framework,
+        candidate_serve_mode=candidate_serve_mode,
         output_path=output_path,
     )
+    prompt_path = output_path.with_name(f"{output_path.stem}.prompt.txt")
+    transcript_path = output_path.with_name(f"{output_path.stem}.claude-transcript.jsonl")
+    prompt_path.parent.mkdir(parents=True, exist_ok=True)
+    prompt_path.write_text(prompt, encoding="utf-8")
+    if transcript_path.exists():
+        transcript_path.unlink()
     max_attempts = 3
     parsed: dict[str, Any] | None = None
     for attempt in range(1, max_attempts + 1):
@@ -245,6 +299,17 @@ async def _generate_candidate_manifest_claude_code_async(
                 AssistantMessage=AssistantMessage,
                 ResultMessage=ResultMessage,
                 TextBlock=TextBlock,
+                transcript_path=transcript_path,
+                transcript_context={
+                    "planner": "candidate_manifest",
+                    "attempt": attempt,
+                    "model": model,
+                    "max_turns": 16,
+                    "candidate_root": str(candidate_root),
+                    "output_path": str(output_path),
+                    "candidate_framework": candidate_framework,
+                    "candidate_serve_mode": candidate_serve_mode,
+                },
             )
             break
         except ClaudeManifestGenerationError as exc:
@@ -352,6 +417,8 @@ def generate_candidate_manifest(
     reference_root: PathLike | None = None,
     backend: str = "claude-code",
     claude_auth: ClaudeAuthMode = "api",
+    candidate_framework: str = "html",
+    candidate_serve_mode: str = "static",
 ) -> dict[str, Any]:
     if backend != "claude-code":
         raise ValueError(f"Unknown candidate planner backend: {backend}")
@@ -371,7 +438,10 @@ def generate_candidate_manifest(
     oracle_animations = _oracle_animation_prior(reference_manifest)
     reference_inventory = _browser_inventory(Path(reference_root).resolve()) if reference_root else None
     oracle_animation_evidence = _reference_animation_evidence(oracle_animations, reference_inventory)
-    inventory = _browser_inventory(root)
+    route_probes = _candidate_route_probes(oracle_captures, oracle_animations)
+    inventory = _browser_inventory(root, serve_mode=candidate_serve_mode, route_paths=route_probes)
+    inventory["candidate_framework"] = candidate_framework
+    inventory["oracle_path_probes"] = route_probes
     return asyncio.run(
         _generate_candidate_manifest_claude_code_async(
             candidate_root=root,
@@ -381,6 +451,8 @@ def generate_candidate_manifest(
             oracle_animations=oracle_animations,
             oracle_animation_evidence=oracle_animation_evidence,
             candidate_inventory=inventory,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
             auth_mode=claude_auth,
         )
     )

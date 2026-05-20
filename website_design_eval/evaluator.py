@@ -10,8 +10,6 @@ from contextlib import nullcontext
 from dataclasses import dataclass
 from datetime import datetime
 from difflib import SequenceMatcher
-from functools import partial
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
@@ -40,6 +38,7 @@ from .scoring import (
     webcode2m_dom_score,
     webcode2m_text_score,
 )
+from .static_server import StaticServer, normalize_serve_mode
 
 PathLike = str | os.PathLike[str]
 
@@ -545,34 +544,6 @@ def _screenshot_options(defaults: dict[str, Any], capture: dict[str, Any], path:
     return options
 
 
-class _QuietHandler(SimpleHTTPRequestHandler):
-    def log_message(self, _format: str, *_args: Any) -> None:
-        return
-
-
-@dataclass
-class StaticServer:
-    root: Path
-    httpd: ThreadingHTTPServer
-    thread: threading.Thread
-    base_url: str
-
-    @classmethod
-    def start(cls, root: Path) -> "StaticServer":
-        root = root.resolve()
-        handler = partial(_QuietHandler, directory=str(root))
-        httpd = ThreadingHTTPServer(("127.0.0.1", 0), handler)
-        host, port = httpd.server_address[:2]
-        thread = threading.Thread(target=httpd.serve_forever, daemon=True)
-        thread.start()
-        return cls(root=root, httpd=httpd, thread=thread, base_url=f"http://{host}:{port}")
-
-    def close(self) -> None:
-        self.httpd.shutdown()
-        self.httpd.server_close()
-        self.thread.join(timeout=2)
-
-
 @dataclass
 class EvaluateConfig:
     reference_root: Path
@@ -580,6 +551,8 @@ class EvaluateConfig:
     candidate_root: Path
     output_dir: Path
     repo_root: Path
+    candidate_framework: str = "html"
+    candidate_serve_mode: str = "static"
     skip_vlm: bool = False
     skip_dreamsim: bool = False
     vlm_model: str = "gpt-5.4-mini"
@@ -643,7 +616,10 @@ def _route_for_capture(
     capture: dict[str, Any],
     *,
     route_inventory: list[dict[str, Any]] | None = None,
+    serve_mode: str = "static",
+    candidate_manifest_mapped: bool = False,
 ) -> dict[str, Any]:
+    serve_mode = normalize_serve_mode(serve_mode)
     capture_path = capture.get("path") or capture.get("urlPath") or "/index.html"
     relative = capture_path.lstrip("/") or "index.html"
     exact_path = root / relative
@@ -656,11 +632,42 @@ def _route_for_capture(
             "status": "resolved",
             "method": "exact_path",
             "failure_mode": None,
+            "serve_mode": serve_mode,
+            "route_resolution_coverage": 1.0,
+        }
+
+    if serve_mode == "spa":
+        index_path = root / "index.html"
+        if index_path.exists():
+            route_confidence = 1.0 if candidate_manifest_mapped else 0.75
+            return {
+                "requested_path": capture_path,
+                "resolved_path": capture_path if str(capture_path).startswith("/") else f"/{capture_path}",
+                "file_path": str(index_path.resolve()),
+                "confidence": route_confidence,
+                "status": "resolved",
+                "method": "spa_manifest_path" if candidate_manifest_mapped else "spa_fallback",
+                "failure_mode": None if candidate_manifest_mapped else "exact_path_missing_spa_fallback",
+                "serve_mode": serve_mode,
+                "route_resolution_coverage": route_confidence,
+            }
+        return {
+            "requested_path": capture_path,
+            "resolved_path": None,
+            "file_path": None,
+            "confidence": 0.0,
+            "status": "missing",
+            "method": "spa_fallback",
+            "failure_mode": "spa_index_missing",
+            "serve_mode": serve_mode,
+            "route_resolution_coverage": 0.0,
         }
 
     if route_inventory:
         semantic_route = _semantic_route_for_capture(capture, route_inventory)
         if semantic_route:
+            semantic_route["serve_mode"] = serve_mode
+            semantic_route["route_resolution_coverage"] = semantic_route.get("confidence", 0.0)
             return semantic_route
 
     page = str(capture.get("page") or "").strip().lower()
@@ -680,6 +687,8 @@ def _route_for_capture(
                 "status": "resolved",
                 "method": "fallback_page_file",
                 "failure_mode": "exact_path_missing",
+                "serve_mode": serve_mode,
+                "route_resolution_coverage": 0.6,
             }
 
     return {
@@ -690,6 +699,8 @@ def _route_for_capture(
         "status": "missing",
         "method": None,
         "failure_mode": "no_matching_route_file",
+        "serve_mode": serve_mode,
+        "route_resolution_coverage": 0.0,
     }
 
 
@@ -858,6 +869,74 @@ def _route_url(base_url: str, resolved_path: str | None) -> str:
     return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
 
 
+def _stability_wait_ms(defaults: dict[str, Any], capture: dict[str, Any]) -> int:
+    if "stabilityWaitMs" in capture:
+        return int(capture.get("stabilityWaitMs") or 0)
+    return int(defaults.get("stabilityWaitMs") or 120)
+
+
+def _wait_for_render_stability(page: Page, quiet_ms: int) -> None:
+    page.evaluate(
+        """() => new Promise((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        })"""
+    )
+    if quiet_ms <= 0:
+        return
+    page.evaluate(
+        """(quietMs) => new Promise((resolve) => {
+          let timer = null;
+          const done = () => {
+            observer.disconnect();
+            resolve();
+          };
+          const observer = new MutationObserver(() => {
+            if (timer !== null) clearTimeout(timer);
+            timer = setTimeout(done, quietMs);
+          });
+          observer.observe(document.documentElement, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            characterData: true
+          });
+          timer = setTimeout(done, quietMs);
+        })""",
+        quiet_ms,
+    )
+
+
+async def _wait_for_render_stability_async(page: AsyncPage, quiet_ms: int) -> None:
+    await page.evaluate(
+        """() => new Promise((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        })"""
+    )
+    if quiet_ms <= 0:
+        return
+    await page.evaluate(
+        """(quietMs) => new Promise((resolve) => {
+          let timer = null;
+          const done = () => {
+            observer.disconnect();
+            resolve();
+          };
+          const observer = new MutationObserver(() => {
+            if (timer !== null) clearTimeout(timer);
+            timer = setTimeout(done, quietMs);
+          });
+          observer.observe(document.documentElement, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            characterData: true
+          });
+          timer = setTimeout(done, quietMs);
+        })""",
+        quiet_ms,
+    )
+
+
 def _goto_capture(
     page: Page,
     base_url: str,
@@ -879,6 +958,7 @@ def _goto_capture(
     after_load_wait_ms = int(defaults.get("afterLoadWaitMs") or 0)
     if after_load_wait_ms:
         page.wait_for_timeout(after_load_wait_ms)
+    _wait_for_render_stability(page, _stability_wait_ms(defaults, capture))
     page.evaluate(STAMP_MANIFEST_ELEMENTS_SCRIPT)
 
 
@@ -1011,7 +1091,7 @@ def _run_action(
     action: dict[str, Any],
     selector: str | None = None,
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> None:
     action_type = action.get("type")
     resolved_selector = selector or action.get("selector")
@@ -1148,7 +1228,7 @@ def _execute_reference_actions(
     page: Page,
     capture: dict[str, Any],
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> list[dict[str, Any]]:
     executed = []
     for action in capture.get("actions") or []:
@@ -1180,7 +1260,7 @@ def _execute_candidate_actions(
     page: Page,
     reference_actions: list[dict[str, Any]],
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> list[dict[str, Any]]:
     executed = []
     for reference_action in reference_actions:
@@ -1248,7 +1328,7 @@ def _execute_direct_manifest_actions(
     page: Page,
     capture: dict[str, Any],
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> list[dict[str, Any]]:
     executed = []
     for action in capture.get("actions") or []:
@@ -1548,7 +1628,7 @@ def _sample_animation_page(
         if settle_before_ms:
             page.wait_for_timeout(settle_before_ms)
         if action.get("type") != "wait":
-            _run_action(page, action)
+            _run_action(page, action, scroll_strategy="playwright_with_dom_nearest_fallback")
     except Exception as exc:
         trigger_status = "failed"
         trigger_failure = f"{type(exc).__name__}: {exc}"
@@ -2092,6 +2172,7 @@ async def _goto_capture_async(
     after_load_wait_ms = int(defaults.get("afterLoadWaitMs") or 0)
     if after_load_wait_ms:
         await page.wait_for_timeout(after_load_wait_ms)
+    await _wait_for_render_stability_async(page, _stability_wait_ms(defaults, capture))
     await page.evaluate(STAMP_MANIFEST_ELEMENTS_SCRIPT)
 
 
@@ -2197,7 +2278,7 @@ async def _run_action_async(
     action: dict[str, Any],
     selector: str | None = None,
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> None:
     action_type = action.get("type")
     resolved_selector = selector or action.get("selector")
@@ -2266,7 +2347,7 @@ async def _execute_reference_actions_async(
     page: AsyncPage,
     capture: dict[str, Any],
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> list[dict[str, Any]]:
     executed = []
     for action in capture.get("actions") or []:
@@ -2298,7 +2379,7 @@ async def _execute_candidate_actions_async(
     page: AsyncPage,
     reference_actions: list[dict[str, Any]],
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> list[dict[str, Any]]:
     executed = []
     for reference_action in reference_actions:
@@ -2366,7 +2447,7 @@ async def _execute_direct_manifest_actions_async(
     page: AsyncPage,
     capture: dict[str, Any],
     *,
-    scroll_strategy: str = "playwright",
+    scroll_strategy: str = "playwright_with_dom_nearest_fallback",
 ) -> list[dict[str, Any]]:
     executed = []
     for action in capture.get("actions") or []:
@@ -2564,7 +2645,11 @@ async def _capture_reference_async(
     page = await context.new_page()
     try:
         await _goto_capture_async(page, base_url, route, capture, defaults)
-        reference_actions = await _execute_reference_actions_async(page, capture)
+        reference_actions = await _execute_reference_actions_async(
+            page,
+            capture,
+            scroll_strategy="playwright_with_dom_nearest_fallback",
+        )
         artifact = await _artifact_from_page_async(page, capture, defaults, artifact_dir, reference_actions, side="reference")
         artifact["route"] = route
         if include_visual_blocks:
@@ -2612,7 +2697,11 @@ async def _capture_candidate_async(
     page = await context.new_page()
     try:
         await _goto_capture_async(page, base_url, route, capture, defaults)
-        candidate_actions = await _execute_candidate_actions_async(page, reference_actions)
+        candidate_actions = await _execute_candidate_actions_async(
+            page,
+            reference_actions,
+            scroll_strategy="playwright_with_dom_nearest_fallback",
+        )
         artifact = await _artifact_from_page_async(page, capture, defaults, artifact_dir, candidate_actions, side="candidate")
         artifact["route"] = route
         if include_visual_blocks:
@@ -2659,7 +2748,11 @@ async def _capture_candidate_from_manifest_async(
     page = await context.new_page()
     try:
         await _goto_capture_async(page, base_url, route, capture, defaults)
-        candidate_actions = await _execute_direct_manifest_actions_async(page, capture)
+        candidate_actions = await _execute_direct_manifest_actions_async(
+            page,
+            capture,
+            scroll_strategy="playwright_with_dom_nearest_fallback",
+        )
         artifact = await _artifact_from_page_async(page, capture, defaults, artifact_dir, candidate_actions, side="candidate")
         artifact["route"] = route
         artifact["capture_source"] = "candidate_manifest"
@@ -3078,7 +3171,7 @@ async def _evaluate_capture_async(
 ) -> tuple[str, dict[str, Any], dict[str, Any]]:
     capture_id = capture["id"]
     _progress(config, "capture_start", capture_id=capture_id)
-    reference_route = _route_for_capture(config.reference_root, capture)
+    reference_route = _route_for_capture(config.reference_root, capture, serve_mode="static")
     candidate_capture = candidate_captures_by_id.get(capture_id)
     if candidate_manifest is not None and candidate_capture is None:
         candidate_route = {
@@ -3095,6 +3188,8 @@ async def _evaluate_capture_async(
             config.candidate_root,
             candidate_capture or capture,
             route_inventory=candidate_route_inventory,
+            serve_mode=config.candidate_serve_mode,
+            candidate_manifest_mapped=candidate_capture is not None,
         )
 
     async with capture_semaphore:
@@ -3308,7 +3403,7 @@ def _evaluate_animations_sync(
         try:
             for animation in animations:
                 animation_id = animation["id"]
-                reference_route = _route_for_capture(config.reference_root, animation)
+                reference_route = _route_for_capture(config.reference_root, animation, serve_mode="static")
                 candidate_animation = candidate_animations_by_id.get(animation_id)
                 if candidate_manifest is not None and candidate_animation is None:
                     candidate_route = {
@@ -3325,6 +3420,8 @@ def _evaluate_animations_sync(
                         config.candidate_root,
                         candidate_animation or animation,
                         route_inventory=candidate_route_inventory,
+                        serve_mode=config.candidate_serve_mode,
+                        candidate_manifest_mapped=candidate_animation is not None,
                     )
 
                 if reference_route["status"] != "resolved":
@@ -3624,6 +3721,7 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
 def evaluate(config: EvaluateConfig) -> dict[str, Any]:
     started = time.time()
     _load_dotenv(config.repo_root / ".env")
+    config.candidate_serve_mode = normalize_serve_mode(config.candidate_serve_mode)
     if config.dreamsim_cache_dir is None:
         config.dreamsim_cache_dir = str(config.repo_root / ".cache" / "dreamsim")
     config.output_dir.mkdir(parents=True, exist_ok=True)
@@ -3645,6 +3743,8 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
         animation_count=len(animations),
         reference_root=str(config.reference_root),
         candidate_root=str(config.candidate_root),
+        candidate_framework=config.candidate_framework,
+        candidate_serve_mode=config.candidate_serve_mode,
         output_dir=str(config.output_dir),
         vlm_model=config.vlm_model,
         skip_vlm=config.skip_vlm,
@@ -3678,6 +3778,8 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
                 reference_root=config.reference_root,
                 backend=config.candidate_manifest_planner,
                 claude_auth=config.candidate_manifest_claude_auth,
+                candidate_framework=config.candidate_framework,
+                candidate_serve_mode=config.candidate_serve_mode,
             )
         candidate_manifest = candidate_manifest_result["manifest"]
     candidate_captures_by_id = {
@@ -3691,12 +3793,14 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
         if isinstance(animation, dict) and animation.get("id")
     }
 
-    reference_server = StaticServer.start(config.reference_root)
-    candidate_server = StaticServer.start(config.candidate_root)
+    reference_server = StaticServer.start(config.reference_root, serve_mode="static")
+    candidate_server = StaticServer.start(config.candidate_root, serve_mode=config.candidate_serve_mode)
     candidate_route_inventory = _route_inventory(config.candidate_root)
     candidate_plan: dict[str, Any] = {
         "reference_root": str(config.reference_root),
         "candidate_root": str(config.candidate_root),
+        "candidate_framework": config.candidate_framework,
+        "candidate_serve_mode": config.candidate_serve_mode,
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "candidate_manifest_planner": candidate_manifest_result,
         "candidate_route_inventory": [
@@ -3712,6 +3816,8 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
             "reference_root": str(config.reference_root),
             "reference_manifest": str(config.reference_manifest),
             "candidate_root": str(config.candidate_root),
+            "candidate_framework": config.candidate_framework,
+            "candidate_serve_mode": config.candidate_serve_mode,
             "output_dir": str(config.output_dir),
             "vlm_model": config.vlm_model,
             "vlm_enabled": not config.skip_vlm and bool(os.environ.get("OPENAI_API_KEY")),

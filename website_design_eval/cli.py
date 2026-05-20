@@ -222,6 +222,8 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--reference-root", required=True)
     evaluate_parser.add_argument("--reference-manifest", required=True)
     evaluate_parser.add_argument("--candidate-root", required=True)
+    evaluate_parser.add_argument("--candidate-framework", choices=["html", "react", "solid"], default="html")
+    evaluate_parser.add_argument("--candidate-serve-mode", choices=["static", "spa"], default="static")
     evaluate_parser.add_argument("--output-dir", required=True)
     evaluate_parser.add_argument("--capture", action="append", default=None, help="Capture id to run; may be repeated")
     evaluate_parser.add_argument("--skip-vlm", action="store_true")
@@ -275,6 +277,8 @@ def main(argv: list[str] | None = None) -> int:
         help="Optional oracle site root used to provide reference-side animation target evidence.",
     )
     generate_candidate_manifest_parser.add_argument("--candidate-root", required=True)
+    generate_candidate_manifest_parser.add_argument("--candidate-framework", choices=["html", "react", "solid"], default="html")
+    generate_candidate_manifest_parser.add_argument("--candidate-serve-mode", choices=["static", "spa"], default="static")
     generate_candidate_manifest_parser.add_argument("--output", required=True)
     generate_candidate_manifest_parser.add_argument("--model", default="opus")
     generate_candidate_manifest_parser.add_argument(
@@ -290,6 +294,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     evaluate_auto_parser.add_argument("--reference-root", required=True)
     evaluate_auto_parser.add_argument("--candidate-root", required=True)
+    evaluate_auto_parser.add_argument("--candidate-framework", choices=["html", "react", "solid"], default="html")
+    evaluate_auto_parser.add_argument("--candidate-serve-mode", choices=["static", "spa"], default="static")
     evaluate_auto_parser.add_argument("--output-dir", required=True)
     evaluate_auto_parser.add_argument("--manifest-backend", choices=["claude-code", "openai"], default="claude-code")
     evaluate_auto_parser.add_argument("--manifest-model", default="opus")
@@ -525,6 +531,8 @@ def main(argv: list[str] | None = None) -> int:
                 reference_root=Path(args.reference_root).resolve(),
                 reference_manifest=Path(args.reference_manifest).resolve(),
                 candidate_root=Path(args.candidate_root).resolve(),
+                candidate_framework=args.candidate_framework,
+                candidate_serve_mode=args.candidate_serve_mode,
                 output_dir=Path(args.output_dir).resolve(),
                 repo_root=repo_root,
                 skip_vlm=args.skip_vlm,
@@ -589,6 +597,8 @@ def main(argv: list[str] | None = None) -> int:
                 reference_root=Path(args.reference_root).resolve() if args.reference_root else None,
                 backend="claude-code",
                 claude_auth=args.claude_auth,
+                candidate_framework=args.candidate_framework,
+                candidate_serve_mode=args.candidate_serve_mode,
             )
         except ClaudeManifestGenerationError as exc:
             raise SystemExit(f"generate-candidate-manifest failed: {exc}") from None
@@ -632,6 +642,8 @@ def main(argv: list[str] | None = None) -> int:
                 reference_root=Path(args.reference_root).resolve(),
                 reference_manifest=manifest_path,
                 candidate_root=Path(args.candidate_root).resolve(),
+                candidate_framework=args.candidate_framework,
+                candidate_serve_mode=args.candidate_serve_mode,
                 output_dir=output_dir,
                 repo_root=repo_root,
                 skip_vlm=args.skip_vlm,
