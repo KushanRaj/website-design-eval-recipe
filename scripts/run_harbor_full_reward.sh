@@ -28,6 +28,7 @@ HARBOR_ENV="${WDE_HARBOR_ENV:-}"
 MODAL_SECRET_NAME="${WDE_MODAL_SECRET_NAME:-}"
 MODAL_ENVIRONMENT_NAME="${WDE_MODAL_ENVIRONMENT:-}"
 MODAL_REGISTRY_SECRET_NAME="${WDE_MODAL_REGISTRY_SECRET_NAME:-}"
+VERIFIER_TIMEOUT_MULTIPLIER="${WDE_HARBOR_VERIFIER_TIMEOUT_MULTIPLIER:-3}"
 
 if [[ -n "$MODAL_ENVIRONMENT_NAME" ]]; then
   export MODAL_ENVIRONMENT="$MODAL_ENVIRONMENT_NAME"
@@ -113,6 +114,18 @@ cmd=(
   --jobs-dir "$JOBS_DIR"
   --yes
 )
+if [[ -n "${WDE_HARBOR_TIMEOUT_MULTIPLIER:-}" ]]; then
+  cmd+=(--timeout-multiplier "$WDE_HARBOR_TIMEOUT_MULTIPLIER")
+fi
+if [[ -n "${WDE_HARBOR_AGENT_TIMEOUT_MULTIPLIER:-}" ]]; then
+  cmd+=(--agent-timeout-multiplier "$WDE_HARBOR_AGENT_TIMEOUT_MULTIPLIER")
+fi
+if [[ -n "$VERIFIER_TIMEOUT_MULTIPLIER" ]]; then
+  cmd+=(--verifier-timeout-multiplier "$VERIFIER_TIMEOUT_MULTIPLIER")
+fi
+if [[ -n "${WDE_HARBOR_ENVIRONMENT_BUILD_TIMEOUT_MULTIPLIER:-}" ]]; then
+  cmd+=(--environment-build-timeout-multiplier "$WDE_HARBOR_ENVIRONMENT_BUILD_TIMEOUT_MULTIPLIER")
+fi
 if ((${#environment_args[@]})); then
   cmd+=("${environment_args[@]}")
 fi
