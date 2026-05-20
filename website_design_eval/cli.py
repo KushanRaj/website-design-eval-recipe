@@ -564,12 +564,15 @@ def main(argv: list[str] | None = None) -> int:
             {
                 "status": "generated",
                 "manifest": result["output_path"],
+                "diagnostics": result.get("diagnostics_path"),
                 "backend": result["backend"],
                 "auth_mode": result.get("auth_mode"),
                 "model": result["model"],
                 "page_count": result["page_count"],
                 "inventory_source": result.get("inventory_source"),
                 "capture_count": result["capture_count"],
+                "raw_animation_count": (result.get("diagnostics") or {}).get("raw_animation_count"),
+                "animation_count": (result.get("diagnostics") or {}).get("sanitized_animation_count"),
                 "capture_budget": result["capture_budget"],
             }
         )

@@ -75,6 +75,11 @@ def _capture_weight(capture_id: str, capture_payload: dict[str, Any], mode: str)
     raise ValueError(f"Unknown weight mode: {mode}")
 
 
+def _manifest_item_weight(payload: dict[str, Any], key: str) -> float:
+    item = payload.get(key) or {}
+    return max(_number(item.get("weight"), 1.0), 0.0)
+
+
 def _component_contributions(
     components: dict[str, float | None],
     *,
@@ -217,6 +222,123 @@ def _score_capture(capture_payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _mean_animation_target_scores(animation_metrics: dict[str, Any], path: list[str]) -> float | None:
+    values = []
+    for target in animation_metrics.get("targets") or []:
+        current: Any = target.get("scores") or {}
+        for key in path:
+            if not isinstance(current, dict):
+                current = None
+                break
+            current = current.get(key)
+        if isinstance(current, int | float):
+            values.append(float(current))
+    if not values:
+        return None
+    return sum(values) / len(values)
+
+
+def _score_animation(animation_payload: dict[str, Any]) -> dict[str, Any]:
+    metrics = animation_payload.get("metrics") or {}
+    if not isinstance(metrics, dict) or metrics.get("status") != "scored":
+        return {
+            "coverage": 0.0,
+            "screenshot_size": None,
+            "html": None,
+            "vlm": None,
+            "global_pixelmatch": None,
+            "block_pixelmatch": None,
+            "pixel_match": None,
+            "visual_block": None,
+            "bbox_geometry": None,
+            "cssom_style": None,
+            "dreamsim": None,
+            "gate_passed": False,
+            "gate_failures": [],
+            "unavailable_components": list(RAW_COMPONENT_WEIGHTS),
+            "component_denominator": 0.0,
+            "raw_component_score": 0.0,
+            "score_before_coverage": 0.0,
+            "screenshot_size_contribution": 0.0,
+            "html_contribution": 0.0,
+            "vlm_contribution": 0.0,
+            "pixel_match_contribution": 0.0,
+            "visual_block_contribution": 0.0,
+            "bbox_geometry_contribution": 0.0,
+            "cssom_style_contribution": 0.0,
+            "dreamsim_contribution": 0.0,
+            "score": 0.0,
+            "status": "unsupported",
+            "reason": metrics.get("reason") or animation_payload.get("missing_reason"),
+        }
+
+    motion_bbox = _mean_animation_target_scores(metrics, ["motion", "bbox_iou"])
+    motion_delta = _mean_animation_target_scores(metrics, ["motion", "motion_delta"])
+    bbox_geometry = _mean_available([motion_bbox, motion_delta])
+    pixel_match = _mean_animation_target_scores(metrics, ["color", "target_box_pixelmatch"])
+    cssom_style = _mean_animation_target_scores(metrics, ["color", "cssom_color"])
+    coverage = 1.0 if any(value is not None for value in (bbox_geometry, pixel_match, cssom_style)) else 0.0
+
+    components = {
+        "screenshot_size": None,
+        "html": None,
+        "vlm": None,
+        "pixel_match": pixel_match,
+        "visual_block": None,
+        "bbox_geometry": bbox_geometry,
+        "cssom_style": cssom_style,
+        "dreamsim": None,
+    }
+    gate_failures = _gate_failures(components)
+    gate_passed = not gate_failures
+    contributions, component_denominator = _component_contributions(components, gate_passed=gate_passed)
+    score_before_coverage = sum(contributions.values())
+    score = coverage * score_before_coverage
+    unavailable_components = [
+        key
+        for key in RAW_COMPONENT_WEIGHTS
+        if components.get(key) is None
+    ]
+
+    return {
+        "coverage": round(coverage, 6),
+        "screenshot_size": None,
+        "html": None,
+        "vlm": None,
+        "global_pixelmatch": None,
+        "block_pixelmatch": None,
+        "pixel_match": _rounded_or_none(pixel_match),
+        "visual_block": None,
+        "bbox_geometry": _rounded_or_none(bbox_geometry),
+        "cssom_style": _rounded_or_none(cssom_style),
+        "dreamsim": None,
+        "gate_passed": gate_passed,
+        "gate_failures": gate_failures,
+        "unavailable_components": unavailable_components,
+        "component_denominator": round(component_denominator, 6),
+        "raw_component_score": round(
+            sum(
+                RAW_COMPONENT_WEIGHTS[key] * float(components[key])
+                for key in RAW_COMPONENT_WEIGHTS
+                if components.get(key) is not None
+            ),
+            6,
+        ),
+        "score_before_coverage": round(score_before_coverage, 6),
+        "screenshot_size_contribution": round(contributions["screenshot_size"], 6),
+        "html_contribution": round(contributions["html"], 6),
+        "vlm_contribution": round(contributions["vlm"], 6),
+        "pixel_match_contribution": round(contributions["pixel_match"], 6),
+        "visual_block_contribution": round(contributions["visual_block"], 6),
+        "bbox_geometry_contribution": round(contributions["bbox_geometry"], 6),
+        "cssom_style_contribution": round(contributions["cssom_style"], 6),
+        "dreamsim_contribution": round(contributions["dreamsim"], 6),
+        "score": round(score, 6),
+        "status": "scored",
+        "reason": None,
+    }
+
+
 def _weighted_mean(rows: list[dict[str, Any]], key: str) -> float:
     denominator = sum(row["weight"] for row in rows)
     if denominator <= 0:
@@ -241,7 +363,11 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
     for capture_id, capture_payload in metrics.get("captures", {}).items():
         score = _score_capture(capture_payload)
         weight = _capture_weight(capture_id, capture_payload, weight_mode)
-        rows.append({"capture_id": capture_id, "weight": weight, **score})
+        rows.append({"capture_id": capture_id, "item_type": "capture", "weight": weight, **score})
+    for animation_id, animation_payload in metrics.get("animations", {}).items():
+        score = _score_animation(animation_payload)
+        weight = 1.0 if weight_mode in {"equal", "suggested"} else _manifest_item_weight(animation_payload, "animation")
+        rows.append({"capture_id": animation_id, "item_type": "animation", "weight": weight, **score})
 
     summary = {
         "score": round(_weighted_mean(rows, "score"), 6),
@@ -267,6 +393,11 @@ def compute_reward(metrics: dict[str, Any], *, weight_mode: str = "manifest") ->
         "dreamsim_contribution": round(_weighted_mean(rows, "dreamsim_contribution"), 6),
         "capture_count": len(rows),
         "scored_capture_count": sum(1 for row in rows if row["status"] == "scored"),
+        "static_capture_count": sum(1 for row in rows if row["item_type"] == "capture"),
+        "animation_capture_count": sum(1 for row in rows if row["item_type"] == "animation"),
+        "scored_animation_capture_count": sum(
+            1 for row in rows if row["item_type"] == "animation" and row["status"] == "scored"
+        ),
         "gate_pass_count": sum(1 for row in rows if row.get("gate_passed")),
         "weight_mode": weight_mode,
         "gate_thresholds": GATE_THRESHOLDS,
@@ -330,6 +461,7 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
     summary = reward["summary"]
     capture_rows = [
         [
+            row.get("item_type", "capture"),
             row["capture_id"],
             row["weight"],
             row["coverage"],
@@ -408,6 +540,7 @@ def build_reward_markdown(reward: dict[str, Any]) -> str:
             "",
             _md_table(
                 [
+                    "Type",
                     "Capture",
                     "Weight",
                     "Coverage",

@@ -179,6 +179,9 @@ Rules:
   animation must include: id, page, target, trigger, channels, durationMs, and
   description. Use only channels ["motion"] and/or ["color"]. Avoid vague
   animation descriptions that cannot be replayed by a browser evaluator.
+- Animation durations may vary by intent: use quick micro-interactions around
+  120-250ms, standard UI transitions around 300-600ms, and smoother showcase
+  moments around 700-1200ms. Pick a duration that matches the described effect.
 - Do not use arbitrary component-count thresholds.
 - Use message_intent for semantic communication goals.
 - Use required_text only for exact visible strings that must appear.
@@ -229,6 +232,20 @@ Write:
 - At least five HTML pages, including index.html at the site root.
 - A shared stylesheet, plus JavaScript only when useful for visible states.
 - site_intent.json describing the concept as implemented.
+
+Animation implementation rules when the accepted concept declares animations:
+- Implement every declared animation visibly on the declared page.
+- Keep the animated target isolated: the target should remain in the DOM,
+  visible, measurable, and in/near the viewport throughout the sampled duration.
+- Do not make the evaluated target disappear, collapse to 0x0, scroll out of
+  view, or depend on unrelated panel/sidebar layout changes for its motion.
+- The trigger may be a different element from the target. Use normal semantic
+  HTML so the rendered browser inventory can identify both elements reliably.
+- Motion animations should move/scale the target itself using transforms or
+  equivalent local geometry changes. Color animations should change clear
+  computed color properties such as background, text, border, or accent color.
+- Avoid continuous infinite loops for manifest animations unless the concept
+  explicitly requests them; triggered finite transitions are easiest to replay.
 
 After writing files, respond with a concise summary and the list of files you wrote.
 """

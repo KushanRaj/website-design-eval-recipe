@@ -162,7 +162,7 @@ Example shape:
       "viewport": { "width": 1440, "height": 900 },
       "trigger": {
         "type": "hover",
-        "selector": "[data-wde-animation-trigger='home.card-hover']"
+        "selector": "button[aria-label='Preview plan']"
       },
       "timeline": {
         "durationMs": 300,
@@ -174,7 +174,7 @@ Example shape:
       "targets": [
         {
           "name": "animated card",
-          "selector": "[data-wde-animation-target='home.card-hover']",
+          "selector": "article[aria-label='Featured plan']",
           "channels": ["motion", "color"],
           "track": ["transform", "background-color", "color"]
         }

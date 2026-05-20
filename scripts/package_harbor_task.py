@@ -54,6 +54,9 @@ def _copy_public_screenshots(site_dir: Path, manifest: dict[str, Any], output_di
         if source.exists():
             shutil.copyfile(source, output_dir / f"{screenshot_index:03d}.png")
             screenshot_index += 1
+    source_animations = source_dir / "animations"
+    if source_animations.exists():
+        _copytree(source_animations, output_dir / "animations")
 
 
 def _write_text(path: Path, text: str, *, executable: bool = False) -> None:
@@ -66,10 +69,24 @@ def _write_text(path: Path, text: str, *, executable: bool = False) -> None:
 def _task_toml(
     task_name: str,
     *,
+    has_animations: bool,
+    animation_count: int,
+    candidate_framework: str,
     verifier_allow_internet: bool = False,
     agent_memory_mb: int = 8192,
 ) -> str:
     verifier_internet = "true" if verifier_allow_internet else "false"
+    keywords = ['"web"', '"design-replication"', '"visual-evaluation"', '"screenshot-only"']
+    tags = ['"website"', '"visual"']
+    if candidate_framework == "html":
+        keywords.extend(['"html"', '"css"'])
+        tags.append('"html-css"')
+    else:
+        keywords.append(f'"{candidate_framework}"')
+        tags.append(f'"{candidate_framework}"')
+    if has_animations:
+        keywords.append('"animation"')
+        tags.append('"animation"')
     return f"""
 schema_version = "1.1"
 artifacts = ["/app"]
@@ -78,12 +95,15 @@ artifacts = ["/app"]
 name = "{task_name}"
 description = "Replicate a multi-page website design from screenshots."
 authors = []
-keywords = ["web", "design-replication", "html", "css", "visual-evaluation", "screenshot-only"]
+keywords = [{", ".join(keywords)}]
 
 [metadata]
 category = "software_engineering"
 difficulty = "medium"
-tags = ["website", "visual", "html-css"]
+tags = [{", ".join(tags)}]
+has_animations = {str(has_animations).lower()}
+animation_count = {animation_count}
+candidate_framework = "{candidate_framework}"
 
 [agent]
 timeout_sec = 1800
@@ -112,7 +132,17 @@ workdir = "/app"
 """
 
 
-def _instruction_md() -> str:
+def _instruction_md(*, has_animations: bool, candidate_framework: str) -> str:
+    framework_line = {
+        "html": "Use HTML, CSS, and JavaScript unless you have a strong reason to add a build tool.",
+        "react": "Build the candidate implementation in React. The oracle may be static HTML; reproduce the visual result and interactions in React.",
+        "solid": "Build the candidate implementation in Solid. The oracle may be static HTML; reproduce the visual result and interactions in Solid.",
+    }.get(candidate_framework, "Use the requested implementation framework while matching the screenshots.")
+    animation_line = (
+        "This task includes animation states. Reproduce visible motion/color transitions implied by the reference animation frames, not just the static layout."
+        if has_animations
+        else "This task is scored on static visual states; do not add distracting animations that are not implied by the screenshots."
+    )
     return """
 # Website Replication
 
@@ -123,7 +153,11 @@ The only reference materials are the screenshots under `/app/reference/screensho
 Build your implementation under `/app/site`. Use local files only. The
 main entry point should be `/app/site/index.html`; additional pages may be
 created as separate HTML files when the screenshots imply multiple routes.
-"""
+
+{framework_line}
+
+{animation_line}
+""".format(framework_line=framework_line, animation_line=animation_line)
 
 
 def _readme_md(
@@ -438,6 +472,9 @@ def main(argv: list[str] | None = None) -> int:
     report_path = eval_dir / "functional-report.md"
     if report_path.exists():
         shutil.copyfile(report_path, logs_dir / "functional-report.md")
+    progress_path = eval_dir / "progress.jsonl"
+    if progress_path.exists():
+        shutil.copyfile(progress_path, logs_dir / "evaluator-progress.jsonl")
     _write_artifact_index(logs_dir, eval_dir)
 
     summary = metrics.get("summary", {})
@@ -461,6 +498,9 @@ def main(argv: list[str] | None = None) -> int:
         "reward_component_cssom_style": reward_summary.get("cssom_style"),
         "reward_component_dreamsim": reward_summary.get("dreamsim"),
         "reward_gate_pass_count": reward_summary.get("gate_pass_count"),
+        "reward_static_capture_count": reward_summary.get("static_capture_count"),
+        "reward_animation_capture_count": reward_summary.get("animation_capture_count"),
+        "reward_scored_animation_capture_count": reward_summary.get("scored_animation_capture_count"),
         "screenshot_size_match": summary.get("mean_screenshot_size_match"),
         "pixelmatch": summary.get("mean_pixelmatch"),
         "dreamsim": summary.get("mean_dreamsim_score"),
@@ -468,8 +508,14 @@ def main(argv: list[str] | None = None) -> int:
         "html_text_bleu_1": summary.get("mean_html_text_bleu_1"),
         "html_text_rouge_1_recall": summary.get("mean_html_text_rouge_1_recall"),
         "visual_block": summary.get("mean_visual_block_score"),
+        "animation_bbox_iou": summary.get("mean_animation_bbox_iou"),
+        "animation_motion_delta": summary.get("mean_animation_motion_delta"),
+        "animation_target_pixelmatch": summary.get("mean_animation_target_pixelmatch"),
+        "animation_cssom_color": summary.get("mean_animation_cssom_color"),
         "capture_count": summary.get("capture_count"),
         "covered_capture_count": summary.get("covered_capture_count"),
+        "animation_count": summary.get("animation_count"),
+        "scored_animation_count": summary.get("scored_animation_count"),
     }
     for key, value in optional_numeric_fields.items():
         if isinstance(value, (int, float)):
@@ -492,13 +538,44 @@ set -euo pipefail
 TESTS_DIR="${TESTS_DIR:-/tests}"
 LOG_DIR="${LOG_DIR:-/logs/verifier}"
 CANDIDATE_ROOT="${CANDIDATE_ROOT:-}"
+mkdir -p "$LOG_DIR"
+
+exec > >(tee -a "$LOG_DIR/test-stdout.txt") 2> >(tee -a "$LOG_DIR/test-stderr.txt" >&2)
+
+log_event() {
+  local event="$1"
+  shift || true
+  local ts
+  ts="$(date -Is)"
+  local payload
+  payload="{\\"ts\\":\\"$ts\\",\\"event\\":\\"$event\\""
+  while (($#)); do
+    local key="$1"
+    local value="$2"
+    shift 2
+    value="${value//\\/\\\\}"
+    value="${value//\"/\\\"}"
+    payload="$payload,\\"$key\\":\\"$value\\""
+  done
+  payload="$payload}"
+  echo "[wde-verifier] $payload"
+  echo "$payload" >> "$LOG_DIR/verifier-progress.jsonl"
+}
+
+log_event "verifier_entry" "tests_dir" "$TESTS_DIR" "candidate_root" "$CANDIDATE_ROOT"
 
 args=(--tests-dir "$TESTS_DIR" --logs-dir "$LOG_DIR")
 if [[ -n "$CANDIDATE_ROOT" ]]; then
   args+=(--candidate-root "$CANDIDATE_ROOT")
 fi
 
+log_event "evaluator_process_start" "command" "python $TESTS_DIR/run_eval.py"
+set +e
 python "$TESTS_DIR/run_eval.py" "${args[@]}"
+status=$?
+set -e
+log_event "evaluator_process_end" "exit_code" "$status"
+exit "$status"
 """
 
 
@@ -609,6 +686,7 @@ def package_task(
     vendor_evaluator: bool | None = None,
     verifier_allow_internet: bool = False,
     agent_memory_mb: int = 8192,
+    candidate_framework: str = "html",
 ) -> None:
     site_dir = site_dir.resolve()
     task_dir = task_dir.resolve()
@@ -621,6 +699,12 @@ def package_task(
         shutil.rmtree(task_dir)
 
     manifest = _read_json(manifest_path)
+    enabled_animations = [
+        animation
+        for animation in manifest.get("animations", [])
+        if isinstance(animation, dict) and animation.get("enabled", True)
+    ]
+    has_animations = bool(enabled_animations)
 
     # Invariant: Harbor packaging only copies frozen screenshots — it never
     # regenerates them. If the manifest references captures whose PNGs are
@@ -653,11 +737,17 @@ def package_task(
             agent_base_image=agent_base_image,
         ),
     )
-    _write_text(task_dir / "instruction.md", _instruction_md())
+    _write_text(
+        task_dir / "instruction.md",
+        _instruction_md(has_animations=has_animations, candidate_framework=candidate_framework),
+    )
     _write_text(
         task_dir / "task.toml",
         _task_toml(
             task_name,
+            has_animations=has_animations,
+            animation_count=len(enabled_animations),
+            candidate_framework=candidate_framework,
             verifier_allow_internet=verifier_allow_internet,
             agent_memory_mb=agent_memory_mb,
         ),
@@ -727,6 +817,12 @@ def main() -> int:
         action="store_true",
         help="Set verifier.environment.allow_internet=true, required for API-backed VLM calls.",
     )
+    parser.add_argument(
+        "--candidate-framework",
+        choices=["html", "react", "solid"],
+        default="html",
+        help="Framework requirement to expose to the candidate agent through task metadata/instructions.",
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
 
@@ -749,6 +845,7 @@ def main() -> int:
         vendor_evaluator=vendor_evaluator,
         verifier_allow_internet=args.verifier_allow_internet,
         agent_memory_mb=args.agent_memory_mb,
+        candidate_framework=args.candidate_framework,
     )
     print(json.dumps({"task_dir": str((PROJECT_ROOT / args.task_dir).resolve()), "task_name": args.task_name}, indent=2))
     return 0

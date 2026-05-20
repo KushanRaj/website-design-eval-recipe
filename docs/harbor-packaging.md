@@ -99,6 +99,15 @@ The agent sees only:
 The prompt is intentionally simple: reproduce the website design shown in the
 screenshots and write the implementation under `/app/site`.
 
+Task-level diversity requirements are exposed through `task.toml` metadata and
+the instruction text. Current fields include:
+
+- `has_animations`: whether the oracle manifest has enabled animation captures.
+- `animation_count`: enabled animation capture count.
+- `candidate_framework`: requested candidate implementation target. It defaults
+  to `html`, but packaging can set `react` or `solid` even when the hidden
+  oracle site itself is static HTML.
+
 The agent does not see:
 
 - oracle HTML/CSS/JS source
@@ -121,6 +130,11 @@ tests/private/
   screenshot-manifest.json
   metric-config.json
 ```
+
+The hidden `screenshot-manifest.json` remains the verifier source of truth for
+static captures and animation captures. Candidate-side manifest planning maps
+both static capture states and animation route/trigger/target selectors onto
+the submitted site before scoring.
 
 The verifier runs in a separate environment. Harbor copies `/app` from the
 agent container to the verifier container through `artifacts = ["/app"]`, so
@@ -249,6 +263,40 @@ Increase `WDE_HARBOR_N_CONCURRENT` after the first stable full run. The Modal
 secret supplies `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` to both the agent and
 separate verifier sandboxes through Harbor's Modal environment kwargs.
 
+## Modal-Owned Run
+
+The local Harbor command is useful for development, but the disconnect-safe path
+is to run the Harbor controller itself inside Modal:
+
+```bash
+MODAL_ENVIRONMENT=kushan-wde-evals \
+python -m modal run -d scripts/modal_harbor_runner.py::submit \
+  --job-name modal-harbor-full-reward-YYYYMMDD-HHMMSS \
+  --n-concurrent 12 \
+  --max-retries 2
+```
+
+This submits `scripts/modal_harbor_runner.py::run_harbor` as a detached Modal
+function. The laptop is then only the submitter; Harbor's controller logs and job
+directory are written into the `wde-harbor-results` Modal Volume under:
+
+```text
+/runs/jobs/harbor-full-reward/<job-name>/
+```
+
+Fetch results later with:
+
+```bash
+MODAL_ENVIRONMENT=kushan-wde-evals \
+python -m modal volume get wde-harbor-results \
+  /jobs/harbor-full-reward/<job-name> \
+  ./modal-results/<job-name>
+```
+
+The runner still asks Harbor to execute agent and verifier sandboxes on Modal.
+The benefit is that the Harbor controller, job state, and artifact collection no
+longer depend on the laptop staying online.
+
 ## Reward Contract
 
 The verifier writes:
@@ -260,7 +308,42 @@ The verifier writes:
 /logs/verifier/reward-report.md
 /logs/verifier/functional-report.md
 /logs/verifier/candidate-capture-plan.json
+/logs/verifier/test-stdout.txt
+/logs/verifier/test-stderr.txt
+/logs/verifier/verifier-progress.jsonl
+/logs/verifier/evaluator-progress.jsonl
 ```
+
+The progress logs are intentionally explicit. `verifier-progress.jsonl` marks
+the verifier wrapper boundary:
+
+```text
+verifier_entry
+evaluator_process_start
+evaluator_process_end
+```
+
+`evaluator-progress.jsonl` marks evaluator phases and per-capture metrics:
+
+```text
+evaluator_start
+candidate_manifest_generation_start/end
+captures_batch_start/end
+capture_start/end
+reference_capture_start/end
+candidate_capture_start/end
+vlm_judge_start/end
+dreamsim_start/end
+visual_block_start/end
+bbox_geometry_start/end
+cssom_block_style_start/end
+evaluator_end
+```
+
+If `verifier_entry` is absent, the verifier container never reached `test.sh`.
+If `verifier_entry` exists but `evaluator_process_start` is absent, the wrapper
+failed before invoking the evaluator. If `vlm_judge_start` exists without
+`vlm_judge_end`, the VLM call for that capture is the live blocker.
 
 `reward.json` is flat and numeric so Harbor can consume it directly:
 

@@ -42,6 +42,36 @@ def _capture_payload(
     }
 
 
+def _animation_payload(
+    *,
+    weight: float = 1.0,
+    bbox_iou: float = 1.0,
+    motion_delta: float = 1.0,
+    target_pixelmatch: float = 1.0,
+    cssom_color: float = 1.0,
+) -> dict:
+    return {
+        "animation": {"weight": weight},
+        "metrics": {
+            "status": "scored",
+            "targets": [
+                {
+                    "scores": {
+                        "motion": {
+                            "bbox_iou": bbox_iou,
+                            "motion_delta": motion_delta,
+                        },
+                        "color": {
+                            "target_box_pixelmatch": target_pixelmatch,
+                            "cssom_color": cssom_color,
+                        },
+                    }
+                }
+            ],
+        },
+    }
+
+
 class SimpleWeightedRewardTests(unittest.TestCase):
     def test_perfect_capture_scores_one(self) -> None:
         reward = compute_reward({"captures": {"perfect": _capture_payload()}})
@@ -242,6 +272,37 @@ class SimpleWeightedRewardTests(unittest.TestCase):
         self.assertEqual(capture["unavailable_components"], [])
         self.assertAlmostEqual(capture["component_denominator"], 0.9)
         self.assertAlmostEqual(capture["score"], expected, places=6)
+
+    def test_animation_is_weighted_like_another_manifest_item(self) -> None:
+        reward = compute_reward(
+            {
+                "captures": {"static-perfect": _capture_payload()},
+                "animations": {
+                    "card-animation": _animation_payload(
+                        weight=1.0,
+                        bbox_iou=0.0,
+                        motion_delta=0.0,
+                        target_pixelmatch=1.0,
+                        cssom_color=1.0,
+                    )
+                },
+            }
+        )
+
+        static_row, animation_row = reward["captures"]
+
+        self.assertEqual(static_row["item_type"], "capture")
+        self.assertEqual(animation_row["item_type"], "animation")
+        self.assertAlmostEqual(static_row["score"], 1.0)
+        self.assertAlmostEqual(animation_row["bbox_geometry"], 0.0)
+        self.assertAlmostEqual(animation_row["pixel_match"], 1.0)
+        self.assertAlmostEqual(animation_row["cssom_style"], 1.0)
+        self.assertLess(animation_row["score"], 1.0)
+        self.assertAlmostEqual(
+            reward["summary"]["score"],
+            (static_row["score"] + animation_row["score"]) / 2,
+        )
+        self.assertEqual(reward["summary"]["animation_capture_count"], 1)
 
 
 if __name__ == "__main__":

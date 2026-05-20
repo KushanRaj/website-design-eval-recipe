@@ -137,23 +137,16 @@ It can use raw HTML/CSS/JS, React, Solid, Tailwind, or another supported fronten
 
 The oracle generator should preserve the concept animation spec and, where possible, add stable hooks:
 
-- target element marker
-- trigger element marker
+- target element identity in rendered inventory
+- trigger element identity in rendered inventory
 - animation id
 - implementation notes for the manifest generator
 
-Example hooks:
-
-```html
-<button
-  data-wde-animation-trigger="pricing.cta-color-hover"
-  data-wde-animation-target="pricing.cta-color-hover"
->
-  Start trial
-</button>
-```
-
-Hooks are preferred for oracle reliability, but candidates are not required to copy them. Candidate resolution still uses browser-observed matching.
+The builder should use normal semantic HTML. It should not author evaluator-only
+animation hooks. The manifest generator resolves trigger and target selectors
+from Playwright-rendered inventory, including semantic attributes, unique ids or
+data attributes already natural to the page, and evaluator-generated
+`data-wde-manifest-id` stamps when no better semantic selector exists.
 
 ### Manifest Generator
 
@@ -180,7 +173,7 @@ Example manifest shape:
   "viewport": { "width": 1440, "height": 900 },
   "trigger": {
     "type": "click",
-    "selector": "[data-wde-animation-trigger='home.demo-card-click']",
+    "selector": "button[aria-label='Open demo card']",
     "settleBeforeMs": 0
   },
   "timeline": {
@@ -193,7 +186,7 @@ Example manifest shape:
   "targets": [
     {
       "name": "interactive demo card",
-      "selector": "[data-wde-animation-target='home.demo-card-click']",
+      "selector": "article[aria-label='Interactive demo card']",
       "channels": ["motion", "color"],
       "track": [
         "transform",

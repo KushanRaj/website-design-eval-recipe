@@ -114,6 +114,7 @@ def package_dataset(
     metric_profile: str,
     verifier_allow_internet: bool,
     agent_memory_mb: int,
+    candidate_framework: str,
     force: bool,
 ) -> dict[str, Any]:
     source_root = source_root.resolve()
@@ -143,6 +144,7 @@ def package_dataset(
             vendor_evaluator=False,
             verifier_allow_internet=verifier_allow_internet,
             agent_memory_mb=agent_memory_mb,
+            candidate_framework=candidate_framework,
         )
         packaged.append(
             {
@@ -190,6 +192,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--agent-base-image", default=None)
     parser.add_argument("--agent-memory-mb", type=int, default=8192)
     parser.add_argument(
+        "--candidate-framework",
+        choices=["html", "react", "solid"],
+        default="html",
+        help="Framework requirement to expose in every packaged task.",
+    )
+    parser.add_argument(
         "--metric-profile",
         choices=["lite", "full-local", "full-vlm"],
         default="full-vlm",
@@ -209,6 +217,7 @@ def main(argv: list[str] | None = None) -> int:
         metric_profile=args.metric_profile,
         verifier_allow_internet=args.verifier_allow_internet,
         agent_memory_mb=args.agent_memory_mb,
+        candidate_framework=args.candidate_framework,
         force=args.force,
     )
     print(json.dumps(result, indent=2, sort_keys=True))

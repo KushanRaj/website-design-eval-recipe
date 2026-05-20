@@ -38,12 +38,24 @@ capture_reward =
 ```
 
 The final reward is the manifest-weighted mean of `capture_reward` across
-captures.
+scored manifest items. Static screenshots and animations are both manifest
+items; animations do not get a separate multiplier or special bonus.
 
 If a component is missing, skipped, errored, or unsupported, the reward removes
 that component's weight from the capture denominator and renormalizes the
 remaining available components. This is evaluator-failure handling, not a free
 pass for bad outputs: a numeric score of `0.0` is still treated as a real zero.
+
+Animation rows reuse the same component machinery with only the metrics that
+exist for the animation channel:
+
+- motion contributes through `bbox_geometry`, using target bbox IoU and motion
+  delta.
+- color contributes through `pixel_match` and `cssom_style`, using target-box
+  pixel match and tracked computed color styles.
+- screenshot size, HTML, VLM, visual block, and DreamSim are unavailable for the
+  animation row unless explicitly added later, so they are removed from that
+  row's denominator.
 
 ## Gate
 

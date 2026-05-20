@@ -28,6 +28,7 @@ from .block_visual import (
     visual_block_score_from_blocks,
 )
 from .candidate_planner import generate_candidate_manifest
+from .cssom import _color_similarity
 from .scoring import (
     _pick_torch_device,
     cssom_block_style_score_from_snapshots,
@@ -594,6 +595,47 @@ class EvaluateConfig:
     candidate_manifest_claude_auth: str = "api"
     capture_concurrency: int = 4
     vlm_concurrency: int = 4
+
+
+_PROGRESS_LOCK = threading.Lock()
+
+
+def _progress(config: EvaluateConfig, event: str, **fields: Any) -> None:
+    payload = {
+        "ts": datetime.now().isoformat(timespec="milliseconds"),
+        "event": event,
+        **fields,
+    }
+    line = json.dumps(payload, sort_keys=True)
+    print(f"[wde-progress] {line}", flush=True)
+    try:
+        config.output_dir.mkdir(parents=True, exist_ok=True)
+        with _PROGRESS_LOCK:
+            with (config.output_dir / "progress.jsonl").open("a", encoding="utf-8") as handle:
+                handle.write(line + "\n")
+    except Exception:
+        pass
+
+
+class _ProgressTimer:
+    def __init__(self, config: EvaluateConfig, event: str, **fields: Any):
+        self.config = config
+        self.event = event
+        self.fields = fields
+        self.started = 0.0
+
+    def __enter__(self) -> "_ProgressTimer":
+        self.started = time.time()
+        _progress(self.config, f"{self.event}_start", **self.fields)
+        return self
+
+    def __exit__(self, exc_type: Any, exc: Any, _tb: Any) -> None:
+        payload = {**self.fields, "elapsed_seconds": round(time.time() - self.started, 3)}
+        if exc is not None:
+            payload["error"] = f"{exc_type.__name__}: {exc}" if exc_type else str(exc)
+            _progress(self.config, f"{self.event}_error", **payload)
+        else:
+            _progress(self.config, f"{self.event}_end", **payload)
 
 
 def _route_for_capture(
@@ -1660,6 +1702,14 @@ def _normalize_style_value(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip().lower())
 
 
+def _animation_style_similarity(prop: str, reference: str, candidate: str) -> float:
+    if prop.endswith("color") or prop == "color":
+        color_score = _color_similarity(reference, candidate)
+        if color_score is not None:
+            return color_score
+    return 1.0 if reference == candidate else 0.0
+
+
 def _score_color_target(reference_rows: list[dict[str, Any]], candidate_rows: list[dict[str, Any]]) -> dict[str, Any]:
     pixel_scores = []
     cssom_scores = []
@@ -1676,9 +1726,17 @@ def _score_color_target(reference_rows: list[dict[str, Any]], candidate_rows: li
         for prop in props:
             ref_value = _normalize_style_value(ref_style.get(prop))
             cand_value = _normalize_style_value(cand_style.get(prop))
-            score = 1.0 if ref_value == cand_value else 0.0
+            score = _animation_style_similarity(prop, ref_value, cand_value)
             prop_scores.append(score)
-            cssom_rows.append({"property": prop, "reference": ref_value, "candidate": cand_value, "score": score})
+            cssom_rows.append(
+                {
+                    "property": prop,
+                    "reference": ref_value,
+                    "candidate": cand_value,
+                    "score": round(score, 6),
+                    "method": "rgb_distance" if prop.endswith("color") or prop == "color" else "exact",
+                }
+            )
         if prop_scores:
             cssom_scores.append(sum(prop_scores) / len(prop_scores))
     return {
@@ -2785,40 +2843,55 @@ async def _run_pair_metrics_async(
     vlm_semaphore: asyncio.Semaphore,
     dreamsim_semaphore: asyncio.Semaphore,
 ) -> dict[str, Any]:
+    capture_id = (
+        reference_artifact.get("capture_id")
+        or candidate_artifact.get("capture_id")
+        or "unknown"
+    )
     reference_screenshot = reference_artifact.get("screenshot_path")
     candidate_screenshot = candidate_artifact.get("screenshot_path")
     if not reference_screenshot or not candidate_screenshot:
+        _progress(
+            config,
+            "capture_metrics_missing_screenshot",
+            capture_id=capture_id,
+            reference_screenshot=bool(reference_screenshot),
+            candidate_screenshot=bool(candidate_screenshot),
+        )
         return {
             "status": "missing",
             "reason": candidate_artifact.get("missing_reason") or reference_artifact.get("missing_reason"),
         }
 
-    pair: dict[str, Any] = {
-        "status": "scored",
-        "reference_screenshot": reference_screenshot,
-        "candidate_screenshot": candidate_screenshot,
-        "screenshot_size_match": screenshot_size_match_score(reference_screenshot, candidate_screenshot),
-        "pixelmatch": pixelmatch_score(reference_screenshot, candidate_screenshot),
-        "reference_render_sanity": render_sanity_score(reference_screenshot),
-        "candidate_render_sanity": render_sanity_score(candidate_screenshot),
-    }
+    _progress(config, "capture_metrics_start", capture_id=capture_id)
+    with _ProgressTimer(config, "screenshot_metrics", capture_id=capture_id):
+        pair: dict[str, Any] = {
+            "status": "scored",
+            "reference_screenshot": reference_screenshot,
+            "candidate_screenshot": candidate_screenshot,
+            "screenshot_size_match": screenshot_size_match_score(reference_screenshot, candidate_screenshot),
+            "pixelmatch": pixelmatch_score(reference_screenshot, candidate_screenshot),
+            "reference_render_sanity": render_sanity_score(reference_screenshot),
+            "candidate_render_sanity": render_sanity_score(candidate_screenshot),
+        }
     reference_html = reference_artifact.get("outer_html")
     candidate_html = candidate_artifact.get("outer_html")
     if reference_html and candidate_html:
-        try:
-            pair["html_text"] = {
-                **webcode2m_text_score(reference_html, candidate_html),
-                "artifact_source": "rendered_outer_html",
-            }
-        except Exception as exc:
-            pair["html_text"] = _metric_error("html_text", exc)
-        try:
-            pair["html_tree"] = {
-                **webcode2m_dom_score(reference_html, candidate_html),
-                "artifact_source": "rendered_outer_html",
-            }
-        except Exception as exc:
-            pair["html_tree"] = _metric_error("html_tree", exc)
+        with _ProgressTimer(config, "html_metrics", capture_id=capture_id):
+            try:
+                pair["html_text"] = {
+                    **webcode2m_text_score(reference_html, candidate_html),
+                    "artifact_source": "rendered_outer_html",
+                }
+            except Exception as exc:
+                pair["html_text"] = _metric_error("html_text", exc)
+            try:
+                pair["html_tree"] = {
+                    **webcode2m_dom_score(reference_html, candidate_html),
+                    "artifact_source": "rendered_outer_html",
+                }
+            except Exception as exc:
+                pair["html_tree"] = _metric_error("html_tree", exc)
     else:
         pair["html_text"] = {"unsupported": True, "reason": "rendered_outer_html_missing"}
         pair["html_tree"] = {"unsupported": True, "reason": "rendered_outer_html_missing"}
@@ -2826,91 +2899,102 @@ async def _run_pair_metrics_async(
     if config.skip_dreamsim:
         pair["dreamsim"] = {"skipped": True, "reason": "--skip-dreamsim"}
     else:
-        try:
-            async with dreamsim_semaphore:
-                distance = await asyncio.to_thread(
-                    dreamsim_distance,
-                    reference_screenshot,
-                    candidate_screenshot,
-                    device=config.dreamsim_device,
-                    dreamsim_type=config.dreamsim_type,
-                    cache_dir=config.dreamsim_cache_dir,
-                )
-            pair["dreamsim"] = {
-                "distance": distance,
-                "score": _score_from_dreamsim(distance),
-                "dreamsim_type": config.dreamsim_type,
-                "device": _pick_torch_device(config.dreamsim_device),
-            }
-        except Exception as exc:
-            pair["dreamsim"] = _metric_error("dreamsim", exc)
+        with _ProgressTimer(config, "dreamsim", capture_id=capture_id):
+            try:
+                async with dreamsim_semaphore:
+                    distance = await asyncio.to_thread(
+                        dreamsim_distance,
+                        reference_screenshot,
+                        candidate_screenshot,
+                        device=config.dreamsim_device,
+                        dreamsim_type=config.dreamsim_type,
+                        cache_dir=config.dreamsim_cache_dir,
+                    )
+                pair["dreamsim"] = {
+                    "distance": distance,
+                    "score": _score_from_dreamsim(distance),
+                    "dreamsim_type": config.dreamsim_type,
+                    "device": _pick_torch_device(config.dreamsim_device),
+                }
+            except Exception as exc:
+                pair["dreamsim"] = _metric_error("dreamsim", exc)
 
     if config.skip_vlm:
         pair["vlm_judge"] = {"skipped": True, "reason": "--skip-vlm"}
     elif not os.environ.get("OPENAI_API_KEY"):
         pair["vlm_judge"] = {"skipped": True, "reason": "OPENAI_API_KEY unavailable"}
     else:
-        try:
-            async with vlm_semaphore:
-                pair["vlm_judge"] = await asyncio.to_thread(
-                    vlm_judge_score,
-                    reference_screenshot,
-                    candidate_screenshot,
-                    model=config.vlm_model,
-                )
-        except Exception as exc:
-            pair["vlm_judge"] = _metric_error("vlm_judge", exc)
+        with _ProgressTimer(config, "vlm_judge", capture_id=capture_id, model=config.vlm_model):
+            try:
+                async with vlm_semaphore:
+                    pair["vlm_judge"] = await asyncio.to_thread(
+                        vlm_judge_score,
+                        reference_screenshot,
+                        candidate_screenshot,
+                        model=config.vlm_model,
+                    )
+            except Exception as exc:
+                pair["vlm_judge"] = _metric_error("vlm_judge", exc)
 
     if config.include_visual_block:
         reference_visual_blocks = reference_artifact.get("visual_blocks") or {}
         candidate_visual_blocks = candidate_artifact.get("visual_blocks") or {}
         if reference_visual_blocks.get("status") == "ok" and candidate_visual_blocks.get("status") == "ok":
             try:
-                visual = await asyncio.to_thread(
-                    visual_block_score_from_blocks,
-                    reference_visual_blocks.get("blocks", []),
-                    candidate_visual_blocks.get("blocks", []),
-                    reference_screenshot,
-                    candidate_screenshot,
-                    device=config.visual_block_device,
-                    include_pairs=True,
-                    include_block_pixelmatch=True,
-                    include_masked_clip=False,
-                )
+                with _ProgressTimer(
+                    config,
+                    "visual_block",
+                    capture_id=capture_id,
+                    reference_block_count=reference_visual_blocks.get("block_count"),
+                    candidate_block_count=candidate_visual_blocks.get("block_count"),
+                ):
+                    visual = await asyncio.to_thread(
+                        visual_block_score_from_blocks,
+                        reference_visual_blocks.get("blocks", []),
+                        candidate_visual_blocks.get("blocks", []),
+                        reference_screenshot,
+                        candidate_screenshot,
+                        device=config.visual_block_device,
+                        include_pairs=True,
+                        include_block_pixelmatch=True,
+                        include_masked_clip=False,
+                    )
                 pair["visual_block"] = visual
-                pair["bbox_geometry"] = {
-                    **_score_bbox_geometry(
-                        visual.get("matched_pairs", []),
-                        coverage_score=float(visual.get("size", 0.0)),
-                    ),
-                    "visual_block": {
-                        key: visual.get(key)
-                        for key in (
-                            "score",
-                            "size",
-                            "text",
-                            "position",
-                            "text_color",
-                            "masked_clip",
-                            "reference_block_count",
-                            "candidate_block_count",
-                            "matched_pair_count",
-                            "unmatched_reference_count",
-                            "unmatched_candidate_count",
-                        )
-                    },
-                }
+                with _ProgressTimer(config, "bbox_geometry", capture_id=capture_id):
+                    pair["bbox_geometry"] = {
+                        **_score_bbox_geometry(
+                            visual.get("matched_pairs", []),
+                            coverage_score=float(visual.get("size", 0.0)),
+                        ),
+                        "visual_block": {
+                            key: visual.get(key)
+                            for key in (
+                                "score",
+                                "size",
+                                "text",
+                                "position",
+                                "text_color",
+                                "masked_clip",
+                                "reference_block_count",
+                                "candidate_block_count",
+                                "matched_pair_count",
+                                "unmatched_reference_count",
+                                "unmatched_candidate_count",
+                            )
+                        },
+                    }
                 try:
                     reference_cssom = reference_artifact.get("cssom")
                     candidate_cssom = candidate_artifact.get("cssom")
                     if not reference_cssom or not candidate_cssom:
                         pair["cssom_block_style"] = {"unsupported": True, "reason": "cssom_snapshot_missing"}
                     else:
-                        pair["cssom_block_style"] = cssom_block_style_score_from_snapshots(
-                            reference_cssom,
-                            candidate_cssom,
-                            visual,
-                        )
+                        with _ProgressTimer(config, "cssom_block_style", capture_id=capture_id):
+                            pair["cssom_block_style"] = cssom_block_style_score_from_snapshots(
+                                reference_cssom,
+                                candidate_cssom,
+                                visual,
+                            )
                 except Exception as exc:
                     pair["cssom_block_style"] = _metric_error("cssom_block_style", exc)
             except Exception as exc:
@@ -2935,6 +3019,7 @@ async def _run_pair_metrics_async(
         pair["visual_block"] = {"unsupported": True, "reason": "visual block disabled"}
         pair["bbox_geometry"] = {"unsupported": True, "reason": "visual block disabled"}
         pair["cssom_block_style"] = {"unsupported": True, "reason": "visual block disabled"}
+    _progress(config, "capture_metrics_end", capture_id=capture_id)
     return pair
 
 
@@ -2956,6 +3041,7 @@ async def _evaluate_capture_async(
     dreamsim_semaphore: asyncio.Semaphore,
 ) -> tuple[str, dict[str, Any], dict[str, Any]]:
     capture_id = capture["id"]
+    _progress(config, "capture_start", capture_id=capture_id)
     reference_route = _route_for_capture(config.reference_root, capture)
     candidate_capture = candidate_captures_by_id.get(capture_id)
     if candidate_manifest is not None and candidate_capture is None:
@@ -2986,15 +3072,16 @@ async def _evaluate_capture_async(
             )
             reference_actions: list[dict[str, Any]] = []
         else:
-            reference_artifact, reference_actions = await _capture_reference_async(
-                browser,
-                reference_base_url,
-                capture,
-                reference_manifest,
-                reference_route,
-                reference_artifact_dir,
-                include_visual_blocks=config.include_visual_block,
-            )
+            with _ProgressTimer(config, "reference_capture", capture_id=capture_id):
+                reference_artifact, reference_actions = await _capture_reference_async(
+                    browser,
+                    reference_base_url,
+                    capture,
+                    reference_manifest,
+                    reference_route,
+                    reference_artifact_dir,
+                    include_visual_blocks=config.include_visual_block,
+                )
 
         if candidate_route["status"] != "resolved":
             candidate_artifact = _missing_artifact(
@@ -3008,26 +3095,28 @@ async def _evaluate_capture_async(
         else:
             try:
                 if candidate_capture is not None:
-                    candidate_artifact, candidate_actions = await _capture_candidate_from_manifest_async(
-                        browser,
-                        candidate_base_url,
-                        candidate_capture,
-                        reference_manifest,
-                        candidate_route,
-                        candidate_artifact_dir,
-                        include_visual_blocks=config.include_visual_block,
-                    )
+                    with _ProgressTimer(config, "candidate_capture", capture_id=capture_id, source="candidate_manifest"):
+                        candidate_artifact, candidate_actions = await _capture_candidate_from_manifest_async(
+                            browser,
+                            candidate_base_url,
+                            candidate_capture,
+                            reference_manifest,
+                            candidate_route,
+                            candidate_artifact_dir,
+                            include_visual_blocks=config.include_visual_block,
+                        )
                 else:
-                    candidate_artifact, candidate_actions = await _capture_candidate_async(
-                        browser,
-                        candidate_base_url,
-                        capture,
-                        reference_manifest,
-                        candidate_route,
-                        reference_actions,
-                        candidate_artifact_dir,
-                        include_visual_blocks=config.include_visual_block,
-                    )
+                    with _ProgressTimer(config, "candidate_capture", capture_id=capture_id, source="deterministic"):
+                        candidate_artifact, candidate_actions = await _capture_candidate_async(
+                            browser,
+                            candidate_base_url,
+                            capture,
+                            reference_manifest,
+                            candidate_route,
+                            reference_actions,
+                            candidate_artifact_dir,
+                            include_visual_blocks=config.include_visual_block,
+                        )
             except Exception as exc:
                 candidate_artifact = _missing_artifact(
                     capture,
@@ -3063,6 +3152,13 @@ async def _evaluate_capture_async(
     }
 
     if coverage["score"] <= 0:
+        _progress(
+            config,
+            "capture_metrics_skipped",
+            capture_id=capture_id,
+            coverage_score=coverage.get("score"),
+            reason=coverage.get("reason") or candidate_artifact.get("missing_reason"),
+        )
         result_payload["metrics"] = {
             "status": "unsupported",
             "reason": coverage.get("reason") or candidate_artifact.get("missing_reason"),
@@ -3080,6 +3176,13 @@ async def _evaluate_capture_async(
             dreamsim_semaphore=dreamsim_semaphore,
         )
 
+    _progress(
+        config,
+        "capture_end",
+        capture_id=capture_id,
+        coverage_score=coverage.get("score"),
+        metrics_status=result_payload["metrics"].get("status"),
+    )
     return capture_id, plan_payload, result_payload
 
 
@@ -3096,6 +3199,14 @@ async def _evaluate_captures_async(
     reference_artifact_dir: Path,
     candidate_artifact_dir: Path,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
+    _progress(
+        config,
+        "captures_batch_start",
+        capture_count=len(captures),
+        capture_concurrency=max(1, int(config.capture_concurrency)),
+        vlm_concurrency=max(1, int(config.vlm_concurrency)),
+        dreamsim_concurrency=1,
+    )
     capture_semaphore = asyncio.Semaphore(max(1, int(config.capture_concurrency)))
     vlm_semaphore = asyncio.Semaphore(max(1, int(config.vlm_concurrency)))
     dreamsim_semaphore = asyncio.Semaphore(1)
@@ -3132,6 +3243,7 @@ async def _evaluate_captures_async(
         capture_id, plan_payload, result_payload = tasks[capture["id"]].result()
         plan_rows[capture_id] = plan_payload
         result_rows[capture_id] = result_payload
+    _progress(config, "captures_batch_end", capture_count=len(captures))
     return plan_rows, result_rows
 
 
@@ -3487,6 +3599,19 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
         for animation in reference_manifest.get("animations", [])
         if _enabled_capture(animation) and (not config.capture_filter or animation["id"] in config.capture_filter)
     ]
+    _progress(
+        config,
+        "evaluator_start",
+        capture_count=len(captures),
+        animation_count=len(animations),
+        reference_root=str(config.reference_root),
+        candidate_root=str(config.candidate_root),
+        output_dir=str(config.output_dir),
+        vlm_model=config.vlm_model,
+        skip_vlm=config.skip_vlm,
+        skip_dreamsim=config.skip_dreamsim,
+        include_visual_block=config.include_visual_block,
+    )
     candidate_manifest_result: dict[str, Any] | None = None
     candidate_manifest: dict[str, Any] | None = None
     if config.candidate_manifest is not None:
@@ -3499,16 +3624,22 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
     elif config.candidate_manifest_planner:
         if config.candidate_manifest_planner != "claude-code":
             raise ValueError(f"Unknown candidate manifest planner: {config.candidate_manifest_planner}")
-        candidate_manifest_result = generate_candidate_manifest(
-            config.reference_manifest,
-            config.candidate_root,
-            config.output_dir / "generated-candidate-manifest.json",
+        with _ProgressTimer(
+            config,
+            "candidate_manifest_generation",
+            planner=config.candidate_manifest_planner,
             model=config.candidate_manifest_model,
-            repo_root=config.repo_root,
-            reference_root=config.reference_root,
-            backend=config.candidate_manifest_planner,
-            claude_auth=config.candidate_manifest_claude_auth,
-        )
+        ):
+            candidate_manifest_result = generate_candidate_manifest(
+                config.reference_manifest,
+                config.candidate_root,
+                config.output_dir / "generated-candidate-manifest.json",
+                model=config.candidate_manifest_model,
+                repo_root=config.repo_root,
+                reference_root=config.reference_root,
+                backend=config.candidate_manifest_planner,
+                claude_auth=config.candidate_manifest_claude_auth,
+            )
         candidate_manifest = candidate_manifest_result["manifest"]
     candidate_captures_by_id = {
         str(capture["id"]): capture
@@ -3602,6 +3733,14 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
     _write_json(config.output_dir / "candidate-capture-plan.json", candidate_plan)
     _write_json(config.output_dir / "metrics.json", result)
     (config.output_dir / "functional-report.md").write_text(_build_report(result), encoding="utf-8")
+    _progress(
+        config,
+        "evaluator_end",
+        elapsed_seconds=result["metadata"]["elapsed_seconds"],
+        manifest_coverage_score=result["summary"].get("manifest_coverage_score"),
+        mean_vlm_overall=result["summary"].get("mean_vlm_overall"),
+        mean_dreamsim_score=result["summary"].get("mean_dreamsim_score"),
+    )
     return result
 
 

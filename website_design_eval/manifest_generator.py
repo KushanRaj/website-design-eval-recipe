@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import asyncio
@@ -15,6 +16,8 @@ from urllib.parse import urldefrag, urljoin, urlparse
 
 from bs4 import BeautifulSoup
 
+
+logger = logging.getLogger(__name__)
 
 PathLike = str | os.PathLike[str]
 ClaudeAuthMode = str
@@ -375,7 +378,27 @@ MANIFEST_OUTPUT_SCHEMA: dict[str, Any] = {
                     "viewport": {"type": "object", "additionalProperties": True},
                     "trigger": {"type": "object", "additionalProperties": True},
                     "timeline": {"type": "object", "additionalProperties": True},
-                    "targets": {"type": "array", "items": {"type": "object", "additionalProperties": True}},
+                    "targets": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": True,
+                            "required": ["name", "selector", "channels"],
+                            "properties": {
+                                "name": {"type": "string"},
+                                "selector": {"type": "string"},
+                                "channels": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {"type": "string", "enum": ["motion", "color"]},
+                                },
+                                "track": {
+                                    "type": "array",
+                                    "items": {"type": "string"},
+                                },
+                            },
+                        },
+                    },
                 },
             },
         },
@@ -886,9 +909,18 @@ Rules:
 - For focus actions prefer inputs with id/name selectors.
 - Add a short intent string for each non-default state capture.
 - Do not include disabled captures.
-- If context includes accepted_concept.animations, map each concrete animation
-  intent to the top-level animations array when the rendered inventory provides
-  a reliable trigger and target selector.
+- The accepted_concept is the source of truth for required animation captures.
+  If accepted_concept.animations is non-empty, copy every declared animation id
+  into the manifest's top-level animations array.
+- Resolve each declared concept animation to one concrete rendered trigger
+  selector and one concrete rendered target selector from the Playwright
+  inventory. If a concept selector matches repeated elements, choose one visible
+  instance and use its unique selector candidate; anchor descendant targets
+  under that same instance.
+- Convert concept trigger variants into manifest trigger fields: trigger.on or
+  trigger.selector becomes trigger.selector; trigger.event or trigger.type
+  becomes trigger.type.
+- Use kind="animation" for every animation entry.
 - For V1 animations, use only channels "motion" and "color". Motion animations
   need target selectors and timeline samples. Color animations also need track
   entries for computed color properties such as background-color, color, and
@@ -957,9 +989,18 @@ Capture rules:
 - Use only paths and selectors present in the rendered inventory.
 - Add a short intent string for each non-default state capture.
 - Do not include disabled captures.
-- If context includes accepted_concept.animations, map each concrete animation
-  intent to the top-level animations array when the rendered inventory provides
-  a reliable trigger and target selector.
+- The accepted_concept is the source of truth for required animation captures.
+  If accepted_concept.animations is non-empty, copy every declared animation id
+  into the manifest's top-level animations array.
+- Resolve each declared concept animation to one concrete rendered trigger
+  selector and one concrete rendered target selector from the Playwright
+  inventory. If a concept selector matches repeated elements, choose one visible
+  instance and use its unique selector candidate; anchor descendant targets
+  under that same instance.
+- Convert concept trigger variants into manifest trigger fields: trigger.on or
+  trigger.selector becomes trigger.selector; trigger.event or trigger.type
+  becomes trigger.type.
+- Use kind="animation" for every animation entry.
 - For V1 animations, use only channels "motion" and "color". Motion animations
   need target selectors and timeline samples. Color animations also need track
   entries for computed color properties such as background-color, color, and
@@ -1006,6 +1047,12 @@ def _claude_result_error_text(message: Any) -> str | None:
     if api_error_status:
         parts.append(f"api_error_status={api_error_status}")
     return "; ".join(parts).strip() or "Claude Code returned an error result"
+
+
+def _write_manifest_diagnostics(output_path: Path, diagnostics: dict[str, Any]) -> Path:
+    diagnostics_path = output_path.with_name(f"{output_path.stem}.diagnostics.json")
+    diagnostics_path.write_text(json.dumps(diagnostics, indent=2, sort_keys=False), encoding="utf-8")
+    return diagnostics_path
 
 
 def _is_transient_claude_error(error_text: str) -> bool:
@@ -1124,12 +1171,23 @@ async def _generate_manifest_claude_code_async(
     if parsed is None:
         raise RuntimeError("Claude Code manifest generation did not return a manifest")
     manifest = _sanitize_manifest_with_inventory(root, parsed, max_captures=max_captures, inventory=inventory)
+    diagnostics = manifest.pop("__diagnostics", {})
     manifest["site"]["root"] = _manifest_site_root(root, output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(manifest, indent=2, sort_keys=False), encoding="utf-8")
+    diagnostics_path = _write_manifest_diagnostics(output_path, diagnostics)
+    logger.info(
+        "manifest generated root=%s backend=claude-code raw_animations=%s kept_animations=%s diagnostics=%s",
+        root,
+        diagnostics.get("raw_animation_count"),
+        diagnostics.get("sanitized_animation_count"),
+        diagnostics_path,
+    )
     return {
         "manifest": manifest,
         "output_path": str(output_path),
+        "diagnostics_path": str(diagnostics_path),
+        "diagnostics": diagnostics,
         "model": model,
         "backend": "claude-code",
         "auth_mode": auth_mode,
@@ -1241,13 +1299,21 @@ def _sanitize_manifest_with_inventory(
     if not captures:
         return _fallback_manifest(root, max_captures=max_captures)
     manifest["captures"] = captures
+    animation_diagnostics: list[dict[str, Any]] = []
     manifest["animations"] = _sanitize_animations(
         root,
         raw.get("animations") or [],
         inventory_paths=inventory_paths,
         inventory_selectors=inventory_selectors,
         inventory_selector_counts=inventory_selector_counts,
+        diagnostics=animation_diagnostics,
     )
+    manifest["__diagnostics"] = {
+        "raw_animation_count": len(raw.get("animations") or []) if isinstance(raw.get("animations") or [], list) else None,
+        "sanitized_animation_count": len(manifest["animations"]),
+        "raw_animations": raw.get("animations") if isinstance(raw.get("animations"), list) else raw.get("animations"),
+        "animation_sanitize": animation_diagnostics,
+    }
     return manifest
 
 
@@ -1258,8 +1324,11 @@ def _sanitize_animations(
     inventory_paths: set[str],
     inventory_selectors: dict[str, set[str]],
     inventory_selector_counts: dict[str, dict[str, int]],
+    diagnostics: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     if not isinstance(raw_animations, list):
+        if diagnostics is not None:
+            diagnostics.append({"status": "skipped", "reason": "animations_not_list", "raw_type": type(raw_animations).__name__})
         return []
     animations: list[dict[str, Any]] = []
     seen_ids: set[str] = set()
@@ -1274,16 +1343,36 @@ def _sanitize_animations(
         "border-left-color",
     ]
 
-    def selector_ok(path: str, selector: str | None) -> bool:
+    def selector_status(path: str, selector: str | None) -> dict[str, Any]:
         if not selector:
-            return False
+            return {"ok": False, "reason": "missing_selector", "selector": selector}
         selector_count = inventory_selector_counts.get(path, {}).get(selector)
         selector_known = selector in inventory_selectors.get(path, set()) or _selector_exists(root, path, selector)
         selector_unique = selector_count == 1 or (selector_count is None and _selector_unique_in_source(root, path, selector))
-        return bool(selector_known and selector_unique)
+        if not selector_known:
+            return {"ok": False, "reason": "selector_not_found", "selector": selector, "selector_count": selector_count}
+        if not selector_unique:
+            return {"ok": False, "reason": "selector_not_unique", "selector": selector, "selector_count": selector_count}
+        return {"ok": True, "selector": selector, "selector_count": selector_count}
+
+    def selector_ok(path: str, selector: str | None) -> bool:
+        return bool(selector_status(path, selector).get("ok"))
+
+    def record(status: str, item: Any, reason: str | None = None, **extra: Any) -> None:
+        if diagnostics is None:
+            return
+        payload = {
+            "status": status,
+            "id": item.get("id") if isinstance(item, dict) else None,
+        }
+        if reason:
+            payload["reason"] = reason
+        payload.update(extra)
+        diagnostics.append(payload)
 
     for item in raw_animations:
         if not isinstance(item, dict):
+            record("dropped", item, "animation_not_object", raw_type=type(item).__name__)
             continue
         path = str(item.get("path") or "")
         if not path.startswith("/"):
@@ -1291,6 +1380,7 @@ def _sanitize_animations(
         browser_path_known = path in inventory_paths
         file_path_known = (root / path.lstrip("/")).exists()
         if not browser_path_known and not file_path_known:
+            record("dropped", item, "path_not_found", path=path)
             continue
 
         animation_id = re.sub(r"[^a-zA-Z0-9_.-]+", "-", str(item.get("id") or "")).strip("-")
@@ -1310,8 +1400,18 @@ def _sanitize_animations(
             trigger_type = "click"
         trigger_selector = trigger.get("selector")
         if trigger_type not in {"wait"} and trigger_selector and not selector_ok(path, str(trigger_selector)):
+            record(
+                "dropped",
+                item,
+                "trigger_selector_invalid",
+                path=path,
+                trigger_type=trigger_type,
+                trigger_selector=str(trigger_selector),
+                selector_status=selector_status(path, str(trigger_selector)),
+            )
             continue
         if trigger_type not in {"wait"} and not trigger_selector:
+            record("dropped", item, "trigger_selector_missing", path=path, trigger_type=trigger_type)
             continue
 
         timeline = item.get("timeline") if isinstance(item.get("timeline"), dict) else {}
@@ -1326,11 +1426,21 @@ def _sanitize_animations(
             duration_ms = max(samples_ms)
 
         targets: list[dict[str, Any]] = []
+        target_drop_reasons: list[dict[str, Any]] = []
         for raw_target in item.get("targets") or []:
             if not isinstance(raw_target, dict):
+                target_drop_reasons.append({"reason": "target_not_object", "raw_type": type(raw_target).__name__})
                 continue
             selector = raw_target.get("selector")
-            if not selector_ok(path, str(selector) if selector else None):
+            target_selector_status = selector_status(path, str(selector) if selector else None)
+            if not target_selector_status.get("ok"):
+                target_drop_reasons.append(
+                    {
+                        "reason": "target_selector_invalid",
+                        "selector": selector,
+                        "selector_status": target_selector_status,
+                    }
+                )
                 continue
             channels = [
                 str(channel)
@@ -1338,6 +1448,13 @@ def _sanitize_animations(
                 if str(channel) in allowed_channels
             ]
             if not channels:
+                target_drop_reasons.append(
+                    {
+                        "reason": "target_channels_missing_or_invalid",
+                        "selector": selector,
+                        "raw_channels": raw_target.get("channels"),
+                    }
+                )
                 continue
             track = [str(prop) for prop in raw_target.get("track") or [] if isinstance(prop, str)]
             if "color" in channels and not track:
@@ -1351,32 +1468,40 @@ def _sanitize_animations(
                 }
             )
         if not targets:
+            record("dropped", item, "no_valid_targets", path=path, target_drop_reasons=target_drop_reasons)
             continue
 
-        animations.append(
-            {
-                "id": animation_id,
-                "kind": "animation",
-                "weight": float(item.get("weight") if isinstance(item.get("weight"), int | float) else 1.0),
-                "page": str(item.get("page") or (Path(path).stem if Path(path).stem != "index" else "home")),
-                "path": path,
-                "viewport": item.get("viewport") if isinstance(item.get("viewport"), dict) else {"width": 1440, "height": 900},
-                "trigger": {
-                    "type": trigger_type,
-                    "selector": str(trigger_selector) if trigger_selector else None,
-                    "settleBeforeMs": int(trigger.get("settleBeforeMs") or 0),
-                    "settleMs": int(trigger.get("settleMs") or 0),
-                },
-                "timeline": {
-                    "durationMs": duration_ms,
-                    "samplesMs": samples_ms,
-                    "recordFrames": bool(timeline.get("recordFrames", True)),
-                    "recordBoundingBoxes": bool(timeline.get("recordBoundingBoxes", True)),
-                    "recordComputedStyles": bool(timeline.get("recordComputedStyles", True)),
-                },
-                "targets": targets,
-                "enabled": bool(item.get("enabled", True)),
-            }
+        sanitized = {
+            "id": animation_id,
+            "kind": "animation",
+            "weight": float(item.get("weight") if isinstance(item.get("weight"), int | float) else 1.0),
+            "page": str(item.get("page") or (Path(path).stem if Path(path).stem != "index" else "home")),
+            "path": path,
+            "viewport": item.get("viewport") if isinstance(item.get("viewport"), dict) else {"width": 1440, "height": 900},
+            "trigger": {
+                "type": trigger_type,
+                "selector": str(trigger_selector) if trigger_selector else None,
+                "settleBeforeMs": int(trigger.get("settleBeforeMs") or 0),
+                "settleMs": int(trigger.get("settleMs") or 0),
+            },
+            "timeline": {
+                "durationMs": duration_ms,
+                "samplesMs": samples_ms,
+                "recordFrames": bool(timeline.get("recordFrames", True)),
+                "recordBoundingBoxes": bool(timeline.get("recordBoundingBoxes", True)),
+                "recordComputedStyles": bool(timeline.get("recordComputedStyles", True)),
+            },
+            "targets": targets,
+            "enabled": bool(item.get("enabled", True)),
+        }
+        animations.append(sanitized)
+        record(
+            "kept",
+            item,
+            path=path,
+            sanitized_id=animation_id,
+            trigger=sanitized["trigger"],
+            targets=[{"selector": target["selector"], "channels": target["channels"]} for target in targets],
         )
     return animations
 
@@ -1441,12 +1566,23 @@ def generate_manifest(
     )
     raw = _extract_json_object(response.output_text)
     manifest = _sanitize_manifest_with_inventory(root, raw, max_captures=capture_budget, inventory=inventory)
+    diagnostics = manifest.pop("__diagnostics", {})
     manifest["site"]["root"] = _manifest_site_root(root, output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(manifest, indent=2, sort_keys=False), encoding="utf-8")
+    diagnostics_path = _write_manifest_diagnostics(output, diagnostics)
+    logger.info(
+        "manifest generated root=%s backend=openai raw_animations=%s kept_animations=%s diagnostics=%s",
+        root,
+        diagnostics.get("raw_animation_count"),
+        diagnostics.get("sanitized_animation_count"),
+        diagnostics_path,
+    )
     return {
         "manifest": manifest,
         "output_path": str(output),
+        "diagnostics_path": str(diagnostics_path),
+        "diagnostics": diagnostics,
         "model": model,
         "backend": "openai",
         "page_count": len(inventory["pages"]),
