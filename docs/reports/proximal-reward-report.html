@@ -30,6 +30,7 @@ tr:nth-child(even) td { background: #fbfcfe; }
 .figure { width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 4px; }
 .figure img { display: block; max-width: 100%; max-height: 133mm; margin: 0 auto; object-fit: contain; }
 .figure.tall img { max-height: 145mm; }
+.figure.honesty img { max-height: 112mm; }
 .caption { font-size: 9pt; color: #475569; margin-top: 6px; }
 .evidence-page { gap: 9px; }
 .evidence-page .figure img { max-height: 132mm; }
@@ -125,8 +126,15 @@ li { margin: 3px 0; }
 </section>
 
 <section class="page evidence-page">
+  <h2>Reward honesty check: does 0.6 look better than 0.2?</h2>
+  <div class="figure honesty"><img src="assets/reward-honesty-gradient.jpg"><div class="caption">A quick ordered read: high reward preserves page grammar and local structure; mid/high reward keeps the system but loses some density/state detail; low reward preserves mood while failing concrete reproduction.</div></div>
+  <p><strong>Short answer: yes, directionally.</strong> The 0.6-0.7 candidates are visibly more faithful than the 0.2 candidates. The high-reward pages preserve the original page type, repeated components, content density, nav/sidebar/footer grammar, and browser-rendered structure. The low-reward pages may still be attractive, but they are closer to a genre rewrite than a reproduction. A 0.6 is not pixel-perfect; it is a candidate that cleared more of the browser-state reproduction checks.</p>
+  <div class="metric-strip"><span class="chip"><strong>0.6+</strong> retained page grammar</span><span class="chip"><strong>0.4-0.6</strong> broad match with local drift</span><span class="chip"><strong>0.2-ish</strong> vibe without faithful reproduction</span></div>
+</section>
+
+<section class="page evidence-page">
   <h2>4. Evidence: high reward requires page grammar, not just resemblance</h2>
-  <div class="figure tall"><img src="../report-figures/fig01_high_reward_k12_home.jpg"><div class="caption">K-12 school site: strongest overall candidate. It preserves dashboard-like layout, side rail, dense cards, palette, footer, and enough rendered content structure.</div></div>
+  <div class="figure tall"><img src="assets/pair-k12-high.jpg"><div class="caption">K-12 school site: strongest overall candidate. It preserves dashboard-like layout, side rail, dense cards, palette, footer, and enough rendered content structure.</div></div>
   <div class="analysis">
     <div><p>The highest-scoring task is not merely attractive. It keeps the page grammar: repeated structures, content density, navigation, and styling survive the reproduction.</p></div>
     <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.678</span><span class="chip"><strong>HTML</strong> 0.634</span><span class="chip"><strong>CSSOM</strong> 0.646</span><span class="chip"><strong>visual block</strong> 0.855</span><span class="chip"><strong>coverage</strong> 0.957</span></div>
@@ -135,7 +143,7 @@ li { margin: 3px 0; }
 
 <section class="page evidence-page">
   <h2>5. Evidence: DreamSim over-credits broad aesthetic resemblance</h2>
-  <div class="figure tall"><img src="../report-figures/fig02_lutherie_low_reward_high_dreamsim.jpg"><div class="caption">Lutherie guild: parchment mood and central composition survive, but actual structure, typography, copy, and layout fidelity are poor.</div></div>
+  <div class="figure tall"><img src="assets/pair-lutherie-low.jpg"><div class="caption">Lutherie guild: parchment mood and central composition survive, but actual structure, typography, copy, and layout fidelity are poor.</div></div>
   <div class="analysis">
     <div><p>This is the cleanest warning against making DreamSim a primary reward driver. The broad aesthetic family is right, but the reproduction is not faithful.</p></div>
     <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.194</span><span class="chip"><strong>DreamSim</strong> 0.849</span><span class="chip"><strong>HTML</strong> 0.279</span><span class="chip"><strong>CSSOM</strong> 0.271</span><span class="chip"><strong>BBox</strong> 0.143</span></div>
@@ -144,7 +152,7 @@ li { margin: 3px 0; }
 
 <section class="page evidence-page">
   <h2>6. Evidence: plausible visual clone, weak rendered structure</h2>
-  <div class="figure tall"><img src="../report-figures/fig03_indie_visual_plausible_low_html.jpg"><div class="caption">Indie record label: the candidate has the right vibe, but content structure and page-specific details drift.</div></div>
+  <div class="figure tall"><img src="assets/pair-indie-plausible.jpg"><div class="caption">Indie record label: the candidate has the right vibe, but content structure and page-specific details drift.</div></div>
   <div class="analysis">
     <div><p>A judge or perceptual model can be tempted by a plausible page. Rendered HTML and CSSOM prevent over-crediting by checking whether the actual browser-rendered structure is close.</p></div>
     <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.261</span><span class="chip"><strong>VLM</strong> 0.652</span><span class="chip"><strong>visual block</strong> 0.768</span><span class="chip"><strong>HTML</strong> 0.314</span><span class="chip"><strong>CSSOM</strong> 0.420</span></div>
@@ -153,7 +161,7 @@ li { margin: 3px 0; }
 
 <section class="page evidence-page">
   <h2>7. Evidence: visual block works when visible blocks align</h2>
-  <div class="figure tall"><img src="../report-figures/fig04_botanical_strong_visual_block.jpg"><div class="caption">Botanical garden map state: labels, cards, map area, and highlighted state structure mostly align.</div></div>
+  <div class="figure tall"><img src="assets/pair-botanical-state.jpg"><div class="caption">Botanical garden map state: labels, cards, map area, and highlighted state structure mostly align.</div></div>
   <div class="analysis">
     <div><p>This is the intended use case for visual block scoring. Once visible blocks correspond, the metric checks whether the same pieces exist with similar area, text, placement, and style.</p></div>
     <div class="metric-strip"><span class="chip"><strong>capture score</strong> 0.810</span><span class="chip"><strong>VB</strong> 0.951</span><span class="chip"><strong>VB size</strong> 0.992</span><span class="chip"><strong>block PM</strong> 0.606</span><span class="chip"><strong>CSSOM</strong> 0.863</span></div>
@@ -162,7 +170,7 @@ li { margin: 3px 0; }
 
 <section class="page evidence-page">
   <h2>8. Evidence: text can match while geometry is wrong</h2>
-  <div class="figure tall"><img src="../report-figures/fig05_regional_bad_state_block_size.jpg"><div class="caption">Tabletop booking contact state: the contact-form text is present, but the candidate keeps the previous add-ons step above it and changes the reservation-panel geometry.</div></div>
+  <div class="figure tall"><img src="assets/pair-tabletop-booking.jpg"><div class="caption">Tabletop booking contact state: the contact-form text is present, but the candidate keeps the previous add-ons step above it and changes the reservation-panel geometry.</div></div>
   <div class="analysis">
     <div><p>This case explains why visual block cannot be reduced to text. The candidate includes much of the right form content, but the block area, local pixels, BBox, and CSSOM show that the state layout is wrong.</p></div>
     <div class="metric-strip"><span class="chip"><strong>capture score</strong> 0.534</span><span class="chip"><strong>HTML</strong> 0.613</span><span class="chip"><strong>VB text</strong> 0.939</span><span class="chip"><strong>VB size</strong> 0.061</span><span class="chip"><strong>block PM</strong> 0.027</span><span class="chip"><strong>BBox</strong> 0.026</span><span class="chip"><strong>CSSOM</strong> 0.047</span></div>
@@ -171,7 +179,7 @@ li { margin: 3px 0; }
 
 <section class="page evidence-page">
   <h2>9. Evidence: local density matters</h2>
-  <div class="figure tall"><img src="../report-figures/fig08_user_curling_evidence.jpg"><div class="caption">Curling athlete directory: the page identity is correct, but card density, header geometry, filter/sidebar treatment, player count layout, and footer/page geometry differ.</div></div>
+  <div class="figure tall"><img src="assets/pair-curling-density.jpg"><div class="caption">Curling athlete directory: the page identity is correct, but card density, header geometry, filter/sidebar treatment, player count layout, and footer/page geometry differ.</div></div>
   <div class="analysis">
     <div><p>This is the case for local fidelity metrics. Broad screenshot identity and visual-block aggregate can still recognize the page, but HTML, CSSOM, BBox, and blockwise pixelmatch correctly penalize density and layout drift.</p></div>
     <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.414</span><span class="chip"><strong>athletes capture</strong> 0.218</span><span class="chip"><strong>DreamSim</strong> 0.766</span><span class="chip"><strong>HTML</strong> 0.346</span><span class="chip"><strong>BBox</strong> 0.119</span><span class="chip"><strong>CSSOM</strong> 0.369</span></div>
@@ -180,7 +188,7 @@ li { margin: 3px 0; }
 
 <section class="page evidence-page">
   <h2>10. Evidence: agents reproduce vibe better than states</h2>
-  <div class="figure tall"><img src="../report-figures/fig07_tabletop_missing_states.jpg"><div class="caption">Tabletop cafe: cheerful domain style is present, but multiple requested state captures are missing.</div></div>
+  <div class="figure tall"><img src="assets/pair-tabletop-booking.jpg"><div class="caption">Tabletop cafe: cheerful domain style is present, but multiple requested state captures are missing.</div></div>
   <div class="analysis">
     <div><p>The agent is stronger at static page construction than interaction-state reproduction. Missing filters, toggles, accordions, selected nodes, and alternate views should remain first-class reward failures.</p></div>
     <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.556</span><span class="chip"><strong>coverage</strong> 0.850</span><span class="chip"><strong>missing</strong> 4/17 states</span><span class="chip"><strong>visual style</strong> plausible</span></div>
