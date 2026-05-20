@@ -1,0 +1,22 @@
+{
+  "id": "gemology-reference-database",
+  "one_liner": "Editorial gemology reference database with mineral specimen pages, gem grading charts, cutting-style galleries, geological origin maps, certification guides, and collector glossaries; jewel-toned dark luxurious UI with rich visual density, curated collection-style navigation, hover-triggered color-shift animations on gem classification cards, and a refined browsing experience spanning eight detailed reference sections.",
+  "metadata": {
+    "animation_channel": "color",
+    "animation_trigger": "hover",
+    "animation_duration_ms_min": 300,
+    "animation_duration_ms_max": 900,
+    "animation_target_hint": "gem classification card background and border color transitioning through a jewel-tone palette shift",
+    "animation_side_effects": "none — card remains in DOM, visible, no scroll or layout change",
+    "implied_pages": [
+      "Home / Featured Gems",
+      "Mineral Specimen Index",
+      "Gem Grading & Certification",
+      "Cutting Styles Gallery",
+      "Geological Origins Map",
+      "Collector's Glossary",
+      "Certification Guides",
+      "About the Reference"
+    ]
+  }
+}

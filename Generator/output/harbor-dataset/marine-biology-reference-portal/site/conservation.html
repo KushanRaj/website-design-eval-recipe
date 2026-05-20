@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conservation Status Dashboard — OceanIndex</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">OI</div>
+      <div class="logo-text-wrap">
+        <span class="logo-name">OceanIndex</span>
+        <span class="logo-sub">Marine Biology Reference</span>
+      </div>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="taxonomy.html">Species Taxonomy</a>
+      <a href="habitat.html">Habitat &amp; Distribution</a>
+      <a href="publications.html">Research Publications</a>
+      <a href="conservation.html" class="active">Conservation Status</a>
+      <a href="field-guide.html">Field Guide</a>
+    </nav>
+    <div class="header-search">
+      <input class="header-search-input" type="search" placeholder="Search species…" aria-label="Site-wide search">
+    </div>
+    <button class="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span class="sep">/</span>
+    <span class="crumb-current">Conservation Status</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- Page header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+    <div>
+      <h1 style="font-size:18px;font-weight:700;color:var(--deep-sea);">Conservation Status Dashboard</h1>
+      <p style="font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">IUCN Red List v2024-1 &bull; 2,391 assessments &bull; Data valid as of 2024-05-01</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-secondary btn-sm">Download Data</button>
+      <button class="btn btn-primary btn-sm">IUCN Methodology</button>
+    </div>
+  </div>
+
+  <div class="cons-grid">
+
+    <!-- ====== 1. IUCN STATUS DISTRIBUTION BAR CHART ====== -->
+    <section class="cons-chart-panel" id="iucn-status-bar-chart">
+      <div class="cons-chart-hd">
+        <span class="cons-chart-title">IUCN Status Distribution — All Assessed Marine Species (n=2,391)</span>
+        <div class="year-selector" id="year-range-selector" style="background:transparent;border:none;padding:0;">
+          <label for="cons-year-range" style="color:rgba(255,255,255,.7);font-size:11px;">Range:</label>
+          <input type="range" id="cons-year-range" min="2000" max="2024" value="2024" style="width:100px;">
+          <span id="cons-year-display" class="year-display" style="color:rgba(255,255,255,.7);">2000–2024</span>
+        </div>
+      </div>
+      <div class="cons-chart-body">
+
+        <!-- Stacked full-width bar -->
+        <div style="margin-bottom:20px;">
+          <div class="iucn-bar-wrap" style="height:32px;border-radius:3px;">
+            <div class="iucn-bar-seg" style="width:28%;background:var(--iucn-lc);">LC<br><span style="font-size:9px;">669</span></div>
+            <div class="iucn-bar-seg" style="width:14%;background:var(--iucn-nt);">NT<br><span style="font-size:9px;">334</span></div>
+            <div class="iucn-bar-seg" style="width:18%;background:var(--iucn-vu);color:#333;">VU<br><span style="font-size:9px;">430</span></div>
+            <div class="iucn-bar-seg" style="width:16%;background:var(--iucn-en);">EN<br><span style="font-size:9px;">382</span></div>
+            <div class="iucn-bar-seg" style="width:10%;background:var(--iucn-cr);">CR<br><span style="font-size:9px;">239</span></div>
+            <div class="iucn-bar-seg" style="width:2%;background:var(--iucn-ew);">EW</div>
+            <div class="iucn-bar-seg" style="width:1%;background:var(--iucn-ex);">EX</div>
+            <div class="iucn-bar-seg" style="width:8%;background:var(--iucn-dd);">DD<br><span style="font-size:9px;">191</span></div>
+            <div class="iucn-bar-seg" style="width:3%;background:var(--iucn-ne);color:#555;">NE</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">
+            <span>← Least Concern</span>
+            <span>Threatened Zone →</span>
+          </div>
+        </div>
+
+        <!-- Individual category bar chart -->
+        <div class="iucn-dist-chart" style="height:160px;padding-bottom:32px;">
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">669</div>
+            <div class="iucn-dist-bar-fill" style="height:110px;background:var(--iucn-lc);"></div>
+            <div class="iucn-dist-bar-label">LC</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">334</div>
+            <div class="iucn-dist-bar-fill" style="height:55px;background:var(--iucn-nt);"></div>
+            <div class="iucn-dist-bar-label">NT</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">430</div>
+            <div class="iucn-dist-bar-fill" style="height:71px;background:var(--iucn-vu);"></div>
+            <div class="iucn-dist-bar-label">VU</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">382</div>
+            <div class="iucn-dist-bar-fill" style="height:63px;background:var(--iucn-en);"></div>
+            <div class="iucn-dist-bar-label">EN</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">239</div>
+            <div class="iucn-dist-bar-fill" style="height:39px;background:var(--iucn-cr);"></div>
+            <div class="iucn-dist-bar-label">CR</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">46</div>
+            <div class="iucn-dist-bar-fill" style="height:8px;background:var(--iucn-ew);"></div>
+            <div class="iucn-dist-bar-label">EW</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">30</div>
+            <div class="iucn-dist-bar-fill" style="height:5px;background:var(--iucn-ex);"></div>
+            <div class="iucn-dist-bar-label">EX</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">191</div>
+            <div class="iucn-dist-bar-fill" style="height:31px;background:var(--iucn-dd);"></div>
+            <div class="iucn-dist-bar-label">DD</div>
+          </div>
+          <div class="iucn-dist-bar">
+            <div class="iucn-dist-bar-count">70</div>
+            <div class="iucn-dist-bar-fill" style="height:12px;background:var(--iucn-ne);"></div>
+            <div class="iucn-dist-bar-label">NE</div>
+          </div>
+        </div>
+
+        <!-- Summary stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--iucn-cr);">44.0%</div>
+            <div style="font-size:11px;color:var(--text-muted);">Threatened (CR+EN+VU)</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--iucn-en);">239</div>
+            <div style="font-size:11px;color:var(--text-muted);">Critically Endangered</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--deep-sea);">76</div>
+            <div style="font-size:11px;color:var(--text-muted);">EW + EX (extinct)</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--teal);">2024</div>
+            <div style="font-size:11px;color:var(--text-muted);">Latest Assessment Year</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 2. ORDER STATUS CARD MATRIX ====== -->
+    <section>
+      <div class="section-hd">
+        <span class="section-hd-title">Conservation Status by Taxonomic Order</span>
+        <span class="section-hd-count">16 orders shown</span>
+      </div>
+
+      <div class="order-card-matrix" id="order-status-card-matrix">
+
+        <!-- Carcharhiniformes -->
+        <div class="order-card oc-en">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Carcharhiniformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-en">EN</span>
+            <span class="trend-up" title="Decreasing population">↓ Decreasing</span>
+          </div>
+          <div class="order-card-count">284 species &bull; 62% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[60,62,65,70,74,82,89,95,101]" data-sparkcolor="#F44336" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Lamniformes -->
+        <div class="order-card oc-cr">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Lamniformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-cr">CR</span>
+            <span class="trend-up">↓ Decreasing</span>
+          </div>
+          <div class="order-card-count">15 species &bull; 100% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[55,60,67,70,76,82,87,93,100]" data-sparkcolor="#F44336" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Artiodactyla (whales) -->
+        <div class="order-card oc-vu">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Artiodactyla (Cetacea)</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-vu">VU</span>
+            <span class="trend-stable">→ Stable/Unknown</span>
+          </div>
+          <div class="order-card-count">92 species &bull; 78% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[38,40,40,42,44,44,43,44,45]" data-sparkcolor="#FF9800" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Scombriformes -->
+        <div class="order-card oc-en">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Scombriformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-en">EN</span>
+            <span class="trend-up">↓ Decreasing</span>
+          </div>
+          <div class="order-card-count">188 species &bull; 55% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[30,34,36,40,45,50,54,58,62]" data-sparkcolor="#F44336" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Rajiformes (rays) -->
+        <div class="order-card oc-cr">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Rajiformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-cr">CR</span>
+            <span class="trend-up">↓ Decreasing</span>
+          </div>
+          <div class="order-card-count">456 species &bull; 68% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[50,54,56,61,67,72,78,84,91]" data-sparkcolor="#F44336" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Testudines (sea turtles) -->
+        <div class="order-card oc-cr">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Testudines (marine)</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-cr">CR</span>
+            <span class="trend-stable">→ Slow recovery</span>
+          </div>
+          <div class="order-card-count">7 species &bull; 100% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[86,86,86,85,84,83,82,82,81]" data-sparkcolor="#FF9800" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Orectolobiformes -->
+        <div class="order-card oc-en">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Orectolobiformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-en">EN</span>
+            <span class="trend-up">↓ Decreasing</span>
+          </div>
+          <div class="order-card-count">43 species &bull; 88% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[42,44,47,50,54,58,62,64,67]" data-sparkcolor="#F44336" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Tetraodontiformes -->
+        <div class="order-card oc-vu">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Tetraodontiformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-vu">VU</span>
+            <span class="trend-stable">→ Stable</span>
+          </div>
+          <div class="order-card-count">447 species &bull; 41% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[24,25,25,27,28,29,28,30,31]" data-sparkcolor="#FFC107" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Perciformes -->
+        <div class="order-card oc-nt">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Perciformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-nt">NT</span>
+            <span class="trend-stable">→ Mixed</span>
+          </div>
+          <div class="order-card-count">7,891 species &bull; 29% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[18,18,19,20,21,22,22,23,24]" data-sparkcolor="#8BC34A" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Carnivora (pinnipeds) -->
+        <div class="order-card oc-vu">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Carnivora (marine)</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-vu">VU</span>
+            <span class="trend-stable">→ Stable</span>
+          </div>
+          <div class="order-card-count">36 species &bull; 92% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[38,38,37,37,38,38,37,38,38]" data-sparkcolor="#FFC107" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Syngnathiformes -->
+        <div class="order-card oc-vu">
+          <div class="order-card-order">Order</div>
+          <div class="order-card-name">Syngnathiformes</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-vu">VU</span>
+            <span class="trend-up">↓ Decreasing</span>
+          </div>
+          <div class="order-card-count">312 species &bull; 58% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[30,32,34,36,38,40,42,44,46]" data-sparkcolor="#FF9800" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+        <!-- Cephalopoda (not an order but class grouping) -->
+        <div class="order-card oc-lc">
+          <div class="order-card-order">Class</div>
+          <div class="order-card-name">Cephalopoda</div>
+          <div class="order-card-meta">
+            <span class="iucn-pill iucn-lc">LC</span>
+            <span class="trend-down">↑ Increasing</span>
+          </div>
+          <div class="order-card-count">800 species &bull; 14% assessed</div>
+          <div class="order-sparkline">
+            <svg data-sparkline="[12,13,14,14,15,16,15,16,17]" data-sparkcolor="#4CAF50" width="100%" height="24" class="sparkline-svg" aria-hidden="true"></svg>
+            <span class="sr-only">Trend sparkline 2016–2024</span>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:4px;">% threatened — 2016–2024</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====== 3. TREND LINE CHARTS ====== -->
+    <section class="cons-chart-panel" id="trend-sparklines">
+      <div class="cons-chart-hd">
+        <span class="cons-chart-title">Class-Level Threatened Species Trend (% of assessed, 2000–2024)</span>
+      </div>
+      <div class="cons-chart-body">
+
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
+
+          <!-- Chondrichthyes trend -->
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="font-weight:700;font-size:13px;color:var(--deep-sea);">Chondrichthyes</span>
+              <span class="iucn-pill iucn-cr" style="font-size:9px;">CR</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">↑ 71% threatened</span>
+            </div>
+            <svg data-sparkline="[24,27,30,34,38,42,47,52,57,62,65,70,71]" data-sparkcolor="#F44336" width="100%" height="52" class="sparkline-svg" style="display:block;"></svg>
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:3px;"><span>2000</span><span>2024</span></div>
+          </div>
+
+          <!-- Mammalia trend -->
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="font-weight:700;font-size:13px;color:var(--deep-sea);">Mammalia (marine)</span>
+              <span class="iucn-pill iucn-vu" style="font-size:9px;">VU</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">→ 41% threatened</span>
+            </div>
+            <svg data-sparkline="[35,36,37,38,39,40,40,41,41,41,42,41,41]" data-sparkcolor="#FF9800" width="100%" height="52" class="sparkline-svg" style="display:block;"></svg>
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:3px;"><span>2000</span><span>2024</span></div>
+          </div>
+
+          <!-- Actinopterygii trend -->
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="font-weight:700;font-size:13px;color:var(--deep-sea);">Actinopterygii</span>
+              <span class="iucn-pill iucn-nt" style="font-size:9px;">NT</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">↑ 24% threatened</span>
+            </div>
+            <svg data-sparkline="[12,13,14,15,16,17,18,19,20,21,22,23,24]" data-sparkcolor="#FFC107" width="100%" height="52" class="sparkline-svg" style="display:block;"></svg>
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:3px;"><span>2000</span><span>2024</span></div>
+          </div>
+
+          <!-- Reptilia trend -->
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="font-weight:700;font-size:13px;color:var(--deep-sea);">Reptilia (marine)</span>
+              <span class="iucn-pill iucn-cr" style="font-size:9px;">CR</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">↓ 81% threatened</span>
+            </div>
+            <svg data-sparkline="[88,88,87,86,86,86,85,84,84,83,83,82,81]" data-sparkcolor="#FF9800" width="100%" height="52" class="sparkline-svg" style="display:block;"></svg>
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:3px;"><span>2000</span><span>2024</span></div>
+          </div>
+
+        </div>
+
+        <!-- Summary table -->
+        <div style="margin-top:24px;">
+          <div class="section-hd">
+            <span class="section-hd-title">Threat Level Summary by Class</span>
+          </div>
+          <div class="tbl-wrap">
+            <table class="data-table" aria-label="Threat level by class">
+              <thead>
+                <tr>
+                  <th>Taxonomic Class</th>
+                  <th>Total Species</th>
+                  <th>Assessed</th>
+                  <th>LC</th>
+                  <th>NT</th>
+                  <th>VU</th>
+                  <th>EN</th>
+                  <th>CR</th>
+                  <th>% Threatened</th>
+                  <th>Trend</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight:600;">Chondrichthyes</td>
+                  <td class="cell-mono">1,199</td>
+                  <td class="cell-mono">783</td>
+                  <td class="cell-mono">142</td>
+                  <td class="cell-mono">64</td>
+                  <td class="cell-mono">188</td>
+                  <td class="cell-mono">178</td>
+                  <td class="cell-mono">211</td>
+                  <td><span style="font-family:var(--font-mono);font-weight:700;color:var(--iucn-cr);">71%</span></td>
+                  <td><span class="trend-up">↓</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Actinopterygii</td>
+                  <td class="cell-mono">22,492</td>
+                  <td class="cell-mono">6,801</td>
+                  <td class="cell-mono">4,018</td>
+                  <td class="cell-mono">812</td>
+                  <td class="cell-mono">892</td>
+                  <td class="cell-mono">612</td>
+                  <td class="cell-mono">467</td>
+                  <td><span style="font-family:var(--font-mono);font-weight:700;color:var(--iucn-vu);">29%</span></td>
+                  <td><span class="trend-up">↓</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Mammalia</td>
+                  <td class="cell-mono">142</td>
+                  <td class="cell-mono">128</td>
+                  <td class="cell-mono">52</td>
+                  <td class="cell-mono">24</td>
+                  <td class="cell-mono">28</td>
+                  <td class="cell-mono">18</td>
+                  <td class="cell-mono">6</td>
+                  <td><span style="font-family:var(--font-mono);font-weight:700;color:var(--iucn-en);">41%</span></td>
+                  <td><span class="trend-stable">→</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Reptilia</td>
+                  <td class="cell-mono">86</td>
+                  <td class="cell-mono">86</td>
+                  <td class="cell-mono">10</td>
+                  <td class="cell-mono">6</td>
+                  <td class="cell-mono">24</td>
+                  <td class="cell-mono">22</td>
+                  <td class="cell-mono">24</td>
+                  <td><span style="font-family:var(--font-mono);font-weight:700;color:var(--iucn-cr);">81%</span></td>
+                  <td><span class="trend-down">↑</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Cephalopoda</td>
+                  <td class="cell-mono">800</td>
+                  <td class="cell-mono">112</td>
+                  <td class="cell-mono">88</td>
+                  <td class="cell-mono">12</td>
+                  <td class="cell-mono">8</td>
+                  <td class="cell-mono">3</td>
+                  <td class="cell-mono">1</td>
+                  <td><span style="font-family:var(--font-mono);font-weight:700;color:var(--iucn-nt);">11%</span></td>
+                  <td><span class="trend-stable">→</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /cons-grid -->
+
+</div><!-- /page-wrap -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fl">OceanIndex</div>
+      <p>Conservation data sourced from the IUCN Red List of Threatened Species (v2024-1). All assessments conducted under IUCN Red List criteria version 3.1. Population trend classifications follow IUCN standard methodology.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Navigation</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="taxonomy.html">Species Taxonomy</a></li>
+        <li><a href="habitat.html">Habitat Maps</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Reference</div>
+      <ul>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="field-guide.html">Field Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Data Sources</div>
+      <ul>
+        <li><a href="#">IUCN Red List</a></li>
+        <li><a href="#">CITES Appendices</a></li>
+        <li><a href="#">CMS Appendices</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>OceanIndex v3.4 &mdash; Conservation Status Dashboard</span>
+    <span>IUCN Red List v2024-1 &bull; 2,391 assessments</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

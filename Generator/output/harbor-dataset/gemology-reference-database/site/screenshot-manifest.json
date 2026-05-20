@@ -1,0 +1,563 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "gemology-reference-database",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Full home page hero, featured specimen, curated strip, gem of the week, taxonomy grid, and recent updates feed",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "home-above-fold",
+      "weight": 0.5,
+      "page": "home",
+      "state": "above-fold",
+      "intent": "Hero with featured specimen panel and stats above the fold",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "minerals-full",
+      "weight": 1.0,
+      "page": "minerals",
+      "state": "default",
+      "intent": "Mineral specimen index with filter sidebar, sort controls, classification card grid, and pagination",
+      "path": "/minerals.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "minerals-filter-applied",
+      "weight": 0.5,
+      "page": "minerals",
+      "state": "filter-beryl-checked",
+      "intent": "Active facet filter chip state after selecting Beryl gem family in filter sidebar",
+      "path": "/minerals.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "input[type=\"checkbox\"][value=\"beryl\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "input[type=\"checkbox\"][value=\"beryl\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 400,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "minerals-card-hover-jewel-tone",
+      "weight": 0.5,
+      "page": "minerals",
+      "state": "card-hover-beryl",
+      "intent": "Hover state on Emerald (beryl) gem classification card revealing jewel-tone color shift",
+      "path": "/minerals.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "#beryl",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "hover",
+          "selector": "#beryl",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 700,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "grading-full",
+      "weight": 1.0,
+      "page": "grading",
+      "state": "default-emerald-tab",
+      "intent": "Grading page with Emerald tab active showing color scale, jardin clarity, and cut proportions",
+      "path": "/grading.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "grading-ruby-tab",
+      "weight": 0.5,
+      "page": "grading",
+      "state": "tab-ruby-active",
+      "intent": "Ruby tab selected on grading reference reveals red color gradient and ruby clarity panel",
+      "path": "/grading.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "button[data-tab=\"ruby\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "button[data-tab=\"ruby\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 400,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "grading-sapphire-tab",
+      "weight": 0.5,
+      "page": "grading",
+      "state": "tab-sapphire-active",
+      "intent": "Sapphire tab selected reveals blue sapphire color gradient panel",
+      "path": "/grading.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "button[data-tab=\"sapphire\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "button[data-tab=\"sapphire\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 400,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "cuts-full",
+      "weight": 1.0,
+      "page": "cuts",
+      "state": "default-all-styles",
+      "intent": "Cutting Styles Gallery with masonry grid, editor's feature spotlight, filter bar, and facet angle reference table",
+      "path": "/cuts.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "cuts-filter-step",
+      "weight": 0.5,
+      "page": "cuts",
+      "state": "filter-step-active",
+      "intent": "Cut category filter applied to Step Cuts narrows masonry gallery",
+      "path": "/cuts.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "button[data-filter=\"step\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "button[data-filter=\"step\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 400,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "cuts-drawer-open",
+      "weight": 0.5,
+      "page": "cuts",
+      "state": "drawer-emerald-cut",
+      "intent": "Detail drawer slides in after clicking Emerald Cut card showing specifications and notes",
+      "path": "/cuts.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "article[data-cut-name=\"Emerald Cut\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "article[data-cut-name=\"Emerald Cut\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 500,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "origins-full",
+      "weight": 1.0,
+      "page": "origins",
+      "state": "default",
+      "intent": "Geological Origins page with world map markers, period filter chips, legend, regional panel, and narrative section",
+      "path": "/origins.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "origins-period-mesozoic",
+      "weight": 0.25,
+      "page": "origins",
+      "state": "period-mesozoic",
+      "intent": "Geological period filter switched to Mesozoic on origins map",
+      "path": "/origins.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "button[data-period=\"mesozoic\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "button[data-period=\"mesozoic\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 400,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "glossary-full",
+      "weight": 1.0,
+      "page": "glossary",
+      "state": "default",
+      "intent": "Collector's Glossary with A-Z sticky letter rail, search input, and definition entries with cross-references",
+      "path": "/glossary.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "glossary-letter-jump-c",
+      "weight": 0.25,
+      "page": "glossary",
+      "state": "scrolled-to-letter-c",
+      "intent": "Letter jump navigation: clicking C scrolls glossary to Chatoyancy / Chromophore / Clarity Enhancement entries",
+      "path": "/glossary.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "a[data-letter=\"C\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "a[data-letter=\"C\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 500,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "certification-full",
+      "weight": 1.0,
+      "page": "certification",
+      "state": "default",
+      "intent": "Certification Guides with lab profile cards, multi-lab equivalency matrix, treatment disclosure table, and recommended labs grid",
+      "path": "/certification.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "about-full",
+      "weight": 1.0,
+      "page": "about",
+      "state": "default",
+      "intent": "About editorial long-form with mission, contributors, methodology, revisions, and contact submission cards",
+      "path": "/about.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ],
+  "animations": [
+    {
+      "id": "gem-card-jewel-shift",
+      "kind": "animation",
+      "weight": 1.0,
+      "page": "mineral-index",
+      "path": "/minerals.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "trigger": {
+        "type": "hover",
+        "selector": "#beryl",
+        "target": null,
+        "description": null,
+        "settleBeforeMs": 0,
+        "settleMs": 0
+      },
+      "timeline": {
+        "durationMs": 600,
+        "samplesMs": [
+          0,
+          200,
+          400,
+          600
+        ],
+        "recordFrames": true,
+        "recordBoundingBoxes": true,
+        "recordComputedStyles": true
+      },
+      "targets": [
+        {
+          "name": "gem-card-beryl",
+          "selector": "#beryl",
+          "signature": {},
+          "channels": [
+            "color"
+          ],
+          "track": [
+            "background-color",
+            "border-color"
+          ]
+        }
+      ],
+      "enabled": true
+    }
+  ]
+}

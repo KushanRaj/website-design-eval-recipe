@@ -1,0 +1,120 @@
+{
+  "id": "gemology-reference-database",
+  "title": "Gem Classification Reference",
+  "description": "A jewel-toned dark-luxury editorial gemological reference database presenting classification, grading, cutting-style galleries, geological origins, and collector glossaries for gem collectors, jewelry designers, and gemology students.",
+  "concept_id": "gemology-lapidary-atlas",
+  "domain": "gemology reference / mineral collecting",
+  "motif": "Jewel-toned dark luxury editorial — deep navy and charcoal backgrounds (#1c1c2e base) with saturated gemstone accent colors shifting by gem family: beryl green (#2ecc71), sapphire blue (#3498db), ruby red (#e74c3c), amethyst violet (#9b59b6), chrysoberyl gold (#f1c40f). Gold rule dividers, serif specimen labels, editorial pull-quote typography.",
+  "pages": [
+    {
+      "id": "home",
+      "file": "index.html",
+      "title": "Home / Featured Gems",
+      "description": "Full-width hero with featured specimen (emerald), stats bar (342 species, 87 cuts, 214 deposits, 1240 glossary terms), curated horizontal strip of gem families, gem-of-the-week editorial spotlight (Kashmir sapphire), taxonomy grid by mineral class, and recently updated reference entries feed."
+    },
+    {
+      "id": "mineral-index",
+      "file": "minerals.html",
+      "title": "Mineral Specimen Index",
+      "description": "Filterable 4-column gem classification card grid with left sidebar facet filters (gem family, crystal system, hardness, treatment). Cards implement the jewel-tone hover animation: on mouseenter, background-color transitions from deep charcoal (#1c1c2e) to gem-family jewel tone over 600ms ease-in-out. Filter sidebar with collapsible groups. Active filter chips. Pagination footer."
+    },
+    {
+      "id": "grading",
+      "file": "grading.html",
+      "title": "Gem Grading & Certification",
+      "description": "Tabbed reference panels per gem type (Emerald, Ruby, Sapphire, Diamond, Alexandrite, Tourmaline). Color grading gradient scales per species. Clarity grading charts with grade codes. Cut proportion reference data. Diamond carat weight conversion table. Multi-lab certification equivalency matrix (GIA, Gübelin, SSEF, AGL)."
+    },
+    {
+      "id": "cutting-gallery",
+      "file": "cuts.html",
+      "title": "Cutting Styles Gallery",
+      "description": "Cut style category filter bar. Masonry gallery grid of cut illustrations (SVG facet diagrams for 12 cuts). Featured Round Brilliant editorial spotlight. Slide-in detail drawer showing name, facet count, category, best gem types, and historical notes. Facet angle and proportion reference table."
+    },
+    {
+      "id": "origins-map",
+      "file": "origins.html",
+      "title": "Geological Origins Map",
+      "description": "Full-bleed SVG world map with clickable deposit markers (Colombia/emerald, Burma/ruby, Kashmir/sapphire, Sri Lanka, Brazil, Russia, Tanzania, Botswana/diamond, Madagascar, Australia, and more). Geological period filter chips. Deposit legend. Collapsible regional detail panel injected dynamically per marker click. Historical deposit narratives (Mogok, Muzo, Kashmir)."
+    },
+    {
+      "id": "glossary",
+      "file": "glossary.html",
+      "title": "Collector's Glossary",
+      "description": "A–Z sticky letter nav rail. Searchable definition entries (instant filter via JS). 20+ rich glossary entries spanning adularescence through zoning with etymologies, definitions, gem-family tags, and cross-reference chips. Related terms sidebar panel with gem family quick links."
+    },
+    {
+      "id": "certification",
+      "file": "certification.html",
+      "title": "Certification Guides",
+      "description": "Lab profile cards (GIA, Gübelin, SSEF, AGL). Multi-lab comparison table with feature ratings and auction house acceptance. Step-by-step guide to reading a grading report (5 steps). Treatment disclosure standards table by gem type (prevalence, value impact). Recommended labs by gem species grid."
+    },
+    {
+      "id": "about",
+      "file": "about.html",
+      "title": "About the Reference",
+      "description": "Editorial mission statement and scope. Contributor profile cards (6 contributors with credentials). Data sourcing and methodology section (5 methodology items). Revision history log. Contact and submission guidelines grid."
+    }
+  ],
+  "animations": [
+    {
+      "id": "gem-card-jewel-shift",
+      "page": "minerals.html",
+      "target": ".gem-classification-card[data-gem-family]",
+      "trigger": "hover (mouseenter / mouseleave)",
+      "channels": ["background-color", "border-color", "box-shadow"],
+      "durationMs": 600,
+      "timing": "ease-in-out",
+      "description": "On hover, background-color transitions from var(--bg-card) (#22223a) to the gem family's jewel-tone background. border-color transitions from var(--border-subtle) (#3a3a4a) to the gem's saturated accent color. A colored glow box-shadow appears. All transitions reverse on mouseleave. Card position, size, and layout are unchanged.",
+      "gem_family_states": {
+        "beryl":           { "bg": "#0d3d2e", "border": "#2ecc71", "shadow": "rgba(46,204,113,0.15)" },
+        "blue-corundum":   { "bg": "#0e1f4a", "border": "#3498db", "shadow": "rgba(52,152,219,0.15)" },
+        "red-corundum":    { "bg": "#3d0e1a", "border": "#e74c3c", "shadow": "rgba(231,76,60,0.15)" },
+        "amethyst":        { "bg": "#2a0e4a", "border": "#9b59b6", "shadow": "rgba(155,89,182,0.15)" },
+        "chrysoberyl":     { "bg": "#3d2e00", "border": "#f1c40f", "shadow": "rgba(241,196,15,0.15)" },
+        "diamond":         { "bg": "#1e2a3a", "border": "#b0c8e8", "shadow": "rgba(176,200,232,0.15)" },
+        "tourmaline":      { "bg": "#1a3a2a", "border": "#1abc9c", "shadow": "rgba(26,188,156,0.15)" },
+        "spinel":          { "bg": "#3a1a2e", "border": "#e91e8c", "shadow": "rgba(233,30,140,0.15)" }
+      }
+    }
+  ],
+  "shared_assets": {
+    "stylesheet": "css/style.css",
+    "javascript": "js/main.js",
+    "svg_icons": [
+      "img/gem-emerald.svg",
+      "img/gem-sapphire.svg",
+      "img/gem-ruby.svg",
+      "img/gem-amethyst.svg",
+      "img/gem-diamond.svg",
+      "img/gem-chrysoberyl.svg",
+      "img/gem-tourmaline.svg",
+      "img/gem-spinel.svg"
+    ]
+  },
+  "design_tokens": {
+    "bg_base":   "#1c1c2e",
+    "bg_surface": "#12121f",
+    "bg_card":   "#22223a",
+    "text_primary": "#f0ece4",
+    "text_gold":   "#c9a84c",
+    "border_gold": "#c9a84c44",
+    "font_serif":  "Georgia, Times New Roman, serif",
+    "font_sans":   "Segoe UI, system-ui, sans-serif"
+  },
+  "required_text_included": [
+    "Gem Classification Reference",
+    "Mineral Specimen Index",
+    "Grading & Certification",
+    "Geological Origins",
+    "Collector's Glossary"
+  ],
+  "built": "2026-05-20",
+  "version": "1.1",
+  "repair_notes": [
+    "glossary.html: Removed empty right sidebar (related-terms-panel). Changed glossary-layout from 3-column (64px 1fr 240px) to 2-column (64px 1fr). Definitions and letter headings now share consistent left-margin baseline aligned to the main content column.",
+    "about.html: Wrapped every section's inner content in a .content-column div to enforce consistent column boundaries matching the page hero. Removed inline max-width from about-two-col section.",
+    "cuts.html: Standardized all 12 cut cards to exactly 3 direct child divs: (1) .cut-card-visual SVG container, (2) .cut-card-info text block with name + subtitle, (3) .cut-card-badge facet count + category chip. Drawer starts visibility:hidden (closed) in initial render.",
+    "minerals.html: Renamed all card stat row classes from card-data-row/card-data-label/card-data-value to stat-row/stat-label/stat-value for uniform component structure. All 12 cards have exactly 5 stat rows (Hardness, Crystal, RI, SG, Origin) with populated data.",
+    "css/style.css: Fixed .strip-card with min-height:80px and flex centering for uniform curated strip height. Added align-items:stretch to .taxonomy-grid. Added min-height + flex layout to .taxonomy-item for row bottom-alignment. Added .cut-card-badge styles. Added .content-column utility class. Added .cut-drawer visibility:hidden closed state."
+  ]
+}

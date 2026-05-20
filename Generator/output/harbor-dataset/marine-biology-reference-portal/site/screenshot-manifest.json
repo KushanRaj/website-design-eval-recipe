@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "marine-biology-reference-portal",
+    "root": "."
+  },
+  "outputDir": "./screenshots/reference",
+  "cleanOutputDir": true,
+  "defaults": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "waitUntil": "networkidle",
+    "afterLoadWaitMs": 100,
+    "timeoutMs": 30000,
+    "screenshot": {
+      "fullPage": false,
+      "animations": "disabled",
+      "caret": "hide"
+    }
+  },
+  "captures": [
+    {
+      "id": "home-full",
+      "weight": 1.0,
+      "page": "home",
+      "state": "default",
+      "intent": "Home page hero spotlight, taxonomy quick-search, recently-added grid, and section nav cards",
+      "path": "/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "taxonomy-default",
+      "weight": 1.0,
+      "page": "taxonomy",
+      "state": "default",
+      "intent": "Three-panel taxonomy browser: tree sidebar, paginated species list, empty specimen detail panel",
+      "path": "/taxonomy.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "taxonomy-specimen-panel-open",
+      "weight": 0.5,
+      "page": "taxonomy",
+      "state": "specimen-panel-open",
+      "intent": "Specimen detail panel revealed in the right rail after clicking a species row (post-animation rest state)",
+      "path": "/taxonomy.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "tr[aria-label=\"Open Great White Shark detail\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "tr[aria-label=\"Open Great White Shark detail\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 800,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "habitat-full",
+      "weight": 1.0,
+      "page": "habitat",
+      "state": "default",
+      "intent": "World ocean basin SVG map, depth-zone filter strip, basin tally, overlay legend with class checkboxes, basin summary data table",
+      "path": "/habitat.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "publications-full",
+      "weight": 1.0,
+      "page": "publications",
+      "state": "default",
+      "intent": "Faceted filter sidebar, active-filter chip row, sortable publications table with abstract expand toggles, pagination",
+      "path": "/publications.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "publications-abstract-expanded",
+      "weight": 0.5,
+      "page": "publications",
+      "state": "abstract-expanded",
+      "intent": "Publications table with the first row's inline abstract preview expanded showing the full text link",
+      "path": "/publications.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        {
+          "type": "waitForSelector",
+          "selector": "button[data-pub=\"p1\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": null,
+          "state": null,
+          "timeoutMs": 5000,
+          "x": null,
+          "y": null
+        },
+        {
+          "type": "click",
+          "selector": "button[data-pub=\"p1\"]",
+          "value": null,
+          "key": null,
+          "ms": null,
+          "settleMs": 400,
+          "state": null,
+          "timeoutMs": null,
+          "x": null,
+          "y": null
+        }
+      ],
+      "screenshot": {
+        "fullPage": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "conservation-full",
+      "weight": 1.0,
+      "page": "conservation",
+      "state": "default",
+      "intent": "IUCN status distribution bar chart, order status card matrix with sparklines, class-level trend section, and threat-level summary table",
+      "path": "/conservation.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "field-guide-full",
+      "weight": 1.0,
+      "page": "field-guide",
+      "state": "default",
+      "intent": "Search-and-filter bar with class/status/habitat selects and masonry field-guide card grid with morphology, depth, and lifespan data",
+      "path": "/field-guide.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [],
+      "screenshot": {
+        "fullPage": true
+      },
+      "enabled": true
+    }
+  ],
+  "animations": [
+    {
+      "id": "specimen-panel-slide",
+      "kind": "animation",
+      "weight": 1.0,
+      "page": "taxonomy",
+      "path": "/taxonomy.html",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "trigger": {
+        "type": "click",
+        "selector": "tr[aria-label=\"Open Great White Shark detail\"]",
+        "target": null,
+        "description": null,
+        "settleBeforeMs": 0,
+        "settleMs": 0
+      },
+      "timeline": {
+        "durationMs": 600,
+        "samplesMs": [
+          0,
+          150,
+          300,
+          450,
+          600
+        ],
+        "recordFrames": true,
+        "recordBoundingBoxes": true,
+        "recordComputedStyles": true
+      },
+      "targets": [
+        {
+          "name": "specimen-detail-panel",
+          "selector": "div[aria-label=\"Specimen detail\"]",
+          "signature": {},
+          "channels": [
+            "motion"
+          ],
+          "track": [
+            "transform",
+            "translateX"
+          ]
+        }
+      ],
+      "enabled": true
+    }
+  ]
+}

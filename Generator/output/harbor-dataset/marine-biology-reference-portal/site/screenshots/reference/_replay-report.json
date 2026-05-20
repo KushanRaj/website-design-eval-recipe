@@ -1,0 +1,226 @@
+{
+  "manifestPath": "/home/ec2-user/website-design-eval-recipe/Generator/output/animation-vm-run-2026-05-20/marine-biology-reference-portal/site/screenshot-manifest.json",
+  "pruneFailed": true,
+  "ok": 9,
+  "failed": 0,
+  "droppedCaptures": [],
+  "results": [
+    {
+      "id": "home-full",
+      "status": "ok",
+      "required": true,
+      "file": "home-full.png"
+    },
+    {
+      "id": "taxonomy-default",
+      "status": "ok",
+      "required": true,
+      "file": "taxonomy-default.png"
+    },
+    {
+      "id": "taxonomy-specimen-panel-open",
+      "status": "ok",
+      "required": false,
+      "file": "taxonomy-specimen-panel-open.png"
+    },
+    {
+      "id": "habitat-full",
+      "status": "ok",
+      "required": true,
+      "file": "habitat-full.png"
+    },
+    {
+      "id": "publications-full",
+      "status": "ok",
+      "required": true,
+      "file": "publications-full.png"
+    },
+    {
+      "id": "publications-abstract-expanded",
+      "status": "ok",
+      "required": false,
+      "file": "publications-abstract-expanded.png"
+    },
+    {
+      "id": "conservation-full",
+      "status": "ok",
+      "required": true,
+      "file": "conservation-full.png"
+    },
+    {
+      "id": "field-guide-full",
+      "status": "ok",
+      "required": true,
+      "file": "field-guide-full.png"
+    },
+    {
+      "id": "specimen-panel-slide",
+      "status": "ok",
+      "required": false,
+      "kind": "animation",
+      "folder": "animations/animation-01",
+      "timeline": [
+        {
+          "timestampMs": 0,
+          "frame": "animations/animation-01/0000ms.png",
+          "targets": [
+            {
+              "target_index": 0,
+              "name": "specimen-detail-panel",
+              "selector": "div[aria-label=\"Specimen detail\"]",
+              "channels": [
+                "motion"
+              ],
+              "track": [
+                "transform",
+                "translateX"
+              ],
+              "sample": {
+                "selector": "div[aria-label=\"Specimen detail\"]",
+                "visible": true,
+                "bbox_px": {
+                  "x": 1423,
+                  "y": 158.5,
+                  "width": 279,
+                  "height": 816
+                },
+                "style": {
+                  "transform": "matrix(1, 0, 0, 1, 279, 0)",
+                  "translateX": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "timestampMs": 150,
+          "frame": "animations/animation-01/0150ms.png",
+          "targets": [
+            {
+              "target_index": 0,
+              "name": "specimen-detail-panel",
+              "selector": "div[aria-label=\"Specimen detail\"]",
+              "channels": [
+                "motion"
+              ],
+              "track": [
+                "transform",
+                "translateX"
+              ],
+              "sample": {
+                "selector": "div[aria-label=\"Specimen detail\"]",
+                "visible": true,
+                "bbox_px": {
+                  "x": 1272.556640625,
+                  "y": 158.5,
+                  "width": 279,
+                  "height": 816
+                },
+                "style": {
+                  "transform": "matrix(1, 0, 0, 1, 128.557, 0)",
+                  "translateX": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "timestampMs": 300,
+          "frame": "animations/animation-01/0300ms.png",
+          "targets": [
+            {
+              "target_index": 0,
+              "name": "specimen-detail-panel",
+              "selector": "div[aria-label=\"Specimen detail\"]",
+              "channels": [
+                "motion"
+              ],
+              "track": [
+                "transform",
+                "translateX"
+              ],
+              "sample": {
+                "selector": "div[aria-label=\"Specimen detail\"]",
+                "visible": true,
+                "bbox_px": {
+                  "x": 1177.97216796875,
+                  "y": 158.5,
+                  "width": 279,
+                  "height": 816
+                },
+                "style": {
+                  "transform": "matrix(1, 0, 0, 1, 33.9722, 0)",
+                  "translateX": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "timestampMs": 450,
+          "frame": "animations/animation-01/0450ms.png",
+          "targets": [
+            {
+              "target_index": 0,
+              "name": "specimen-detail-panel",
+              "selector": "div[aria-label=\"Specimen detail\"]",
+              "channels": [
+                "motion"
+              ],
+              "track": [
+                "transform",
+                "translateX"
+              ],
+              "sample": {
+                "selector": "div[aria-label=\"Specimen detail\"]",
+                "visible": true,
+                "bbox_px": {
+                  "x": 1144,
+                  "y": 158.5,
+                  "width": 279,
+                  "height": 816
+                },
+                "style": {
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "translateX": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "timestampMs": 600,
+          "frame": "animations/animation-01/0600ms.png",
+          "targets": [
+            {
+              "target_index": 0,
+              "name": "specimen-detail-panel",
+              "selector": "div[aria-label=\"Specimen detail\"]",
+              "channels": [
+                "motion"
+              ],
+              "track": [
+                "transform",
+                "translateX"
+              ],
+              "sample": {
+                "selector": "div[aria-label=\"Specimen detail\"]",
+                "visible": true,
+                "bbox_px": {
+                  "x": 1144,
+                  "y": 158.5,
+                  "width": 279,
+                  "height": 816
+                },
+                "style": {
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "translateX": ""
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "ocean-index",
+      "score": 0.93,
+      "accept": true,
+      "strengths": [
+        "Animation is a perfect seed match: motion channel, CSS translateX(100%)→translateX(0) slide, click-triggered, 600ms within the 300–900ms window, zero layout shift, zero scroll — directly targets the 'expandable specimen data card panel that slides open in-place' hint",
+        "Motif is tightly institutional: deep-sea blue #003366 header band on white, monospace IBM Plex Mono for scientific annotations, strict 12-column grid — fully satisfies the 'clean institutional blue-and-white grid layout' seed requirement",
+        "Layout descriptions are unusually concrete: exact pixel widths (240px sidebar, 280px right rail, 60% center column), named CSS properties, column-count breakpoints — a developer can implement directly without interpretation",
+        "Six pages are genuinely distinct with no near-duplicate layouts: hero-split home, three-panel taxonomy browser, SVG map page, faceted-filter publications table, sparkline-and-card conservation dashboard, masonry field guide",
+        "Content model is domain-specific: full kingdom-to-subspecies hierarchy, depth-zone polygon geodata with temperature bands, IUCN population trend sparklines, DOI/citation-count publication metadata — not generic CMS placeholders",
+        "Interactions map tightly to data: clicking a basin polygon filters the species list, sorting publications by impact factor, toggling taxon overlays — all are realistic, purposeful, and domain-appropriate"
+      ],
+      "weaknesses": [
+        "Masonry layout on the field guide page introduces a CSS complexity (column-fill or JS masonry) that may conflict with the otherwise strict grid discipline",
+        "Habitat map uses SVG with clickable polygons but no mention of a tile-based fallback or data source format for the basin topology, leaving a small realism gap"
+      ]
+    },
+    {
+      "candidate_id": "coral-base",
+      "score": 0.79,
+      "accept": true,
+      "strengths": [
+        "IUCN status matrix table — sticky order column, seven category columns, inline collapsible species roster as a sub-row — is a genuinely useful and non-generic analytical pattern that fits the conservation dashboard requirement well",
+        "Alphabetical sidebar index on the field guide with per-letter species counts is a smart reference-portal UX pattern absent from the other candidate",
+        "Publication card list with expandable two-sentence abstract and open-access icon demonstrates realistic content modeling",
+        "Six pages with clearly differentiated layouts; no near-duplicates"
+      ],
+      "weaknesses": [
+        "Animation uses the 'color' channel (background-color transition on a matrix cell) but the seed explicitly specifies animation_channel: 'motion'; this is a direct channel mismatch",
+        "Animation target is a status matrix cell, not the 'expandable specimen data card panel that slides open in-place' described in animation_target_hint — the concept ignores the seed's primary animation scenario",
+        "Coral accent (#E8572A) conflicts with the seed's 'clean institutional blue-and-white' specification; it introduces a warm, commercial tone misaligned with the institutional domain aesthetic",
+        "Mega-menu navigation adds visual and implementation complexity that pushes the motif away from the dense utilitarian register the seed calls for"
+      ]
+    }
+  ],
+  "best_candidate_id": "ocean-index",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

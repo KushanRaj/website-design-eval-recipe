@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geological Origins Map — Gem Classification Reference</title>
+  <meta name="description" content="Interactive world map of major gem deposit locations with geological period data, deposit types, and notable mine profiles.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .origins-page-header {
+      background: linear-gradient(135deg, #0a0a1a, #0e1a2e);
+      padding: var(--space-2xl) 0;
+      border-bottom: var(--divider-gold);
+    }
+    .map-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .map-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* Land masses */
+    .land { fill: #1e2a3a; stroke: #2a3a4a; stroke-width: 0.5; }
+    /* Deposit dot hover */
+    .map-deposit-dot {
+      cursor: pointer;
+      transition: r 0.15s ease, opacity 0.15s ease;
+      filter: drop-shadow(0 0 3px currentColor);
+    }
+    .map-deposit-dot:hover { opacity: 0.85; }
+    .deposit-label {
+      font-size: 4px;
+      fill: rgba(240,236,228,0.6);
+      font-family: sans-serif;
+      pointer-events: none;
+    }
+    .map-title-overlay {
+      position: absolute;
+      top: var(--space-md);
+      left: var(--space-md);
+      background: rgba(18,18,31,0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: var(--space-sm) var(--space-md);
+    }
+    .map-title-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-gold);
+    }
+    .narrative-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--text-gold);
+      border-radius: 0 4px 4px 0;
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+    .narrative-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: var(--space-sm);
+    }
+    .narrative-body {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="minerals.html">Mineral Index</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="cuts.html">Cut Styles</a></li>
+      <li><a href="origins.html" class="active">Origins Map</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="certification.html">Certification</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-search"><input type="search" placeholder="Search specimens, terms…" aria-label="Search"></div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Geological Origins Map</span>
+  </nav>
+
+  <div class="origins-page-header">
+    <div class="page-wrapper">
+      <span class="eyebrow" style="display:block;margin-bottom:var(--space-sm);">Global Deposits</span>
+      <h1>Geological Origins</h1>
+      <p style="color:var(--text-secondary);margin-top:var(--space-md);max-width:60ch;">Click any deposit marker to view regional data, geological context, and notable mine profiles. Filter by geological period or gem family.</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-wrapper" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+      <!-- GEOLOGICAL PERIOD FILTERS -->
+      <div class="period-chips" role="group" aria-label="Filter by geological period">
+        <button class="period-chip active" data-period="all">All Periods</button>
+        <button class="period-chip" data-period="precambrian">Precambrian</button>
+        <button class="period-chip" data-period="paleozoic">Paleozoic</button>
+        <button class="period-chip" data-period="mesozoic">Mesozoic</button>
+        <button class="period-chip" data-period="cenozoic">Cenozoic</button>
+        <button class="period-chip" data-period="quaternary">Quaternary</button>
+      </div>
+
+      <div class="origins-layout">
+
+        <!-- MAP CANVAS -->
+        <div>
+          <div class="map-wrapper" role="application" aria-label="World gem deposit map">
+            <div class="map-title-overlay">
+              <span class="map-title-text">Major Gem Deposit Locations</span>
+            </div>
+
+            <!-- Simplified SVG world map with deposit markers -->
+            <svg class="map-svg" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" aria-label="World map showing major gem deposit locations">
+              <!-- Ocean background -->
+              <rect width="800" height="420" fill="#080e1a"/>
+              <!-- Grid lines -->
+              <g stroke="#1a2030" stroke-width="0.4">
+                <line x1="0" y1="210" x2="800" y2="210"/>
+                <line x1="400" y1="0" x2="400" y2="420"/>
+                <line x1="0" y1="70" x2="800" y2="70" stroke-dasharray="3,4"/>
+                <line x1="0" y1="350" x2="800" y2="350" stroke-dasharray="3,4"/>
+                <line x1="133" y1="0" x2="133" y2="420" stroke-dasharray="3,4"/>
+                <line x1="266" y1="0" x2="266" y2="420" stroke-dasharray="3,4"/>
+                <line x1="533" y1="0" x2="533" y2="420" stroke-dasharray="3,4"/>
+                <line x1="666" y1="0" x2="666" y2="420" stroke-dasharray="3,4"/>
+              </g>
+
+              <!-- NORTH AMERICA -->
+              <path class="land" d="M 80,60 Q 110,50 140,55 Q 165,52 175,60 Q 200,55 215,65 Q 235,60 250,70 Q 265,65 270,80 Q 280,90 275,105 Q 285,110 280,125 Q 270,130 265,145 Q 255,155 250,170 Q 240,175 235,185 Q 220,190 215,200 Q 200,200 195,195 Q 185,190 175,195 Q 165,200 155,198 Q 140,195 135,185 Q 125,180 120,170 Q 110,160 108,148 Q 100,138 98,125 Q 90,115 85,100 Q 75,90 72,75 Z"/>
+
+              <!-- CENTRAL AMERICA + CARIBBEAN -->
+              <path class="land" d="M 195,205 Q 210,210 220,218 Q 228,225 225,232 Q 218,238 210,235 Q 200,230 195,220 Z"/>
+
+              <!-- SOUTH AMERICA -->
+              <path class="land" d="M 215,230 Q 230,225 250,228 Q 270,228 285,238 Q 300,248 308,262 Q 315,278 312,295 Q 308,312 300,325 Q 290,340 278,350 Q 265,358 252,360 Q 238,360 226,352 Q 213,342 205,328 Q 196,312 194,295 Q 192,278 196,262 Q 200,248 208,238 Z"/>
+
+              <!-- EUROPE -->
+              <path class="land" d="M 370,55 Q 390,50 410,52 Q 425,52 435,60 Q 445,65 442,75 Q 438,82 430,85 Q 420,88 415,95 Q 408,100 400,100 Q 390,100 382,95 Q 372,90 368,80 Q 364,70 368,62 Z"/>
+
+              <!-- AFRICA -->
+              <path class="land" d="M 368,115 Q 385,108 402,110 Q 420,110 435,118 Q 450,125 458,140 Q 465,158 462,178 Q 458,200 450,218 Q 440,235 428,248 Q 415,260 402,268 Q 388,275 375,270 Q 361,264 350,252 Q 340,238 334,220 Q 328,200 328,180 Q 328,160 334,142 Q 340,125 355,118 Z"/>
+
+              <!-- MIDDLE EAST -->
+              <path class="land" d="M 448,100 Q 465,95 480,98 Q 492,100 498,110 Q 503,120 498,130 Q 490,138 478,140 Q 466,140 456,133 Q 446,125 444,113 Z"/>
+
+              <!-- CENTRAL / SOUTH ASIA -->
+              <path class="land" d="M 490,80 Q 520,72 550,75 Q 572,77 585,88 Q 595,98 593,110 Q 590,122 580,128 Q 568,133 555,130 Q 540,126 528,118 Q 515,110 505,100 Q 495,92 492,85 Z"/>
+
+              <!-- INDIA -->
+              <path class="land" d="M 535,133 Q 550,130 562,135 Q 572,140 576,152 Q 578,163 573,173 Q 566,182 555,185 Q 544,187 534,180 Q 524,172 521,160 Q 519,148 524,140 Z"/>
+
+              <!-- MYANMAR / SOUTHEAST ASIA -->
+              <path class="land" d="M 578,110 Q 600,105 620,108 Q 635,112 645,122 Q 652,132 648,142 Q 642,150 630,153 Q 618,155 606,148 Q 594,140 587,130 Q 580,120 580,113 Z"/>
+
+              <!-- EAST ASIA -->
+              <path class="land" d="M 610,65 Q 640,58 665,62 Q 685,65 698,78 Q 708,90 706,105 Q 702,118 690,125 Q 676,130 662,127 Q 648,122 637,112 Q 625,100 617,88 Q 610,78 610,68 Z"/>
+
+              <!-- AUSTRALIA -->
+              <path class="land" d="M 610,268 Q 640,258 668,260 Q 692,262 710,275 Q 725,288 726,305 Q 725,322 712,333 Q 698,343 680,345 Q 660,345 643,337 Q 626,328 617,312 Q 608,295 608,280 Z"/>
+
+              <!-- RUSSIA (simplified) -->
+              <path class="land" d="M 420,30 Q 500,22 570,28 Q 620,32 655,42 Q 670,48 668,58 Q 655,65 635,68 Q 600,72 565,70 Q 525,68 490,62 Q 455,56 430,50 Q 415,44 416,35 Z"/>
+
+              <!-- MADAGASCAR -->
+              <path class="land" d="M 468,238 Q 478,234 485,240 Q 490,247 487,256 Q 482,262 474,260 Q 466,256 464,248 Z"/>
+
+              <!-- JAPAN -->
+              <path class="land" d="M 680,80 Q 692,76 700,82 Q 706,88 704,95 Q 699,100 692,99 Q 685,97 682,91 Z"/>
+
+              <!-- SRI LANKA -->
+              <path class="land" d="M 565,170 Q 572,168 577,173 Q 580,178 578,183 Q 573,187 567,185 Q 561,182 560,177 Z"/>
+
+              <!-- COLOMBIA deposit dot area-->
+
+              <!-- ===== DEPOSIT MARKERS ===== -->
+              <!-- Colombia: Emerald -->
+              <circle class="map-deposit-dot" cx="222" cy="248" r="6" fill="var(--beryl-accent)" opacity="0.9"
+                data-base-r="6" data-deposit-id="colombia"
+                data-country="Colombia" data-region="Boyacá Department"
+                data-gems="Emerald" data-deposit-type="Hydrothermal veins in shale"
+                data-period="Cretaceous" data-mine="Muzo, Chivor, Coscuez">
+                <title>Colombia — Emerald</title>
+              </circle>
+              <text class="deposit-label" x="230" y="247">Colombia</text>
+
+              <!-- Zambia: Emerald + Amethyst -->
+              <circle class="map-deposit-dot" cx="408" cy="238" r="6" fill="var(--beryl-accent)" opacity="0.9"
+                data-base-r="6" data-deposit-id="zambia"
+                data-country="Zambia" data-region="Ndola Rural / Copperbelt"
+                data-gems="Emerald, Amethyst" data-deposit-type="Schist-hosted metamorphic"
+                data-period="Precambrian" data-mine="Kagem, Grizzly, Pirala">
+                <title>Zambia — Emerald, Amethyst</title>
+              </circle>
+              <text class="deposit-label" x="415" y="237">Zambia</text>
+
+              <!-- Myanmar/Burma: Ruby + Sapphire + Spinel -->
+              <circle class="map-deposit-dot" cx="603" cy="127" r="7" fill="var(--red-corundum-accent)" opacity="0.9"
+                data-base-r="7" data-deposit-id="burma"
+                data-country="Myanmar (Burma)" data-region="Mogok Stone Tract, Mong Hsu"
+                data-gems="Ruby, Sapphire, Spinel, Peridot" data-deposit-type="Marble-hosted metamorphic"
+                data-period="Cenozoic" data-mine="Mogok, Mong Hsu">
+                <title>Myanmar — Ruby, Sapphire, Spinel</title>
+              </circle>
+              <text class="deposit-label" x="610" y="126">Myanmar</text>
+
+              <!-- Kashmir: Sapphire -->
+              <circle class="map-deposit-dot" cx="538" cy="96" r="6" fill="var(--blue-corundum-accent)" opacity="0.9"
+                data-base-r="6" data-deposit-id="kashmir"
+                data-country="India / Pakistan (Kashmir)" data-region="Zanskar Range"
+                data-gems="Sapphire (Blue)" data-deposit-type="Metamorphic pegmatite"
+                data-period="Oligocene" data-mine="Sumjam, Kudi Valley">
+                <title>Kashmir — Sapphire</title>
+              </circle>
+              <text class="deposit-label" x="546" y="95">Kashmir</text>
+
+              <!-- Sri Lanka: Sapphire + Corundum + Chrysoberyl -->
+              <circle class="map-deposit-dot" cx="568" cy="178" r="6" fill="var(--blue-corundum-accent)" opacity="0.85"
+                data-base-r="6" data-deposit-id="srilanka"
+                data-country="Sri Lanka (Ceylon)" data-region="Ratnapura District"
+                data-gems="Sapphire, Ruby, Alexandrite, Chrysoberyl, Spinel" data-deposit-type="Alluvial/eluvial"
+                data-period="Precambrian" data-mine="Ratnapura, Elahera">
+                <title>Sri Lanka — Sapphire, Ruby, Alexandrite</title>
+              </circle>
+              <text class="deposit-label" x="575" y="177">Sri Lanka</text>
+
+              <!-- Brazil: Emerald + Alexandrite + Tourmaline -->
+              <circle class="map-deposit-dot" cx="268" cy="280" r="7" fill="var(--beryl-accent)" opacity="0.85"
+                data-base-r="7" data-deposit-id="brazil"
+                data-country="Brazil" data-region="Minas Gerais, Bahia, Pará"
+                data-gems="Alexandrite, Emerald, Tourmaline, Amethyst, Aquamarine" data-deposit-type="Granitic pegmatites"
+                data-period="Precambrian" data-mine="Itabira, Belém, Salininha">
+                <title>Brazil — Alexandrite, Emerald, Tourmaline</title>
+              </circle>
+              <text class="deposit-label" x="276" y="279">Brazil</text>
+
+              <!-- Russia: Alexandrite + Demantoid Garnet -->
+              <circle class="map-deposit-dot" cx="505" cy="50" r="6" fill="var(--chrysoberyl-accent)" opacity="0.9"
+                data-base-r="6" data-deposit-id="russia"
+                data-country="Russia" data-region="Ural Mountains"
+                data-gems="Alexandrite, Demantoid Garnet, Emerald" data-deposit-type="Metamorphic mica schist"
+                data-period="Paleozoic" data-mine="Malysheva, Bisert">
+                <title>Russia — Alexandrite, Demantoid</title>
+              </circle>
+              <text class="deposit-label" x="512" y="49">Russia (Urals)</text>
+
+              <!-- Tanzania: Tanzanite + Tsavorite -->
+              <circle class="map-deposit-dot" cx="438" cy="218" r="6" fill="var(--amethyst-accent)" opacity="0.9"
+                data-base-r="6" data-deposit-id="tanzania"
+                data-country="Tanzania" data-region="Merelani Hills, Tsavo"
+                data-gems="Tanzanite, Tsavorite Garnet, Ruby, Spinel" data-deposit-type="Metamorphic"
+                data-period="Neoproterozoic" data-mine="Merelani, Longido">
+                <title>Tanzania — Tanzanite, Tsavorite</title>
+              </circle>
+              <text class="deposit-label" x="446" y="217">Tanzania</text>
+
+              <!-- Botswana: Diamond -->
+              <circle class="map-deposit-dot" cx="392" cy="265" r="7" fill="var(--diamond-accent)" opacity="0.9"
+                data-base-r="7" data-deposit-id="botswana"
+                data-country="Botswana" data-region="Jwaneng / Orapa"
+                data-gems="Diamond" data-deposit-type="Kimberlite pipe"
+                data-period="Cretaceous" data-mine="Jwaneng, Orapa, Damtshaa">
+                <title>Botswana — Diamond</title>
+              </circle>
+              <text class="deposit-label" x="400" y="264">Botswana</text>
+
+              <!-- South Africa: Diamond + Emerald -->
+              <circle class="map-deposit-dot" cx="385" cy="290" r="6" fill="var(--diamond-accent)" opacity="0.85"
+                data-base-r="6" data-deposit-id="southafrica"
+                data-country="South Africa" data-region="Kimberley, Limpopo"
+                data-gems="Diamond, Emerald" data-deposit-type="Kimberlite / metamorphic"
+                data-period="Cretaceous" data-mine="Cullinan, Big Hole, Cobra">
+                <title>South Africa — Diamond, Emerald</title>
+              </circle>
+
+              <!-- Madagascar: Sapphire + Tourmaline -->
+              <circle class="map-deposit-dot" cx="472" cy="248" r="6" fill="var(--tourmaline-accent)" opacity="0.9"
+                data-base-r="6" data-deposit-id="madagascar"
+                data-country="Madagascar" data-region="Ilakaka, Andilamena"
+                data-gems="Sapphire, Tourmaline, Chrysoberyl, Ruby" data-deposit-type="Alluvial"
+                data-period="Precambrian" data-mine="Ilakaka, Sakala">
+                <title>Madagascar — Sapphire, Tourmaline</title>
+              </circle>
+              <text class="deposit-label" x="479" y="247">Madagascar</text>
+
+              <!-- Australia: Opal + Sapphire + Diamond -->
+              <circle class="map-deposit-dot" cx="660" cy="305" r="6" fill="var(--chrysoberyl-accent)" opacity="0.85"
+                data-base-r="6" data-deposit-id="australia"
+                data-country="Australia" data-region="Queensland, New South Wales"
+                data-gems="Opal, Sapphire, Diamond" data-deposit-type="Sedimentary / kimberlite"
+                data-period="Cenozoic" data-mine="Lightning Ridge, Coober Pedy">
+                <title>Australia — Opal, Sapphire, Diamond</title>
+              </circle>
+              <text class="deposit-label" x="668" y="304">Australia</text>
+
+              <!-- Mozambique: Ruby + Tourmaline -->
+              <circle class="map-deposit-dot" cx="445" cy="248" r="6" fill="var(--red-corundum-accent)" opacity="0.85"
+                data-base-r="6" data-deposit-id="mozambique"
+                data-country="Mozambique" data-region="Montepuez, Niassa"
+                data-gems="Ruby, Tourmaline (Paraíba)" data-deposit-type="Metamorphic"
+                data-period="Precambrian" data-mine="Montepuez, Mavuco">
+                <title>Mozambique — Ruby, Tourmaline</title>
+              </circle>
+
+              <!-- Nigeria: Tourmaline + Sapphire -->
+              <circle class="map-deposit-dot" cx="378" cy="195" r="5" fill="var(--tourmaline-accent)" opacity="0.8"
+                data-base-r="5" data-deposit-id="nigeria"
+                data-country="Nigeria" data-region="Oyo, Kwara State"
+                data-gems="Tourmaline (Paraíba), Sapphire, Aquamarine" data-deposit-type="Granitic pegmatites"
+                data-period="Precambrian" data-mine="Ibadan region">
+                <title>Nigeria — Tourmaline, Sapphire</title>
+              </circle>
+
+              <!-- LEGEND -->
+              <g transform="translate(615, 340)">
+                <rect x="0" y="0" width="170" height="72" rx="3" fill="rgba(18,18,31,0.92)" stroke="#3a3a4a" stroke-width="0.8"/>
+                <text x="8" y="14" fill="#c9a84c" font-size="5.5" font-family="sans-serif" letter-spacing="1">DEPOSIT TYPE</text>
+                <circle cx="15" cy="25" r="4" fill="var(--beryl-accent)"/>
+                <text x="23" y="28" fill="rgba(240,236,228,0.7)" font-size="5" font-family="sans-serif">Beryl (Emerald, Aquamarine)</text>
+                <circle cx="15" cy="37" r="4" fill="var(--red-corundum-accent)"/>
+                <text x="23" y="40" fill="rgba(240,236,228,0.7)" font-size="5" font-family="sans-serif">Red Corundum (Ruby)</text>
+                <circle cx="15" cy="49" r="4" fill="var(--blue-corundum-accent)"/>
+                <text x="23" y="52" fill="rgba(240,236,228,0.7)" font-size="5" font-family="sans-serif">Blue Corundum (Sapphire)</text>
+                <circle cx="15" cy="61" r="4" fill="var(--diamond-accent)"/>
+                <text x="23" y="64" fill="rgba(240,236,228,0.7)" font-size="5" font-family="sans-serif">Diamond</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- GEOLOGICAL PERIOD NARRATIVES -->
+          <section style="margin-top:var(--space-xl);" aria-labelledby="narratives-heading">
+            <div class="section-header" style="margin-top:0;">
+              <span class="eyebrow">Historical Context</span>
+              <h2 id="narratives-heading">Notable Deposit Narratives</h2>
+            </div>
+
+            <div class="narrative-card">
+              <div class="narrative-title">The Mogok Stone Tract, Myanmar</div>
+              <p class="narrative-body">For over a millennium, the Mogok Valley has yielded the world's finest rubies — the chromium-rich marble metamorphics creating conditions for the vivid "Pigeon's Blood" coloration unmatched elsewhere. The Valley of Rubies stretches 400 km² and also produces fine blue and violet sapphires, red spinel (historically confused with ruby — the "Black Prince's Ruby" is in fact spinel), and moon stones.</p>
+            </div>
+
+            <div class="narrative-card" style="border-left-color:var(--beryl-accent);">
+              <div class="narrative-title">Muzo, Colombia — The Emerald Capital</div>
+              <p class="narrative-body">The Muzo mines in Boyacá, Colombia have been worked since pre-Columbian times. Colombian emeralds are distinguished by their inclusions of three-phase fluid inclusions (brine + gas bubble + salt crystal), confirming hydrothermal origin in black bituminous shale. The characteristic slightly bluish-green "Colombian green" is considered the world standard for emerald color.</p>
+            </div>
+
+            <div class="narrative-card" style="border-left-color:var(--blue-corundum-accent);">
+              <div class="narrative-title">Kashmir — The Lost Mines</div>
+              <p class="narrative-body">Discovered in 1881 after a landslide revealed blue crystals in the Zanskar Range at 4,000m altitude, the Kashmir sapphire deposits were essentially exhausted by 1888. A second period of mining 1906–1927 recovered additional material. The characteristic "velvety" appearance — caused by dense rutile silk inclusions — has never been fully replicated in any other deposit, making genuine Kashmir origin the most valuable provenance in sapphire.</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- DEPOSIT DETAIL PANEL -->
+        <aside class="deposit-panel" id="deposit-panel" aria-live="polite" aria-atomic="true">
+          <div class="filter-sidebar-title">Deposit Details</div>
+          <div class="deposit-panel-empty" id="deposit-empty-msg">
+            <p>Click a deposit marker on the map to view regional geological data and mine profiles.</p>
+          </div>
+          <!-- Dynamic deposit info will be injected here by JS -->
+        </aside>
+
+      </div><!-- /.origins-layout -->
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><span class="nav-brand-text">Gem Classification Reference</span><p class="footer-desc">Authoritative gemological data for collectors and professionals.</p></div>
+      <div><div class="footer-col-title">Reference</div><ul class="footer-links"><li><a href="minerals.html">Mineral Index</a></li><li><a href="grading.html">Grading</a></li><li><a href="cuts.html">Cut Styles</a></li><li><a href="origins.html">Origins Map</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links"><li><a href="glossary.html">Glossary</a></li><li><a href="certification.html">Certification</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><div class="footer-col-title">Gem Families</div><ul class="footer-links"><li><a href="minerals.html">Beryl Group</a></li><li><a href="minerals.html">Corundum</a></li><li><a href="minerals.html">Diamond</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Gemology Reference Database</span><span>Updated May 2026</span></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

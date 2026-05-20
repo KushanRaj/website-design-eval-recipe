@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certification Guides — Gem Classification Reference</title>
+  <meta name="description" content="Comprehensive guides to gem certification laboratories including GIA, AGL, Gübelin, and SSEF — lab comparisons, treatment disclosure standards, and how to read a grading report.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .cert-hero {
+      background: linear-gradient(135deg, #0a0a1a 0%, #0e1520 60%, #1c1c2e 100%);
+      padding: var(--space-2xl) 0;
+      border-bottom: var(--divider-gold);
+    }
+    .cert-overview {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--text-gold);
+      border-radius: 0 4px 4px 0;
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    @media (max-width: 700px) { .cert-overview { grid-template-columns: 1fr; } }
+    .guide-step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+      padding-bottom: var(--space-xl);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .guide-step:last-child { border-bottom: none; }
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--text-gold);
+      flex-shrink: 0;
+    }
+    .step-content h4 {
+      color: var(--text-primary);
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      margin-bottom: var(--space-sm);
+    }
+    .step-content p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.65;
+    }
+    .recommended-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+    .recommended-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: var(--space-md);
+    }
+    .recommended-gem {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: var(--space-sm);
+    }
+    .recommended-labs {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xs);
+    }
+    .recommended-reason {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="minerals.html">Mineral Index</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="cuts.html">Cut Styles</a></li>
+      <li><a href="origins.html">Origins Map</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="certification.html" class="active">Certification</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-search"><input type="search" placeholder="Search specimens, terms…" aria-label="Search"></div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Certification Guides</span>
+  </nav>
+
+  <div class="cert-hero">
+    <div class="page-wrapper">
+      <span class="eyebrow" style="display:block;margin-bottom:var(--space-sm);">Reference Guide</span>
+      <h1>Gem Certification Guides</h1>
+      <p style="color:var(--text-secondary);margin-top:var(--space-md);max-width:60ch;">Understanding laboratory grading reports, comparing major certification bodies, and navigating treatment disclosure requirements for gem collectors and buyers.</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-wrapper" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+      <!-- OVERVIEW -->
+      <section class="page-section" aria-labelledby="overview-heading">
+        <div class="section-header" style="margin-top:0;">
+          <span class="eyebrow">Why Certification Matters</span>
+          <h2 id="overview-heading">The Role of Laboratory Reports</h2>
+        </div>
+        <div class="cert-overview">
+          <div>
+            <h3 style="font-family:var(--font-serif);color:var(--text-gold);margin-bottom:var(--space-md);">Authentication & Identity</h3>
+            <p style="color:var(--text-secondary);font-size:0.875rem;line-height:1.7;">A gemological laboratory report confirms that a stone is a natural mineral species and provides independent verification of its physical and optical properties. In a market where synthetic and treated stones are increasingly sophisticated, third-party certification from a reputable laboratory is the primary tool for establishing authenticity.</p>
+          </div>
+          <div>
+            <h3 style="font-family:var(--font-serif);color:var(--text-gold);margin-bottom:var(--space-md);">Origin & Treatment Disclosure</h3>
+            <p style="color:var(--text-secondary);font-size:0.875rem;line-height:1.7;">For premium-grade colored stones, origin determination and treatment disclosure are as commercially important as the stone's grade. A Kashmir sapphire, Burmese ruby, or Colombian emerald with laboratory-confirmed origin carries premiums of 50–300% over similar-quality material from other sources. Treatment disclosure is a legal and ethical obligation in most major gem markets.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LAB COMPARISON -->
+      <section class="page-section" aria-labelledby="labs-heading">
+        <div class="section-header">
+          <span class="eyebrow">Major Certification Bodies</span>
+          <h2 id="labs-heading">Laboratory Profiles</h2>
+        </div>
+
+        <div class="lab-cards-grid" role="list">
+          <div class="lab-card" role="listitem">
+            <div class="lab-acronym">GIA</div>
+            <div class="lab-name">Gemological Institute of America</div>
+            <div class="lab-location">Carlsbad, CA · New York · Mumbai · Hong Kong · Bangkok</div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:var(--space-md);line-height:1.5;">The world's foremost gemological research and grading authority. Founded 1931. GIA grading reports set the global standard, particularly for diamonds. The 4Cs grading system was developed by GIA.</p>
+            <span class="lab-specialty-tag">Diamond · Colored Stones</span>
+          </div>
+
+          <div class="lab-card" role="listitem">
+            <div class="lab-acronym">Gübelin</div>
+            <div class="lab-name">Gübelin Gem Lab</div>
+            <div class="lab-location">Lucerne, Switzerland · Hong Kong · New York</div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:var(--space-md);line-height:1.5;">The most prestigious laboratory for colored stone origin determination. Founded 1923. Renowned for meticulous inclusion documentation and the Gübelin F-grade clarity classification for exceptional emeralds.</p>
+            <span class="lab-specialty-tag">Origin · Colored Stones</span>
+          </div>
+
+          <div class="lab-card" role="listitem">
+            <div class="lab-acronym">SSEF</div>
+            <div class="lab-name">Swiss Gemmological Institute</div>
+            <div class="lab-location">Basel, Switzerland</div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:var(--space-md);line-height:1.5;">Co-equal with Gübelin for colored stone prestige reports. Known for exceptional Kashmir sapphire origin research and Jadeite jade testing. SSEF and Gübelin reports are interchangeable at top auction houses.</p>
+            <span class="lab-specialty-tag">Kashmir · Jade · Jadeite</span>
+          </div>
+
+          <div class="lab-card" role="listitem">
+            <div class="lab-acronym">AGL</div>
+            <div class="lab-name">American Gemological Laboratories</div>
+            <div class="lab-location">New York, NY</div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:var(--space-md);line-height:1.5;">Major US laboratory with strong reputation for colored stone grading, particularly ruby origin determination and emerald clarity enhancement classification. Known for the C.S. Letter Report format and the "Country of Origin" report.</p>
+            <span class="lab-specialty-tag">Ruby · Emerald · US Market</span>
+          </div>
+        </div>
+
+        <!-- LAB COMPARISON TABLE -->
+        <div class="section-header">
+          <span class="eyebrow">Equivalency Matrix</span>
+          <h2>Multi-Laboratory Comparison</h2>
+        </div>
+
+        <table class="comparison-table" aria-label="Laboratory comparison table">
+          <thead>
+            <tr>
+              <th>Feature / Capability</th>
+              <th>GIA</th>
+              <th>Gübelin</th>
+              <th>SSEF</th>
+              <th>AGL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Diamond Grading (4Cs)</td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--text-muted);">●●●○○</span></td>
+              <td><span style="color:var(--text-muted);">●●●○○</span></td>
+              <td><span style="color:var(--text-muted);">●●●●○</span></td>
+            </tr>
+            <tr>
+              <td>Ruby Origin Determination</td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+            </tr>
+            <tr>
+              <td>Sapphire Origin Determination</td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+            </tr>
+            <tr>
+              <td>Emerald Origin &amp; Enhancement</td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+            </tr>
+            <tr>
+              <td>Alexandrite Color-Change Assessment</td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●○○</span></td>
+            </tr>
+            <tr>
+              <td>Jadeite / Jade Testing</td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●○</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--text-muted);">●●●○○</span></td>
+            </tr>
+            <tr>
+              <td>Natural Pearl Authentication</td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--beryl-accent);">●●●●●</span></td>
+              <td><span style="color:var(--text-muted);">●●○○○</span></td>
+            </tr>
+            <tr>
+              <td>Auction House Acceptance</td>
+              <td>Sotheby's · Christie's · Bonhams</td>
+              <td>Sotheby's · Christie's · Phillips</td>
+              <td>Sotheby's · Christie's · Bonhams</td>
+              <td>Christie's · Bonhams</td>
+            </tr>
+            <tr>
+              <td>Report Turnaround (standard)</td>
+              <td>10–15 business days</td>
+              <td>3–4 weeks</td>
+              <td>3–4 weeks</td>
+              <td>7–14 business days</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- HOW TO READ A REPORT -->
+      <section class="page-section" aria-labelledby="reading-heading">
+        <div class="section-header">
+          <span class="eyebrow">Buyer's Guide</span>
+          <h2 id="reading-heading">How to Read a Grading Report</h2>
+        </div>
+
+        <div>
+          <div class="guide-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Verify Report Authenticity</h4>
+              <p>Every legitimate report has a unique report number and can be verified online through the issuing laboratory's database (GIA Report Check, Gübelin Gem Lab report lookup). Compare the report number, stone weight, and measurements with the actual stone before purchase. QR codes and holograms provide additional security features on modern reports.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Confirm Species and Variety</h4>
+              <p>The species identification confirms what the stone is: "Natural Corundum" (not synthetic), "Species: Corundum — Variety: Ruby" (not "Sapphire" or "Pink Sapphire"). Some labs use threshold criteria for the ruby/pink sapphire distinction — GIA requires the dominant hue to be red with specific saturation minimums. The variety designation is commercially significant.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Read the Origin Statement</h4>
+              <p>Premium colored stone reports include a country of origin determination. Statements range from definitive ("Origin: Kashmir, India" — highest certainty) to probable ("Geographic Origin: Most probably Burma") to inconclusive ("Geographic origin could not be determined"). Origin determination requires corroborating evidence from multiple analytical techniques — inclusions, trace element chemistry, spectroscopy — and no single test is definitive.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Understand the Treatment Section</h4>
+              <p>The treatment comments are perhaps the most commercially important section. For corundum, look for: "No indications of heating" (unheated — maximum premium), "Indications of heating" (standard commercial), "Indications of heating with residues in fissures" (glass/flux filling — significant discount warranted). For emerald: "Insignificant" / "Minor" / "Moderate" / "Significant" clarity enhancement refers to filler quantity — higher enhancement reduces value.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Check Physical Measurements</h4>
+              <p>Weight is stated in carats (ct), accurate to ±0.01 ct for loose stones. Measurements (length × width × depth in mm) verify the stone matches the report. A significant discrepancy (>0.1mm) suggests a report has been substituted. For mounted stones, estimated weight may show a weight range rather than precise carat weight.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TREATMENT DISCLOSURE -->
+      <section class="page-section" aria-labelledby="treatment-heading">
+        <div class="section-header">
+          <span class="eyebrow">Trade Standards</span>
+          <h2 id="treatment-heading">Treatment Disclosure by Gem Type</h2>
+        </div>
+
+        <table class="treatment-table" aria-label="Treatment disclosure standards by gem type">
+          <thead>
+            <tr>
+              <th>Gem Species</th>
+              <th>Common Treatments</th>
+              <th>Trade Prevalence</th>
+              <th>Disclosure Requirement</th>
+              <th>Value Impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ruby (Corundum)</td>
+              <td>Heat treatment, glass filling, beryllium diffusion</td>
+              <td><span class="treatment-status status-common">● Very Common</span></td>
+              <td>Always required</td>
+              <td>Unheated +50–200%</td>
+            </tr>
+            <tr>
+              <td>Blue Sapphire</td>
+              <td>Heat treatment, beryllium diffusion, surface diffusion</td>
+              <td><span class="treatment-status status-common">● Very Common</span></td>
+              <td>Always required</td>
+              <td>Unheated +30–150%</td>
+            </tr>
+            <tr>
+              <td>Emerald (Beryl)</td>
+              <td>Oil/resin filling (clarity), irradiation (color in rare cases)</td>
+              <td><span class="treatment-status status-common">● Almost Universal</span></td>
+              <td>Extent must be disclosed</td>
+              <td>Insignificant fill = premium</td>
+            </tr>
+            <tr>
+              <td>Diamond</td>
+              <td>Laser drilling, fracture filling, HPHT color improvement</td>
+              <td><span class="treatment-status status-occasional">● Occasional</span></td>
+              <td>Always required (FTC rule)</td>
+              <td>Treated = significant discount</td>
+            </tr>
+            <tr>
+              <td>Alexandrite</td>
+              <td>Heat treatment (rare)</td>
+              <td><span class="treatment-status status-rare">● Rare</span></td>
+              <td>Required when present</td>
+              <td>Minimal if heat only</td>
+            </tr>
+            <tr>
+              <td>Spinel</td>
+              <td>Heat treatment (low temperature, accepted)</td>
+              <td><span class="treatment-status status-occasional">● Occasional</span></td>
+              <td>Required for significant treatment</td>
+              <td>Minimal impact if disclosed</td>
+            </tr>
+            <tr>
+              <td>Tourmaline</td>
+              <td>Heat treatment, irradiation (pink/red), filling (Paraíba)</td>
+              <td><span class="treatment-status status-common">● Common</span></td>
+              <td>Required</td>
+              <td>Paraíba filling: major discount</td>
+            </tr>
+            <tr>
+              <td>Tanzanite</td>
+              <td>Heat treatment (virtually universal — converts brown to blue)</td>
+              <td><span class="treatment-status status-common">● Universal</span></td>
+              <td>Accepted trade practice</td>
+              <td>Minimal — industry standard</td>
+            </tr>
+            <tr>
+              <td>Aquamarine</td>
+              <td>Heat treatment (lightens green tones to blue)</td>
+              <td><span class="treatment-status status-common">● Very Common</span></td>
+              <td>Required</td>
+              <td>Unheated natural blue = premium</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- RECOMMENDED LABS BY GEM -->
+      <section class="page-section" aria-labelledby="recommended-heading">
+        <div class="section-header">
+          <span class="eyebrow">Buyer's Guidance</span>
+          <h2 id="recommended-heading">Recommended Laboratories by Gem Species</h2>
+        </div>
+
+        <div class="recommended-grid" role="list">
+          <div class="recommended-item" role="listitem">
+            <div class="recommended-gem" style="color:var(--red-corundum-accent);">Ruby</div>
+            <div class="recommended-labs">Primary: <strong>Gübelin · SSEF</strong></div>
+            <div class="recommended-reason">Both Swiss labs provide the most authoritative Burmese origin determinations, critical for Pigeon's Blood designation. GIA reports widely accepted for commercial trade.</div>
+          </div>
+          <div class="recommended-item" role="listitem">
+            <div class="recommended-gem" style="color:var(--blue-corundum-accent);">Sapphire</div>
+            <div class="recommended-labs">Primary: <strong>Gübelin · SSEF</strong></div>
+            <div class="recommended-reason">Kashmir origin determination is the most coveted report in colored stones. Both Swiss labs are co-equal authorities. For Ceylon/Burmese sapphires, GIA also fully accepted.</div>
+          </div>
+          <div class="recommended-item" role="listitem">
+            <div class="recommended-gem" style="color:var(--beryl-accent);">Emerald</div>
+            <div class="recommended-labs">Primary: <strong>Gübelin · AGL</strong></div>
+            <div class="recommended-reason">AGL pioneered emerald enhancement classification (Insignificant to Significant) and is the preferred lab for Colombian emerald clarity reporting. Gübelin carries prestige for top-tier material.</div>
+          </div>
+          <div class="recommended-item" role="listitem">
+            <div class="recommended-gem" style="color:var(--diamond-accent);">Diamond</div>
+            <div class="recommended-labs">Primary: <strong>GIA</strong></div>
+            <div class="recommended-reason">GIA diamond reports are the global standard; the 4Cs system originated there. For investment-grade diamonds, a GIA report is mandatory. AGS reports are also respected for optical performance data.</div>
+          </div>
+          <div class="recommended-item" role="listitem">
+            <div class="recommended-gem" style="color:var(--chrysoberyl-accent);">Alexandrite</div>
+            <div class="recommended-labs">Primary: <strong>Gübelin · SSEF · GIA</strong></div>
+            <div class="recommended-reason">Alexandrite color-change reporting benefits from Gübelin and SSEF's color expertise. Russian Ural origin determination requires corroborating trace element and inclusion data from experienced labs.</div>
+          </div>
+          <div class="recommended-item" role="listitem">
+            <div class="recommended-gem" style="color:var(--tourmaline-accent);">Paraíba Tourmaline</div>
+            <div class="recommended-labs">Primary: <strong>Gübelin · GIA · SSEF</strong></div>
+            <div class="recommended-reason">Copper content and geographic origin (Brazil vs. Nigeria vs. Mozambique) critically affect value. All three major labs perform copper content testing and origin determination for Paraíba material.</div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><span class="nav-brand-text">Gem Classification Reference</span><p class="footer-desc">Authoritative gemological data for collectors and professionals.</p></div>
+      <div><div class="footer-col-title">Reference</div><ul class="footer-links"><li><a href="minerals.html">Mineral Index</a></li><li><a href="grading.html">Grading</a></li><li><a href="cuts.html">Cut Styles</a></li><li><a href="origins.html">Origins Map</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links"><li><a href="glossary.html">Glossary</a></li><li><a href="certification.html">Certification</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><div class="footer-col-title">Gem Families</div><ul class="footer-links"><li><a href="minerals.html">Beryl Group</a></li><li><a href="minerals.html">Corundum</a></li><li><a href="minerals.html">Diamond</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Gemology Reference Database</span><span>Updated May 2026</span></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

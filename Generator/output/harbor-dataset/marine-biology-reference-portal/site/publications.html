@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Publications — OceanIndex</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">OI</div>
+      <div class="logo-text-wrap">
+        <span class="logo-name">OceanIndex</span>
+        <span class="logo-sub">Marine Biology Reference</span>
+      </div>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="taxonomy.html">Species Taxonomy</a>
+      <a href="habitat.html">Habitat &amp; Distribution</a>
+      <a href="publications.html" class="active">Research Publications</a>
+      <a href="conservation.html">Conservation Status</a>
+      <a href="field-guide.html">Field Guide</a>
+    </nav>
+    <div class="header-search">
+      <input class="header-search-input" type="search" placeholder="Search species…" aria-label="Site-wide search">
+    </div>
+    <button class="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span class="sep">/</span>
+    <span class="crumb-current">Research Publications</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- Page header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+    <div>
+      <h1 style="font-size:18px;font-weight:700;color:var(--deep-sea);">Research Publications</h1>
+      <p style="font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">8,204 peer-reviewed publications &bull; Indexed 2000–2024</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-secondary btn-sm">Export BibTeX</button>
+      <button class="btn btn-primary btn-sm">⊕ Submit Publication</button>
+    </div>
+  </div>
+
+  <div class="pub-layout">
+
+    <!-- ===== FACETED FILTER SIDEBAR ===== -->
+    <aside class="pub-sidebar" id="faceted-filter-sidebar">
+      <div class="pub-sidebar-hd">Filter Publications</div>
+
+      <!-- Year range -->
+      <div class="pub-sidebar-section">
+        <div class="pub-sidebar-section-title">Publication Year</div>
+        <input type="range" id="year-range" min="2000" max="2024" value="2010" style="width:100%;">
+        <div class="pub-range-vals">
+          <span id="year-range-val">2010–2024</span>
+        </div>
+      </div>
+
+      <!-- Taxonomy phylum checkboxes -->
+      <div class="pub-sidebar-section">
+        <div class="pub-sidebar-section-title">Taxonomic Group</div>
+        <label class="check-label"><input type="checkbox" class="phylum-check" value="Chondrichthyes" checked> Chondrichthyes <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">(1,847)</span></label>
+        <label class="check-label"><input type="checkbox" class="phylum-check" value="Actinopterygii" checked> Actinopterygii <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">(3,204)</span></label>
+        <label class="check-label"><input type="checkbox" class="phylum-check" value="Mammalia" checked> Mammalia <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">(892)</span></label>
+        <label class="check-label"><input type="checkbox" class="phylum-check" value="Cephalopoda"> Cephalopoda <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">(412)</span></label>
+        <label class="check-label"><input type="checkbox" class="phylum-check" value="Reptilia"> Reptilia <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">(304)</span></label>
+        <label class="check-label"><input type="checkbox" class="phylum-check" value="Echinodermata"> Echinodermata <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">(245)</span></label>
+      </div>
+
+      <!-- Journal select -->
+      <div class="pub-sidebar-section">
+        <div class="pub-sidebar-section-title">Journal</div>
+        <select class="fg-filter-select" style="width:100%;font-size:11px;" multiple size="5">
+          <option>Marine Biology</option>
+          <option>Journal of Marine Systems</option>
+          <option>Copeia</option>
+          <option>ICES Journal of Marine Science</option>
+          <option>Molecular Ecology</option>
+          <option>Conservation Biology</option>
+          <option>PLoS ONE</option>
+          <option>Fisheries Research</option>
+        </select>
+      </div>
+
+      <!-- Open access toggle -->
+      <div class="pub-sidebar-section">
+        <div class="pub-sidebar-section-title">Access</div>
+        <label class="check-label">
+          <input type="checkbox" id="oa-toggle">
+          <span>Open Access only</span>
+        </label>
+      </div>
+
+      <!-- Citation count -->
+      <div class="pub-sidebar-section">
+        <div class="pub-sidebar-section-title">Min. Citations</div>
+        <input type="range" min="0" max="500" value="0" style="width:100%;">
+        <div class="pub-range-vals"><span>0+</span></div>
+      </div>
+
+    </aside><!-- /pub-sidebar -->
+
+    <!-- ===== PUBLICATIONS TABLE ===== -->
+    <div class="pub-main">
+
+      <!-- Active filter chips + result count -->
+      <div class="pub-top-bar" id="active-filter-chips">
+        <span style="font-size:11px;font-weight:700;color:var(--deep-sea);">Active filters:</span>
+        <div class="filter-chips">
+          <span class="filter-chip">Year ≥ 2010 <button aria-label="Remove filter">×</button></span>
+          <span class="filter-chip">Chondrichthyes <button aria-label="Remove filter">×</button></span>
+          <span class="filter-chip">Actinopterygii <button aria-label="Remove filter">×</button></span>
+          <span class="filter-chip">Mammalia <button aria-label="Remove filter">×</button></span>
+        </div>
+        <span class="pub-result-count" id="pub-result-count">12 results</span>
+      </div>
+
+      <!-- Sortable publications table -->
+      <div class="tbl-wrap">
+        <table class="data-table" id="pub-table" aria-label="Research publications">
+          <thead>
+            <tr>
+              <th data-sort="title">Title <span class="sort-arrow"></span></th>
+              <th data-sort="author" style="width:140px;">Lead Author <span class="sort-arrow"></span></th>
+              <th data-sort="journal" style="width:160px;">Journal <span class="sort-arrow"></span></th>
+              <th data-sort="year" style="width:60px;">Year <span class="sort-arrow"></span></th>
+              <th data-sort="citations" style="width:68px;">Cites <span class="sort-arrow"></span></th>
+              <th style="width:70px;">Abstract</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr class="pub-row" data-pub-id="p1" data-title="Population genetics of white sharks" data-author="Pardini" data-journal="Molecular Ecology" data-year="2023" data-citations="182" data-oa="true" data-phylum="Chondrichthyes">
+              <td>
+                <div style="font-weight:600;font-size:13px;color:var(--text-primary);">Population genetics of the great white shark <em>Carcharodon carcharias</em> inferred from mitochondrial DNA sequences</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-vu" style="font-size:9px;">VU</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Chondrichthyes</span></span>
+                  <span style="background:#E8F0F8;border:1px solid #B8CCE0;border-radius:2px;padding:1px 5px;font-size:9px;font-family:var(--font-mono);color:var(--deep-sea);">OA</span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Pardini A.T. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Molecular Ecology</td>
+              <td class="cell-mono">2023</td>
+              <td><span class="citation-badge">182</span></td>
+              <td><button class="pub-expand-btn" data-pub="p1">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p1">
+              <td colspan="6">
+                <div class="abstract-text">We analyzed mitochondrial DNA sequences from 131 white sharks (<em>Carcharodon carcharias</em>) sampled from the Pacific, Atlantic, and Indian Oceans. Phylogeographic analyses revealed strong population structure between ocean basins, with low within-basin diversity consistent with historically small effective population sizes. Our data suggest that white shark populations are not panmictic globally and that conservation management units should be defined at the ocean-basin level.</div>
+                <div class="abstract-doi">DOI: 10.1111/mec.14522 &bull; <a href="#">Full text</a> &bull; Open Access</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p2" data-title="Long-term decline humpback whale feeding" data-author="Stevenson" data-journal="Marine Mammal Science" data-year="2022" data-citations="94" data-oa="false" data-phylum="Mammalia">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Long-term decline in humpback whale feeding aggregations in the North Atlantic correlates with zooplankton biomass reduction</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-lc" style="font-size:9px;">LC</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Mammalia</span></span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Stevenson C.F. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Marine Mammal Science</td>
+              <td class="cell-mono">2022</td>
+              <td><span class="citation-badge">94</span></td>
+              <td><button class="pub-expand-btn" data-pub="p2">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p2">
+              <td colspan="6">
+                <div class="abstract-text">Using 28 years of aerial survey data (1994–2022) from the Gulf of Maine feeding ground, we demonstrate a significant (p &lt; 0.001) long-term decline in humpback whale (<em>Megaptera novaeangliae</em>) aggregation size that correlates strongly with reductions in <em>Calanus finmarchicus</em> copepod biomass. We attribute the copepod decline to sea surface temperature increases of 1.4°C over the study period, consistent with climate projections for the Northwest Atlantic Shelf.</div>
+                <div class="abstract-doi">DOI: 10.1111/mms.12892</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p3" data-title="Atlantic bluefin tuna spawning" data-author="Rooker" data-journal="ICES Journal Marine Science" data-year="2022" data-citations="156" data-oa="true" data-phylum="Actinopterygii">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Mixed-stock analysis of Atlantic bluefin tuna (<em>Thunnus thynnus</em>) at feeding grounds reveals asymmetric contributions from Mediterranean and Gulf of Mexico spawning stocks</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-en" style="font-size:9px;">EN</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Actinopterygii</span></span>
+                  <span style="background:#E8F0F8;border:1px solid #B8CCE0;border-radius:2px;padding:1px 5px;font-size:9px;font-family:var(--font-mono);color:var(--deep-sea);">OA</span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Rooker J.R. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">ICES J. Mar. Science</td>
+              <td class="cell-mono">2022</td>
+              <td><span class="citation-badge">156</span></td>
+              <td><button class="pub-expand-btn" data-pub="p3">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p3">
+              <td colspan="6">
+                <div class="abstract-text">We applied otolith δ¹³C–δ¹⁸O isotope analysis and archival tagging to characterize stock mixing of Atlantic bluefin tuna in the Northwest Atlantic. Results indicate that approximately 64% of the sampled individuals originated from Mediterranean spawning grounds, with the remainder attributable to the Gulf of Mexico stock. Stock mixing ratios varied significantly between years (2018–2022), suggesting dynamic and environment-dependent mixing that complicates single-stock management assumptions.</div>
+                <div class="abstract-doi">DOI: 10.1093/icesjms/fsac014 &bull; <a href="#">Full text</a> &bull; Open Access</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p4" data-title="Whale shark global abundance" data-author="Peel" data-journal="Endangered Species Research" data-year="2021" data-citations="231" data-oa="true" data-phylum="Chondrichthyes">
+              <td>
+                <div style="font-weight:600;font-size:13px;">A global assessment of whale shark (<em>Rhincodon typus</em>) abundance using photo-identification and mark-recapture analysis</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-en" style="font-size:9px;">EN</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Chondrichthyes</span></span>
+                  <span style="background:#E8F0F8;border:1px solid #B8CCE0;border-radius:2px;padding:1px 5px;font-size:9px;font-family:var(--font-mono);color:var(--deep-sea);">OA</span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Peel L.R. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Endang. Species Res.</td>
+              <td class="cell-mono">2021</td>
+              <td><span class="citation-badge">231</span></td>
+              <td><button class="pub-expand-btn" data-pub="p4">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p4">
+              <td colspan="6">
+                <div class="abstract-text">We combined photo-identification records (n = 7,212 individuals) from Wildbook for Whale Sharks with satellite telemetry data to produce the first global abundance estimate for whale sharks. Using a Cormack-Jolly-Seber open-population model, we estimate the global population at approximately 180,000 (95% CI: 120,000–290,000) individuals. Population trend analysis indicates a 63% decline over three generations (approximately 75 years), confirming the species' IUCN Endangered status.</div>
+                <div class="abstract-doi">DOI: 10.3354/esr01096 &bull; <a href="#">Full text</a> &bull; Open Access</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p5" data-title="Mola mola vertical migration" data-author="Nakamura" data-journal="Deep-Sea Research" data-year="2021" data-citations="67" data-oa="false" data-phylum="Actinopterygii">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Vertical migration patterns and thermoregulatory basking behaviour in ocean sunfish (<em>Mola mola</em>) in temperate waters</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-vu" style="font-size:9px;">VU</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Actinopterygii</span></span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Nakamura I. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Deep-Sea Research I</td>
+              <td class="cell-mono">2021</td>
+              <td><span class="citation-badge">67</span></td>
+              <td><button class="pub-expand-btn" data-pub="p5">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p5">
+              <td colspan="6">
+                <div class="abstract-text">Archival pop-up satellite tags deployed on 24 ocean sunfish in the northwestern Pacific revealed consistent daily vertical migration from epipelagic surface waters to mesopelagic depths of up to 844 m. Deep dives occurred primarily during daylight hours and were followed by extended surface basking, supporting the thermoregulatory hypothesis. Mean dive duration was 26 minutes, with deeper dives in warmer surface conditions, suggesting active thermoregulation to maintain optimal core temperatures for neural and locomotory function.</div>
+                <div class="abstract-doi">DOI: 10.1016/j.dsr.2020.103418</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p6" data-title="Orca ecotypes genetics" data-author="Foote" data-journal="Current Biology" data-year="2023" data-citations="298" data-oa="false" data-phylum="Mammalia">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Convergent evolution of killer whale (<em>Orcinus orca</em>) ecotypes revealed by comparative genomics</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-dd" style="font-size:9px;">DD</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Mammalia</span></span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Foote A.D. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Current Biology</td>
+              <td class="cell-mono">2023</td>
+              <td><span class="citation-badge">298</span></td>
+              <td><button class="pub-expand-btn" data-pub="p6">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p6">
+              <td colspan="6">
+                <div class="abstract-text">High-coverage whole-genome resequencing of 48 killer whales spanning all known ecotypes revealed that dietary and ecological divergence has driven convergent evolution across ocean basins. Antarctic fish-eating and marine mammal-eating ecotypes show independent evolution of sensory and digestive gene variants. Demographic modelling places ecotype divergence times at 100,000–200,000 years ago, predating or coinciding with the Last Glacial Maximum, with strong evidence for selection on MHC and olfactory receptor gene clusters.</div>
+                <div class="abstract-doi">DOI: 10.1016/j.cub.2022.11.064</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p7" data-title="Hammerhead shark critical" data-author="Duncan" data-journal="Marine Ecology Progress Series" data-year="2020" data-citations="142" data-oa="true" data-phylum="Chondrichthyes">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Critically Endangered status of the scalloped hammerhead (<em>Sphyrna lewini</em>): bycatch rates, CPUE trends, and nursery habitat loss in Atlantic coastal systems</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-cr" style="font-size:9px;">CR</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Chondrichthyes</span></span>
+                  <span style="background:#E8F0F8;border:1px solid #B8CCE0;border-radius:2px;padding:1px 5px;font-size:9px;font-family:var(--font-mono);color:var(--deep-sea);">OA</span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Duncan K.M. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Mar. Ecol. Prog. Ser.</td>
+              <td class="cell-mono">2020</td>
+              <td><span class="citation-badge">142</span></td>
+              <td><button class="pub-expand-btn" data-pub="p7">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p7">
+              <td colspan="6">
+                <div class="abstract-text">We synthesized 40 years of CPUE data from Atlantic longline fisheries alongside acoustic telemetry of 187 individuals to assess population status and habitat use of the scalloped hammerhead in the western North Atlantic. Standardized CPUE declined by 89% (1980–2019). Nursery site fidelity was high, and three of eight identified coastal nursery habitats have been lost to estuarine development since 1990. We urge emergency bycatch mitigation measures and legal protection of remaining nursery estuaries.</div>
+                <div class="abstract-doi">DOI: 10.3354/meps13451 &bull; <a href="#">Full text</a> &bull; Open Access</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p8" data-title="Blue whale acoustic monitoring" data-author="Širovic" data-journal="Journal of the Acoustical Society" data-year="2023" data-citations="88" data-oa="false" data-phylum="Mammalia">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Decadal acoustic monitoring of blue whale (<em>Balaenoptera musculus</em>) call frequency shift in the North Pacific: evidence for vocal learning or population recovery?</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-en" style="font-size:9px;">EN</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Mammalia</span></span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Širovic A. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">J. Acoust. Soc. Am.</td>
+              <td class="cell-mono">2023</td>
+              <td><span class="citation-badge">88</span></td>
+              <td><button class="pub-expand-btn" data-pub="p8">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p8">
+              <td colspan="6">
+                <div class="abstract-text">Passive acoustic recordings from 12 hydrophone arrays in the North Pacific (2004–2023) document a steady decline in blue whale call frequency of approximately 0.3 Hz per year, a trend observed globally. Two competing hypotheses—ambient noise masking and post-whaling population recovery—were tested using noise level co-variates and population density estimates. Our analysis supports neither hypothesis exclusively, but is most consistent with cultural transmission of call patterns across a slowly recovering population in which density-dependent effects are beginning to emerge.</div>
+                <div class="abstract-doi">DOI: 10.1121/10.0019245</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p9" data-title="Sea turtle bycatch Mediterranean" data-author="Casale" data-journal="Biological Conservation" data-year="2021" data-citations="204" data-oa="true" data-phylum="Reptilia">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Bycatch of loggerhead (<em>Caretta caretta</em>) and leatherback (<em>Dermochelys coriacea</em>) sea turtles in Mediterranean fisheries: updated estimates and mitigation priorities</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-vu" style="font-size:9px;">VU</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Reptilia</span></span>
+                  <span style="background:#E8F0F8;border:1px solid #B8CCE0;border-radius:2px;padding:1px 5px;font-size:9px;font-family:var(--font-mono);color:var(--deep-sea);">OA</span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Casale P. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Biological Conservation</td>
+              <td class="cell-mono">2021</td>
+              <td><span class="citation-badge">204</span></td>
+              <td><button class="pub-expand-btn" data-pub="p9">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p9">
+              <td colspan="6">
+                <div class="abstract-text">We synthesized observer programme data and fishing effort statistics from 17 Mediterranean countries (2010–2019) to update sea turtle bycatch estimates. Annual bycatch of loggerhead turtles is estimated at 43,000–80,000 individuals, of which 8–15% are expected to be lethal interactions. Leatherback bycatch, previously underestimated, is concentrated in pelagic longline fleets and may represent a key driver of the species' poor conservation status in the Mediterranean basin.</div>
+                <div class="abstract-doi">DOI: 10.1016/j.biocon.2021.109032 &bull; <a href="#">Full text</a> &bull; Open Access</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p10" data-title="Manta ray population connectivity" data-author="Stewart" data-journal="Royal Society Open Science" data-year="2020" data-citations="119" data-oa="true" data-phylum="Chondrichthyes">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Population connectivity and site fidelity of giant manta rays (<em>Mobula birostris</em>) across Indo-Pacific aggregation sites</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-vu" style="font-size:9px;">VU</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Chondrichthyes</span></span>
+                  <span style="background:#E8F0F8;border:1px solid #B8CCE0;border-radius:2px;padding:1px 5px;font-size:9px;font-family:var(--font-mono);color:var(--deep-sea);">OA</span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Stewart J.D. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">R. Soc. Open Sci.</td>
+              <td class="cell-mono">2020</td>
+              <td><span class="citation-badge">119</span></td>
+              <td><button class="pub-expand-btn" data-pub="p10">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p10">
+              <td colspan="6">
+                <div class="abstract-text">Photo-identification of 3,812 individual giant manta rays at 22 aggregation sites across the Indo-Pacific (2010–2019) revealed high site fidelity and limited inter-site connectivity. Bayesian network analysis identified three largely independent population clusters (East Indian Ocean, Coral Triangle, Central Pacific) separated by genetic FST values of 0.11–0.22. These findings suggest that site-specific threats—particularly targeted fisheries and gill-raker trade—can have disproportionate regional impacts even on a globally Vulnerable species.</div>
+                <div class="abstract-doi">DOI: 10.1098/rsos.192005 &bull; <a href="#">Full text</a> &bull; Open Access</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p11" data-title="Seahorse population genetics" data-author="Woodall" data-journal="Zoological Journal" data-year="2019" data-citations="58" data-oa="false" data-phylum="Actinopterygii">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Genetic structure and cryptic diversity within the short-snouted seahorse complex (<em>Hippocampus hippocampus</em> sensu lato) across the European Atlantic</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-lc" style="font-size:9px;">LC</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Actinopterygii</span></span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Woodall L.C. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Zool. J. Linn. Soc.</td>
+              <td class="cell-mono">2019</td>
+              <td><span class="citation-badge">58</span></td>
+              <td><button class="pub-expand-btn" data-pub="p11">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p11">
+              <td colspan="6">
+                <div class="abstract-text">Multi-locus microsatellite and mitochondrial DNA analysis of 840 seahorse specimens from 26 Atlantic coastal sites reveals cryptic genetic divergence within the nominal species <em>Hippocampus hippocampus</em>. Three genetically distinct clades correspond to geographical barriers imposed by the Almeria-Oran front and the English Channel. Morphological differentiation is subtle but detectable in rostral length-to-height ratios. We recommend these lineages be re-evaluated as candidate species.</div>
+                <div class="abstract-doi">DOI: 10.1093/zoolinnean/zlz009</div>
+              </td>
+            </tr>
+
+            <tr class="pub-row" data-pub-id="p12" data-title="Skipjack tuna age structure" data-author="Murua" data-journal="Fisheries Research" data-year="2024" data-citations="12" data-oa="true" data-phylum="Actinopterygii">
+              <td>
+                <div style="font-weight:600;font-size:13px;">Age structure, growth parameters, and reproductive biology of skipjack tuna (<em>Katsuwonus pelamis</em>) in the Western and Central Pacific Ocean</div>
+                <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="iucn-pill iucn-lc" style="font-size:9px;">LC</span>
+                  <span class="rank-badge" style="font-size:9px;"><span class="rk">Actinopterygii</span></span>
+                  <span style="background:#E8F0F8;border:1px solid #B8CCE0;border-radius:2px;padding:1px 5px;font-size:9px;font-family:var(--font-mono);color:var(--deep-sea);">OA</span>
+                </div>
+              </td>
+              <td class="cell-mono" style="font-size:12px;">Murua H. et al.</td>
+              <td style="font-size:12px;color:var(--text-secondary);">Fisheries Research</td>
+              <td class="cell-mono">2024</td>
+              <td><span class="citation-badge">12</span></td>
+              <td><button class="pub-expand-btn" data-pub="p12">▼ Abstract</button></td>
+            </tr>
+            <tr class="pub-abstract-row" id="abs-p12">
+              <td colspan="6">
+                <div class="abstract-text">Otolith thin-sections from 2,847 skipjack tuna collected in WCPFC observer programme samples were used to estimate age, growth (von Bertalanffy parameters: L∞ = 82.3 cm, K = 0.79 yr⁻¹), and reproductive season length. Modal age at first spawning was 1.6 years. Size-at-maturity estimates from gonad histology indicate median L50 = 41.2 cm FL, lower than commonly applied stock assessment parameters, with implications for reference point calibration in Pacific skipjack management.</div>
+                <div class="abstract-doi">DOI: 10.1016/j.fishres.2024.106891 &bull; <a href="#">Full text</a> &bull; Open Access</div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div><!-- /tbl-wrap -->
+
+      <!-- Pagination -->
+      <div style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;">
+        <button class="page-btn" disabled>‹</button>
+        <button class="page-btn current">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span style="color:var(--text-muted);">…</span>
+        <button class="page-btn">684</button>
+        <button class="page-btn">›</button>
+        <span style="margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">1–12 of 8,204 publications</span>
+      </div>
+
+    </div><!-- /pub-main -->
+
+  </div><!-- /pub-layout -->
+
+</div><!-- /page-wrap -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fl">OceanIndex</div>
+      <p>Publication metadata indexed from Web of Science, Scopus, and PubMed. DOI resolution via CrossRef. Open access status determined by Unpaywall. Citation counts updated monthly.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Navigation</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="taxonomy.html">Species Taxonomy</a></li>
+        <li><a href="habitat.html">Habitat Maps</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Reference</div>
+      <ul>
+        <li><a href="conservation.html">Conservation</a></li>
+        <li><a href="field-guide.html">Field Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Indices</div>
+      <ul>
+        <li><a href="#">Web of Science</a></li>
+        <li><a href="#">Scopus</a></li>
+        <li><a href="#">CrossRef</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>OceanIndex v3.4 &mdash; Research Publications</span>
+    <span>8,204 publications indexed</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -526,7 +526,10 @@ def main(argv: list[str] | None = None) -> int:
             encoding="utf-8",
         )
     except Exception as exc:
-        (logs_dir / "reward-report-error.txt").write_text(f"{type(exc).__name__}: {exc}\n", encoding="utf-8")
+        (logs_dir / "reward-report-error.txt").write_text(
+            f"{type(exc).__name__}: {exc}\n",
+            encoding="utf-8",
+        )
     print(json.dumps(reward_payload, indent=2, sort_keys=True))
     return 0
 

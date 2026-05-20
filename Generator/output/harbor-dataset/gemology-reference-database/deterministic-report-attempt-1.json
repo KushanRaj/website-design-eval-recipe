@@ -1,0 +1,3788 @@
+{
+  "passed": true,
+  "issues": [],
+  "checks": {
+    "site_files": [
+      "about.html",
+      "certification.html",
+      "css/style.css",
+      "cuts.html",
+      "glossary.html",
+      "grading.html",
+      "img/gem-amethyst.svg",
+      "img/gem-chrysoberyl.svg",
+      "img/gem-diamond.svg",
+      "img/gem-emerald.svg",
+      "img/gem-ruby.svg",
+      "img/gem-sapphire.svg",
+      "img/gem-spinel.svg",
+      "img/gem-tourmaline.svg",
+      "index.html",
+      "js/main.js",
+      "minerals.html",
+      "origins.html",
+      "site_intent.json"
+    ],
+    "html_page_count": 8,
+    "page_presence": {
+      "/": {
+        "declared_path": "/",
+        "declared_id": "home",
+        "resolved_file": "index.html",
+        "found": true
+      },
+      "/minerals": {
+        "declared_path": "/minerals",
+        "declared_id": "mineral-index",
+        "resolved_file": "minerals.html",
+        "found": true
+      },
+      "/grading": {
+        "declared_path": "/grading",
+        "declared_id": "grading",
+        "resolved_file": "grading.html",
+        "found": true
+      },
+      "/cuts": {
+        "declared_path": "/cuts",
+        "declared_id": "cutting-gallery",
+        "resolved_file": "cuts.html",
+        "found": true
+      },
+      "/origins": {
+        "declared_path": "/origins",
+        "declared_id": "origins-map",
+        "resolved_file": "origins.html",
+        "found": true
+      },
+      "/glossary": {
+        "declared_path": "/glossary",
+        "declared_id": "glossary",
+        "resolved_file": "glossary.html",
+        "found": true
+      },
+      "/certification": {
+        "declared_path": "/certification",
+        "declared_id": "certification",
+        "resolved_file": "certification.html",
+        "found": true
+      },
+      "/about": {
+        "declared_path": "/about",
+        "declared_id": "about",
+        "resolved_file": "about.html",
+        "found": true
+      }
+    },
+    "missing_required_text": [],
+    "placeholder_hits": [],
+    "per_page_metrics": {
+      "/": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 54,
+          "element_count": 265,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 3618
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.83223,
+          "passed": true,
+          "width": 1568,
+          "height": 3618,
+          "entropy": 2.450232,
+          "gray_std": 18.736128,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.002069,
+          "html_text_chars": 3065
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 8,
+              "candidate_component_count": 8,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 8,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "3|img:icon:0>div:title:0>div:body:0|body,icon,title",
+                  "majority_style": "block|row|none|normal|normal|normal|16px|16px|16px|16px|4px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 6,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(8)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(9)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(10)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(11)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(12)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 72.393891,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 31,
+              "total_elements": 146,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 6,
+                "elements_without_horizontal_alignment": 17,
+                "row_bottom_alignment": 8
+              },
+              "row_group_count": 34,
+              "vertical_alignment_group_count": 97,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 93.282724,
+              "tags": [],
+              "sparsity_rate": 12.983333,
+              "largest_blank_rectangle": {
+                "x": 1321,
+                "y": 585,
+                "width": 247,
+                "height": 2979,
+                "area": 736454
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 520,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 3618
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/minerals": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 77,
+          "element_count": 578,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 2882
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.799073,
+          "passed": true,
+          "width": 1568,
+          "height": 2882,
+          "entropy": 1.994803,
+          "gray_std": 16.397989,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001203,
+          "html_text_chars": 2906
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 23.69323,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 168,
+              "total_num": 240,
+              "candidate_component_count": 253,
+              "evaluated_group_count": 73,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)",
+                  "component_count": 12,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "10|img:icon:0>div:title:0>div:body:0>span:body:0>div:body:2>div:body:2>div:body:2>div:body:2>div:body:2>div:body:2|body,body,body,body,body,body,body,body,icon,title",
+                  "majority_style": "flex|column|none|normal|normal|8px|24px|24px|24px|24px|4px",
+                  "issues": []
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-153",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-154",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-155",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-172",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-158",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-159",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-161",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-162",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-164",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-165",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-167",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-168",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-170",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-171",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-186",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-187",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-188",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-205",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-191",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-192",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-194",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-195",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-197",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-198",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-200",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-201",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-203",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-204",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-219",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-220",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-221",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-238",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-224",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-225",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-227",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-228",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-230",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-231",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-233",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-234",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-236",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-237",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-252",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-253",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-254",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-271",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-257",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-258",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-260",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-261",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-263",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-264",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-266",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-267",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-269",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-270",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-285",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-286",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-287",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-304",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-290",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-291",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-293",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-294",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-296",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-297",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-299",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-300",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-302",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-303",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-318",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-319",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-320",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-337",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-323",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-324",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-326",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-327",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-329",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-330",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-332",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-333",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-335",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-336",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-351",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-352",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-353",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-370",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-356",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-357",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-359",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-360",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-362",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-363",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-365",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-366",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-368",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-369",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-384",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-385",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-386",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-403",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-389",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-390",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-392",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-393",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-395",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-396",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-398",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-399",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-401",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-402",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-417",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-418",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-419",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-436",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-422",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-423",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-425",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-426",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-428",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-429",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-431",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-432",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-434",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-435",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-450",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-451",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-452",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-469",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-455",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-456",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-458",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-459",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-461",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-462",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-464",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-465",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-467",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-468",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-483",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-484",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-485",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-502",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-488",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-489",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-491",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-492",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-494",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-495",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-497",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-498",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-500",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-501",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)",
+                  "component_count": 9,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "2|span:body:0>span:body:0|body,body",
+                  "majority_style": "flex|row|none|normal|space-between|normal|4px|0px|4px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-516",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-517",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-518",
+                      "issues": [
+                        "fewer_than_two_children",
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-535",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)>div:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-521",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-522",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)>div:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-524",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-525",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)>div:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-527",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-528",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)>div:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-530",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-531",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)>div:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-533",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-534",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 82.851953,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 26,
+              "total_elements": 205,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 6,
+                "elements_without_horizontal_alignment": 17,
+                "row_bottom_alignment": 3
+              },
+              "row_group_count": 44,
+              "vertical_alignment_group_count": 95,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 92.062679,
+              "tags": [],
+              "sparsity_rate": 15.244632,
+              "largest_blank_rectangle": {
+                "x": 1319,
+                "y": 48,
+                "width": 247,
+                "height": 2781,
+                "area": 687973
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 652,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 2882
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/grading": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 30,
+          "element_count": 152,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 2278
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.843102,
+          "passed": true,
+          "width": 1568,
+          "height": 2278,
+          "entropy": 2.159538,
+          "gray_std": 22.670935,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001043,
+          "html_text_chars": 6229
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 76.867445,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 20,
+              "total_elements": 114,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 4,
+                "elements_without_horizontal_alignment": 12,
+                "row_bottom_alignment": 4
+              },
+              "row_group_count": 21,
+              "vertical_alignment_group_count": 84,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 94.275011,
+              "tags": [],
+              "sparsity_rate": 11.122222,
+              "largest_blank_rectangle": {
+                "x": 1319,
+                "y": 395,
+                "width": 247,
+                "height": 1608,
+                "area": 396800
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 825,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 2278
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/cuts": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 43,
+          "element_count": 363,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 2929
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.773713,
+          "passed": true,
+          "width": 1568,
+          "height": 2929,
+          "entropy": 1.241556,
+          "gray_std": 17.525162,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001152,
+          "html_text_chars": 2480
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 16.255301,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 48,
+              "total_num": 60,
+              "candidate_component_count": 60,
+              "evaluated_group_count": 25,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 12,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "2|div:other:1>div:body:2|body,other",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|4px",
+                  "issues": []
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:6|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-94",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-102",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-103",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-104",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:8|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-108",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-118",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-119",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-120",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:4|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-124",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-130",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(3)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-131",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-132",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(4)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:6|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-136",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-144",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(4)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-145",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-146",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(5)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:5|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-150",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-157",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(5)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-158",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-159",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(6)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:5|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-163",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-170",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(6)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-171",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-172",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(7)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:4|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-176",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-182",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(7)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-183",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-184",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(8)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:4|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-188",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-194",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(8)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-195",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-196",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(9)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:6|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-200",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-208",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(9)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-209",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-210",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(10)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:3|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-214",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-219",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(10)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-220",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-221",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(11)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:5|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-225",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-232",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(11)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-233",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-234",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(12)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "1|svg:icon:3|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-238",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-243",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(12)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-244",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-245",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 15,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(5)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(6)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(7)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(8)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(9)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(10)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(11)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(12)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 69.599381,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 38,
+              "total_elements": 161,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 1,
+                "elements_without_horizontal_alignment": 21,
+                "row_bottom_alignment": 16
+              },
+              "row_group_count": 36,
+              "vertical_alignment_group_count": 101,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 94.492826,
+              "tags": [],
+              "sparsity_rate": 10.711059,
+              "largest_blank_rectangle": {
+                "x": 1318,
+                "y": 901,
+                "width": 249,
+                "height": 1975,
+                "area": 491615
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 642,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 2929
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/origins": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 29,
+          "element_count": 162,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 2158
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.824684,
+          "passed": true,
+          "width": 1568,
+          "height": 2158,
+          "entropy": 2.402548,
+          "gray_std": 17.801144,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001586,
+          "html_text_chars": 2819
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 3,
+              "candidate_component_count": 3,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>section:nth-of-type(1)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "2|div:title:0>p:body:0|body,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|0px 4px 4px 0px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 2,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 67.807191,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 23,
+              "total_elements": 91,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 3,
+                "elements_without_horizontal_alignment": 16,
+                "row_bottom_alignment": 4
+              },
+              "row_group_count": 16,
+              "vertical_alignment_group_count": 76,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 89.901826,
+              "tags": [],
+              "sparsity_rate": 19.176617,
+              "largest_blank_rectangle": {
+                "x": 959,
+                "y": 727,
+                "width": 608,
+                "height": 1066,
+                "area": 648204
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 871,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 2158
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/glossary": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 121,
+          "element_count": 425,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 9646
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.767287,
+          "passed": true,
+          "width": 1568,
+          "height": 9646,
+          "entropy": 1.047684,
+          "gray_std": 17.832306,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.000334,
+          "html_text_chars": 17992
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "large_blank_region",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 3.34747,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 104,
+              "total_elements": 108,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 4,
+                "elements_without_horizontal_alignment": 100,
+                "row_bottom_alignment": 0
+              },
+              "row_group_count": 3,
+              "vertical_alignment_group_count": 31,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 85.146932,
+              "tags": [
+                "large_blank_region"
+              ],
+              "sparsity_rate": 27.5,
+              "largest_blank_rectangle": {
+                "x": 1037,
+                "y": 1511,
+                "width": 531,
+                "height": 7837,
+                "area": 4157963
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 195,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 9646
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/certification": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 33,
+          "element_count": 354,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 5385
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.793556,
+          "passed": true,
+          "width": 1568,
+          "height": 5385,
+          "entropy": 1.523405,
+          "gray_std": 18.857473,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.000557,
+          "html_text_chars": 8210
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 4,
+              "candidate_component_count": 5,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "5|div:body:0>div:title:0>div:body:0>p:body:0>span:body:0|body,body,body,body,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|4px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 67.003459,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 46,
+              "total_elements": 178,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 3,
+                "elements_without_horizontal_alignment": 30,
+                "row_bottom_alignment": 13
+              },
+              "row_group_count": 39,
+              "vertical_alignment_group_count": 107,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 91.932843,
+              "tags": [],
+              "sparsity_rate": 15.483524,
+              "largest_blank_rectangle": {
+                "x": 1319,
+                "y": 40,
+                "width": 247,
+                "height": 5291,
+                "area": 1305826
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 349,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 5385
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/about": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 25,
+          "element_count": 242,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 5347
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.809322,
+          "passed": true,
+          "width": 1568,
+          "height": 5347,
+          "entropy": 1.716829,
+          "gray_std": 20.135695,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.000382,
+          "html_text_chars": 8623
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 87.446912,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 1,
+              "total_num": 10,
+              "candidate_component_count": 14,
+              "evaluated_group_count": 2,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 6,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "4|div:icon:0>div:title:0>div:title:0>div:body:0|body,icon,title,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|4px",
+                  "issues": []
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(2)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 1,
+                  "majority_structure": "2|div:title:0>p:body:0|body,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|4px",
+                  "issues": [
+                    {
+                      "node_id": "node-207",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(2)>div:nth-of-type(3)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(2)>div:nth-of-type(4)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 40.498383,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 73,
+              "total_elements": 142,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 4,
+                "elements_without_horizontal_alignment": 63,
+                "row_bottom_alignment": 6
+              },
+              "row_group_count": 25,
+              "vertical_alignment_group_count": 84,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 91.871954,
+              "tags": [],
+              "sparsity_rate": 15.595442,
+              "largest_blank_rectangle": {
+                "x": 1314,
+                "y": 67,
+                "width": 250,
+                "height": 5227,
+                "area": 1304199
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 351,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 5347
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      }
+    },
+    "per_page_summary": {
+      "/": {
+        "render_sanity": 0.832,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/minerals": {
+        "render_sanity": 0.799,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/grading": {
+        "render_sanity": 0.843,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/cuts": {
+        "render_sanity": 0.774,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/origins": {
+        "render_sanity": 0.825,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/glossary": {
+        "render_sanity": 0.767,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/certification": {
+        "render_sanity": 0.794,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/about": {
+        "render_sanity": 0.809,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      }
+    }
+  }
+}

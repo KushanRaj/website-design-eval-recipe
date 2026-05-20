@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gem Grading &amp; Certification — Gem Classification Reference</title>
+  <meta name="description" content="Comprehensive grading reference for major gem species including color scales, clarity grades, cut proportions, and multi-lab certification equivalency matrices.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .grading-hero {
+      background: linear-gradient(135deg, #0a0a1a 0%, #1c1c2e 100%);
+      padding: var(--space-2xl) 0;
+      border-bottom: var(--divider-gold);
+    }
+    .proportion-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    .proportion-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: var(--space-lg);
+    }
+    .proportion-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-gold);
+      margin-bottom: var(--space-sm);
+    }
+    .proportion-range {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+    }
+    .proportion-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .carat-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .carat-table th {
+      background: var(--bg-card);
+      color: var(--text-gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: var(--space-sm) var(--space-md);
+      text-align: left;
+      border-bottom: var(--divider-gold);
+      font-family: var(--font-sans);
+    }
+    .carat-table td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+    .carat-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .panel-intro {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      margin-bottom: var(--space-xl);
+      max-width: 70ch;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="minerals.html">Mineral Index</a></li>
+      <li><a href="grading.html" class="active">Grading</a></li>
+      <li><a href="cuts.html">Cut Styles</a></li>
+      <li><a href="origins.html">Origins Map</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="certification.html">Certification</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-search"><input type="search" placeholder="Search specimens, terms…" aria-label="Search"></div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Grading &amp; Certification</span>
+  </nav>
+
+  <div class="grading-hero">
+    <div class="page-wrapper">
+      <span class="eyebrow" style="display:block;margin-bottom:var(--space-sm);">Reference Data</span>
+      <h1>Grading &amp; Certification</h1>
+      <p style="color:var(--text-secondary);margin-top:var(--space-md);max-width:60ch;">Comparative grading scales, clarity charts, cut proportion reference, and multi-laboratory certification equivalency data for major gem species.</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-wrapper" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+      <!-- GEM TYPE TABS -->
+      <div class="gem-tabs" role="tablist" aria-label="Gem type grading data">
+        <button class="gem-tab active" data-tab="emerald" role="tab" aria-selected="true" aria-controls="panel-emerald">Emerald</button>
+        <button class="gem-tab" data-tab="ruby" role="tab" aria-selected="false" aria-controls="panel-ruby">Ruby</button>
+        <button class="gem-tab" data-tab="sapphire" role="tab" aria-selected="false" aria-controls="panel-sapphire">Sapphire</button>
+        <button class="gem-tab" data-tab="diamond" role="tab" aria-selected="false" aria-controls="panel-diamond">Diamond</button>
+        <button class="gem-tab" data-tab="alexandrite" role="tab" aria-selected="false" aria-controls="panel-alexandrite">Alexandrite</button>
+        <button class="gem-tab" data-tab="tourmaline" role="tab" aria-selected="false" aria-controls="panel-tourmaline">Tourmaline</button>
+      </div>
+
+      <!-- EMERALD PANEL -->
+      <div id="panel-emerald" class="tab-panel active" role="tabpanel" aria-labelledby="tab-emerald">
+        <p class="panel-intro">Emeralds are graded using a combination of color quality (hue, tone, saturation), clarity (jardin assessment), and cut. Colombian material is the benchmark against which all other origins are evaluated.</p>
+
+        <div class="section-header" style="margin-top:0;">
+          <span class="eyebrow">Color Grading</span>
+          <h2>Emerald Color Scale</h2>
+        </div>
+
+        <div class="color-scale" aria-label="Emerald color grading scale">
+          <div class="color-scale-bar" style="background:linear-gradient(to right, #e8f5e9 0%, #a5d6a7 15%, #66bb6a 30%, #2e7d32 50%, #1b5e20 70%, #0d3b0d 85%, #081f08 100%);" role="img" aria-label="Emerald color gradient from pale to vivid green"></div>
+          <div class="color-scale-labels">
+            <span>Pale / Insignificant</span>
+            <span>Light</span>
+            <span>Medium Light</span>
+            <span>Medium</span>
+            <span>Medium Dark</span>
+            <span>Dark</span>
+            <span>Very Dark</span>
+          </div>
+        </div>
+
+        <div style="background:var(--bg-card);border:1px solid var(--beryl-border);border-left:3px solid var(--beryl-accent);border-radius:4px;padding:var(--space-lg);margin-bottom:var(--space-xl);">
+          <p style="color:var(--beryl-accent);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:var(--space-sm);">Premium Color Standard</p>
+          <p style="color:var(--text-primary);font-family:var(--font-serif);font-size:1rem;margin:0;">A fine Colombian emerald displays vivid, slightly bluish-green to pure green hue with medium to medium-dark tone (60–75%) and strong saturation — the "Muzo Green" benchmark.</p>
+        </div>
+
+        <div class="section-header">
+          <span class="eyebrow">Clarity Grading</span>
+          <h2>Jardin Assessment</h2>
+        </div>
+
+        <div class="clarity-grid" aria-label="Emerald clarity grades">
+          <div class="clarity-item"><div class="clarity-grade">GIA-1</div><div class="clarity-name">Loupe Clean</div><div class="clarity-desc">No inclusions visible under 10× magnification</div></div>
+          <div class="clarity-item"><div class="clarity-grade">GIA-2</div><div class="clarity-name">Minor</div><div class="clarity-desc">Minor inclusions under 10×, difficult to see unaided</div></div>
+          <div class="clarity-item"><div class="clarity-grade">GIA-3</div><div class="clarity-name">Noticeable</div><div class="clarity-desc">Noticeable inclusions, do not affect beauty</div></div>
+          <div class="clarity-item"><div class="clarity-grade">GIA-4</div><div class="clarity-name">Obvious</div><div class="clarity-desc">Obvious inclusions, somewhat affect appearance</div></div>
+          <div class="clarity-item"><div class="clarity-grade">GIA-5</div><div class="clarity-name">Prominent</div><div class="clarity-desc">Prominent jardin visible to unaided eye</div></div>
+          <div class="clarity-item" style="border-color:var(--beryl-border);"><div class="clarity-grade" style="color:var(--beryl-accent);">F₁</div><div class="clarity-name">Gübelin F Grade</div><div class="clarity-desc">Gübelin exceptional clarity classification</div></div>
+        </div>
+
+        <div class="section-header">
+          <span class="eyebrow">Cut Proportions</span>
+          <h2>Standard Emerald Cut Reference</h2>
+        </div>
+
+        <div class="proportion-diagram">
+          <div class="proportion-item"><div class="proportion-label">Table Width</div><div class="proportion-range">60 – 75%</div><div class="proportion-desc">Percentage of girdle diameter. Wider tables increase brilliance but reduce depth.</div></div>
+          <div class="proportion-item"><div class="proportion-label">Crown Height</div><div class="proportion-range">10 – 20%</div><div class="proportion-desc">Measured from girdle plane to table. Low crowns common in emerald cuts.</div></div>
+          <div class="proportion-item"><div class="proportion-label">Pavilion Depth</div><div class="proportion-range">40 – 50%</div><div class="proportion-desc">Critical for color return. Deeper pavilions intensify color in light material.</div></div>
+          <div class="proportion-item"><div class="proportion-label">Length/Width Ratio</div><div class="proportion-range">1.3 – 1.5</div><div class="proportion-desc">Classic emerald cut proportion. Squares are 1.0–1.05.</div></div>
+        </div>
+      </div>
+
+      <!-- RUBY PANEL -->
+      <div id="panel-ruby" class="tab-panel" role="tabpanel" aria-labelledby="tab-ruby">
+        <p class="panel-intro">Ruby grading centers on color quality — particularly the chromium-driven red to slightly purplish-red hue. The Burmese "Pigeon's Blood" standard commands 50–100% premiums over comparable material from other origins.</p>
+
+        <div class="section-header" style="margin-top:0;">
+          <span class="eyebrow">Color Grading</span>
+          <h2>Ruby Color Scale</h2>
+        </div>
+
+        <div class="color-scale" aria-label="Ruby color grading scale">
+          <div class="color-scale-bar" style="background:linear-gradient(to right, #ffcdd2 0%, #ef9a9a 15%, #e57373 30%, #c62828 50%, #8e1010 70%, #5c0a0a 85%, #2e0505 100%);" role="img" aria-label="Ruby color gradient from pale to vivid red"></div>
+          <div class="color-scale-labels">
+            <span>Pinkish Red</span>
+            <span>Red</span>
+            <span>Vivid Red</span>
+            <span>Pigeon's Blood</span>
+            <span>Deep Red</span>
+            <span>Dark Red</span>
+            <span>Very Dark</span>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <span class="eyebrow">Clarity Grading</span>
+          <h2>Ruby Clarity Reference</h2>
+        </div>
+        <div class="clarity-grid">
+          <div class="clarity-item"><div class="clarity-grade">VS</div><div class="clarity-name">Very Slightly</div><div class="clarity-desc">Minor inclusions visible only under 10× magnification</div></div>
+          <div class="clarity-item"><div class="clarity-grade">SI1</div><div class="clarity-name">Slightly Incl. 1</div><div class="clarity-desc">Inclusions visible under 10×, not unaided eye</div></div>
+          <div class="clarity-item"><div class="clarity-grade">SI2</div><div class="clarity-name">Slightly Incl. 2</div><div class="clarity-desc">Inclusions borderline visible to unaided eye</div></div>
+          <div class="clarity-item"><div class="clarity-grade">I1</div><div class="clarity-name">Included 1</div><div class="clarity-desc">Inclusions clearly visible, affect brilliance somewhat</div></div>
+          <div class="clarity-item"><div class="clarity-grade">I2</div><div class="clarity-name">Included 2</div><div class="clarity-desc">Obvious inclusions, affect appearance significantly</div></div>
+          <div class="clarity-item" style="border-color:var(--red-corundum-border);"><div class="clarity-grade" style="color:var(--red-corundum-accent);">ST</div><div class="clarity-name">Silk / Needles</div><div class="clarity-desc">Rutile silk — diagnostic; aids origin determination</div></div>
+        </div>
+      </div>
+
+      <!-- SAPPHIRE PANEL -->
+      <div id="panel-sapphire" class="tab-panel" role="tabpanel" aria-labelledby="tab-sapphire">
+        <p class="panel-intro">Blue sapphire color grading follows the "Royal Blue" to "Cornflower Blue" spectrum. Kashmir material sets the benchmark for velvety appearance; Burmese sapphires typically show more intensity while Ceylon stones display brighter, lighter tones.</p>
+
+        <div class="section-header" style="margin-top:0;">
+          <span class="eyebrow">Color Grading</span>
+          <h2>Blue Sapphire Color Scale</h2>
+        </div>
+
+        <div class="color-scale" aria-label="Blue sapphire color grading scale">
+          <div class="color-scale-bar" style="background:linear-gradient(to right, #e3f2fd 0%, #90caf9 15%, #42a5f5 30%, #1565c0 50%, #0d3b8e 70%, #082060 85%, #040e2e 100%);" role="img" aria-label="Sapphire color gradient from pale to vivid blue"></div>
+          <div class="color-scale-labels">
+            <span>Pale Blue</span>
+            <span>Medium Light</span>
+            <span>Cornflower</span>
+            <span>Royal Blue</span>
+            <span>Kashmir Blue</span>
+            <span>Very Dark</span>
+            <span>Inky</span>
+          </div>
+        </div>
+
+        <div style="background:var(--bg-card);border:1px solid var(--blue-corundum-border);border-left:3px solid var(--blue-corundum-accent);border-radius:4px;padding:var(--space-lg);margin-bottom:var(--space-xl);">
+          <p style="color:var(--blue-corundum-accent);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:var(--space-sm);">Kashmir Standard</p>
+          <p style="color:var(--text-primary);font-family:var(--font-serif);font-size:1rem;margin:0;">Fine Kashmir sapphires display a characteristic velvety, slightly sleepy quality with intensely saturated medium to medium-dark blue (60–75% tone) — caused by dense rutile needle inclusions scattering light.</p>
+        </div>
+      </div>
+
+      <!-- DIAMOND PANEL -->
+      <div id="panel-diamond" class="tab-panel" role="tabpanel" aria-labelledby="tab-diamond">
+        <p class="panel-intro">Diamond grading follows the GIA 4Cs system: Color (D–Z scale), Clarity (FL–I3), Cut (Excellent–Poor), and Carat weight. The GIA system is the global standard; AGS, HRD, and IGI maintain comparable but not identical scales.</p>
+
+        <div class="section-header" style="margin-top:0;">
+          <span class="eyebrow">Color Grading</span>
+          <h2>GIA Diamond Color Scale (D–Z)</h2>
+        </div>
+
+        <div class="color-scale" aria-label="Diamond color grading scale">
+          <div class="color-scale-bar" style="background:linear-gradient(to right, #ffffff 0%, #f8f8f0 20%, #f0edd8 40%, #e8e0b0 60%, #d4c878 80%, #c0b040 100%);" role="img" aria-label="Diamond color gradient from colorless to light yellow"></div>
+          <div class="color-scale-labels">
+            <span>D–F Colorless</span>
+            <span>G–J Near Colorless</span>
+            <span>K–M Faint</span>
+            <span>N–R Very Light</span>
+            <span>S–Z Light Yellow</span>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <span class="eyebrow">Clarity Grading</span>
+          <h2>GIA Clarity Scale</h2>
+        </div>
+
+        <div class="clarity-grid">
+          <div class="clarity-item"><div class="clarity-grade">FL</div><div class="clarity-name">Flawless</div><div class="clarity-desc">No inclusions or blemishes visible under 10× magnification</div></div>
+          <div class="clarity-item"><div class="clarity-grade">IF</div><div class="clarity-name">Internally Flawless</div><div class="clarity-desc">No internal characteristics; only minor surface blemishes</div></div>
+          <div class="clarity-item"><div class="clarity-grade">VVS1</div><div class="clarity-name">Very Very Slightly</div><div class="clarity-desc">Minute inclusions extremely difficult to detect under 10×</div></div>
+          <div class="clarity-item"><div class="clarity-grade">VVS2</div><div class="clarity-name">Very Very Slightly</div><div class="clarity-desc">Minute inclusions very difficult to detect</div></div>
+          <div class="clarity-item"><div class="clarity-grade">VS1</div><div class="clarity-name">Very Slightly 1</div><div class="clarity-desc">Minor inclusions difficult to see under 10×</div></div>
+          <div class="clarity-item"><div class="clarity-grade">VS2</div><div class="clarity-name">Very Slightly 2</div><div class="clarity-desc">Minor inclusions somewhat easy to see</div></div>
+          <div class="clarity-item"><div class="clarity-grade">SI1</div><div class="clarity-name">Slightly Included 1</div><div class="clarity-desc">Noticeable inclusions easy to detect under 10×</div></div>
+          <div class="clarity-item"><div class="clarity-grade">I1</div><div class="clarity-name">Included 1</div><div class="clarity-desc">Obvious inclusions visible to unaided eye</div></div>
+        </div>
+
+        <div class="section-header">
+          <span class="eyebrow">Carat Conversion</span>
+          <h2>Round Brilliant Weight Reference</h2>
+        </div>
+
+        <table class="carat-table" aria-label="Diamond carat weight reference by diameter">
+          <thead>
+            <tr>
+              <th>Diameter (mm)</th>
+              <th>Approx. Carat</th>
+              <th>Girdle Depth (mm)</th>
+              <th>Crown Angle</th>
+              <th>Pavilion Angle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>4.1</td><td>0.25 ct</td><td>2.45</td><td>34.0°–34.9°</td><td>40.4°–41.0°</td></tr>
+            <tr><td>5.2</td><td>0.50 ct</td><td>3.12</td><td>34.0°–34.9°</td><td>40.4°–41.0°</td></tr>
+            <tr><td>6.5</td><td>1.00 ct</td><td>3.90</td><td>33.7°–35.8°</td><td>40.2°–41.4°</td></tr>
+            <tr><td>8.2</td><td>2.00 ct</td><td>4.92</td><td>33.7°–35.8°</td><td>40.2°–41.4°</td></tr>
+            <tr><td>9.4</td><td>3.00 ct</td><td>5.64</td><td>33.7°–35.8°</td><td>40.2°–41.4°</td></tr>
+            <tr><td>10.4</td><td>4.00 ct</td><td>6.24</td><td>33.7°–35.8°</td><td>40.2°–41.4°</td></tr>
+            <tr><td>11.1</td><td>5.00 ct</td><td>6.66</td><td>33.7°–35.8°</td><td>40.2°–41.4°</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ALEXANDRITE PANEL -->
+      <div id="panel-alexandrite" class="tab-panel" role="tabpanel" aria-labelledby="tab-alexandrite">
+        <p class="panel-intro">Alexandrite grading uniquely includes color-change assessment: the quality of the color shift between incandescent and daylight illumination is the primary value driver. Fine specimens show a complete shift from vivid green (daylight) to intense red (incandescent).</p>
+
+        <div class="section-header" style="margin-top:0;">
+          <span class="eyebrow">Color Change</span>
+          <h2>Alexandrite Dual Color Assessment</h2>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg);margin-bottom:var(--space-xl);">
+          <div>
+            <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--beryl-accent);margin-bottom:var(--space-sm);">Daylight Color</div>
+            <div class="color-scale-bar" style="height:36px;background:linear-gradient(to right, #c8e6c9, #66bb6a, #2e7d32, #1b5e20);" role="img" aria-label="Daylight color range"></div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">Bluish Green → Vivid Green</div>
+          </div>
+          <div>
+            <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red-corundum-accent);margin-bottom:var(--space-sm);">Incandescent Color</div>
+            <div class="color-scale-bar" style="height:36px;background:linear-gradient(to right, #f48fb1, #e57373, #c62828, #8e1010);" role="img" aria-label="Incandescent color range"></div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">Purplish Red → Vivid Red</div>
+          </div>
+        </div>
+
+        <table class="comparison-table" aria-label="Alexandrite color change grading">
+          <thead>
+            <tr><th>Grade</th><th>Color Change Extent</th><th>Color Purity</th><th>Premium Factor</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Exceptional</td><td>Complete (100%)</td><td>Both colors vivid, pure hue</td><td>5× – 10× base</td></tr>
+            <tr><td>Very Fine</td><td>Strong (75–100%)</td><td>Both colors strong</td><td>3× – 5× base</td></tr>
+            <tr><td>Fine</td><td>Moderate (50–75%)</td><td>Slight secondary hues</td><td>2× – 3× base</td></tr>
+            <tr><td>Commercial</td><td>Weak (25–50%)</td><td>Notable secondaries</td><td>Base value</td></tr>
+            <tr><td>Low Grade</td><td>Slight (&lt;25%)</td><td>Mixed / muddy colors</td><td>Below base</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TOURMALINE PANEL -->
+      <div id="panel-tourmaline" class="tab-panel" role="tabpanel" aria-labelledby="tab-tourmaline">
+        <p class="panel-intro">Tourmaline grading varies significantly by variety. Paraíba tourmalines (copper-bearing elbaites) are graded against a "neon" vivid blue-green standard and command extraordinary premiums based on copper/manganese content and color saturation.</p>
+
+        <div class="section-header" style="margin-top:0;">
+          <span class="eyebrow">Paraíba Color Scale</span>
+          <h2>Copper-Bearing Tourmaline Grading</h2>
+        </div>
+
+        <div class="color-scale" aria-label="Paraíba tourmaline color scale">
+          <div class="color-scale-bar" style="background:linear-gradient(to right, #e0f7fa, #80deea, #26c6da, #00acc1, #007d87, #004d5a);" role="img" aria-label="Paraíba color range from pale to vivid cyan"></div>
+          <div class="color-scale-labels">
+            <span>Pale Cyan</span>
+            <span>Light Blue-Green</span>
+            <span>Medium Teal</span>
+            <span>Vivid Teal</span>
+            <span>Neon Blue-Green</span>
+            <span>Deep Teal</span>
+          </div>
+        </div>
+
+        <table class="comparison-table" style="margin-top:var(--space-xl);" aria-label="Tourmaline variety comparison">
+          <thead>
+            <tr><th>Variety</th><th>Color Range</th><th>Hardness</th><th>Typical Origin</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Paraíba</td><td>Vivid cyan, blue-green, blue</td><td>7.0–7.5</td><td>Brazil, Nigeria, Mozambique</td></tr>
+            <tr><td>Rubellite</td><td>Vivid red to pink</td><td>7.0–7.5</td><td>Brazil, Nigeria, Madagascar</td></tr>
+            <tr><td>Chrome Tourmaline</td><td>Vivid green</td><td>7.0–7.5</td><td>Tanzania, Kenya</td></tr>
+            <tr><td>Indicolite</td><td>Blue to blue-green</td><td>7.0–7.5</td><td>Brazil, Afghanistan</td></tr>
+            <tr><td>Bicolor / Watermelon</td><td>Multiple hue zones</td><td>7.0–7.5</td><td>Brazil, California</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><span class="nav-brand-text">Gem Classification Reference</span><p class="footer-desc">Authoritative gemological data for collectors and professionals.</p></div>
+      <div><div class="footer-col-title">Reference</div><ul class="footer-links"><li><a href="minerals.html">Mineral Index</a></li><li><a href="grading.html">Grading</a></li><li><a href="cuts.html">Cut Styles</a></li><li><a href="origins.html">Origins Map</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links"><li><a href="glossary.html">Glossary</a></li><li><a href="certification.html">Certification</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><div class="footer-col-title">Gem Families</div><ul class="footer-links"><li><a href="minerals.html">Beryl Group</a></li><li><a href="minerals.html">Corundum</a></li><li><a href="minerals.html">Diamond</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Gemology Reference Database</span><span>Updated May 2026</span></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

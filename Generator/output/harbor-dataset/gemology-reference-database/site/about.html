@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About the Reference — Gem Classification Reference</title>
+  <meta name="description" content="Editorial mission, contributor profiles, data sourcing methodology, revision history, and contact information for the Gemology Reference Database.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .about-hero {
+      background: linear-gradient(160deg, #0a0a1a 0%, #1c1c2e 50%, #0e1a2e 100%);
+      padding: var(--space-2xl) 0;
+      border-bottom: var(--divider-gold);
+    }
+    .about-body {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+    .about-body p { margin-bottom: var(--space-lg); }
+    .about-body h3 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      margin: var(--space-xl) 0 var(--space-md);
+    }
+    .methodology-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: var(--space-md);
+      align-items: start;
+    }
+    .method-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-gold);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .method-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      margin-bottom: var(--space-xs);
+    }
+    .method-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: var(--space-lg);
+    }
+    .contact-card-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-gold);
+      margin-bottom: var(--space-sm);
+    }
+    .contact-card p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="minerals.html">Mineral Index</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="cuts.html">Cut Styles</a></li>
+      <li><a href="origins.html">Origins Map</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="certification.html">Certification</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+    <div class="nav-search"><input type="search" placeholder="Search specimens, terms…" aria-label="Search"></div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">About the Reference</span>
+  </nav>
+
+  <div class="about-hero">
+    <div class="page-wrapper">
+      <span class="eyebrow" style="display:block;margin-bottom:var(--space-sm);">Our Mission</span>
+      <h1>About the Reference</h1>
+      <p style="color:var(--text-secondary);margin-top:var(--space-md);max-width:64ch;">A curated editorial archive built by gemologists, mineralogists, and scholars — for collectors, designers, students, and anyone captivated by the rarity and beauty of the mineral world.</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-wrapper" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+      <!-- EDITORIAL MISSION -->
+      <section class="page-section" aria-labelledby="mission-heading">
+        <div class="content-column about-two-col" style="display:grid;grid-template-columns:1fr 320px;gap:var(--space-2xl);">
+
+          <div class="editorial-column" style="max-width:100%;">
+            <span class="eyebrow" style="display:block;margin-bottom:var(--space-sm);">Editorial Statement</span>
+            <h2 id="mission-heading" style="margin-bottom:var(--space-lg);">A Collector's Archive for the Digital Age</h2>
+
+            <div class="about-body">
+              <p>The Gemology Reference Database was conceived as a response to the fragmented state of gemological knowledge in the digital realm — where authoritative data sits scattered across academic journals, trade publications, laboratory reports, and the closely guarded expertise of dealers and specialists who have spent careers building knowledge that rarely reaches the collector or student who needs it most.</p>
+
+              <div class="pull-quote">
+                <p>"Every exceptional gem is a message from deep geological time — a crystalline record of pressure, temperature, chemistry, and chance that took millions of years to compose and mere decades for a skilled cutter to reveal."</p>
+              </div>
+
+              <p>Our editorial approach treats gemology as the discipline it is: a rigorous intersection of mineralogy, optical physics, materials science, economic geology, and cultural history. We do not traffic in superlatives or marketing language. A "commercial quality" stone is described as such; the premium commanded by an unheated ruby is stated with its commercial rationale.</p>
+
+              <h3>What This Reference Covers</h3>
+              <p>The database spans eight principal reference sections: the Mineral Specimen Index catalogues physical constants and origin data for 342 gem species and varieties; the Grading section provides comparative scales for the major gem types; the Cutting Styles Gallery documents 87 faceting styles with proportion data and historical context; the Geological Origins Map plots 214 documented deposit locations with geological period and deposit-type data; the Collector's Glossary defines over 1,240 terms from <em>adularescence</em> to <em>zoning</em>; and the Certification Guides provide practical buyer guidance for navigating laboratory reports and treatment disclosure.</p>
+
+              <h3>Scope and Limitations</h3>
+              <p>This reference covers faceted gemstones and mineral specimens of collector interest. Organic gems (pearl, coral, amber, jet) are referenced in the glossary but do not have full specimen pages in the current edition. Meteoritic gems (moldavite, make-earth olivine) are catalogued but without full grading scales. Synthetic and simulant identification is referenced in certification guides but this database is primarily oriented toward natural material.</p>
+
+              <p>Grading data reflects industry consensus as of the current publication date (May 2026) and may not reflect unpublished laboratory methodology revisions. Origin determination criteria evolve as new deposits are discovered and analytical techniques improve — users are advised to consult current laboratory documentation for the most recent origin determination protocols.</p>
+            </div>
+          </div>
+
+          <aside>
+            <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:4px;padding:var(--space-lg);position:sticky;top:calc(var(--nav-height) + var(--space-lg));">
+              <div class="filter-sidebar-title">Quick Navigation</div>
+              <ul style="list-style:none;padding:0;">
+                <li><a href="#contributors" style="display:block;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;color:var(--text-secondary);">Contributor Profiles</a></li>
+                <li><a href="#methodology" style="display:block;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;color:var(--text-secondary);">Data Sourcing</a></li>
+                <li><a href="#revisions" style="display:block;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;color:var(--text-secondary);">Revision History</a></li>
+                <li><a href="#contact" style="display:block;padding:8px 0;font-size:0.82rem;color:var(--text-secondary);">Contact</a></li>
+              </ul>
+
+              <div style="margin-top:var(--space-lg);padding-top:var(--space-lg);border-top:var(--divider-gold);">
+                <div style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-gold);margin-bottom:var(--space-md);">Database Scope</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+                  <div style="display:flex;justify-content:space-between;font-size:0.78rem;">
+                    <span style="color:var(--text-muted);">Gem Species</span>
+                    <span style="color:var(--text-primary);font-family:var(--font-mono);">342</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.78rem;">
+                    <span style="color:var(--text-muted);">Cut Styles</span>
+                    <span style="color:var(--text-primary);font-family:var(--font-mono);">87</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.78rem;">
+                    <span style="color:var(--text-muted);">Origin Deposits</span>
+                    <span style="color:var(--text-primary);font-family:var(--font-mono);">214</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.78rem;">
+                    <span style="color:var(--text-muted);">Glossary Terms</span>
+                    <span style="color:var(--text-primary);font-family:var(--font-mono);">1,240</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.78rem;">
+                    <span style="color:var(--text-muted);">Last Updated</span>
+                    <span style="color:var(--text-primary);font-family:var(--font-mono);">May 2026</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CONTRIBUTORS -->
+      <section class="page-section" id="contributors" aria-labelledby="contributors-heading">
+        <div class="content-column">
+        <div class="section-header">
+          <span class="eyebrow">Editorial Team</span>
+          <h2 id="contributors-heading">Contributors &amp; Reviewers</h2>
+          <p>The reference is compiled and reviewed by credentialed gemologists, mineralogists, and specialist contributors from the gem trade and academic community.</p>
+        </div>
+
+        <div class="contributor-grid">
+          <div class="contributor-card">
+            <div class="contributor-avatar">M</div>
+            <div class="contributor-name">Dr. M. Halvorsen</div>
+            <div class="contributor-title">FGA · GIA GG</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-top:var(--space-sm);">Senior Editor — Corundum, Origin Analysis</div>
+          </div>
+          <div class="contributor-card">
+            <div class="contributor-avatar">S</div>
+            <div class="contributor-name">S. Ramirez-Vidal</div>
+            <div class="contributor-title">GIA GG · FGA</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-top:var(--space-sm);">Lead — Colored Stones, Trade Nomenclature</div>
+          </div>
+          <div class="contributor-card">
+            <div class="contributor-avatar">T</div>
+            <div class="contributor-name">Prof. T. Nakamura</div>
+            <div class="contributor-title">PhD Mineralogy</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-top:var(--space-sm);">Scientific Reviewer — Crystal Systems, RI Data</div>
+          </div>
+          <div class="contributor-card">
+            <div class="contributor-avatar">A</div>
+            <div class="contributor-name">A. Christodoulou</div>
+            <div class="contributor-title">GIA GG · AGS</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-top:var(--space-sm);">Diamond Editor — Cut Grading, 4Cs</div>
+          </div>
+          <div class="contributor-card">
+            <div class="contributor-avatar">L</div>
+            <div class="contributor-name">L. Beaumont</div>
+            <div class="contributor-title">Graduate Gemologist</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-top:var(--space-sm);">Glossary Compilation, Etymology Research</div>
+          </div>
+          <div class="contributor-card">
+            <div class="contributor-avatar">K</div>
+            <div class="contributor-name">K. Osei-Mensah</div>
+            <div class="contributor-title">BSc Geology · FGA</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-top:var(--space-sm);">Geological Origins, Deposit Database</div>
+          </div>
+        </div>
+        </div><!-- /.content-column -->
+      </section>
+
+      <!-- METHODOLOGY -->
+      <section class="page-section" id="methodology" aria-labelledby="methodology-heading">
+        <div class="content-column">
+        <div class="section-header">
+          <span class="eyebrow">Editorial Standards</span>
+          <h2 id="methodology-heading">Data Sourcing &amp; Methodology</h2>
+        </div>
+
+        <div class="methodology-item">
+          <div class="method-icon">◆</div>
+          <div>
+            <div class="method-title">Primary Laboratory Sources</div>
+            <p class="method-desc">Physical constants (RI, SG, hardness, crystal system) are drawn from current GIA publications, the Gemological Institute of America's <em>Colored Stone Grading</em> system, and peer-reviewed mineralogical reference works including Deer, Howie &amp; Zussman <em>Rock-Forming Minerals</em> and Gübelin &amp; Koivula <em>Photoatlas of Inclusions in Gemstones</em>.</p>
+          </div>
+        </div>
+
+        <div class="methodology-item">
+          <div class="method-icon">●</div>
+          <div>
+            <div class="method-title">Grading Scale Standards</div>
+            <p class="method-desc">Color and clarity grades follow GIA standards for diamond and AGTA guidelines for colored stones. Where grading terminology varies between laboratories (GIA, Gübelin, SSEF, AGL), equivalency mappings are noted with explicit caveats about laboratory-specific methodology differences. Grade equivalencies are approximate and should not be used as a substitute for independent laboratory assessment.</p>
+          </div>
+        </div>
+
+        <div class="methodology-item">
+          <div class="method-icon">▲</div>
+          <div>
+            <div class="method-title">Origin Deposit Data</div>
+            <p class="method-desc">Geographic deposit locations are compiled from published geological surveys, USGS mineral resources data, peer-reviewed papers in <em>Gems &amp; Gemology</em>, <em>The Journal of Gemmology</em>, and <em>Mineralogical Magazine</em>. Coordinate data is approximate to 25km for general educational reference and does not represent survey-grade geological mapping.</p>
+          </div>
+        </div>
+
+        <div class="methodology-item">
+          <div class="method-icon">■</div>
+          <div>
+            <div class="method-title">Trade Value Premiums</div>
+            <p class="method-desc">Value premium statements (e.g., "Kashmir sapphires command X% premium") are derived from published auction results (Christie's, Sotheby's, Bonhams) and trade survey data from Gemfields, Rapaport, and GemSelect market reports. Premium data reflects approximate ranges as of the publication date and is not investment advice.</p>
+          </div>
+        </div>
+
+        <div class="methodology-item">
+          <div class="method-icon">◉</div>
+          <div>
+            <div class="method-title">Peer Review Process</div>
+            <p class="method-desc">All new entries and substantial revisions are reviewed by at least one credentialed gemologist (FGA, GIA GG, or PhD mineralogy) before publication. Treatment disclosure data is reviewed against current CIBJO guidelines and laboratory disclosure standards. The editorial team endeavors to update entries within 90 days of significant industry changes (new laboratory methodology publications, CIBJO rule updates, major new deposit discoveries).</p>
+          </div>
+        </div>
+        </div><!-- /.content-column -->
+      </section>
+
+      <!-- REVISION HISTORY -->
+      <section class="page-section" id="revisions" aria-labelledby="revisions-heading">
+        <div class="content-column">
+        <div class="section-header">
+          <span class="eyebrow">Version History</span>
+          <h2 id="revisions-heading">Revision Log</h2>
+        </div>
+
+        <ul class="revision-log" aria-label="Database revision history">
+          <li class="revision-entry">
+            <span class="revision-date">2026-05-18</span>
+            <span class="revision-desc">Ruby specimen data updated with Mozambique Montepuez 2025 production figures. Pigeon's Blood definition revised per updated Gübelin 2026 quality criteria documentation.</span>
+          </li>
+          <li class="revision-entry">
+            <span class="revision-date">2026-05-15</span>
+            <span class="revision-desc">GIA 2026 emerald color descriptor updates incorporated into grading scale. Muzo vs. Chivor emerald color differentiation notes added.</span>
+          </li>
+          <li class="revision-entry">
+            <span class="revision-date">2026-05-12</span>
+            <span class="revision-desc">Ceylon Cushion cut historical notes expanded. Crown angle ranges revised per Tolkowsky Society 2025 proportions analysis. Four new historical cut illustrations added to the gallery.</span>
+          </li>
+          <li class="revision-entry">
+            <span class="revision-date">2026-05-09</span>
+            <span class="revision-desc">Zambian amethyst deposit section updated with Lusaka region new mining activity. Deposit coordinates and mine profiles added for three new Zambian sites.</span>
+          </li>
+          <li class="revision-entry">
+            <span class="revision-date">2026-04-28</span>
+            <span class="revision-desc">Chatoyancy glossary entry revised. Cat's eye chrysoberyl grading methodology from SSEF 2025 paper incorporated. Related terms expanded.</span>
+          </li>
+          <li class="revision-entry">
+            <span class="revision-date">2026-04-15</span>
+            <span class="revision-desc">Lab comparison table updated: AGL report turnaround revised, SSEF Jadeite testing specialty notes added. Treatment disclosure table revised per FTC 2026 guidance on HPHT diamond disclosure.</span>
+          </li>
+          <li class="revision-entry">
+            <span class="revision-date">2026-04-02</span>
+            <span class="revision-desc">Initial publication of the Gemology Reference Database v1.0. All eight reference sections live. 342 specimen entries, 87 cut styles, 214 deposit locations, 1,240 glossary terms.</span>
+          </li>
+        </ul>
+        </div><!-- /.content-column -->
+      </section>
+
+      <!-- CONTACT -->
+      <section class="page-section" id="contact" aria-labelledby="contact-heading">
+        <div class="content-column">
+        <div class="section-header">
+          <span class="eyebrow">Get in Touch</span>
+          <h2 id="contact-heading">Contact &amp; Submission Guidelines</h2>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-card-title">Editorial Corrections</div>
+            <p>Found a factual error, outdated reference, or data discrepancy? We welcome corrections from credentialed gemologists and mineralogists. Please include the specific entry, the correction, and a published source reference. Corrections are reviewed within 14 business days.</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-title">New Entry Submissions</div>
+            <p>Contributing a new gem species, cut style, deposit profile, or glossary term? Submissions should follow the reference format documented in our contributor guidelines and be accompanied by at least two corroborating published sources (GIA, peer-reviewed journal, or major laboratory publication).</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-title">Licensing &amp; Citation</div>
+            <p>All reference data is provided for educational and personal use. Academic citation: <em>Gemology Reference Database</em> (2026). Commercial licensing for dealer or institutional use is available — inquire through the editorial office with details of intended use and distribution scope.</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-title">Image Contributions</div>
+            <p>High-resolution mineral specimen photographs and facet diagram illustrations are always needed. We accept contributions under Creative Commons Attribution license. Images must include species, variety, carat weight where known, and photographed collection attribution.</p>
+          </div>
+        </div>
+        </div><!-- /.content-column -->
+      </section>
+
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><span class="nav-brand-text">Gem Classification Reference</span><p class="footer-desc">Authoritative gemological data for collectors and professionals.</p></div>
+      <div><div class="footer-col-title">Reference</div><ul class="footer-links"><li><a href="minerals.html">Mineral Index</a></li><li><a href="grading.html">Grading</a></li><li><a href="cuts.html">Cut Styles</a></li><li><a href="origins.html">Origins Map</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links"><li><a href="glossary.html">Glossary</a></li><li><a href="certification.html">Certification</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><div class="footer-col-title">Gem Families</div><ul class="footer-links"><li><a href="minerals.html">Beryl Group</a></li><li><a href="minerals.html">Corundum</a></li><li><a href="minerals.html">Diamond</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Gemology Reference Database. All reference data for educational use.</span><span>Updated <time datetime="2026-05-20">May 2026</time></span></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Stack the two-col layout on narrow screens
+    function handleAboutLayout() {
+      const col = document.querySelector('.about-two-col');
+      if (col) {
+        col.style.gridTemplateColumns = window.innerWidth < 900 ? '1fr' : '1fr 320px';
+      }
+    }
+    handleAboutLayout();
+    window.addEventListener('resize', handleAboutLayout);
+  </script>
+</body>
+</html>

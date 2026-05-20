@@ -1,0 +1,2484 @@
+{
+  "passed": true,
+  "issues": [],
+  "checks": {
+    "site_files": [
+      "about.html",
+      "certification.html",
+      "css/style.css",
+      "cuts.html",
+      "glossary.html",
+      "grading.html",
+      "img/gem-amethyst.svg",
+      "img/gem-chrysoberyl.svg",
+      "img/gem-diamond.svg",
+      "img/gem-emerald.svg",
+      "img/gem-ruby.svg",
+      "img/gem-sapphire.svg",
+      "img/gem-spinel.svg",
+      "img/gem-tourmaline.svg",
+      "index.html",
+      "js/main.js",
+      "minerals.html",
+      "origins.html",
+      "screenshot-manifest.diagnostics.json",
+      "screenshot-manifest.json",
+      "screenshots/reference/_replay-report.json",
+      "screenshots/reference/about-full.png",
+      "screenshots/reference/animations/animation-01/0000ms.png",
+      "screenshots/reference/animations/animation-01/0150ms.png",
+      "screenshots/reference/animations/animation-01/0300ms.png",
+      "screenshots/reference/animations/animation-01/0450ms.png",
+      "screenshots/reference/animations/animation-01/0600ms.png",
+      "screenshots/reference/certification-full.png",
+      "screenshots/reference/cuts-drawer-open.png",
+      "screenshots/reference/cuts-filter-step.png",
+      "screenshots/reference/cuts-full.png",
+      "screenshots/reference/glossary-full.png",
+      "screenshots/reference/glossary-letter-jump-c.png",
+      "screenshots/reference/grading-full.png",
+      "screenshots/reference/grading-ruby-tab.png",
+      "screenshots/reference/grading-sapphire-tab.png",
+      "screenshots/reference/home-above-fold.png",
+      "screenshots/reference/home-full.png",
+      "screenshots/reference/minerals-card-hover-jewel-tone.png",
+      "screenshots/reference/minerals-filter-applied.png",
+      "screenshots/reference/minerals-full.png",
+      "screenshots/reference/origins-full.png",
+      "screenshots/reference/origins-period-mesozoic.png",
+      "site_intent.json"
+    ],
+    "html_page_count": 8,
+    "page_presence": {
+      "/": {
+        "declared_path": "/",
+        "declared_id": "home",
+        "resolved_file": "index.html",
+        "found": true
+      },
+      "/minerals": {
+        "declared_path": "/minerals",
+        "declared_id": "mineral-index",
+        "resolved_file": "minerals.html",
+        "found": true
+      },
+      "/grading": {
+        "declared_path": "/grading",
+        "declared_id": "grading",
+        "resolved_file": "grading.html",
+        "found": true
+      },
+      "/cuts": {
+        "declared_path": "/cuts",
+        "declared_id": "cutting-gallery",
+        "resolved_file": "cuts.html",
+        "found": true
+      },
+      "/origins": {
+        "declared_path": "/origins",
+        "declared_id": "origins-map",
+        "resolved_file": "origins.html",
+        "found": true
+      },
+      "/glossary": {
+        "declared_path": "/glossary",
+        "declared_id": "glossary",
+        "resolved_file": "glossary.html",
+        "found": true
+      },
+      "/certification": {
+        "declared_path": "/certification",
+        "declared_id": "certification",
+        "resolved_file": "certification.html",
+        "found": true
+      },
+      "/about": {
+        "declared_path": "/about",
+        "declared_id": "about",
+        "resolved_file": "about.html",
+        "found": true
+      }
+    },
+    "missing_required_text": [],
+    "placeholder_hits": [],
+    "per_page_metrics": {
+      "/": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 54,
+          "element_count": 265,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 3610
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.833461,
+          "passed": true,
+          "width": 1568,
+          "height": 3610,
+          "entropy": 2.476666,
+          "gray_std": 18.754372,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.002068,
+          "html_text_chars": 3065
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 8,
+              "candidate_component_count": 8,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 8,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "3|img:icon:0>div:title:0>div:body:0|body,icon,title",
+                  "majority_style": "flex|column|none|center|center|normal|16px|16px|16px|16px|4px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 6,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(8)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(9)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(10)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(11)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>a:nth-of-type(12)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 74.184782,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 29,
+              "total_elements": 147,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 6,
+                "elements_without_horizontal_alignment": 17,
+                "row_bottom_alignment": 6
+              },
+              "row_group_count": 35,
+              "vertical_alignment_group_count": 97,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 93.524163,
+              "tags": [],
+              "sparsity_rate": 12.53231,
+              "largest_blank_rectangle": {
+                "x": 1318,
+                "y": 716,
+                "width": 250,
+                "height": 2840,
+                "area": 709091
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 521,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 3610
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/minerals": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 77,
+          "element_count": 578,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 2892
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.80012,
+          "passed": true,
+          "width": 1568,
+          "height": 2892,
+          "entropy": 2.022855,
+          "gray_std": 16.373503,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.00116,
+          "html_text_chars": 2906
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 16.255301,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 48,
+              "total_num": 60,
+              "candidate_component_count": 73,
+              "evaluated_group_count": 13,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)",
+                  "component_count": 12,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "10|img:icon:0>div:title:0>div:body:0>span:body:0>div:body:2>div:body:2>div:body:2>div:body:2>div:body:2>div:body:2|body,body,body,body,body,body,body,body,icon,title",
+                  "majority_style": "flex|column|none|normal|normal|8px|24px|24px|24px|24px|4px",
+                  "issues": []
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-153",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-154",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-155",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-172",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(1)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-186",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-187",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-188",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-205",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(2)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-219",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-220",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-221",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-238",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(3)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-252",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-253",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-254",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-271",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(4)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-285",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-286",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-287",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-304",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(5)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-318",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-319",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-320",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-337",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(6)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-351",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-352",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-353",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-370",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(7)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-384",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-385",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-386",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-403",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(8)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-417",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-418",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-419",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-436",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(9)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-450",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-451",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-452",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-469",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(10)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-483",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-484",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-485",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-502",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(11)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 4,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-516",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-517",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-518",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-535",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(3)>article:nth-of-type(12)>div:nth-of-type(8)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 80.373461,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 29,
+              "total_elements": 198,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 6,
+                "elements_without_horizontal_alignment": 19,
+                "row_bottom_alignment": 4
+              },
+              "row_group_count": 44,
+              "vertical_alignment_group_count": 95,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 92.0372,
+              "tags": [],
+              "sparsity_rate": 15.291538,
+              "largest_blank_rectangle": {
+                "x": 1318,
+                "y": 48,
+                "width": 248,
+                "height": 2791,
+                "area": 692755
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 650,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 2892
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/grading": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 30,
+          "element_count": 152,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 2278
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.843102,
+          "passed": true,
+          "width": 1568,
+          "height": 2278,
+          "entropy": 2.159538,
+          "gray_std": 22.670935,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001043,
+          "html_text_chars": 6229
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 76.867445,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 20,
+              "total_elements": 114,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 4,
+                "elements_without_horizontal_alignment": 12,
+                "row_bottom_alignment": 4
+              },
+              "row_group_count": 21,
+              "vertical_alignment_group_count": 84,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 94.275011,
+              "tags": [],
+              "sparsity_rate": 11.122222,
+              "largest_blank_rectangle": {
+                "x": 1319,
+                "y": 395,
+                "width": 247,
+                "height": 1608,
+                "area": 396800
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 825,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 2278
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/cuts": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 42,
+          "element_count": 356,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 3043
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.769474,
+          "passed": true,
+          "width": 1568,
+          "height": 3043,
+          "entropy": 1.199861,
+          "gray_std": 17.107199,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001127,
+          "html_text_chars": 2859
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 13.454212,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 60,
+              "total_num": 72,
+              "candidate_component_count": 72,
+              "evaluated_group_count": 25,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 12,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "3|div:other:1>div:body:2>div:body:2|body,body,other",
+                  "majority_style": "flex|column|none|normal|normal|normal|0px|0px|0px|0px|4px",
+                  "issues": []
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:6|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-94",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-102",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-105",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-103",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-104",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:8|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-109",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-119",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-122",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-120",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-121",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:4|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-126",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-132",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-135",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(3)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-133",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-134",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(4)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:6|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-139",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-147",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-150",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(4)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-148",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-149",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(5)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:5|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-154",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-161",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-164",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(5)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-162",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-163",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(6)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:5|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-168",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-175",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-178",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(6)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-176",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-177",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(7)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:4|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-182",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-188",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-191",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(7)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-189",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-190",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(8)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:4|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-195",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-201",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-204",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(8)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-202",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-203",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(9)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:6|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-208",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-216",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-219",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(9)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-217",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-218",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(10)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:3|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-223",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-228",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-231",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(10)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-229",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-230",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(11)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:5|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-235",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-242",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-245",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(11)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-243",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-244",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(12)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 3,
+                  "majority_structure": "1|svg:icon:3|icon",
+                  "majority_style": "flex|row|none|center|center|normal|24px|24px|24px|24px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-249",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-254",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    },
+                    {
+                      "node_id": "node-257",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags",
+                        "mismatched_card_style"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(12)>div:nth-of-type(2)",
+                  "component_count": 2,
+                  "evaluated": true,
+                  "inconsistent_count": 2,
+                  "majority_structure": "0||",
+                  "majority_style": "block|row|none|normal|normal|normal|0px|0px|0px|0px|0px",
+                  "issues": [
+                    {
+                      "node_id": "node-255",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    },
+                    {
+                      "node_id": "node-256",
+                      "issues": [
+                        "fewer_than_two_children"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 14,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(2)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(3)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(4)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(5)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(6)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(7)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(8)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(9)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(10)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(11)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)>article:nth-of-type(12)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 72.582504,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 36,
+              "total_elements": 171,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 1,
+                "elements_without_horizontal_alignment": 21,
+                "row_bottom_alignment": 14
+              },
+              "row_group_count": 40,
+              "vertical_alignment_group_count": 106,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 92.016836,
+              "tags": [],
+              "sparsity_rate": 15.329018,
+              "largest_blank_rectangle": {
+                "x": 1319,
+                "y": 48,
+                "width": 249,
+                "height": 2942,
+                "area": 731014
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 618,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 3043
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/origins": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 29,
+          "element_count": 162,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 2158
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.824684,
+          "passed": true,
+          "width": 1568,
+          "height": 2158,
+          "entropy": 2.402548,
+          "gray_std": 17.801144,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.001586,
+          "html_text_chars": 2819
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 3,
+              "candidate_component_count": 3,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)>section:nth-of-type(1)",
+                  "component_count": 3,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "2|div:title:0>p:body:0|body,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|0px 4px 4px 0px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 2,
+              "evaluated_group_count": 0,
+              "applicable": true,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 67.807191,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 23,
+              "total_elements": 91,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 3,
+                "elements_without_horizontal_alignment": 16,
+                "row_bottom_alignment": 4
+              },
+              "row_group_count": 16,
+              "vertical_alignment_group_count": 76,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 89.901826,
+              "tags": [],
+              "sparsity_rate": 19.176617,
+              "largest_blank_rectangle": {
+                "x": 959,
+                "y": 727,
+                "width": 608,
+                "height": 1066,
+                "area": 648204
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 871,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 2158
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/glossary": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 95,
+          "element_count": 396,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 8953
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.768144,
+          "passed": true,
+          "width": 1568,
+          "height": 8953,
+          "entropy": 1.00948,
+          "gray_std": 18.252626,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.00028,
+          "html_text_chars": 17615
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 0,
+              "candidate_component_count": 0,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": []
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 2.748074,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 102,
+              "total_elements": 105,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 3,
+                "elements_without_horizontal_alignment": 98,
+                "row_bottom_alignment": 1
+              },
+              "row_group_count": 3,
+              "vertical_alignment_group_count": 32,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 91.892795,
+              "tags": [],
+              "sparsity_rate": 15.557143,
+              "largest_blank_rectangle": {
+                "x": 1321,
+                "y": 37,
+                "width": 246,
+                "height": 8863,
+                "area": 2182253
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 210,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 8953
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/certification": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 33,
+          "element_count": 354,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 5385
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.793556,
+          "passed": true,
+          "width": 1568,
+          "height": 5385,
+          "entropy": 1.523405,
+          "gray_std": 18.857473,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.000557,
+          "html_text_chars": 8210
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "inconsistent_num": 0,
+              "total_num": 4,
+              "candidate_component_count": 5,
+              "evaluated_group_count": 1,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "5|div:body:0>div:title:0>div:body:0>p:body:0>span:body:0|body,body,body,body,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|4px",
+                  "issues": []
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 67.003459,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 46,
+              "total_elements": 178,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 3,
+                "elements_without_horizontal_alignment": 30,
+                "row_bottom_alignment": 13
+              },
+              "row_group_count": 39,
+              "vertical_alignment_group_count": 107,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 91.932843,
+              "tags": [],
+              "sparsity_rate": 15.483524,
+              "largest_blank_rectangle": {
+                "x": 1319,
+                "y": 40,
+                "width": 247,
+                "height": 5291,
+                "area": 1305826
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 349,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 5385
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      },
+      "/about": {
+        "accessibility": {
+          "tags": [],
+          "issue_count": 0,
+          "control_count": 25,
+          "element_count": 246,
+          "viewport": {
+            "width": 1440,
+            "height": 900,
+            "devicePixelRatio": 1
+          },
+          "document": {
+            "width": 1568,
+            "height": 5347
+          },
+          "source": "WebCoderBench/Lighthouse accessibility inspired diagnostic"
+        },
+        "render_sanity": {
+          "score": 0.809322,
+          "passed": true,
+          "width": 1568,
+          "height": 5347,
+          "entropy": 1.716829,
+          "gray_std": 20.135695,
+          "non_white_ratio": 1.0,
+          "non_black_ratio": 1.0,
+          "unique_color_ratio": 0.000382,
+          "html_text_chars": 8623
+        },
+        "webcoderbench_visual_quality": {
+          "tags": [
+            "component_style_inconsistency",
+            "layout_alignment_inconsistency"
+          ],
+          "metrics": {
+            "component_style_consistency": {
+              "score": 87.446912,
+              "tags": [
+                "component_style_inconsistency"
+              ],
+              "inconsistent_num": 1,
+              "total_num": 10,
+              "candidate_component_count": 14,
+              "evaluated_group_count": 2,
+              "applicable": true,
+              "formula": "score = (1 - log2(1 + (inconsistent_num / (total_num + 1)))) * 100",
+              "source": "WebCoderBench Component Style Consistency paper-faithful local fallback",
+              "card_keywords": [
+                "card"
+              ],
+              "groups": [
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 6,
+                  "evaluated": true,
+                  "inconsistent_count": 0,
+                  "majority_structure": "4|div:icon:0>div:title:0>div:title:0>div:body:0|body,icon,title,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|4px",
+                  "issues": []
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(1)>div:nth-of-type(2)",
+                  "component_count": 4,
+                  "evaluated": true,
+                  "inconsistent_count": 1,
+                  "majority_structure": "2|div:title:0>p:body:0|body,title",
+                  "majority_style": "block|row|none|normal|normal|normal|24px|24px|24px|24px|4px",
+                  "issues": [
+                    {
+                      "node_id": "node-211",
+                      "issues": [
+                        "mismatched_hierarchy_or_tags"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(1)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(2)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(3)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                },
+                {
+                  "group": "card::body:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(5)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(4)",
+                  "component_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "icon_style_consistency": {
+              "score": 100.0,
+              "tags": [],
+              "failed_dimension_num": 0,
+              "failed_dimensions": [],
+              "icon_count": 1,
+              "evaluated_group_count": 0,
+              "applicable": false,
+              "formula": "score = max(0, 100 - 25 * failed_dimension_num)",
+              "source": "WebCoderBench Icon Style Consistency paper-faithful local fallback",
+              "groups": [
+                {
+                  "group": "body:nth-of-type(1)>nav:nth-of-type(1)>a:nth-of-type(1)",
+                  "icon_count": 1,
+                  "evaluated": false,
+                  "reason": "singleton_group"
+                }
+              ]
+            },
+            "layout_consistency": {
+              "score": 40.498383,
+              "tags": [
+                "layout_alignment_inconsistency"
+              ],
+              "total_errors": 73,
+              "total_elements": 142,
+              "error_breakdown": {
+                "elements_without_vertical_alignment": 4,
+                "elements_without_horizontal_alignment": 63,
+                "row_bottom_alignment": 6
+              },
+              "row_group_count": 25,
+              "vertical_alignment_group_count": 84,
+              "alignment_tolerance_px": 9.408,
+              "canny_thresholds": [
+                50,
+                150
+              ],
+              "formula": "score = (1 - log2(1 + (total_errors / (total_elements + 1)))) * 100",
+              "source": "WebCoderBench Layout Consistency paper-faithful local fallback",
+              "applicable": true
+            },
+            "layout_sparsity": {
+              "score": 91.871954,
+              "tags": [],
+              "sparsity_rate": 15.595442,
+              "largest_blank_rectangle": {
+                "x": 1314,
+                "y": 67,
+                "width": 250,
+                "height": 5227,
+                "area": 1304199
+              },
+              "tolerance": 80,
+              "processed_size": {
+                "width": 351,
+                "height": 1200
+              },
+              "original_size": {
+                "width": 1568,
+                "height": 5347
+              },
+              "formula": "score = min(sqrt(100 - sparsity_rate) * 10, 100)",
+              "source": "WebCoderBench Layout Sparsity paper-faithful local fallback",
+              "applicable": true
+            }
+          },
+          "source": "WebCoderBench visual-quality paper-faithful local fallback bundle",
+          "official_evaluator": "not_found_in_public_artifacts_checked"
+        }
+      }
+    },
+    "per_page_summary": {
+      "/": {
+        "render_sanity": 0.833,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/minerals": {
+        "render_sanity": 0.8,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/grading": {
+        "render_sanity": 0.843,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/cuts": {
+        "render_sanity": 0.769,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/origins": {
+        "render_sanity": 0.825,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/glossary": {
+        "render_sanity": 0.768,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/certification": {
+        "render_sanity": 0.794,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      },
+      "/about": {
+        "render_sanity": 0.809,
+        "accessibility_tags": [],
+        "component_style": null,
+        "icon_style": null,
+        "layout_consistency": null,
+        "layout_sparsity": null
+      }
+    }
+  }
+}

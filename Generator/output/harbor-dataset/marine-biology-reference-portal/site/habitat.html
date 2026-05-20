@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habitat &amp; Distribution Maps — OceanIndex</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">OI</div>
+      <div class="logo-text-wrap">
+        <span class="logo-name">OceanIndex</span>
+        <span class="logo-sub">Marine Biology Reference</span>
+      </div>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="taxonomy.html">Species Taxonomy</a>
+      <a href="habitat.html" class="active">Habitat &amp; Distribution</a>
+      <a href="publications.html">Research Publications</a>
+      <a href="conservation.html">Conservation Status</a>
+      <a href="field-guide.html">Field Guide</a>
+    </nav>
+    <div class="header-search">
+      <input class="header-search-input" type="search" placeholder="Search species…" aria-label="Site-wide search">
+    </div>
+    <button class="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span class="sep">/</span>
+    <span class="crumb-current">Habitat &amp; Distribution</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- Page header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+    <div>
+      <h1 style="font-size:18px;font-weight:700;color:var(--deep-sea);">Habitat &amp; Distribution Maps</h1>
+      <p style="font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">Ocean basin polygons &bull; Depth-zone overlays &bull; Species distribution data</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">Click a basin to filter species</span>
+      <button class="btn btn-secondary btn-sm">Reset Map</button>
+    </div>
+  </div>
+
+  <div class="habitat-layout">
+
+    <!-- Main map + controls column -->
+    <div>
+      <!-- World Map SVG Panel -->
+      <div class="map-panel" id="world-map-svg">
+        <div class="map-hd" style="display:flex;align-items:center;justify-content:space-between;">
+          <span>World Ocean Basin Map</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.6);">Clickable basin regions</span>
+        </div>
+        <svg class="ocean-map-svg" viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" aria-label="Interactive ocean basin map">
+          <!-- Ocean background -->
+          <rect width="900" height="400" fill="#0A1F3A"/>
+
+          <!-- Continents (simplified) -->
+          <!-- North America -->
+          <path d="M120 40 L200 35 L220 55 L240 50 L250 75 L240 100 L220 110 L210 140 L190 160 L175 180 L160 200 L150 230 L130 250 L110 260 L90 250 L80 220 L85 190 L90 160 L100 130 L105 100 L100 70 L110 50 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Central America & Caribbean -->
+          <path d="M150 255 L170 260 L185 250 L200 260 L195 275 L175 278 L155 270 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- South America -->
+          <path d="M175 280 L210 270 L235 280 L255 300 L265 330 L260 360 L240 380 L210 390 L185 385 L165 365 L158 340 L160 310 L170 295 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Europe -->
+          <path d="M370 30 L420 28 L440 40 L450 55 L430 65 L410 60 L395 70 L385 65 L375 55 L372 42 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Africa -->
+          <path d="M380 80 L430 75 L460 85 L475 110 L480 145 L475 175 L465 210 L455 240 L445 270 L425 295 L400 305 L380 295 L365 270 L358 240 L360 205 L368 170 L370 140 L372 110 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Asia -->
+          <path d="M455 28 L560 25 L620 35 L660 45 L680 65 L665 80 L640 85 L610 80 L575 75 L550 85 L520 90 L490 85 L470 75 L460 60 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Russia/Siberia -->
+          <path d="M455 28 L560 25 L680 20 L820 25 L840 40 L820 50 L750 55 L680 65 L660 45 L560 35 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- East Asia / China -->
+          <path d="M620 60 L680 55 L710 70 L715 90 L700 105 L675 110 L650 100 L635 85 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Southeast Asia / Malay -->
+          <path d="M660 115 L700 110 L720 125 L718 140 L700 145 L675 135 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- India -->
+          <path d="M540 90 L575 90 L590 105 L590 130 L575 155 L555 165 L538 155 L530 135 L530 110 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Australia -->
+          <path d="M695 210 L760 205 L800 215 L820 235 L825 265 L810 290 L780 300 L745 295 L715 280 L700 260 L692 235 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- New Zealand -->
+          <path d="M820 285 L835 280 L840 295 L835 310 L822 308 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Japan -->
+          <path d="M730 65 L750 60 L755 72 L745 82 L732 80 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Greenland -->
+          <path d="M250 15 L310 10 L330 22 L320 38 L295 42 L268 36 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Iceland -->
+          <path d="M335 40 L355 37 L358 48 L345 52 L334 48 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- UK/Ireland -->
+          <path d="M348 52 L365 50 L368 62 L358 68 L349 63 Z" fill="#2D4A2D" stroke="#1A3A1A" stroke-width="0.5"/>
+          <!-- Antarctica -->
+          <rect x="0" y="370" width="900" height="30" fill="#3A4A5A" opacity=".7"/>
+
+          <!-- ===== OCEAN BASIN CLICKABLE POLYGONS ===== -->
+          <!-- Pacific Ocean (large central) -->
+          <path class="ocean-basin" data-basin="pacific"
+            d="M250 80 L260 310 L270 360 L350 365 L680 200 L720 125 L700 50 L660 45 L260 50 Z"
+            fill="#1A4A8A" fill-opacity="0.6"/>
+
+          <!-- Atlantic Ocean -->
+          <path class="ocean-basin" data-basin="atlantic"
+            d="M110 260 L175 280 L215 270 L260 310 L260 360 L210 390 L150 380 L80 350 L50 280 L60 200 L85 190 L90 250 Z"
+            fill="#1A5AAA" fill-opacity="0.6"/>
+
+          <!-- North Atlantic upper band -->
+          <path class="ocean-basin" data-basin="atlantic"
+            d="M100 70 L120 40 L200 35 L250 75 L240 100 L200 120 L150 100 L120 90 Z"
+            fill="#1A5AAA" fill-opacity="0.5"/>
+
+          <!-- Indian Ocean -->
+          <path class="ocean-basin" data-basin="indian"
+            d="M480 145 L490 85 L540 90 L600 130 L640 115 L695 145 L692 235 L700 260 L640 280 L575 290 L490 270 L470 230 Z"
+            fill="#1A6A8A" fill-opacity="0.6"/>
+
+          <!-- Arctic Ocean -->
+          <path class="ocean-basin" data-basin="arctic"
+            d="M100 0 L450 0 L820 0 L840 30 L660 20 L450 15 L250 15 L120 20 Z"
+            fill="#3A7AAA" fill-opacity="0.6"/>
+
+          <!-- Southern Ocean -->
+          <path class="ocean-basin" data-basin="southern"
+            d="M0 360 L900 360 L900 400 L0 400 Z"
+            fill="#0A3A6A" fill-opacity="0.7"/>
+
+          <!-- Mediterranean -->
+          <path class="ocean-basin" data-basin="mediterranean"
+            d="M370 65 L460 65 L470 75 L475 85 L460 90 L430 88 L400 90 L380 85 L368 75 Z"
+            fill="#2A7AAA" fill-opacity="0.7"/>
+
+          <!-- Labels for basins -->
+          <text x="480" y="200" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="12" font-family="IBM Plex Mono, monospace">Pacific Ocean</text>
+          <text x="175" y="320" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="10" font-family="IBM Plex Mono, monospace">Atlantic</text>
+          <text x="575" y="190" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="10" font-family="IBM Plex Mono, monospace">Indian Ocean</text>
+          <text x="450" y="12" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-family="IBM Plex Mono, monospace">Arctic Ocean</text>
+          <text x="450" y="388" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-family="IBM Plex Mono, monospace">Southern Ocean</text>
+          <text x="415" y="80" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="7.5" font-family="IBM Plex Mono, monospace">Mediterranean</text>
+
+          <!-- Depth zone color bars legend (mini) -->
+          <rect x="20" y="355" width="16" height="8" fill="#4CACBC" rx="1"/>
+          <text x="40" y="362" fill="rgba(255,255,255,.6)" font-size="8" font-family="IBM Plex Mono, monospace">Epipelagic 0–200m</text>
+          <rect x="180" y="355" width="16" height="8" fill="#007A8C" rx="1"/>
+          <text x="200" y="362" fill="rgba(255,255,255,.6)" font-size="8" font-family="IBM Plex Mono, monospace">Mesopelagic 200–1000m</text>
+          <rect x="380" y="355" width="16" height="8" fill="#003366" rx="1"/>
+          <text x="400" y="362" fill="rgba(255,255,255,.6)" font-size="8" font-family="IBM Plex Mono, monospace">Bathypelagic 1000–4000m</text>
+        </svg>
+      </div>
+
+      <!-- Depth Zone Filter Strip -->
+      <div class="depth-filter-strip" style="margin-top:12px;" id="depth-zone-filter-strip">
+        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--deep-sea);margin-right:8px;">Depth Zone Filter:</span>
+        <div class="depth-toggle active" data-zone="epipelagic">
+          <div class="depth-swatch" style="background:#4CACBC;"></div>
+          <span>Epipelagic</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:inherit;opacity:.7;">0–200 m</span>
+        </div>
+        <div class="depth-toggle active" data-zone="mesopelagic">
+          <div class="depth-swatch" style="background:#007A8C;"></div>
+          <span>Mesopelagic</span>
+          <span style="font-family:var(--font-mono);font-size:10px;opacity:.7;">200–1,000 m</span>
+        </div>
+        <div class="depth-toggle" data-zone="bathypelagic">
+          <div class="depth-swatch" style="background:#003366;"></div>
+          <span>Bathypelagic</span>
+          <span style="font-family:var(--font-mono);font-size:10px;opacity:.7;">1,000–4,000 m</span>
+        </div>
+        <div class="depth-toggle" data-zone="abyssopelagic">
+          <div class="depth-swatch" style="background:#001133;"></div>
+          <span>Abyssopelagic</span>
+          <span style="font-family:var(--font-mono);font-size:10px;opacity:.7;">4,000+ m</span>
+        </div>
+        <div class="depth-toggle" data-zone="benthic">
+          <div class="depth-swatch" style="background:#8B4513;"></div>
+          <span>Benthic</span>
+          <span style="font-family:var(--font-mono);font-size:10px;opacity:.7;">Seafloor</span>
+        </div>
+      </div>
+
+      <!-- Basin Species Tally -->
+      <div id="basin-tally" style="margin-top:12px;">
+        <div style="padding:12px 16px;background:#fff;border:1px solid var(--border);border-radius:4px;font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">
+          ← Click an ocean basin on the map to see species distribution data
+        </div>
+      </div>
+
+      <!-- All-basins summary table -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-hd">
+          <span class="card-hd-title">Basin Summary — All Active Filters</span>
+        </div>
+        <table class="data-table" aria-label="Basin species summary">
+          <thead>
+            <tr>
+              <th>Ocean Basin</th>
+              <th>Total Species</th>
+              <th>Threatened (CR+EN+VU)</th>
+              <th>Epipelagic</th>
+              <th>Mesopelagic</th>
+              <th>Bathypelagic</th>
+              <th>Distribution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600;color:var(--deep-sea);">Pacific Ocean</td>
+              <td class="cell-mono">1,847</td>
+              <td><span style="color:var(--iucn-en);font-weight:700;font-family:var(--font-mono);">412</span></td>
+              <td class="cell-mono">1,204</td>
+              <td class="cell-mono">483</td>
+              <td class="cell-mono">160</td>
+              <td><div class="tally-bar-wrap"><div class="tally-bar-fill" style="width:100%"></div></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--deep-sea);">Atlantic Ocean</td>
+              <td class="cell-mono">1,203</td>
+              <td><span style="color:var(--iucn-en);font-weight:700;font-family:var(--font-mono);">298</span></td>
+              <td class="cell-mono">802</td>
+              <td class="cell-mono">295</td>
+              <td class="cell-mono">106</td>
+              <td><div class="tally-bar-wrap"><div class="tally-bar-fill" style="width:65%"></div></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--deep-sea);">Indian Ocean</td>
+              <td class="cell-mono">892</td>
+              <td><span style="color:var(--iucn-en);font-weight:700;font-family:var(--font-mono);">201</span></td>
+              <td class="cell-mono">614</td>
+              <td class="cell-mono">198</td>
+              <td class="cell-mono">80</td>
+              <td><div class="tally-bar-wrap"><div class="tally-bar-fill" style="width:48%"></div></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--deep-sea);">Southern Ocean</td>
+              <td class="cell-mono">527</td>
+              <td><span style="color:var(--iucn-en);font-weight:700;font-family:var(--font-mono);">89</span></td>
+              <td class="cell-mono">310</td>
+              <td class="cell-mono">145</td>
+              <td class="cell-mono">72</td>
+              <td><div class="tally-bar-wrap"><div class="tally-bar-fill" style="width:29%"></div></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--deep-sea);">Mediterranean Sea</td>
+              <td class="cell-mono">614</td>
+              <td><span style="color:var(--iucn-en);font-weight:700;font-family:var(--font-mono);">178</span></td>
+              <td class="cell-mono">548</td>
+              <td class="cell-mono">60</td>
+              <td class="cell-mono">6</td>
+              <td><div class="tally-bar-wrap"><div class="tally-bar-fill" style="width:33%"></div></div></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--deep-sea);">Arctic Ocean</td>
+              <td class="cell-mono">341</td>
+              <td><span style="color:var(--iucn-en);font-weight:700;font-family:var(--font-mono);">64</span></td>
+              <td class="cell-mono">298</td>
+              <td class="cell-mono">38</td>
+              <td class="cell-mono">5</td>
+              <td><div class="tally-bar-wrap"><div class="tally-bar-fill" style="width:18%"></div></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Legend sidebar -->
+    <div>
+      <!-- Overlay Legend -->
+      <div class="legend-panel" id="overlay-legend-panel">
+        <div class="legend-hd">Active Species Overlays</div>
+        <div style="padding:8px 16px;border-bottom:1px solid var(--border);">
+          <label class="check-label">
+            <input type="checkbox" checked> All classes
+          </label>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#003366;"></div>
+          <label class="check-label" style="flex:1;">
+            <input type="checkbox" checked> Chondrichthyes
+          </label>
+          <span class="legend-count">1,199</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#007A8C;"></div>
+          <label class="check-label" style="flex:1;">
+            <input type="checkbox" checked> Actinopterygii
+          </label>
+          <span class="legend-count">22,492</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#4CACBC;"></div>
+          <label class="check-label" style="flex:1;">
+            <input type="checkbox" checked> Mammalia
+          </label>
+          <span class="legend-count">142</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#8BC34A;"></div>
+          <label class="check-label" style="flex:1;">
+            <input type="checkbox" checked> Reptilia
+          </label>
+          <span class="legend-count">86</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#FF9800;"></div>
+          <label class="check-label" style="flex:1;">
+            <input type="checkbox" checked> Cephalopoda
+          </label>
+          <span class="legend-count">800</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#9C27B0;"></div>
+          <label class="check-label" style="flex:1;">
+            <input type="checkbox"> Echinodermata
+          </label>
+          <span class="legend-count">1,821</span>
+        </div>
+      </div>
+
+      <!-- IUCN status key — each row uses consistent two-child label/value structure -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-hd"><span class="card-hd-title">IUCN Status Key</span></div>
+        <div class="card-body" style="padding:8px;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-lc">LC</span></span>
+              <span class="value">Least Concern</span>
+            </div>
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-nt">NT</span></span>
+              <span class="value">Near Threatened</span>
+            </div>
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-vu">VU</span></span>
+              <span class="value">Vulnerable</span>
+            </div>
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-en">EN</span></span>
+              <span class="value">Endangered</span>
+            </div>
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-cr">CR</span></span>
+              <span class="value">Critically Endangered</span>
+            </div>
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-ew">EW</span></span>
+              <span class="value">Extinct in Wild</span>
+            </div>
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-ex">EX</span></span>
+              <span class="value">Extinct</span>
+            </div>
+            <div class="iucn-key-row">
+              <span class="label"><span class="iucn-pill iucn-dd">DD</span></span>
+              <span class="value">Data Deficient</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map data info — consistent two-child label/value rows -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-hd"><span class="card-hd-title">Map Data</span></div>
+        <div class="card-body">
+          <div style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted);line-height:1.8;">
+            <div class="map-data-row"><span class="label">Source:</span><span class="value">OBIS / GBIF</span></div>
+            <div class="map-data-row"><span class="label">Basemap:</span><span class="value">Simplified topology</span></div>
+            <div class="map-data-row"><span class="label">Depth zones:</span><span class="value">GEBCO</span></div>
+            <div class="map-data-row"><span class="label">Updated:</span><span class="value">2024-05-01</span></div>
+            <div class="map-data-row"><span class="label">Projection:</span><span class="value">Plate Carrée</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /habitat-layout -->
+
+</div><!-- /page-wrap -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fl">OceanIndex</div>
+      <p>Habitat and distribution data sourced from the Ocean Biodiversity Information System (OBIS), GBIF, and the GEBCO bathymetric dataset. Depth zone definitions follow the UNESCO IOC classification.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Navigation</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="taxonomy.html">Species Taxonomy</a></li>
+        <li><a href="publications.html">Publications</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Tools</div>
+      <ul>
+        <li><a href="conservation.html">Conservation</a></li>
+        <li><a href="field-guide.html">Field Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Data Sources</div>
+      <ul>
+        <li><a href="#">OBIS</a></li>
+        <li><a href="#">GBIF</a></li>
+        <li><a href="#">GEBCO</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>OceanIndex v3.4 &mdash; Habitat &amp; Distribution</span>
+    <span>34,817 species &bull; 146 habitat zones</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

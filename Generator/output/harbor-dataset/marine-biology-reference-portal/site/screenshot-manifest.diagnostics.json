@@ -1,0 +1,66 @@
+{
+  "raw_animation_count": 1,
+  "sanitized_animation_count": 1,
+  "raw_animations": [
+    {
+      "id": "specimen-panel-slide",
+      "kind": "animation",
+      "path": "/taxonomy.html",
+      "page": "taxonomy",
+      "trigger": {
+        "type": "click",
+        "selector": "tr[aria-label=\"Open Great White Shark detail\"]"
+      },
+      "timeline": {
+        "durationMs": 600,
+        "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "samplesMs": [
+          0,
+          150,
+          300,
+          450,
+          600
+        ]
+      },
+      "targets": [
+        {
+          "name": "specimen-detail-panel",
+          "selector": "div[aria-label=\"Specimen detail\"]",
+          "channels": [
+            "motion"
+          ],
+          "track": [
+            "transform",
+            "translateX"
+          ]
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    }
+  ],
+  "animation_sanitize": [
+    {
+      "status": "kept",
+      "id": "specimen-panel-slide",
+      "path": "/taxonomy.html",
+      "sanitized_id": "specimen-panel-slide",
+      "trigger": {
+        "type": "click",
+        "selector": "tr[aria-label=\"Open Great White Shark detail\"]",
+        "settleBeforeMs": 0,
+        "settleMs": 0
+      },
+      "targets": [
+        {
+          "selector": "div[aria-label=\"Specimen detail\"]",
+          "channels": [
+            "motion"
+          ]
+        }
+      ]
+    }
+  ]
+}

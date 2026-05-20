@@ -1,0 +1,256 @@
+{
+  "site_id": "marine-biology-reference-portal",
+  "concept_seed": {
+    "id": "marine-biology-reference-portal",
+    "one_liner": "Dense utilitarian marine biology reference portal covering species taxonomy, habitat distribution maps, research publications, conservation status dashboards, field guide entries, and specimen data cards; clean institutional blue-and-white grid layout with high information density, multi-level navigation, and click-triggered motion animations on interactive data visualization panels across six structured pages.",
+    "metadata": {
+      "animation_channel": "motion",
+      "animation_trigger": "click",
+      "animation_duration_ms_min": 300,
+      "animation_duration_ms_max": 900,
+      "animation_target_hint": "expandable specimen data card panel that slides open in-place",
+      "animation_side_effects": "none — no scroll, no layout shift, no element replacement",
+      "implied_pages": [
+        "Home / Featured Species",
+        "Species Taxonomy Browser",
+        "Habitat & Distribution Maps",
+        "Research Publications",
+        "Conservation Status Dashboard",
+        "Field Guide Entries"
+      ]
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "ocean-index",
+    "domain": "marine biology reference",
+    "site_goal": "Provide taxonomists, marine researchers, and conservationists with a dense, authoritative single-source reference for species taxonomy, habitat distribution, peer-reviewed literature, and conservation metrics",
+    "audience": [
+      "marine biologists",
+      "taxonomists",
+      "conservation researchers",
+      "oceanographic graduate students"
+    ],
+    "description": "OceanIndex is a high-density institutional reference portal built on a strict blue-and-white grid. A three-panel taxonomy browser anchors the experience: a collapsible hierarchical tree on the left, a paginated species roster in the center, and a specimen detail panel on the right rail that slides in-place on click. Every page follows the same disciplined grid, monospace scientific annotations, and deep-sea blue (#003366) header band. Navigation is multi-level with persistent breadcrumbs. Data-heavy pages use sortable tables, faceted filters, and inline sparklines rather than decorative chrome.",
+    "motif": "Institutional deep-sea blue (#003366) header band on crisp white content panels; monospace scientific annotations for measurements and taxonomy ranks; strict 12-column grid with dense gutters; tabular data-first layout; muted teal accent for interactive affordances",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "hero split: left two-thirds shows rotating featured-species spotlight with large binomial name, phylum badge, and IUCN status pill; right third houses a persistent taxonomy quick-search widget with autocomplete; below the fold a three-column recently-added species card grid with thumbnail silhouette, common name, and date-added stamp",
+        "sections": [
+          "featured-species-spotlight",
+          "taxonomy-quick-search",
+          "recently-added-grid",
+          "site-stats-banner"
+        ]
+      },
+      {
+        "id": "taxonomy-browser",
+        "path": "/taxonomy",
+        "layout_pattern": "three-panel: 240px sticky left sidebar contains collapsible taxonomy tree from kingdom to species with node counts; 60% center column shows paginated species list rows (thumbnail, binomial, authority, habitat zone, IUCN status pill); 280px right rail holds the specimen detail panel that slides in on row click — panel contains morphology measurements, synonyms, depth range bar, and classification breadcrumb",
+        "sections": [
+          "taxonomy-tree-sidebar",
+          "species-list-table",
+          "specimen-detail-panel",
+          "pagination-controls"
+        ]
+      },
+      {
+        "id": "habitat-maps",
+        "path": "/habitat",
+        "layout_pattern": "full-width SVG world map occupying the upper 55% of viewport with clickable ocean-basin regions rendered as colored polygons; below the map: a horizontal depth-zone filter strip (epipelagic, mesopelagic, bathypelagic toggles); right-side legend panel lists active species overlays with color swatches and species counts; clicking a basin polygon filters an inline result tally beneath the filter strip",
+        "sections": [
+          "world-map-svg",
+          "depth-zone-filter-strip",
+          "overlay-legend-panel",
+          "basin-species-tally"
+        ]
+      },
+      {
+        "id": "publications",
+        "path": "/publications",
+        "layout_pattern": "220px left filter sidebar with faceted controls for year range slider, taxonomy phylum checkboxes, journal name multi-select, and open-access toggle; center region renders a sortable dense table with columns for title, lead author, journal, year, citation count badge, and a collapsible abstract row that expands inline; top bar shows active-filter chip row and result count",
+        "sections": [
+          "faceted-filter-sidebar",
+          "publications-sortable-table",
+          "active-filter-chips",
+          "abstract-inline-preview"
+        ]
+      },
+      {
+        "id": "conservation",
+        "path": "/conservation",
+        "layout_pattern": "dashboard grid: top row spans full width with an IUCN status distribution bar chart showing species counts per category; middle section is a card matrix where each card represents a taxonomic order with its dominant status, population trend arrow, and a sparkline of assessment history; bottom section contains per-class trend line charts with a year-range selector",
+        "sections": [
+          "iucn-status-bar-chart",
+          "order-status-card-matrix",
+          "trend-sparklines",
+          "year-range-selector"
+        ]
+      },
+      {
+        "id": "field-guide",
+        "path": "/field-guide",
+        "layout_pattern": "masonry card grid (3 columns desktop, 2 tablet, 1 mobile) where each card shows a specimen silhouette placeholder at top, common name in bold, scientific binomial in italics, a taxonomic rank badge (e.g., ORDER: Carcharhiniformes), habitat zone tag chips, maximum recorded length, and depth range data strip at card foot",
+        "sections": [
+          "search-and-filter-bar",
+          "field-guide-masonry-grid",
+          "card-detail-hover-tooltip"
+        ]
+      }
+    ],
+    "message_intent": [
+      "establish portal as the authoritative dense-reference destination for working marine scientists",
+      "enable rapid lookup and side-by-side comparison of species taxonomic data",
+      "surface geographic distribution patterns through layered habitat map overlays",
+      "communicate conservation urgency through dashboard-style status metrics and trend sparklines"
+    ],
+    "required_text": [
+      "Species Taxonomy",
+      "Habitat & Distribution",
+      "Conservation Status",
+      "Field Guide",
+      "Research Publications"
+    ],
+    "content_model": [
+      "species taxonomy records with full classification hierarchy from kingdom to subspecies",
+      "habitat zone polygon geodata with depth range and temperature band attributes",
+      "peer-reviewed publication metadata including DOI, abstract snippet, citation count, and taxa tags",
+      "IUCN Red List conservation status records with population trend and assessment year",
+      "field guide entries with morphological measurements, diagnostic characters, and behavioral notes"
+    ],
+    "interactions": [
+      "click species row in taxonomy browser to slide open specimen detail panel in right rail",
+      "click ocean zone polygon on habitat map to filter species list to that zone",
+      "sort publications table by year, citation count, or journal impact factor",
+      "toggle species taxon overlays on habitat map via checkbox legend",
+      "expand and collapse taxonomy tree nodes from phylum to species level"
+    ],
+    "animations": [
+      {
+        "id": "specimen-panel-slide",
+        "page": "taxonomy-browser",
+        "target": ".specimen-detail-panel",
+        "trigger": {
+          "type": "click",
+          "source": ".species-list-row"
+        },
+        "channels": [
+          "motion"
+        ],
+        "durationMs": 600,
+        "description": "Clicking a row in the center species list triggers the specimen detail panel in the right rail to animate from its collapsed off-canvas position (CSS transform: translateX(100%)) to its fully visible in-rail position (transform: translateX(0)) over 600ms with an ease-out cubic-bezier curve. The panel is already present in the DOM and absolutely positioned within the fixed-width right rail container, so no surrounding columns shift and no page scroll is triggered. The panel stays fully within the right rail viewport region for the entire 600ms transition."
+      }
+    ],
+    "asset_needs": [
+      "specimen silhouette SVG icons keyed to taxonomic class (e.g., Chondrichthyes, Actinopterygii, Cetacea)",
+      "ocean zone vector base layer with basin and depth-zone polygon topology",
+      "IUCN status color-token palette (LC green through EX black)",
+      "monospace typeface for scientific annotations (e.g., IBM Plex Mono)"
+    ],
+    "mobile_behavior": "collapsible sidebar navigation behind hamburger; taxonomy tree stacks above species list; specimen detail panel becomes full-width bottom drawer; publications table switches to stacked card list",
+    "difficulty": "hard"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "ocean-index",
+        "score": 0.93,
+        "accept": true,
+        "strengths": [
+          "Animation is a perfect seed match: motion channel, CSS translateX(100%)→translateX(0) slide, click-triggered, 600ms within the 300–900ms window, zero layout shift, zero scroll — directly targets the 'expandable specimen data card panel that slides open in-place' hint",
+          "Motif is tightly institutional: deep-sea blue #003366 header band on white, monospace IBM Plex Mono for scientific annotations, strict 12-column grid — fully satisfies the 'clean institutional blue-and-white grid layout' seed requirement",
+          "Layout descriptions are unusually concrete: exact pixel widths (240px sidebar, 280px right rail, 60% center column), named CSS properties, column-count breakpoints — a developer can implement directly without interpretation",
+          "Six pages are genuinely distinct with no near-duplicate layouts: hero-split home, three-panel taxonomy browser, SVG map page, faceted-filter publications table, sparkline-and-card conservation dashboard, masonry field guide",
+          "Content model is domain-specific: full kingdom-to-subspecies hierarchy, depth-zone polygon geodata with temperature bands, IUCN population trend sparklines, DOI/citation-count publication metadata — not generic CMS placeholders",
+          "Interactions map tightly to data: clicking a basin polygon filters the species list, sorting publications by impact factor, toggling taxon overlays — all are realistic, purposeful, and domain-appropriate"
+        ],
+        "weaknesses": [
+          "Masonry layout on the field guide page introduces a CSS complexity (column-fill or JS masonry) that may conflict with the otherwise strict grid discipline",
+          "Habitat map uses SVG with clickable polygons but no mention of a tile-based fallback or data source format for the basin topology, leaving a small realism gap"
+        ]
+      },
+      {
+        "candidate_id": "coral-base",
+        "score": 0.79,
+        "accept": true,
+        "strengths": [
+          "IUCN status matrix table — sticky order column, seven category columns, inline collapsible species roster as a sub-row — is a genuinely useful and non-generic analytical pattern that fits the conservation dashboard requirement well",
+          "Alphabetical sidebar index on the field guide with per-letter species counts is a smart reference-portal UX pattern absent from the other candidate",
+          "Publication card list with expandable two-sentence abstract and open-access icon demonstrates realistic content modeling",
+          "Six pages with clearly differentiated layouts; no near-duplicates"
+        ],
+        "weaknesses": [
+          "Animation uses the 'color' channel (background-color transition on a matrix cell) but the seed explicitly specifies animation_channel: 'motion'; this is a direct channel mismatch",
+          "Animation target is a status matrix cell, not the 'expandable specimen data card panel that slides open in-place' described in animation_target_hint — the concept ignores the seed's primary animation scenario",
+          "Coral accent (#E8572A) conflicts with the seed's 'clean institutional blue-and-white' specification; it introduces a warm, commercial tone misaligned with the institutional domain aesthetic",
+          "Mega-menu navigation adds visual and implementation complexity that pushes the motif away from the dense utilitarian register the seed calls for"
+        ]
+      }
+    ],
+    "best_candidate_id": "ocean-index",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/animation-vm-run-2026-05-20/marine-biology-reference-portal/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "icon_style_warning",
+        "message": "The six feature navigation cards on the home page use SVG icons with noticeably different path complexity and visual weight (one group has 3 paths, another has 8 paths, etc.), producing a minor shape-consistency flag. Visually tolerable but worth aligning.",
+        "severity": "warning",
+        "path": "/"
+      },
+      {
+        "type": "component_sub_element_structure",
+        "message": "Field guide cards visually appear uniform, but the automated checker detects structural variation in sub-elements — likely because some cards conditionally omit a habitat tag row or render a different number of tag chips, causing differing child counts inside otherwise-identical card sections. The visual presentation is acceptable; the underlying markup should be normalized for long-term maintainability.",
+        "severity": "warning",
+        "path": "/field-guide"
+      },
+      {
+        "type": "component_sub_element_structure",
+        "message": "Conservation order cards look consistent in the screenshot, but the component checker finds mismatched element counts within several card data-row sub-elements. Likely caused by conditional sparkline rendering or variable badge presence for some orders. Low automated score (16) is misleading given the strong visual uniformity; nonetheless the markup should be standardized.",
+        "severity": "warning",
+        "path": "/conservation"
+      },
+      {
+        "type": "component_sub_element_structure",
+        "message": "Recently-added species cards on the home page show structural variation in their inner link blocks — some use a different element type for the card footer area versus the majority. Cards look visually identical in the screenshot; normalize the underlying markup so each card uses the same element hierarchy.",
+        "severity": "warning",
+        "path": "/"
+      },
+      {
+        "type": "layout_row_alignment",
+        "message": "All pages record 8–21 row-bottom alignment errors, primarily from card rows with variable-height content (differing numbers of habitat tag chips, long vs short diagnostic text). This produces mild ragged baselines in the grid, most visible in the field guide and conservation order matrix. Not a blocking issue, but tightening row heights would improve polish.",
+        "severity": "warning",
+        "path": null
+      }
+    ],
+    "scores": {
+      "accessibility": 1.0,
+      "render_quality": 0.96,
+      "page_completeness": 1.0,
+      "layout_alignment": 0.79,
+      "component_consistency": 0.52,
+      "mobile_responsiveness": 0.95
+    },
+    "repair_instructions": [
+      "On the home page, replace or redraw the SVG icons used inside the six feature navigation cards so they share a consistent visual language: same stroke weight, same level of path complexity (aim for 4–6 paths each), and the same visual bounding-box fill ratio. The current set mixes icons with very few paths and icons with many more, making them feel mismatched at a glance.",
+      "Normalize the HTML structure of every repeating card type (field guide cards, conservation order cards, recently-added species cards) so that each positional slot within the card always contains the same element tag and nesting depth, regardless of whether data is present. Where a field is absent for a particular record, render the container element with an empty or hidden state rather than omitting it entirely. This ensures the DOM tree is structurally identical across all instances of the same card type.",
+      "Fix row-height alignment in the field guide masonry grid and the conservation order card matrix by applying a consistent minimum card height and using CSS grid's 'align-items: stretch' (or equivalent flex stretching) so that cards within the same row reach the same bottom edge even when their content length differs. Consider capping diagnostic text at a fixed number of lines (e.g., 3 lines with text-overflow ellipsis) rather than letting it grow unbounded, to prevent height outliers from distorting row rhythm.",
+      "Review the taxonomy page specimen detail panel to confirm that clicking a species row triggers the translateX(100%) → translateX(0) CSS transition over 600ms with ease-out timing. The animation frame captures (0ms through 600ms) are present, which is a good sign; verify in the JS that the transition property is correctly set on the .specimen-detail-panel element and that the click handler on .species-list-row removes the off-canvas class rather than using a JavaScript-driven position override, so the CSS transition fires naturally without layout shift."
+    ],
+    "deterministic_checks": {
+      "html_page_count": 6,
+      "all_declared_pages_present": true,
+      "missing_required_text_count": 0,
+      "zero_accessibility_issues": true,
+      "all_render_sanity_passed": true,
+      "animation_frames_captured": true,
+      "specimen_panel_animation_present": true
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/animation-vm-run-2026-05-20/marine-biology-reference-portal/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/animation-vm-run-2026-05-20/marine-biology-reference-portal/site/screenshots/reference"
+}

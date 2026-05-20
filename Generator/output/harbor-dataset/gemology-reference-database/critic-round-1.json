@@ -1,0 +1,41 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "gemology-lapidary-atlas",
+      "score": 0.91,
+      "accept": true,
+      "strengths": [
+        "Animation precisely matches seed spec: color channel, hover trigger, 600ms within 300–900ms window, background and border transitions keyed per gem family with exact hex values (#0d3d2e beryl, #0e1f4a blue corundum, #3d0e1a red corundum, #2a0e4a amethyst, #3d2e00 chrysoberyl), no layout change",
+        "Motif is exactly what the seed specifies — jewel-toned dark luxury editorial — with #1c1c2e base, saturated gem-family accent colors, gold rule dividers, serif specimen labels",
+        "All 8 pages have distinct, non-duplicate layout patterns: hero+strip, 4-column filterable grid, tabbed comparison charts, masonry+drawer, full-bleed SVG map, sticky A-Z rail, multi-column lab table, editorial long-form",
+        "Interactions are concrete and varied: facet sidebar filter, gem type tab switch, deposit marker click, letter jump nav, masonry drawer, hover color-shift",
+        "Audience (collectors, students, designers, appraisers) aligns with seed's curated-collection browsing intent rather than tilting purely professional",
+        "Content model includes treatment status and trade names on GemSpecimen, multi-lab certification equivalency matrix on grading page, and real labs named (GIA, AGL, Gübelin, SSEF) — domain specificity is high"
+      ],
+      "weaknesses": [
+        "About page sections are competent but relatively standard (mission, bios, methodology, revision log) compared to the richness of other pages",
+        "Masonry layout for cutting gallery is common; a faceted-diagram grid with a pinned comparison panel would be more differentiated"
+      ]
+    },
+    {
+      "candidate_id": "gemology-vault-reference",
+      "score": 0.74,
+      "accept": true,
+      "strengths": [
+        "Content model is the most technically rigorous of the two: IMA-recognized naming, chemical formula, type locality, report verification URLs, jurisdiction acceptance, average turnaround — credible professional depth",
+        "Origins map page adds a geological period timeline range filter and gem-type overlay toggle, interactions not present in the other candidate and genuinely useful for research workflows",
+        "Lab-guides page with side-by-side scrollable comparison columns and report format sample panels is concrete and differentiated",
+        "Taxonomy tree sidebar persisting across pages creates a coherent hierarchical navigation model appropriate to the domain"
+      ],
+      "weaknesses": [
+        "Animation channel is motion (translateY + scale lift), not color — a direct mismatch with the seed's animation_channel: 'color' and the explicit requirement for hover-triggered color-shift on gem classification cards",
+        "Warm obsidian + walnut-brown + burnished gold motif diverges from the seed's jewel-toned dark luxury specification; this is a different aesthetic register, not a refinement of it",
+        "Audience skewed to professional gemologists and lab technicians rather than the seed's collector/student browsing experience, reducing alignment with the curated-collection navigation intent",
+        "Cut card hover lift is a generic e-commerce pattern that does not carry the domain specificity of jewel-tone color shift"
+      ]
+    }
+  ],
+  "best_candidate_id": "gemology-lapidary-atlas",
+  "regenerate": false,
+  "feedback_for_regeneration": []
+}

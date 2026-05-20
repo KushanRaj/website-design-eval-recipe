@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <polygon points="50,5 95,50 50,95 5,50" fill="#3a1a2e" stroke="#e91e8c" stroke-width="2"/>
+  <polygon points="50,18 82,50 50,82 18,50" fill="#7a2a5a" stroke="#e91e8c" stroke-width="1" opacity="0.5"/>
+  <polygon points="50,32 68,50 50,68 32,50" fill="#e91e8c" opacity="0.2"/>
+  <line x1="50" y1="5" x2="50" y2="32" stroke="#e91e8c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="95" y1="50" x2="68" y2="50" stroke="#e91e8c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="50" y1="95" x2="50" y2="68" stroke="#e91e8c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="5" y1="50" x2="32" y2="50" stroke="#e91e8c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="50" y1="5" x2="95" y2="50" stroke="#e91e8c" stroke-width="0.3" opacity="0.3"/>
+  <line x1="95" y1="50" x2="50" y2="95" stroke="#e91e8c" stroke-width="0.3" opacity="0.3"/>
+  <line x1="50" y1="95" x2="5" y2="50" stroke="#e91e8c" stroke-width="0.3" opacity="0.3"/>
+  <line x1="5" y1="50" x2="50" y2="5" stroke="#e91e8c" stroke-width="0.3" opacity="0.3"/>
+</svg>

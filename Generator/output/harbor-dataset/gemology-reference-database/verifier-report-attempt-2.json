@@ -1,0 +1,60 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "layout_alignment",
+      "message": "The glossary page's layout consistency score is near-zero (2.75/100), with 98 of 105 measured elements flagged as lacking horizontal alignment. While the content is rich and the letter-section headers are visible, this extreme score suggests the A-Z sticky letter rail on the left may not be implemented as a true fixed side rail — the tool sees the rail offsets and the content column as unrelated baselines. Verify that the letter nav is using 'position: sticky' so it stays anchored during scroll and is visually separated from (but aligned beside) the definition entries.",
+      "severity": "warning",
+      "path": "/glossary"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "The automated component consistency score for the mineral index card grid is very low (~16/100). Visually the cards look uniform, but the static analysis is tripping over nested sub-elements inside each card — specifically the property/value rows (hardness, crystal system, RI, SG, origin) where some cells are bare divs with a single child rather than consistently structured label-value pairs. Standardising the inner DOM of each data row (e.g. consistently wrapping every property label in a 'span.label' and its value in a 'span.value' inside a shared row div) would resolve the structural mismatches the tool flags.",
+      "severity": "warning",
+      "path": "/minerals"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "The cutting-styles gallery cards score ~13/100 for component style consistency. The gallery outer cards (12 items) are visually consistent, but the SVG facet-diagram container elements nested inside each article card vary in child count and tag structure across entries — some have only the SVG icon with no sibling wrapper, while others have wrapping div containers. Normalize each cut card so the facet-diagram zone, cut-name div, and detail footer all use the same tag hierarchy across all 12 (and any additional) gallery items.",
+      "severity": "warning",
+      "path": "/cuts"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "One revision-log entry in the 'Revision Log' section uses a different internal tag structure from the others (the majority pattern is a title div followed by a body paragraph; one entry wraps its content differently). This causes a minor component consistency flag (87/100). Inspect the revision log entries in about.html and ensure every log item uses the same two-child structure: one div for the date/heading and one paragraph for the description.",
+      "severity": "info",
+      "path": "/about"
+    },
+    {
+      "type": "layout_sparsity",
+      "message": "The origins page has a noticeable blank region in the lower-right quadrant below the map canvas (sparsity score 89.9, with a ~648k-pixel blank rectangle detected). Consider filling this area with the deposit-type legend, a gem-family legend, or expanding the regional deposit narratives section upward so the map and content sections share vertical space more evenly.",
+      "severity": "info",
+      "path": "/origins"
+    }
+  ],
+  "scores": {
+    "render_quality": 0.81,
+    "accessibility": 1.0,
+    "page_completeness": 1.0,
+    "layout_alignment": 0.63,
+    "component_consistency": 0.55,
+    "mobile_responsiveness": 0.9,
+    "motif_fidelity": 0.97,
+    "content_depth": 0.96
+  },
+  "repair_instructions": [
+    "On the glossary page (glossary.html), give the A-Z letter navigation list 'position: sticky; top: 1rem;' (or equivalent) so it remains fixed in the left rail as the user scrolls through the 8,900px+ page. Also confirm the page uses a two-column CSS grid or flexbox layout so the letter rail occupies the left column and the definition entries the right — if the current implementation is single-column with letters inline, restructure it to the sidebar-plus-content pattern the concept specifies.",
+    "In the mineral index (minerals.html), normalise the inner DOM of every gem classification card's property rows. Each physical-property entry (Hardness, Crystal, RI, SG, Origin) should follow a consistent two-child pattern: a 'span' or 'div' with class 'prop-label' and a sibling 'span' or 'div' with class 'prop-value'. Remove any wrapper divs that have only a single child and no sibling, as these are what the consistency checker flags as structurally mismatched.",
+    "In the cutting-styles gallery (cuts.html), standardise every cut-style card's internal structure so the SVG facet diagram, the text block (cut name + description), and the metadata footer (facet count + style badge) each sit in their own consistently-named child div. Currently some article cards nest the SVG directly as a solo child without a sibling wrapper; wrap the SVG in a 'div.cut-diagram' container in all cards so the three-part hierarchy is uniform across all gallery items.",
+    "In about.html, open the Revision Log section and inspect each log entry. The majority structure is a two-child card: one div for the date-stamped heading and one paragraph for the revision description. One entry currently wraps its content differently (likely an extra nesting level or a different element tag). Update that entry to match the two-child pattern used by the other log items.",
+    "On the origins page (origins.html), address the large blank area in the lower-right below the SVG map. Options: (a) extend the deposit-type legend and gem-family legend into that space as a two-column panel; (b) add a 'Currently Selected Region' info box that shows placeholder text when no marker is active; or (c) move the 'Notable Deposit Narratives' section up so it sits beside or immediately below the map rather than leaving a wide empty gap."
+  ],
+  "deterministic_checks": {
+    "all_pages_present": true,
+    "missing_required_text": [],
+    "accessibility_issues_any_page": false,
+    "render_sanity_all_pass": true,
+    "animation_screenshots_present": true,
+    "html_page_count": 8
+  }
+}

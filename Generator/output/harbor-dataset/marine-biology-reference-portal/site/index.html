@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OceanIndex — Marine Biology Reference Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">OI</div>
+      <div class="logo-text-wrap">
+        <span class="logo-name">OceanIndex</span>
+        <span class="logo-sub">Marine Biology Reference</span>
+      </div>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="taxonomy.html">Species Taxonomy</a>
+      <a href="habitat.html">Habitat &amp; Distribution</a>
+      <a href="publications.html">Research Publications</a>
+      <a href="conservation.html">Conservation Status</a>
+      <a href="field-guide.html">Field Guide</a>
+    </nav>
+    <div class="header-search">
+      <input class="header-search-input" type="search" placeholder="Search species…" aria-label="Site-wide search">
+    </div>
+    <button class="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-inner">
+    <span class="crumb-current">Home</span>
+  </div>
+</div>
+
+<!-- STATS BANNER -->
+<div class="stats-banner">
+  <div class="stats-banner-inner">
+    <div class="stat-item">
+      <div class="stat-value">34,817</div>
+      <div class="stat-label">Marine Species</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">8,204</div>
+      <div class="stat-label">Publications</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">2,391</div>
+      <div class="stat-label">Conservation Assessments</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">612</div>
+      <div class="stat-label">Field Guide Entries</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">146</div>
+      <div class="stat-label">Habitat Zones Mapped</div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO SPLIT -->
+<div class="home-hero">
+  <!-- Featured Species Spotlight -->
+  <section class="hero-spotlight" id="featured-species-spotlight">
+    <div class="hero-bg-art">
+      <svg width="360" height="220" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Whale shark silhouette -->
+        <ellipse cx="180" cy="110" rx="160" ry="55" fill="white"/>
+        <path d="M20 110 Q60 60 140 90 Q180 100 220 88 Q270 75 320 90 L340 108 L320 115 Q270 130 220 120 Q180 115 140 125 Q80 140 20 110Z" fill="white" opacity="0.7"/>
+        <path d="M320 90 L355 65 L360 108 L355 155 L320 130Z" fill="white" opacity="0.5"/>
+        <ellipse cx="100" cy="103" rx="8" ry="5" fill="rgba(0,0,0,0.3)"/>
+        <path d="M155 80 L165 55 L175 80Z" fill="white" opacity="0.5"/>
+        <path d="M165 135 L175 160 L185 135Z" fill="white" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="hero-meta">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="hero-phylum-badge">Chondrichthyes</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.8px;">FEATURED SPECIES</span>
+      </div>
+      <div class="hero-common">Whale Shark</div>
+      <div class="hero-binomial">Rhincodon typus</div>
+      <div class="hero-authority">Smith, 1828</div>
+      <div class="hero-bottom">
+        <span class="iucn-pill iucn-en">EN — Endangered</span>
+        <span class="rank-badge"><span class="rk">ORDER:</span><span class="rv">Orectolobiformes</span></span>
+        <span class="habitat-tag">Epipelagic</span>
+        <span class="habitat-tag">Coastal</span>
+      </div>
+      <p class="hero-desc">
+        The world's largest fish, reaching up to 18.8 m in length. A filter feeder found
+        in warm, tropical ocean waters worldwide. Listed as Endangered on the IUCN Red List
+        due to fishing, vessel strikes, and habitat degradation.
+      </p>
+    </div>
+  </section>
+
+  <!-- Taxonomy Quick-Search Widget -->
+  <section class="quick-search-panel" id="taxonomy-quick-search">
+    <div class="qs-header">Taxonomy Quick-Search</div>
+    <div class="qs-body">
+      <div class="qs-input-wrap">
+        <input class="qs-input" id="qs-input" type="search"
+               placeholder="Scientific or common name…" autocomplete="off" aria-label="Species search">
+      </div>
+      <div id="qs-results" class="qs-results"></div>
+      <div class="qs-shortcuts">
+        <div class="qs-shortcut-title">Browse by Taxonomic Class</div>
+        <div class="qs-shortcut-list">
+          <a href="taxonomy.html?class=Chondrichthyes" class="qs-shortcut-link">
+            <span>Chondrichthyes</span>
+            <span class="qs-tag">sharks &amp; rays</span>
+          </a>
+          <a href="taxonomy.html?class=Actinopterygii" class="qs-shortcut-link">
+            <span>Actinopterygii</span>
+            <span class="qs-tag">ray-finned fishes</span>
+          </a>
+          <a href="taxonomy.html?class=Mammalia" class="qs-shortcut-link">
+            <span>Mammalia</span>
+            <span class="qs-tag">marine mammals</span>
+          </a>
+          <a href="taxonomy.html?class=Cephalopoda" class="qs-shortcut-link">
+            <span>Cephalopoda</span>
+            <span class="qs-tag">squid &amp; octopus</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- RECENTLY ADDED GRID -->
+<div class="page-wrap">
+  <div class="section-hd">
+    <span class="section-hd-title">Recently Added Species</span>
+    <span class="section-hd-count">12 new this week</span>
+  </div>
+  <div class="recent-grid" id="recently-added-grid">
+
+    <a href="taxonomy.html" class="species-card" style="text-decoration:none;color:inherit;">
+      <div class="species-card-thumb">
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true">
+          <!-- Shark silhouette -->
+          <path d="M8 32 Q20 15 40 22 Q55 28 68 25 L74 30 L68 36 Q55 42 40 38 Q20 44 8 32Z" fill="#003366" opacity=".7"/>
+          <path d="M68 25 L78 15 L80 30 L78 46 L68 36Z" fill="#003366" opacity=".5"/>
+          <path d="M40 22 L44 10 L48 22Z" fill="#003366" opacity=".5"/>
+          <circle cx="22" cy="30" r="2.5" fill="#003366"/>
+        </svg>
+        <span class="sr-only">Scalloped Hammerhead silhouette</span>
+      </div>
+      <div class="species-card-body">
+        <div class="species-card-common">Scalloped Hammerhead</div>
+        <div class="species-card-binomial">Sphyrna lewini</div>
+        <div class="species-card-meta">
+          <span class="iucn-pill iucn-cr">CR</span>
+          <span class="rank-badge"><span class="rk">CLASS:</span><span class="rv">Chondrichthyes</span></span>
+        </div>
+        <div class="species-card-date">Added 2024-05-18 &bull; Authority: (Griffith &amp; Smith, 1834)</div>
+      </div>
+    </a>
+
+    <a href="taxonomy.html" class="species-card" style="text-decoration:none;color:inherit;">
+      <div class="species-card-thumb">
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true">
+          <!-- Dolphin silhouette -->
+          <path d="M10 35 Q25 20 45 26 Q60 30 72 25 L76 30 L72 35 Q60 40 45 36 Q25 45 10 35Z" fill="#003366" opacity=".7"/>
+          <path d="M72 25 L80 18 L80 35 L72 35Z" fill="#003366" opacity=".5"/>
+          <path d="M40 26 L36 14 L50 26Z" fill="#003366" opacity=".5"/>
+          <path d="M38 36 L34 48 L48 38Z" fill="#003366" opacity=".5"/>
+          <circle cx="18" cy="31" r="2" fill="#003366"/>
+        </svg>
+        <span class="sr-only">Common Bottlenose Dolphin silhouette</span>
+      </div>
+      <div class="species-card-body">
+        <div class="species-card-common">Common Bottlenose Dolphin</div>
+        <div class="species-card-binomial">Tursiops truncatus</div>
+        <div class="species-card-meta">
+          <span class="iucn-pill iucn-lc">LC</span>
+          <span class="rank-badge"><span class="rk">CLASS:</span><span class="rv">Mammalia</span></span>
+        </div>
+        <div class="species-card-date">Added 2024-05-17 &bull; Authority: (Montagu, 1821)</div>
+      </div>
+    </a>
+
+    <a href="taxonomy.html" class="species-card" style="text-decoration:none;color:inherit;">
+      <div class="species-card-thumb">
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true">
+          <!-- Seahorse silhouette -->
+          <ellipse cx="40" cy="18" rx="10" ry="8" fill="#003366" opacity=".7"/>
+          <path d="M32 22 Q20 30 22 45 Q28 58 38 54 Q48 50 42 38 Q38 28 40 26" stroke="#003366" stroke-width="6" stroke-linecap="round" fill="none" opacity=".7"/>
+          <path d="M50 18 L62 12 L58 22Z" fill="#003366" opacity=".4"/>
+        </svg>
+        <span class="sr-only">Short-snouted Seahorse silhouette</span>
+      </div>
+      <div class="species-card-body">
+        <div class="species-card-common">Short-snouted Seahorse</div>
+        <div class="species-card-binomial">Hippocampus hippocampus</div>
+        <div class="species-card-meta">
+          <span class="iucn-pill iucn-lc">LC</span>
+          <span class="rank-badge"><span class="rk">CLASS:</span><span class="rv">Actinopterygii</span></span>
+        </div>
+        <div class="species-card-date">Added 2024-05-16 &bull; Authority: (Linnaeus, 1758)</div>
+      </div>
+    </a>
+
+    <a href="taxonomy.html" class="species-card" style="text-decoration:none;color:inherit;">
+      <div class="species-card-thumb">
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true">
+          <!-- Tuna silhouette -->
+          <ellipse cx="38" cy="30" rx="28" ry="14" fill="#003366" opacity=".7"/>
+          <path d="M62 26 L78 18 L78 42 L62 34Z" fill="#003366" opacity=".5"/>
+          <path d="M38 16 L42 6 L46 16Z" fill="#003366" opacity=".4"/>
+          <path d="M38 44 L42 54 L46 44Z" fill="#003366" opacity=".4"/>
+          <circle cx="18" cy="28" r="2.5" fill="#003366"/>
+        </svg>
+        <span class="sr-only">Atlantic Bluefin Tuna silhouette</span>
+      </div>
+      <div class="species-card-body">
+        <div class="species-card-common">Atlantic Bluefin Tuna</div>
+        <div class="species-card-binomial">Thunnus thynnus</div>
+        <div class="species-card-meta">
+          <span class="iucn-pill iucn-en">EN</span>
+          <span class="rank-badge"><span class="rk">CLASS:</span><span class="rv">Actinopterygii</span></span>
+        </div>
+        <div class="species-card-date">Added 2024-05-15 &bull; Authority: (Linnaeus, 1758)</div>
+      </div>
+    </a>
+
+    <a href="taxonomy.html" class="species-card" style="text-decoration:none;color:inherit;">
+      <div class="species-card-thumb">
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true">
+          <!-- Manta ray silhouette -->
+          <path d="M40 30 Q10 10 4 30 Q10 50 40 40 Q70 50 76 30 Q70 10 40 30Z" fill="#003366" opacity=".7"/>
+          <path d="M40 40 L38 58 L42 58 L40 40Z" fill="#003366" opacity=".5"/>
+          <circle cx="25" cy="26" r="2.5" fill="#003366"/>
+          <circle cx="55" cy="26" r="2.5" fill="#003366"/>
+        </svg>
+        <span class="sr-only">Giant Oceanic Manta Ray silhouette</span>
+      </div>
+      <div class="species-card-body">
+        <div class="species-card-common">Giant Oceanic Manta Ray</div>
+        <div class="species-card-binomial">Mobula birostris</div>
+        <div class="species-card-meta">
+          <span class="iucn-pill iucn-vu">VU</span>
+          <span class="rank-badge"><span class="rk">CLASS:</span><span class="rv">Chondrichthyes</span></span>
+        </div>
+        <div class="species-card-date">Added 2024-05-14 &bull; Authority: (Walbaum, 1792)</div>
+      </div>
+    </a>
+
+    <a href="taxonomy.html" class="species-card" style="text-decoration:none;color:inherit;">
+      <div class="species-card-thumb">
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true">
+          <!-- Octopus silhouette -->
+          <circle cx="40" cy="22" r="14" fill="#003366" opacity=".7"/>
+          <path d="M26 32 Q16 40 14 52" stroke="#003366" stroke-width="4" stroke-linecap="round" fill="none" opacity=".6"/>
+          <path d="M32 36 Q26 44 24 56" stroke="#003366" stroke-width="4" stroke-linecap="round" fill="none" opacity=".6"/>
+          <path d="M40 36 Q40 48 40 58" stroke="#003366" stroke-width="4" stroke-linecap="round" fill="none" opacity=".6"/>
+          <path d="M48 36 Q54 44 56 56" stroke="#003366" stroke-width="4" stroke-linecap="round" fill="none" opacity=".6"/>
+          <path d="M54 32 Q64 40 66 52" stroke="#003366" stroke-width="4" stroke-linecap="round" fill="none" opacity=".6"/>
+          <circle cx="34" cy="20" r="2.5" fill="white"/>
+          <circle cx="46" cy="20" r="2.5" fill="white"/>
+        </svg>
+        <span class="sr-only">Common Octopus silhouette</span>
+      </div>
+      <div class="species-card-body">
+        <div class="species-card-common">Common Octopus</div>
+        <div class="species-card-binomial">Octopus vulgaris</div>
+        <div class="species-card-meta">
+          <span class="iucn-pill iucn-ne">NE</span>
+          <span class="rank-badge"><span class="rk">CLASS:</span><span class="rv">Cephalopoda</span></span>
+        </div>
+        <div class="species-card-date">Added 2024-05-12 &bull; Authority: Cuvier, 1797</div>
+      </div>
+    </a>
+
+  </div><!-- /recent-grid -->
+
+  <!-- Site Overview section -->
+  <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+
+    <div class="card">
+      <div class="card-hd">
+        <span class="card-hd-title">Species Taxonomy</span>
+      </div>
+      <div class="card-body">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
+          Browse the full taxonomic hierarchy from Kingdom to subspecies. Three-panel
+          browser with collapsible tree and specimen detail cards.
+        </p>
+        <a href="taxonomy.html" class="btn btn-primary btn-sm">Open Taxonomy Browser →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <span class="card-hd-title">Habitat &amp; Distribution</span>
+      </div>
+      <div class="card-body">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
+          Interactive ocean basin map with depth-zone filters, species overlay layers,
+          and per-basin species tallies.
+        </p>
+        <a href="habitat.html" class="btn btn-primary btn-sm">Explore Maps →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <span class="card-hd-title">Conservation Status</span>
+      </div>
+      <div class="card-body">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
+          IUCN Red List distribution charts, taxonomic order cards with population
+          trend indicators, and historical sparklines.
+        </p>
+        <a href="conservation.html" class="btn btn-primary btn-sm">View Dashboard →</a>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fl">OceanIndex</div>
+      <p>An authoritative marine biology reference portal for taxonomists, conservation researchers, and oceanographic scientists. Data sourced from FishBase, IUCN Red List, WoRMS, and peer-reviewed literature.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Reference</div>
+      <ul>
+        <li><a href="taxonomy.html">Species Taxonomy</a></li>
+        <li><a href="field-guide.html">Field Guide</a></li>
+        <li><a href="habitat.html">Habitat Maps</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Research</div>
+      <ul>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="conservation.html">Conservation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Data Sources</div>
+      <ul>
+        <li><a href="#">IUCN Red List</a></li>
+        <li><a href="#">FishBase</a></li>
+        <li><a href="#">WoRMS</a></li>
+        <li><a href="#">OBIS</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>OceanIndex v3.4 &mdash; Last updated 2024-05-20</span>
+    <span>Data: IUCN · FishBase · WoRMS · OBIS</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

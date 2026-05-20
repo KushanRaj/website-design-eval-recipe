@@ -1,0 +1,294 @@
+{
+  "site_id": "gemology-reference-database",
+  "concept_seed": {
+    "id": "gemology-reference-database",
+    "one_liner": "Editorial gemology reference database with mineral specimen pages, gem grading charts, cutting-style galleries, geological origin maps, certification guides, and collector glossaries; jewel-toned dark luxurious UI with rich visual density, curated collection-style navigation, hover-triggered color-shift animations on gem classification cards, and a refined browsing experience spanning eight detailed reference sections.",
+    "metadata": {
+      "animation_channel": "color",
+      "animation_trigger": "hover",
+      "animation_duration_ms_min": 300,
+      "animation_duration_ms_max": 900,
+      "animation_target_hint": "gem classification card background and border color transitioning through a jewel-tone palette shift",
+      "animation_side_effects": "none — card remains in DOM, visible, no scroll or layout change",
+      "implied_pages": [
+        "Home / Featured Gems",
+        "Mineral Specimen Index",
+        "Gem Grading & Certification",
+        "Cutting Styles Gallery",
+        "Geological Origins Map",
+        "Collector's Glossary",
+        "Certification Guides",
+        "About the Reference"
+      ]
+    }
+  },
+  "accepted_concept": {
+    "candidate_id": "gemology-lapidary-atlas",
+    "domain": "gemology reference / mineral collecting",
+    "site_goal": "Serve as a curated editorial reference database for gem collectors, jewelry designers, and gemology students, providing authoritative classification, grading, and visual reference across all major gem species",
+    "audience": [
+      "gem collectors",
+      "jewelry designers",
+      "gemology students",
+      "mineralogists",
+      "antique jewelry appraisers"
+    ],
+    "description": "A jewel-toned dark-luxury editorial reference site presenting gemological knowledge as a collector's archive. Deep navy and charcoal page backgrounds contrast with saturated gemstone accent colors — emerald, sapphire, ruby, amethyst, citrine — applied per gem family. Classification cards fill dense grid layouts, each card subtly keyed to its gem's color family. Navigation follows a curated collection model with a persistent side rail and breadcrumb trails through eight detailed reference sections.",
+    "motif": "jewel-toned dark luxury editorial — deep navy and charcoal backgrounds (#1c1c2e base) with saturated gemstone accent colors shifting by gem family, gold rule dividers, serif specimen labels, and editorial pull-quote typography",
+    "pages": [
+      {
+        "id": "home",
+        "path": "/",
+        "layout_pattern": "full-width hero with featured specimen spotlight + horizontal curated card strip + editorial gem-of-the-week panel",
+        "sections": [
+          "hero featured specimen with large photograph and classification badge",
+          "curated collection horizontal strip",
+          "gem of the week editorial spotlight",
+          "quick-navigation taxonomy grid by mineral class",
+          "recently updated reference entries feed"
+        ]
+      },
+      {
+        "id": "mineral-index",
+        "path": "/minerals",
+        "layout_pattern": "filterable 4-column classification card grid with left sidebar facet filters by mineral system, hardness, crystal structure, and gem family",
+        "sections": [
+          "filter sidebar with collapsible facet groups",
+          "gem classification card grid",
+          "active filter chips row",
+          "result count and sort controls",
+          "pagination footer"
+        ]
+      },
+      {
+        "id": "grading",
+        "path": "/grading",
+        "layout_pattern": "tabbed reference panels per gem type with full-width comparison charts, visual grading scales, and certification equivalency matrix",
+        "sections": [
+          "gem type selector tabs",
+          "color grading gradient scale",
+          "clarity grading chart with inclusion diagrams",
+          "cut grade proportion reference",
+          "carat weight conversion table",
+          "multi-lab certification equivalency matrix"
+        ]
+      },
+      {
+        "id": "cutting-gallery",
+        "path": "/cuts",
+        "layout_pattern": "masonry gallery grid with slide-in detail drawer showing SVG facet diagrams, proportions, and recommended gem types",
+        "sections": [
+          "cut style category filter bar",
+          "masonry gallery grid of cut illustrations",
+          "featured cut editorial spotlight",
+          "facet count and angle reference table",
+          "historical development and regional origin notes"
+        ]
+      },
+      {
+        "id": "origins-map",
+        "path": "/origins",
+        "layout_pattern": "full-bleed interactive SVG world map with clickable deposit markers and collapsible regional detail panel on the right",
+        "sections": [
+          "world map canvas with deposit point markers",
+          "deposit type and gem family legend",
+          "geological period filter chips",
+          "regional detail panel with mine profiles",
+          "notable historical deposit narratives"
+        ]
+      },
+      {
+        "id": "glossary",
+        "path": "/glossary",
+        "layout_pattern": "alphabetical sticky index rail on left with scrollable definition entries, inline cross-reference links, and search input at top",
+        "sections": [
+          "A-Z sticky letter nav rail",
+          "definition entry list with gem family tags",
+          "inline cross-reference link chips",
+          "search input with instant filtering",
+          "related terms sidebar panel"
+        ]
+      },
+      {
+        "id": "certification",
+        "path": "/certification",
+        "layout_pattern": "structured guide pages with multi-column lab comparison table, lab profile cards, and treatment disclosure reference",
+        "sections": [
+          "certification overview and why it matters",
+          "major lab comparison table (GIA, AGL, Gübelin, SSEF)",
+          "how to read a grading report guide",
+          "treatment disclosure standards by gem type",
+          "recommended labs by gem species"
+        ]
+      },
+      {
+        "id": "about",
+        "path": "/about",
+        "layout_pattern": "editorial long-form single-column with pull quotes, contributor bios, and sourcing methodology notes",
+        "sections": [
+          "editorial mission statement",
+          "contributor and reviewer profiles",
+          "data sourcing and methodology",
+          "revision history log",
+          "contact and submission guidelines"
+        ]
+      }
+    ],
+    "message_intent": [
+      "establish authoritative expertise in gemological reference",
+      "make complex classification data visually accessible and browsable",
+      "evoke the luxury and rarity of fine gemstones through UI aesthetic",
+      "support both casual collector browsing and deep gemologist research"
+    ],
+    "required_text": [
+      "Gem Classification Reference",
+      "Mineral Specimen Index",
+      "Grading & Certification",
+      "Geological Origins",
+      "Collector's Glossary"
+    ],
+    "content_model": [
+      "GemSpecimen: name, species, variety, trade names, hardness, crystal system, refractive index, specific gravity, treatment status, origin regions, images",
+      "CutStyle: name, category, facet count, crown angle, pavilion angle, SVG diagram, best gem types, historical notes",
+      "GradingScale: gem type, grading authority, color descriptor scale, clarity grade map, cut proportion ranges",
+      "GlossaryTerm: term, definition, etymology, gem families, related term links",
+      "OriginDeposit: country, region, coordinates, gem types, geological period, deposit type, notable mines"
+    ],
+    "interactions": [
+      "facet filter selection and reset on mineral index sidebar",
+      "gem type tab switching on grading page",
+      "deposit marker click revealing regional detail panel on origins map",
+      "letter jump navigation on glossary",
+      "cut gallery masonry card opening detail drawer",
+      "hover jewel-tone color-shift on gem classification cards"
+    ],
+    "animations": [
+      {
+        "id": "gem-card-jewel-shift",
+        "page": "mineral-index",
+        "target": ".gem-classification-card",
+        "trigger": {
+          "type": "hover"
+        },
+        "channels": [
+          "color"
+        ],
+        "durationMs": 600,
+        "description": "On mouseenter, the gem classification card's CSS background-color transitions from deep charcoal (#1c1c2e) to a rich jewel tone keyed to the card's data-gem-family attribute — #0d3d2e for beryl, #0e1f4a for blue corundum, #3d0e1a for red corundum, #2a0e4a for amethyst, #3d2e00 for chrysoberyl — while border-color transitions from #3a3a4a to the gem's saturated accent (#2ecc71, #3498db, #e74c3c, #9b59b6, #f1c40f respectively); timing is ease-in-out over 600ms; on mouseleave all colors return to base values over the same duration; card position, size, and page layout remain entirely unchanged throughout"
+      }
+    ],
+    "asset_needs": [
+      "SVG world map of major gem deposit locations with coordinate data",
+      "SVG facet diagram illustrations for 20+ cut styles",
+      "high-resolution mineral specimen photographs per gem species",
+      "grading scale gradient graphics for color and clarity",
+      "gem family color palette design tokens"
+    ],
+    "mobile_behavior": "single-column stacked layout; bottom-sheet filter drawer replaces sidebar; origins map switches to searchable regional list; masonry gallery becomes 2-column",
+    "difficulty": "hard"
+  },
+  "critic_report": {
+    "candidates": [
+      {
+        "candidate_id": "gemology-lapidary-atlas",
+        "score": 0.91,
+        "accept": true,
+        "strengths": [
+          "Animation precisely matches seed spec: color channel, hover trigger, 600ms within 300–900ms window, background and border transitions keyed per gem family with exact hex values (#0d3d2e beryl, #0e1f4a blue corundum, #3d0e1a red corundum, #2a0e4a amethyst, #3d2e00 chrysoberyl), no layout change",
+          "Motif is exactly what the seed specifies — jewel-toned dark luxury editorial — with #1c1c2e base, saturated gem-family accent colors, gold rule dividers, serif specimen labels",
+          "All 8 pages have distinct, non-duplicate layout patterns: hero+strip, 4-column filterable grid, tabbed comparison charts, masonry+drawer, full-bleed SVG map, sticky A-Z rail, multi-column lab table, editorial long-form",
+          "Interactions are concrete and varied: facet sidebar filter, gem type tab switch, deposit marker click, letter jump nav, masonry drawer, hover color-shift",
+          "Audience (collectors, students, designers, appraisers) aligns with seed's curated-collection browsing intent rather than tilting purely professional",
+          "Content model includes treatment status and trade names on GemSpecimen, multi-lab certification equivalency matrix on grading page, and real labs named (GIA, AGL, Gübelin, SSEF) — domain specificity is high"
+        ],
+        "weaknesses": [
+          "About page sections are competent but relatively standard (mission, bios, methodology, revision log) compared to the richness of other pages",
+          "Masonry layout for cutting gallery is common; a faceted-diagram grid with a pinned comparison panel would be more differentiated"
+        ]
+      },
+      {
+        "candidate_id": "gemology-vault-reference",
+        "score": 0.74,
+        "accept": true,
+        "strengths": [
+          "Content model is the most technically rigorous of the two: IMA-recognized naming, chemical formula, type locality, report verification URLs, jurisdiction acceptance, average turnaround — credible professional depth",
+          "Origins map page adds a geological period timeline range filter and gem-type overlay toggle, interactions not present in the other candidate and genuinely useful for research workflows",
+          "Lab-guides page with side-by-side scrollable comparison columns and report format sample panels is concrete and differentiated",
+          "Taxonomy tree sidebar persisting across pages creates a coherent hierarchical navigation model appropriate to the domain"
+        ],
+        "weaknesses": [
+          "Animation channel is motion (translateY + scale lift), not color — a direct mismatch with the seed's animation_channel: 'color' and the explicit requirement for hover-triggered color-shift on gem classification cards",
+          "Warm obsidian + walnut-brown + burnished gold motif diverges from the seed's jewel-toned dark luxury specification; this is a different aesthetic register, not a refinement of it",
+          "Audience skewed to professional gemologists and lab technicians rather than the seed's collector/student browsing experience, reducing alignment with the curated-collection navigation intent",
+          "Cut card hover lift is a generic e-commerce pattern that does not carry the domain specificity of jewel-tone color shift"
+        ]
+      }
+    ],
+    "best_candidate_id": "gemology-lapidary-atlas",
+    "regenerate": false,
+    "feedback_for_regeneration": []
+  },
+  "website_path": "Generator/output/animation-vm-run-2026-05-20/gemology-reference-database/site",
+  "verifier_report": {
+    "status": "approved",
+    "issues": [
+      {
+        "type": "layout_alignment",
+        "message": "The glossary page's layout consistency score is near-zero (2.75/100), with 98 of 105 measured elements flagged as lacking horizontal alignment. While the content is rich and the letter-section headers are visible, this extreme score suggests the A-Z sticky letter rail on the left may not be implemented as a true fixed side rail — the tool sees the rail offsets and the content column as unrelated baselines. Verify that the letter nav is using 'position: sticky' so it stays anchored during scroll and is visually separated from (but aligned beside) the definition entries.",
+        "severity": "warning",
+        "path": "/glossary"
+      },
+      {
+        "type": "component_style_inconsistency",
+        "message": "The automated component consistency score for the mineral index card grid is very low (~16/100). Visually the cards look uniform, but the static analysis is tripping over nested sub-elements inside each card — specifically the property/value rows (hardness, crystal system, RI, SG, origin) where some cells are bare divs with a single child rather than consistently structured label-value pairs. Standardising the inner DOM of each data row (e.g. consistently wrapping every property label in a 'span.label' and its value in a 'span.value' inside a shared row div) would resolve the structural mismatches the tool flags.",
+        "severity": "warning",
+        "path": "/minerals"
+      },
+      {
+        "type": "component_style_inconsistency",
+        "message": "The cutting-styles gallery cards score ~13/100 for component style consistency. The gallery outer cards (12 items) are visually consistent, but the SVG facet-diagram container elements nested inside each article card vary in child count and tag structure across entries — some have only the SVG icon with no sibling wrapper, while others have wrapping div containers. Normalize each cut card so the facet-diagram zone, cut-name div, and detail footer all use the same tag hierarchy across all 12 (and any additional) gallery items.",
+        "severity": "warning",
+        "path": "/cuts"
+      },
+      {
+        "type": "component_style_inconsistency",
+        "message": "One revision-log entry in the 'Revision Log' section uses a different internal tag structure from the others (the majority pattern is a title div followed by a body paragraph; one entry wraps its content differently). This causes a minor component consistency flag (87/100). Inspect the revision log entries in about.html and ensure every log item uses the same two-child structure: one div for the date/heading and one paragraph for the description.",
+        "severity": "info",
+        "path": "/about"
+      },
+      {
+        "type": "layout_sparsity",
+        "message": "The origins page has a noticeable blank region in the lower-right quadrant below the map canvas (sparsity score 89.9, with a ~648k-pixel blank rectangle detected). Consider filling this area with the deposit-type legend, a gem-family legend, or expanding the regional deposit narratives section upward so the map and content sections share vertical space more evenly.",
+        "severity": "info",
+        "path": "/origins"
+      }
+    ],
+    "scores": {
+      "render_quality": 0.81,
+      "accessibility": 1.0,
+      "page_completeness": 1.0,
+      "layout_alignment": 0.63,
+      "component_consistency": 0.55,
+      "mobile_responsiveness": 0.9,
+      "motif_fidelity": 0.97,
+      "content_depth": 0.96
+    },
+    "repair_instructions": [
+      "On the glossary page (glossary.html), give the A-Z letter navigation list 'position: sticky; top: 1rem;' (or equivalent) so it remains fixed in the left rail as the user scrolls through the 8,900px+ page. Also confirm the page uses a two-column CSS grid or flexbox layout so the letter rail occupies the left column and the definition entries the right — if the current implementation is single-column with letters inline, restructure it to the sidebar-plus-content pattern the concept specifies.",
+      "In the mineral index (minerals.html), normalise the inner DOM of every gem classification card's property rows. Each physical-property entry (Hardness, Crystal, RI, SG, Origin) should follow a consistent two-child pattern: a 'span' or 'div' with class 'prop-label' and a sibling 'span' or 'div' with class 'prop-value'. Remove any wrapper divs that have only a single child and no sibling, as these are what the consistency checker flags as structurally mismatched.",
+      "In the cutting-styles gallery (cuts.html), standardise every cut-style card's internal structure so the SVG facet diagram, the text block (cut name + description), and the metadata footer (facet count + style badge) each sit in their own consistently-named child div. Currently some article cards nest the SVG directly as a solo child without a sibling wrapper; wrap the SVG in a 'div.cut-diagram' container in all cards so the three-part hierarchy is uniform across all gallery items.",
+      "In about.html, open the Revision Log section and inspect each log entry. The majority structure is a two-child card: one div for the date-stamped heading and one paragraph for the revision description. One entry currently wraps its content differently (likely an extra nesting level or a different element tag). Update that entry to match the two-child pattern used by the other log items.",
+      "On the origins page (origins.html), address the large blank area in the lower-right below the SVG map. Options: (a) extend the deposit-type legend and gem-family legend into that space as a two-column panel; (b) add a 'Currently Selected Region' info box that shows placeholder text when no marker is active; or (c) move the 'Notable Deposit Narratives' section up so it sits beside or immediately below the map rather than leaving a wide empty gap."
+    ],
+    "deterministic_checks": {
+      "all_pages_present": true,
+      "missing_required_text": [],
+      "accessibility_issues_any_page": false,
+      "render_sanity_all_pass": true,
+      "animation_screenshots_present": true,
+      "html_page_count": 8
+    }
+  },
+  "screenshot_manifest_path": "Generator/output/animation-vm-run-2026-05-20/gemology-reference-database/site/screenshot-manifest.json",
+  "reference_screenshots_dir": "Generator/output/animation-vm-run-2026-05-20/gemology-reference-database/site/screenshots/reference"
+}

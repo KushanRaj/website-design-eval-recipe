@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemology Reference Database — Gem Classification Reference</title>
+  <meta name="description" content="A curated editorial reference database for gem collectors, jewelry designers, and gemology students. Classification, grading, and visual reference across all major gem species.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="minerals.html">Mineral Index</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="cuts.html">Cut Styles</a></li>
+      <li><a href="origins.html">Origins Map</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="certification.html">Certification</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-search">
+      <input type="search" placeholder="Search specimens, terms…" aria-label="Search">
+    </div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-bg-pattern" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="hero-eyebrow">Authoritative Gemological Reference</span>
+        <h1 id="hero-heading">The Collector's<br>Atlas of Fine Gems</h1>
+        <p class="hero-subtitle">A jewel-toned editorial archive spanning classification, grading, cutting styles, geological origins, and certification guidance for gem collectors, designers, and gemologists.</p>
+        <div class="hero-cta">
+          <a href="minerals.html" class="btn btn-primary">Browse Mineral Index</a>
+          <a href="glossary.html" class="btn">Collector's Glossary</a>
+        </div>
+      </div>
+      <div class="hero-specimen" aria-hidden="true">
+        <div class="gem-specimen-display">
+          <span class="specimen-badge">Featured Specimen</span>
+          <img src="img/gem-emerald.svg" class="gem-svg-large" alt="Emerald facet diagram" width="140" height="140">
+          <div class="specimen-classification">
+            <div class="specimen-name">Emerald</div>
+            <div class="specimen-species">Beryl · Al₂Be₃Si₆O₁₈</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar" aria-label="Reference database statistics">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-number">342</span>
+        <span class="stat-label">Gem Species</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">87</span>
+        <span class="stat-label">Cut Styles</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">214</span>
+        <span class="stat-label">Origin Deposits</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">1,240</span>
+        <span class="stat-label">Glossary Terms</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURATED STRIP -->
+  <section class="curated-strip" aria-labelledby="curated-heading">
+    <div class="curated-strip-inner">
+      <div class="strip-header">
+        <div>
+          <span class="eyebrow" style="font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-gold);display:block;margin-bottom:4px;">Curated Collection</span>
+          <h2 id="curated-heading" style="font-size:1.1rem;">Featured Gem Families</h2>
+        </div>
+        <a href="minerals.html" class="btn btn-sm">View All</a>
+      </div>
+      <div class="strip-scroll" role="list">
+        <a href="minerals.html#beryl" class="strip-card" role="listitem">
+          <img src="img/gem-emerald.svg" class="strip-gem-icon" alt="Emerald" width="48" height="48">
+          <div class="strip-gem-name">Emerald</div>
+          <div class="strip-gem-type">Beryl</div>
+        </a>
+        <a href="minerals.html#sapphire" class="strip-card" role="listitem">
+          <img src="img/gem-sapphire.svg" class="strip-gem-icon" alt="Sapphire" width="48" height="48">
+          <div class="strip-gem-name">Sapphire</div>
+          <div class="strip-gem-type">Corundum</div>
+        </a>
+        <a href="minerals.html#ruby" class="strip-card" role="listitem">
+          <img src="img/gem-ruby.svg" class="strip-gem-icon" alt="Ruby" width="48" height="48">
+          <div class="strip-gem-name">Ruby</div>
+          <div class="strip-gem-type">Corundum</div>
+        </a>
+        <a href="minerals.html#amethyst" class="strip-card" role="listitem">
+          <img src="img/gem-amethyst.svg" class="strip-gem-icon" alt="Amethyst" width="48" height="48">
+          <div class="strip-gem-name">Amethyst</div>
+          <div class="strip-gem-type">Quartz</div>
+        </a>
+        <a href="minerals.html#diamond" class="strip-card" role="listitem">
+          <img src="img/gem-diamond.svg" class="strip-gem-icon" alt="Diamond" width="48" height="48">
+          <div class="strip-gem-name">Diamond</div>
+          <div class="strip-gem-type">Native Carbon</div>
+        </a>
+        <a href="minerals.html#chrysoberyl" class="strip-card" role="listitem">
+          <img src="img/gem-chrysoberyl.svg" class="strip-gem-icon" alt="Chrysoberyl" width="48" height="48">
+          <div class="strip-gem-name">Alexandrite</div>
+          <div class="strip-gem-type">Chrysoberyl</div>
+        </a>
+        <a href="minerals.html#tourmaline" class="strip-card" role="listitem">
+          <img src="img/gem-tourmaline.svg" class="strip-gem-icon" alt="Tourmaline" width="48" height="48">
+          <div class="strip-gem-name">Tourmaline</div>
+          <div class="strip-gem-type">Silicate</div>
+        </a>
+        <a href="minerals.html#spinel" class="strip-card" role="listitem">
+          <img src="img/gem-spinel.svg" class="strip-gem-icon" alt="Spinel" width="48" height="48">
+          <div class="strip-gem-name">Spinel</div>
+          <div class="strip-gem-type">Oxide</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="page-wrapper">
+
+      <!-- GEM OF THE WEEK -->
+      <section class="page-section" aria-labelledby="spotlight-heading">
+        <div class="section-header">
+          <span class="eyebrow">Gem of the Week</span>
+          <h2 id="spotlight-heading">Editorial Spotlight</h2>
+        </div>
+        <article class="editorial-spotlight">
+          <div class="spotlight-visual">
+            <img src="img/gem-sapphire.svg" alt="Blue Sapphire facet illustration" width="160" height="160" style="width:160px;height:160px;">
+          </div>
+          <div class="spotlight-content">
+            <span class="spotlight-label">Gem of the Week — May 2026</span>
+            <h3 class="spotlight-title" style="font-family:var(--font-serif);font-size:1.8rem;">Kashmir Sapphire</h3>
+            <p class="spotlight-body">The Padparadscha of velvety blues — Kashmir sapphires command extraordinary premiums at auction for their intensely saturated, cornflower-blue hue with a characteristic velvety, sleepy appearance caused by dense silk needle inclusions. First discovered in 1881 in the Zanskar Range, the alluvial deposits were largely exhausted within a decade, making genuine Kashmir provenance among the most coveted in all of gemology.</p>
+            <p class="spotlight-body">A fine, unheated Kashmir sapphire can exceed $200,000 per carat — surpassing many comparable-quality Burmese rubies — driven by extreme rarity and the prestige attached to the origin.</p>
+            <a href="minerals.html" class="btn">View Corundum Family</a>
+          </div>
+        </article>
+      </section>
+
+      <hr class="gold-rule">
+
+      <!-- TAXONOMY GRID -->
+      <section class="page-section" aria-labelledby="taxonomy-heading">
+        <div class="section-header">
+          <span class="eyebrow">Mineral Classification</span>
+          <h2 id="taxonomy-heading">Browse by Mineral Class</h2>
+          <p>Navigate the reference archive by primary mineralogical classification. Each class contains detailed specimen pages, grading data, and geological origin profiles.</p>
+        </div>
+        <div class="taxonomy-grid" role="list">
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <img src="img/gem-emerald.svg" class="taxonomy-icon" alt="" width="36" height="36" aria-hidden="true">
+            <div class="taxonomy-name">Beryl Group</div>
+            <div class="taxonomy-count">12 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <img src="img/gem-sapphire.svg" class="taxonomy-icon" alt="" width="36" height="36" aria-hidden="true">
+            <div class="taxonomy-name">Corundum</div>
+            <div class="taxonomy-count">8 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <img src="img/gem-diamond.svg" class="taxonomy-icon" alt="" width="36" height="36" aria-hidden="true">
+            <div class="taxonomy-name">Native Carbon</div>
+            <div class="taxonomy-count">3 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <img src="img/gem-amethyst.svg" class="taxonomy-icon" alt="" width="36" height="36" aria-hidden="true">
+            <div class="taxonomy-name">Quartz Group</div>
+            <div class="taxonomy-count">22 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <img src="img/gem-chrysoberyl.svg" class="taxonomy-icon" alt="" width="36" height="36" aria-hidden="true">
+            <div class="taxonomy-name">Chrysoberyl</div>
+            <div class="taxonomy-count">4 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <img src="img/gem-tourmaline.svg" class="taxonomy-icon" alt="" width="36" height="36" aria-hidden="true">
+            <div class="taxonomy-name">Tourmaline</div>
+            <div class="taxonomy-count">18 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <img src="img/gem-spinel.svg" class="taxonomy-icon" alt="" width="36" height="36" aria-hidden="true">
+            <div class="taxonomy-name">Spinel Group</div>
+            <div class="taxonomy-count">6 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <svg class="taxonomy-icon" viewBox="0 0 36 36" aria-hidden="true">
+              <polygon points="18,3 33,12 33,24 18,33 3,24 3,12" fill="#1a2e1a" stroke="#88bb66" stroke-width="1.5"/>
+              <polygon points="18,9 27,14 27,22 18,27 9,22 9,14" fill="#88bb66" opacity="0.3"/>
+            </svg>
+            <div class="taxonomy-name">Garnet Group</div>
+            <div class="taxonomy-count">15 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <svg class="taxonomy-icon" viewBox="0 0 36 36" aria-hidden="true">
+              <rect x="8" y="4" width="20" height="28" rx="3" fill="#1e2a3e" stroke="#a0c0e8" stroke-width="1.5"/>
+              <rect x="12" y="8" width="12" height="20" rx="2" fill="#a0c0e8" opacity="0.25"/>
+            </svg>
+            <div class="taxonomy-name">Feldspar Group</div>
+            <div class="taxonomy-count">9 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <svg class="taxonomy-icon" viewBox="0 0 36 36" aria-hidden="true">
+              <polygon points="18,2 34,18 18,34 2,18" fill="#2a1e0a" stroke="#d4a020" stroke-width="1.5"/>
+              <polygon points="18,9 27,18 18,27 9,18" fill="#d4a020" opacity="0.3"/>
+            </svg>
+            <div class="taxonomy-name">Topaz</div>
+            <div class="taxonomy-count">7 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <svg class="taxonomy-icon" viewBox="0 0 36 36" aria-hidden="true">
+              <ellipse cx="18" cy="18" rx="15" ry="10" fill="#1a2a1a" stroke="#44aa66" stroke-width="1.5"/>
+              <ellipse cx="18" cy="18" rx="9" ry="6" fill="#44aa66" opacity="0.3"/>
+            </svg>
+            <div class="taxonomy-name">Jade / Nephrite</div>
+            <div class="taxonomy-count">5 varieties</div>
+          </a>
+          <a href="minerals.html" class="taxonomy-item" role="listitem">
+            <svg class="taxonomy-icon" viewBox="0 0 36 36" aria-hidden="true">
+              <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="#1a1a2e" stroke="#8080cc" stroke-width="1.5"/>
+              <polygon points="18,8 28,13 28,23 18,28 8,23 8,13" fill="#8080cc" opacity="0.3"/>
+            </svg>
+            <div class="taxonomy-name">Zircon</div>
+            <div class="taxonomy-count">4 varieties</div>
+          </a>
+        </div>
+      </section>
+
+      <hr class="gold-rule">
+
+      <!-- RECENTLY UPDATED -->
+      <section class="page-section" aria-labelledby="recent-heading">
+        <div class="section-header">
+          <span class="eyebrow">Latest Updates</span>
+          <h2 id="recent-heading">Recently Updated Reference Entries</h2>
+        </div>
+        <div class="feed-list" role="list">
+          <a href="minerals.html" class="feed-item" role="listitem">
+            <div class="feed-gem-dot" style="background:var(--red-corundum-bg);border:1px solid var(--red-corundum-border);">
+              <img src="img/gem-ruby.svg" alt="" width="24" height="24">
+            </div>
+            <div>
+              <div class="feed-name">Pigeon's Blood Ruby</div>
+              <div class="feed-meta">Corundum · Burmese origin data updated · New certification records added</div>
+            </div>
+            <span class="feed-date">2026-05-18</span>
+          </a>
+          <a href="grading.html" class="feed-item" role="listitem">
+            <div class="feed-gem-dot" style="background:var(--beryl-bg);border:1px solid var(--beryl-border);">
+              <img src="img/gem-emerald.svg" alt="" width="24" height="24">
+            </div>
+            <div>
+              <div class="feed-name">Emerald Color Grading Scale</div>
+              <div class="feed-meta">Grading & Certification · GIA 2026 color descriptor updates</div>
+            </div>
+            <span class="feed-date">2026-05-15</span>
+          </a>
+          <a href="cuts.html" class="feed-item" role="listitem">
+            <div class="feed-gem-dot" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);">
+              <img src="img/gem-sapphire.svg" alt="" width="24" height="24">
+            </div>
+            <div>
+              <div class="feed-name">Ceylon Cushion Cut</div>
+              <div class="feed-meta">Cut Styles Gallery · Historical notes expanded, proportions revised</div>
+            </div>
+            <span class="feed-date">2026-05-12</span>
+          </a>
+          <a href="origins.html" class="feed-item" role="listitem">
+            <div class="feed-gem-dot" style="background:var(--amethyst-bg);border:1px solid var(--amethyst-border);">
+              <img src="img/gem-amethyst.svg" alt="" width="24" height="24">
+            </div>
+            <div>
+              <div class="feed-name">Zambian Amethyst Deposits</div>
+              <div class="feed-meta">Geological Origins · New mine profiles from Lusaka region</div>
+            </div>
+            <span class="feed-date">2026-05-09</span>
+          </a>
+          <a href="glossary.html" class="feed-item" role="listitem">
+            <div class="feed-gem-dot" style="background:var(--chrysoberyl-bg);border:1px solid var(--chrysoberyl-border);">
+              <img src="img/gem-chrysoberyl.svg" alt="" width="24" height="24">
+            </div>
+            <div>
+              <div class="feed-name">Chatoyancy (Cat's Eye Effect)</div>
+              <div class="feed-meta">Collector's Glossary · Etymology added, related terms updated</div>
+            </div>
+            <span class="feed-date">2026-05-07</span>
+          </a>
+        </div>
+      </section>
+
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-brand-text">Gem Classification Reference</span>
+        <p class="footer-desc">An authoritative editorial database for gem collectors, jewelry designers, and gemology students — providing classification, grading, and visual reference across all major gem species.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Reference</div>
+        <ul class="footer-links">
+          <li><a href="minerals.html">Mineral Specimen Index</a></li>
+          <li><a href="grading.html">Grading &amp; Certification</a></li>
+          <li><a href="cuts.html">Cutting Styles Gallery</a></li>
+          <li><a href="origins.html">Geological Origins</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <ul class="footer-links">
+          <li><a href="glossary.html">Collector's Glossary</a></li>
+          <li><a href="certification.html">Certification Guides</a></li>
+          <li><a href="about.html">About the Reference</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Gem Families</div>
+        <ul class="footer-links">
+          <li><a href="minerals.html">Beryl Group</a></li>
+          <li><a href="minerals.html">Corundum</a></li>
+          <li><a href="minerals.html">Diamond</a></li>
+          <li><a href="minerals.html">Tourmaline</a></li>
+          <li><a href="minerals.html">Chrysoberyl</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Gemology Reference Database. All reference data for educational use.</span>
+      <span>Updated <time datetime="2026-05-20">May 2026</time></span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

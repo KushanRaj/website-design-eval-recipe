@@ -1,0 +1,66 @@
+{
+  "raw_animation_count": 1,
+  "sanitized_animation_count": 1,
+  "raw_animations": [
+    {
+      "id": "gem-card-jewel-shift",
+      "kind": "animation",
+      "page": "mineral-index",
+      "path": "/minerals.html",
+      "trigger": {
+        "type": "hover",
+        "selector": "#beryl"
+      },
+      "timeline": {
+        "durationMs": 600,
+        "easing": "ease-in-out",
+        "samples": [
+          0,
+          150,
+          300,
+          450,
+          600
+        ]
+      },
+      "targets": [
+        {
+          "name": "gem-card-beryl",
+          "selector": "#beryl",
+          "channels": [
+            "color"
+          ],
+          "track": [
+            "background-color",
+            "border-color"
+          ]
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    }
+  ],
+  "animation_sanitize": [
+    {
+      "status": "kept",
+      "id": "gem-card-jewel-shift",
+      "path": "/minerals.html",
+      "sanitized_id": "gem-card-jewel-shift",
+      "trigger": {
+        "type": "hover",
+        "selector": "#beryl",
+        "settleBeforeMs": 0,
+        "settleMs": 0
+      },
+      "targets": [
+        {
+          "selector": "#beryl",
+          "channels": [
+            "color"
+          ]
+        }
+      ]
+    }
+  ]
+}

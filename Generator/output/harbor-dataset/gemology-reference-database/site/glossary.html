@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collector's Glossary — Gem Classification Reference</title>
+  <meta name="description" content="Comprehensive gemological glossary with over 1,240 terms covering mineralogy, optics, treatment, certification, and trade nomenclature.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .glossary-page-header {
+      background: linear-gradient(135deg, #0a0a1a, #1c1c2e);
+      padding: var(--space-2xl) 0;
+      border-bottom: var(--divider-gold);
+    }
+    .crossref-link {
+      display: inline-block;
+      padding: 2px 10px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 12px;
+      font-size: 0.7rem;
+      color: var(--text-gold);
+      margin: 2px;
+      cursor: pointer;
+      transition: all var(--anim-fast);
+    }
+    .crossref-link:hover {
+      background: rgba(201,168,76,0.18);
+      color: var(--text-primary);
+    }
+    .gem-family-pill {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      margin: 2px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="minerals.html">Mineral Index</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="cuts.html">Cut Styles</a></li>
+      <li><a href="origins.html">Origins Map</a></li>
+      <li><a href="glossary.html" class="active">Glossary</a></li>
+      <li><a href="certification.html">Certification</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-search"><input type="search" placeholder="Search specimens, terms…" aria-label="Search"></div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Collector's Glossary</span>
+  </nav>
+
+  <div class="glossary-page-header">
+    <div class="page-wrapper">
+      <span class="eyebrow" style="display:block;margin-bottom:var(--space-sm);">Reference Archive</span>
+      <h1>Collector's Glossary</h1>
+      <p style="color:var(--text-secondary);margin-top:var(--space-md);max-width:60ch;">Over 1,240 terms spanning mineralogy, optical phenomena, trade nomenclature, treatment disclosure, and certification terminology.</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-wrapper" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+      <!-- SEARCH -->
+      <input type="search" class="glossary-search" placeholder="Search glossary terms and definitions…" aria-label="Search glossary" id="glossary-search-input">
+
+      <div class="glossary-layout">
+
+        <!-- ALPHA NAV RAIL -->
+        <nav class="glossary-alpha-nav" aria-label="Alphabetical navigation">
+          <a href="#glossary-A" class="alpha-link has-entries" data-letter="A" title="Jump to A">A</a>
+          <a href="#glossary-B" class="alpha-link has-entries" data-letter="B" title="Jump to B">B</a>
+          <a href="#glossary-C" class="alpha-link has-entries" data-letter="C" title="Jump to C">C</a>
+          <a href="#glossary-D" class="alpha-link has-entries" data-letter="D" title="Jump to D">D</a>
+          <a href="#glossary-E" class="alpha-link has-entries" data-letter="E" title="Jump to E">E</a>
+          <a href="#glossary-F" class="alpha-link has-entries" data-letter="F" title="Jump to F">F</a>
+          <a href="#glossary-G" class="alpha-link has-entries" data-letter="G" title="Jump to G">G</a>
+          <a href="#glossary-H" class="alpha-link has-entries" data-letter="H" title="Jump to H">H</a>
+          <a href="#glossary-I" class="alpha-link has-entries" data-letter="I" title="Jump to I">I</a>
+          <a href="#glossary-J" class="alpha-link" data-letter="J" title="Jump to J">J</a>
+          <a href="#glossary-K" class="alpha-link has-entries" data-letter="K" title="Jump to K">K</a>
+          <a href="#glossary-L" class="alpha-link has-entries" data-letter="L" title="Jump to L">L</a>
+          <a href="#glossary-M" class="alpha-link has-entries" data-letter="M" title="Jump to M">M</a>
+          <a href="#glossary-N" class="alpha-link" data-letter="N" title="Jump to N">N</a>
+          <a href="#glossary-O" class="alpha-link has-entries" data-letter="O" title="Jump to O">O</a>
+          <a href="#glossary-P" class="alpha-link has-entries" data-letter="P" title="Jump to P">P</a>
+          <a href="#glossary-Q" class="alpha-link" data-letter="Q" title="Jump to Q">Q</a>
+          <a href="#glossary-R" class="alpha-link has-entries" data-letter="R" title="Jump to R">R</a>
+          <a href="#glossary-S" class="alpha-link has-entries" data-letter="S" title="Jump to S">S</a>
+          <a href="#glossary-T" class="alpha-link has-entries" data-letter="T" title="Jump to T">T</a>
+          <a href="#glossary-U" class="alpha-link" data-letter="U" title="Jump to U">U</a>
+          <a href="#glossary-V" class="alpha-link has-entries" data-letter="V" title="Jump to V">V</a>
+          <a href="#glossary-W" class="alpha-link" data-letter="W" title="Jump to W">W</a>
+          <a href="#glossary-X" class="alpha-link" data-letter="X" title="Jump to X">X</a>
+          <a href="#glossary-Y" class="alpha-link" data-letter="Y" title="Jump to Y">Y</a>
+          <a href="#glossary-Z" class="alpha-link has-entries" data-letter="Z" title="Jump to Z">Z</a>
+        </nav>
+
+        <!-- GLOSSARY ENTRIES -->
+        <div role="main" aria-label="Glossary entries">
+
+          <!-- A -->
+          <section class="glossary-section" id="glossary-A" aria-labelledby="letter-A">
+            <h2 class="glossary-letter-heading" id="letter-A">A</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Adularescence</h3>
+              <div class="entry-etymology">From <em>adularia</em> (a variety of orthoclase feldspar) + Latin suffix -escence ("becoming")</div>
+              <p class="entry-definition">A floating, billowing, bluish-white optical phenomenon observed in moonstone (adularia variety of orthoclase feldspar) and occasionally in other feldspars. Caused by light scattering between alternating thin layers of orthoclase and albite that differ slightly in refractive index. The visual effect resembles moonlight on water and moves across the surface as the stone is tilted.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--text-muted);">Feldspar</span>
+                <span class="gem-family-pill" style="background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--text-muted);">Moonstone</span>
+                <a href="#glossary-C" class="crossref-link">→ Chatoyancy</a>
+                <a href="#glossary-A" class="crossref-link">→ Asterism</a>
+                <a href="#glossary-L" class="crossref-link">→ Labradorescence</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Allochromatic</h3>
+              <div class="entry-etymology">Greek <em>allos</em> ("other") + <em>chroma</em> ("color")</div>
+              <p class="entry-definition">A mineral whose color is caused by trace impurities or structural defects rather than its essential chemical composition. In allochromatic gems, the pure mineral is colorless; color develops through the presence of chromophore elements such as chromium (ruby, emerald), iron (blue sapphire, aquamarine), or vanadium (certain demantoid garnets). Compare with <em>idiochromatic</em>.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--beryl-bg);border:1px solid var(--beryl-border);color:var(--beryl-accent);">Beryl</span>
+                <span class="gem-family-pill" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);color:var(--blue-corundum-accent);">Corundum</span>
+                <a href="#glossary-I" class="crossref-link">→ Idiochromatic</a>
+                <a href="#glossary-C" class="crossref-link">→ Chromophore</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Asterism</h3>
+              <div class="entry-etymology">Greek <em>aster</em> ("star")</div>
+              <p class="entry-definition">An optical phenomenon producing a star-shaped pattern of intersecting light lines across the surface of a cabochon-cut gemstone. Caused by light reflecting from oriented needle-like inclusions (silk) arranged in two or more directions parallel to crystal axes. The most valuable star gems are star ruby (6-ray, Burmese origin) and star sapphire; 4-ray stars and 12-ray stars occur in certain diopside and star rose quartz.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--red-corundum-bg);border:1px solid var(--red-corundum-border);color:var(--red-corundum-accent);">Ruby</span>
+                <span class="gem-family-pill" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);color:var(--blue-corundum-accent);">Sapphire</span>
+                <a href="#glossary-C" class="crossref-link">→ Chatoyancy</a>
+                <a href="#glossary-S" class="crossref-link">→ Silk (inclusions)</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- B -->
+          <section class="glossary-section" id="glossary-B" aria-labelledby="letter-B">
+            <h2 class="glossary-letter-heading" id="letter-B">B</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Birefringence</h3>
+              <div class="entry-etymology">Latin <em>bi</em> ("two") + refringere ("to break apart")</div>
+              <p class="entry-definition">The difference in refractive indices between the extraordinary and ordinary rays in a doubly refractive mineral. High birefringence causes visual doubling of back facets in transparent stones when viewed through the table — a notable identifying characteristic in zircon (DR = 0.059) and calcite (DR = 0.172). Singly refractive minerals (cubic crystal system, amorphous) exhibit no birefringence.</p>
+              <div class="entry-tags">
+                <a href="#glossary-R" class="crossref-link">→ Refractive Index</a>
+                <a href="#glossary-D" class="crossref-link">→ Double Refraction</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Brilliance</h3>
+              <div class="entry-etymology">French <em>briller</em> ("to shine")</div>
+              <p class="entry-definition">The visual effect of white light returning to the observer from a gemstone's interior. In faceted stones, brilliance is maximized when total internal reflection (TIR) retains light within the pavilion before returning it through the crown. Brilliance is distinct from fire (chromatic dispersion) and scintillation (sparkle from movement). A round brilliant cut diamond with ideal proportions captures maximum brilliance; dark extinction indicates light "leaking" through the pavilion.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--diamond-bg);border:1px solid var(--diamond-border);color:var(--diamond-accent);">Diamond</span>
+                <a href="#glossary-F" class="crossref-link">→ Fire</a>
+                <a href="#glossary-S" class="crossref-link">→ Scintillation</a>
+                <a href="#glossary-T" class="crossref-link">→ Total Internal Reflection</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- C -->
+          <section class="glossary-section" id="glossary-C" aria-labelledby="letter-C">
+            <h2 class="glossary-letter-heading" id="letter-C">C</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Chatoyancy</h3>
+              <div class="entry-etymology">French <em>chatoyer</em> ("to shine like a cat's eye")</div>
+              <p class="entry-definition">An optical phenomenon producing a luminous, moving band of light across the surface of a cabochon gemstone — the "cat's eye" effect. Caused by reflection from parallel needle-like inclusions, hollow tubes, or fibrous structures oriented in a single direction perpendicular to the light band. Most prized in chrysoberyl cat's eye (cymophane), though also occurs in tourmaline, quartz, moonstone, and corundum. The finest cat's eyes display a sharp, bright band and strong "milk and honey" effect when illuminated from the side.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--chrysoberyl-bg);border:1px solid var(--chrysoberyl-border);color:var(--chrysoberyl-accent);">Chrysoberyl</span>
+                <a href="#glossary-A" class="crossref-link">→ Asterism</a>
+                <a href="#glossary-S" class="crossref-link">→ Silk (inclusions)</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Chromophore</h3>
+              <div class="entry-etymology">Greek <em>chroma</em> ("color") + <em>phoros</em> ("bearer")</div>
+              <p class="entry-definition">A chemical element or structural feature that selectively absorbs certain wavelengths of visible light, producing color in a mineral. In gemology, the most significant chromophores are transition metal ions: chromium (Cr³⁺) produces red in ruby and green in emerald; iron (Fe²⁺/Fe³⁺) produces blue in sapphire and yellow in citrine; vanadium (V³⁺) produces green in tsavorite and certain emeralds; copper (Cu²⁺) produces the neon blue in Paraíba tourmaline.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--red-corundum-bg);border:1px solid var(--red-corundum-border);color:var(--red-corundum-accent);">Ruby</span>
+                <span class="gem-family-pill" style="background:var(--beryl-bg);border:1px solid var(--beryl-border);color:var(--beryl-accent);">Emerald</span>
+                <a href="#glossary-A" class="crossref-link">→ Allochromatic</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Clarity Enhancement</h3>
+              <div class="entry-etymology">From Latin <em>claritas</em> ("brightness, clearness")</div>
+              <p class="entry-definition">Any treatment applied to improve the apparent clarity of a gemstone by filling, bleaching, or otherwise reducing the visibility of inclusions or fractures. Common methods include: fracture filling with glass or epoxy resin (common in ruby and emerald); lead glass filling (historically used in ruby, now largely discontinued due to instability); oiling/resin treatment (standard trade practice for emeralds). All clarity enhancements must be disclosed at point of sale; GIA and other major laboratories note treatments on grading reports.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--beryl-bg);border:1px solid var(--beryl-border);color:var(--beryl-accent);">Emerald</span>
+                <span class="gem-family-pill" style="background:var(--red-corundum-bg);border:1px solid var(--red-corundum-border);color:var(--red-corundum-accent);">Ruby</span>
+                <a href="#glossary-T" class="crossref-link">→ Treatment Disclosure</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- D -->
+          <section class="glossary-section" id="glossary-D" aria-labelledby="letter-D">
+            <h2 class="glossary-letter-heading" id="letter-D">D</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Dispersion</h3>
+              <div class="entry-etymology">Latin <em>dispersio</em> ("scattering")</div>
+              <p class="entry-definition">The separation of white light into its spectral colors (fire) as it passes through a gemstone with different refractive indices for different wavelengths. Measured as the difference in RI between the red (B line, 686.7 nm) and violet (G line, 430.8 nm) extremes of the visible spectrum. Diamond (0.044), demantoid garnet (0.057), and sphene (0.051) show high dispersion — their "fire" is their primary visual attribute. Dispersion is different from birefringence (which also splits light but not into spectral colors).</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--diamond-bg);border:1px solid var(--diamond-border);color:var(--diamond-accent);">Diamond</span>
+                <a href="#glossary-F" class="crossref-link">→ Fire</a>
+                <a href="#glossary-R" class="crossref-link">→ Refractive Index</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- E -->
+          <section class="glossary-section" id="glossary-E" aria-labelledby="letter-E">
+            <h2 class="glossary-letter-heading" id="letter-E">E</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Extinction</h3>
+              <div class="entry-etymology">Latin <em>extinctio</em> ("putting out")</div>
+              <p class="entry-definition">Dark areas in a faceted gemstone where light is not returned to the observer, creating a visual "dead" or shadowy zone. In diamonds, extinction indicates sub-optimal cut proportions causing light leakage through the pavilion. In colored stones, extinction interacts with color saturation — highly saturated rubies and sapphires frequently show extinction in deep-toned zones, which is a trade-off accepted for color intensity. Excessive extinction significantly reduces a stone's perceived brilliance and desirability.</p>
+              <div class="entry-tags">
+                <a href="#glossary-B" class="crossref-link">→ Brilliance</a>
+                <a href="#glossary-T" class="crossref-link">→ Total Internal Reflection</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- F -->
+          <section class="glossary-section" id="glossary-F" aria-labelledby="letter-F">
+            <h2 class="glossary-letter-heading" id="letter-F">F</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Fire</h3>
+              <div class="entry-etymology">Old English <em>fȳr</em></div>
+              <p class="entry-definition">The spectral dispersion of white light into rainbow colors visible in a faceted gemstone. Fire is the property most closely associated with high-dispersion gems like diamond, demantoid garnet, and sphene. It is distinct from brilliance (white light return) and scintillation (sparkle from movement). Fire is best observed under direct, point-source lighting. Highly saturated colored stones may mask fire with body color.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--diamond-bg);border:1px solid var(--diamond-border);color:var(--diamond-accent);">Diamond</span>
+                <a href="#glossary-D" class="crossref-link">→ Dispersion</a>
+                <a href="#glossary-B" class="crossref-link">→ Brilliance</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Fluorescence</h3>
+              <div class="entry-etymology">From fluorspar (fluorite) + -escence; fluorspar from Latin <em>fluere</em> ("to flow")</div>
+              <p class="entry-definition">Visible light emitted by a gemstone when exposed to ultraviolet radiation, ceasing immediately when the UV source is removed. In diamonds, fluorescence is graded None, Faint, Medium, Strong, and Very Strong; blue fluorescence in strong-fluorescent D–H color diamonds can cause a "milky" or "oily" appearance in daylight (negative effect) or appear to improve apparent color (positive effect). Ruby typically shows strong red fluorescence under LW UV. Emerald generally shows weak or no fluorescence, which helps distinguish natural from synthetic material.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--diamond-bg);border:1px solid var(--diamond-border);color:var(--diamond-accent);">Diamond</span>
+                <span class="gem-family-pill" style="background:var(--red-corundum-bg);border:1px solid var(--red-corundum-border);color:var(--red-corundum-accent);">Ruby</span>
+                <a href="#glossary-P" class="crossref-link">→ Phosphorescence</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- G -->
+          <section class="glossary-section" id="glossary-G" aria-labelledby="letter-G">
+            <h2 class="glossary-letter-heading" id="letter-G">G</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Girdle</h3>
+              <div class="entry-etymology">Old English <em>gyrdel</em> ("belt, encircler")</div>
+              <p class="entry-definition">The narrow band forming the outer edge of a faceted gemstone, separating the crown (upper portion) from the pavilion (lower portion). The girdle is typically the widest point of the stone and the line from which the stone is set in a mounting. Girdle thickness ranges from extremely thin (prone to chipping) to very thick (wastes carat weight); medium girdles are preferred for most cuts. In diamonds, GIA grades girdle thickness on a scale from Extremely Thin to Extremely Thick.</p>
+              <div class="entry-tags">
+                <a href="#glossary-P" class="crossref-link">→ Pavilion</a>
+                <a href="#glossary-C" class="crossref-link">→ Crown (gem)</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- H -->
+          <section class="glossary-section" id="glossary-H" aria-labelledby="letter-H">
+            <h2 class="glossary-letter-heading" id="letter-H">H</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Heat Treatment</h3>
+              <div class="entry-etymology">Old English <em>hǣtu</em> + French <em>traitement</em></div>
+              <p class="entry-definition">The controlled application of elevated temperatures (typically 1,200–1,800°C for corundum) to alter or improve a gemstone's color and/or clarity. Heat treatment is the most common and widely accepted enhancement in the gem trade: over 95% of commercial sapphires and rubies are heat-treated. The process can dissolve silk inclusions in sapphires (improving clarity while deepening blue color), reduce brownish tones in sapphires, or improve color distribution. Unheated specimens with certification of no heat treatment command significant premiums — typically 30–100% over heated equivalents of similar quality.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);color:var(--blue-corundum-accent);">Sapphire</span>
+                <span class="gem-family-pill" style="background:var(--red-corundum-bg);border:1px solid var(--red-corundum-border);color:var(--red-corundum-accent);">Ruby</span>
+                <a href="#glossary-T" class="crossref-link">→ Treatment Disclosure</a>
+                <a href="#glossary-S" class="crossref-link">→ Silk (inclusions)</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- I -->
+          <section class="glossary-section" id="glossary-I" aria-labelledby="letter-I">
+            <h2 class="glossary-letter-heading" id="letter-I">I</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Idiochromatic</h3>
+              <div class="entry-etymology">Greek <em>idios</em> ("one's own") + <em>chroma</em> ("color")</div>
+              <p class="entry-definition">A mineral whose color is caused by essential chemical elements that are part of its fundamental composition rather than by trace impurities. Idiochromatic gems are always the same color — malachite is always green (copper is its chromophore AND essential element), peridot is always yellowish-green (iron in its crystal structure), rhodonite is always pink/red (manganese). Compare with allochromatic, where color varies by impurities.</p>
+              <div class="entry-tags">
+                <a href="#glossary-A" class="crossref-link">→ Allochromatic</a>
+                <a href="#glossary-C" class="crossref-link">→ Chromophore</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Inclusion</h3>
+              <div class="entry-etymology">Latin <em>inclusio</em> ("confinement")</div>
+              <p class="entry-definition">Any feature enclosed within a gemstone that was present during or formed after crystal growth. Inclusions include: crystals of other minerals (e.g., rutile silk in corundum, calcite in emerald), negative crystals (cavities), two-phase inclusions (liquid + gas), three-phase inclusions (liquid + gas + crystal — diagnostic for Colombian emerald), growth zoning, and fractures. While inclusions reduce clarity grades, certain inclusions — fingerprints, jardin in emerald, silk in Kashmir sapphire — are characteristic and diagnostically important for establishing origin and natural vs. synthetic status.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--beryl-bg);border:1px solid var(--beryl-border);color:var(--beryl-accent);">Emerald</span>
+                <span class="gem-family-pill" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);color:var(--blue-corundum-accent);">Sapphire</span>
+                <a href="#glossary-J" class="crossref-link">→ Jardin</a>
+                <a href="#glossary-S" class="crossref-link">→ Silk</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- K -->
+          <section class="glossary-section" id="glossary-K" aria-labelledby="letter-K">
+            <h2 class="glossary-letter-heading" id="letter-K">K</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Kimberlite</h3>
+              <div class="entry-etymology">Named for Kimberley, South Africa, where diamond-bearing kimberlite was first identified</div>
+              <p class="entry-definition">An ultramafic, potassic volcanic rock that is the primary source rock for diamonds in economic quantities. Kimberlites originate in the Earth's mantle at depths of 150–450 km and ascend rapidly through the lithosphere, occasionally carrying diamonds and mantle xenoliths to the surface. The geological structures formed by kimberlite intrusions are called pipes or diatremes. Notable kimberlite mining regions include Kimberley and Cullinan (South Africa), Jwaneng and Orapa (Botswana), Mirny and Aikhal (Russia), and Ekati and Diavik (Canada).</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--diamond-bg);border:1px solid var(--diamond-border);color:var(--diamond-accent);">Diamond</span>
+                <a href="#glossary-L" class="crossref-link">→ Lamproite</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- L -->
+          <section class="glossary-section" id="glossary-L" aria-labelledby="letter-L">
+            <h2 class="glossary-letter-heading" id="letter-L">L</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Labradorescence</h3>
+              <div class="entry-etymology">Named for Labrador, Canada + -escence</div>
+              <p class="entry-definition">A spectacular iridescent optical phenomenon unique to labradorite (a plagioclase feldspar) and spectrolite (high-quality Finnish labradorite). Caused by light interference between alternating thin layers of feldspar with slightly different compositions, labradorescence produces shifting flashes of blue, green, gold, orange, red, and violet — often multiple colors from a single stone. The phenomenon is related to adularescence (moonstone) but produces a broader color range. "Spectrolite" shows the full spectral range.</p>
+              <div class="entry-tags">
+                <a href="#glossary-A" class="crossref-link">→ Adularescence</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- M -->
+          <section class="glossary-section" id="glossary-M" aria-labelledby="letter-M">
+            <h2 class="glossary-letter-heading" id="letter-M">M</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Mohs Hardness Scale</h3>
+              <div class="entry-etymology">Named for Friedrich Mohs (1773–1839), German mineralogist</div>
+              <p class="entry-definition">A relative scale of mineral hardness based on the ability of one mineral to scratch another, ranging from 1 (talc) to 10 (diamond). The scale is ordinal, not linear — diamond (10) is approximately 4× harder than corundum (9) and 6× harder than topaz (8) in absolute terms. Standard reference minerals: 1-Talc, 2-Gypsum, 3-Calcite, 4-Fluorite, 5-Apatite, 6-Orthoclase, 7-Quartz, 8-Topaz, 9-Corundum, 10-Diamond. Gemstones intended for everyday wear (rings) should be ≥7 to resist scratching from atmospheric quartz dust.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--diamond-bg);border:1px solid var(--diamond-border);color:var(--diamond-accent);">Diamond</span>
+                <span class="gem-family-pill" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);color:var(--blue-corundum-accent);">Corundum</span>
+              </div>
+            </article>
+          </section>
+
+          <!-- O -->
+          <section class="glossary-section" id="glossary-O" aria-labelledby="letter-O">
+            <h2 class="glossary-letter-heading" id="letter-O">O</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Opalescence</h3>
+              <div class="entry-etymology">From <em>opal</em> (gemstone) + -escence</div>
+              <p class="entry-definition">A milky, bluish-white internal glow observed in certain gems caused by the scattering of short-wavelength light by very fine colloidal particles or structural discontinuities within the stone. True opalescence (also called Tyndall effect) is seen in milky quartz, girasol opal, and some moonstones. The term is sometimes colloquially confused with play-of-color (the rainbow iridescence of precious opal, which is caused by diffraction from a silica sphere array) — a distinct phenomenon.</p>
+              <div class="entry-tags">
+                <a href="#glossary-A" class="crossref-link">→ Adularescence</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- P -->
+          <section class="glossary-section" id="glossary-P" aria-labelledby="letter-P">
+            <h2 class="glossary-letter-heading" id="letter-P">P</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Pleochroism</h3>
+              <div class="entry-etymology">Greek <em>pleon</em> ("more") + <em>chros</em> ("skin color")</div>
+              <p class="entry-definition">The property of doubly refractive minerals to display different colors when viewed along different crystallographic directions under polarized light. Dichroic minerals (two colors) include iolite (blue/colorless/yellow) and alexandrite (green/red); trichroic minerals (three colors) include tanzanite (violet/blue/reddish-brown) and tourmaline. Pleochroism is a critical factor in gem orientation during cutting: the cutter must orient the stone to present the most desirable color through the table facet for the intended viewing direction.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--chrysoberyl-bg);border:1px solid var(--chrysoberyl-border);color:var(--chrysoberyl-accent);">Alexandrite</span>
+                <span class="gem-family-pill" style="background:var(--amethyst-bg);border:1px solid var(--amethyst-border);color:var(--amethyst-accent);">Tanzanite</span>
+                <a href="#glossary-B" class="crossref-link">→ Birefringence</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Provenance</h3>
+              <div class="entry-etymology">French <em>provenance</em> from <em>provenir</em> ("to come from")</div>
+              <p class="entry-definition">The documented geographic origin and ownership history of a gemstone. In the premium market, provenance serves as a significant value multiplier: Kashmir sapphires, Colombian emeralds, and Burmese "Pigeon's Blood" rubies command premiums of 50–400% over comparable material from other origins. Provenance is established through gemological laboratory testing (inclusions, spectroscopy, trace element analysis) and documented chain of custody. Historical gems with royal or aristocratic provenance may command auction premiums independent of gemological quality.</p>
+              <div class="entry-tags">
+                <a href="#glossary-C" class="crossref-link">→ Certification</a>
+                <a href="#glossary-O" class="crossref-link">→ Origin (geological)</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- R -->
+          <section class="glossary-section" id="glossary-R" aria-labelledby="letter-R">
+            <h2 class="glossary-letter-heading" id="letter-R">R</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Refractive Index (RI)</h3>
+              <div class="entry-etymology">Latin <em>refractus</em> ("bent back")</div>
+              <p class="entry-definition">A dimensionless number expressing the ratio of the speed of light in a vacuum to the speed of light in a given medium. Measured with a refractometer, the RI of a gemstone is one of its most diagnostic physical constants: diamond (2.417), corundum (1.762–1.770), beryl (1.565–1.602), quartz (1.544–1.553). Higher RI correlates with higher brilliance potential (more light is bent and retained). The refractometer reads RI values between approximately 1.36 and 1.81; stones above this range (diamond, demantoid) must be identified by other means.</p>
+              <div class="entry-tags">
+                <a href="#glossary-B" class="crossref-link">→ Birefringence</a>
+                <a href="#glossary-D" class="crossref-link">→ Dispersion</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- S -->
+          <section class="glossary-section" id="glossary-S" aria-labelledby="letter-S">
+            <h2 class="glossary-letter-heading" id="letter-S">S</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Silk (inclusions)</h3>
+              <div class="entry-etymology">Old English <em>seolc</em></div>
+              <p class="entry-definition">Oriented needle-like inclusions of rutile (TiO₂), ilmenite, or other minerals in corundum (ruby and sapphire), creating a visual effect resembling fine silk. In unheated Kashmir sapphires, a dense, fine silk scatters light to produce the characteristic "velvety" appearance that distinguishes Kashmir material from all other origins. In star corundum, silk arranged along three directions (in hexagonal symmetry) produces six-ray asterism when cut as a cabochon. Heat treatment dissolves silk, removing the velvety quality and asterism potential while improving transparency.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);color:var(--blue-corundum-accent);">Sapphire</span>
+                <a href="#glossary-A" class="crossref-link">→ Asterism</a>
+                <a href="#glossary-H" class="crossref-link">→ Heat Treatment</a>
+              </div>
+            </article>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Specific Gravity (SG)</h3>
+              <div class="entry-etymology">Latin <em>specificare</em> ("to designate") + <em>gravitas</em> ("weight")</div>
+              <p class="entry-definition">The ratio of a gemstone's weight to the weight of an equal volume of water — a dimensionless number equivalent to density in g/cm³. Each mineral species has a characteristic SG range: diamond (3.52), corundum (3.99–4.00), beryl (2.67–2.90), quartz (2.65), tourmaline (2.82–3.32). SG is determined by hydrostatic weighing (Archimedes' method) or by heavy liquid testing with calibrated solutions of bromoform, methylene iodide, or Clerici solution. SG is valuable for species separation when RI testing is inconclusive.</p>
+              <div class="entry-tags">
+                <a href="#glossary-R" class="crossref-link">→ Refractive Index</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- T -->
+          <section class="glossary-section" id="glossary-T" aria-labelledby="letter-T">
+            <h2 class="glossary-letter-heading" id="letter-T">T</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Total Internal Reflection (TIR)</h3>
+              <div class="entry-etymology">From optics terminology; Latin <em>totalis</em> + <em>internalis</em></div>
+              <p class="entry-definition">The optical phenomenon where light traveling from a denser medium to a less dense medium is completely reflected back at the interface rather than transmitted through it, when the angle of incidence exceeds the critical angle. TIR is fundamental to gem brilliance: light entering the crown of a properly proportioned diamond or colored stone reflects off pavilion facets and returns through the table, creating the "brilliance" effect. The critical angle is inversely related to the refractive index — higher RI gems have smaller critical angles, retaining more light and producing greater brilliance potential.</p>
+              <div class="entry-tags">
+                <a href="#glossary-B" class="crossref-link">→ Brilliance</a>
+                <a href="#glossary-R" class="crossref-link">→ Refractive Index</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- V -->
+          <section class="glossary-section" id="glossary-V" aria-labelledby="letter-V">
+            <h2 class="glossary-letter-heading" id="letter-V">V</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Velvet (texture)</h3>
+              <div class="entry-etymology">From French <em>velouté</em> ("soft, like velvet")</div>
+              <p class="entry-definition">An informal descriptive term used in trade to describe the characteristic soft, slightly hazy, internally glowing quality of fine Kashmir sapphires. The effect is caused by the scattering of light from densely distributed, very fine rutile silk inclusions that diffuse light without creating visible individual needles. The "velvety sleepiness" of a Kashmir sapphire is considered a mark of quality rather than a flaw, unlike the more transparent, "brilliant" appearance of heated Ceylonese or Thai stones. No other origin consistently replicates this quality.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--blue-corundum-bg);border:1px solid var(--blue-corundum-border);color:var(--blue-corundum-accent);">Kashmir Sapphire</span>
+                <a href="#glossary-S" class="crossref-link">→ Silk (inclusions)</a>
+              </div>
+            </article>
+          </section>
+
+          <!-- Z -->
+          <section class="glossary-section" id="glossary-Z" aria-labelledby="letter-Z">
+            <h2 class="glossary-letter-heading" id="letter-Z">Z</h2>
+
+            <article class="glossary-entry">
+              <h3 class="entry-term">Zoning (color)</h3>
+              <div class="entry-etymology">Greek <em>zōnē</em> ("belt, zone")</div>
+              <p class="entry-definition">Irregular distribution of color within a gemstone caused by variations in trace element concentration during crystal growth. Common in corundum (sector zoning, straight bands), emerald (growth zoning visible as color planes), and tourmaline (concentric or sector zoning). Color zoning is generally a negative quality factor — fine gems display even, uniform color distribution. However, distinctive zoning patterns can confirm natural origin (vs. synthetic), and the unusual color distribution of "watermelon tourmaline" (pink core, green rim) is itself a prized characteristic.</p>
+              <div class="entry-tags">
+                <span class="gem-family-pill" style="background:var(--beryl-bg);border:1px solid var(--beryl-border);color:var(--beryl-accent);">Emerald</span>
+                <span class="gem-family-pill" style="background:var(--tourmaline-bg);border:1px solid var(--tourmaline-border);color:var(--tourmaline-accent);">Tourmaline</span>
+                <a href="#glossary-I" class="crossref-link">→ Inclusion</a>
+              </div>
+            </article>
+          </section>
+
+        </div><!-- /main entries column -->
+
+      </div><!-- /.glossary-layout -->
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><span class="nav-brand-text">Gem Classification Reference</span><p class="footer-desc">Authoritative gemological data for collectors and professionals.</p></div>
+      <div><div class="footer-col-title">Reference</div><ul class="footer-links"><li><a href="minerals.html">Mineral Index</a></li><li><a href="grading.html">Grading</a></li><li><a href="cuts.html">Cut Styles</a></li><li><a href="origins.html">Origins Map</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links"><li><a href="glossary.html">Glossary</a></li><li><a href="certification.html">Certification</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><div class="footer-col-title">Gem Families</div><ul class="footer-links"><li><a href="minerals.html">Beryl Group</a></li><li><a href="minerals.html">Corundum</a></li><li><a href="minerals.html">Diamond</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Gemology Reference Database</span><span>Updated May 2026</span></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

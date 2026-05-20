@@ -1,0 +1,65 @@
+{
+  "status": "needs_repair",
+  "issues": [
+    {
+      "type": "broken_interaction",
+      "message": "The inline abstract-expand interaction is non-functional. The sticky table header intercepts pointer events, so clicking any '▸ Abstract' button in the publications table rows times out without expanding the abstract panel. The animation-replay capture for publications-abstract-expanded failed with this exact cause. The 'abstract-inline-preview' section is declared in the concept and the expand buttons are visually present, but they cannot be activated.",
+      "severity": "error",
+      "path": "/publications"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "The home page recently-added cards and site-navigation cards scored 14.6 on component style consistency. The automated checker found structural variation inside card sub-elements — icon wrappers with inconsistent child counts and data-row divs that alternate between one and two children. The cards look visually uniform in the screenshot, but the underlying DOM structure is not regularized.",
+      "severity": "warning",
+      "path": "/"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "The order-status cards on the conservation dashboard scored 16.3 on component style consistency. The sparkline row and status-label sub-elements within each card have structural variation (some have mismatched tag hierarchies and fewer-than-two-children issues). Visually the cards look consistent, but the HTML structure inside each card is not uniform.",
+      "severity": "warning",
+      "path": "/conservation"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "The field guide masonry cards scored 33.5 on component style consistency. The icon-placeholder wrapper and data-row elements vary in child count and tag structure across the 12 card instances shown. Some columns render different HTML shapes for the silhouette container, flagging mismatched hierarchy and card-style issues across approximately 99 of 168 evaluated sub-nodes.",
+      "severity": "warning",
+      "path": "/field-guide"
+    },
+    {
+      "type": "missing_rotation",
+      "message": "The featured-species spotlight on the home page displays a single static entry (Rhincodon typus) rather than the rotating spotlight described in the concept. No rotation cycle was captured in the replay. The hero section is otherwise fully implemented with binomial name, phylum badge, and IUCN status pill.",
+      "severity": "warning",
+      "path": "/"
+    },
+    {
+      "type": "layout_alignment_inconsistency",
+      "message": "Layout consistency scored 74.8 on the home page, with 8 row-bottom misalignments and 7 elements lacking horizontal grid anchors. This is minor but noticeable at the card-grid level and in the site-stats banner row.",
+      "severity": "warning",
+      "path": "/"
+    }
+  ],
+  "scores": {
+    "accessibility": 1.0,
+    "render_quality": 0.95,
+    "page_completeness": 0.97,
+    "layout_alignment": 0.78,
+    "component_consistency": 0.45,
+    "mobile_responsiveness": 0.9,
+    "animation_fidelity": 0.85
+  },
+  "repair_instructions": [
+    "Fix the pointer-events bug on the publications table so that the inline abstract expansion works. The root cause is that the sticky table header sits above table body rows in the stacking context, swallowing click events targeted at the '▸ Abstract' expand buttons. To fix this: lower the z-index of the sticky thead element (or its th children) so it no longer overlaps interactive body content, or apply 'pointer-events: none' to the thead when it is in its stuck/fixed position and the body rows are scrolled beneath it. After the fix, verify that clicking '▸ Abstract' on any row in publications.html causes the abstract text to expand inline beneath that row without page scroll.",
+    "Add a rotation cycle to the featured-species spotlight on the home page. Define a JavaScript array of 3–5 species objects (each with a binomial name, phylum badge text, IUCN status, and a short description). Use setInterval with an 8–10 second delay to cycle through them, applying a short CSS opacity or cross-fade transition (200–300 ms) when swapping to the next species. The IUCN status pill color should update to match the incoming species. This satisfies the 'rotating featured-species spotlight' described in the concept.",
+    "Regularize the DOM structure of card sub-elements across index.html, conservation.html, field-guide.html, and habitat.html. For every repeated card component: ensure each icon wrapper element always contains exactly two children (the SVG element and a visually-hidden or visible label span); ensure each data-row element uses a consistent two-child structure of '<span class=\"label\">…</span><span class=\"value\">…</span>'; and ensure all card image/silhouette placeholder containers use the same tag and class structure. This removes the structural variation that is causing low component style consistency scores.",
+    "Improve row-bottom alignment in the home page card grid and site-stats banner. On the recently-added species cards, apply 'align-items: stretch' to the grid container so all cards in each row share the same bottom edge. In the site-stats banner, ensure the five stat columns use 'align-items: baseline' or 'align-items: flex-end' consistently so numbers and labels are co-aligned. Similar row-alignment corrections should be applied to the conservation order-status card matrix."
+  ],
+  "deterministic_checks": {
+    "all_declared_pages_present": true,
+    "missing_required_text": [],
+    "html_page_count": 6,
+    "accessibility_issues_any_page": false,
+    "animation_specimen_panel_slide_passed": true,
+    "animation_publications_abstract_expand_passed": false,
+    "render_sanity_all_passed": true
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "status": "needs_repair",
+  "issues": [
+    {
+      "type": "layout_blank_region",
+      "message": "The Collector's Glossary page has a very large blank column on the right side — approximately 530px wide and spanning nearly 8,000px of scroll height. The 'related terms sidebar' declared in the concept is present in DOM structure but almost entirely empty of content, leaving a wasted third of the page width across the full scrollable length. This is the most visually prominent flaw in the build.",
+      "severity": "error",
+      "path": "/glossary"
+    },
+    {
+      "type": "layout_alignment_inconsistency",
+      "message": "The glossary layout consistency score is critically low (3.35/100), with 100 out of 108 measured elements lacking horizontal alignment registration. This correlates with the empty right-sidebar issue: the two-column flex/grid container is not distributing content evenly, causing most items to float unanchored in the layout algorithm's view.",
+      "severity": "warning",
+      "path": "/glossary"
+    },
+    {
+      "type": "layout_alignment_inconsistency",
+      "message": "The About page layout consistency score is 40.5/100, with 63 elements flagged for missing horizontal alignment. The editorial long-form page mixes contributor bio cards, methodology step cards, revision log rows, and contact grid blocks — several of these groups fall out of their alignment columns. The page is visually readable but structurally loose.",
+      "severity": "warning",
+      "path": "/about"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "The Cutting Styles Gallery masonry card components score 16.3/100 for component style consistency. The stat sub-containers inside each cut card have mismatched child counts and display types across the grid — some cells are fully populated (SVG diagram + label + specs div) while others use a different nesting pattern. This is partly exacerbated by the detail drawer being partially open during screenshot capture, but the underlying card DOM structure varies card-to-card.",
+      "severity": "warning",
+      "path": "/cuts"
+    },
+    {
+      "type": "component_style_inconsistency",
+      "message": "Mineral classification cards score 23.7/100 for component style consistency. The inner stat rows (Hardness, Crystal, RI, SG, Origin data rows) inside each card use inconsistent internal structures: some rows render as empty containers with zero children while adjacent rows use a label+value flex pair. This is a DOM-structure issue, not purely visual — the cards look consistent on screen but the structural inconsistency will affect candidate evaluation scoring.",
+      "severity": "warning",
+      "path": "/minerals"
+    },
+    {
+      "type": "layout_alignment_inconsistency",
+      "message": "Home page layout consistency is 72.4/100 with 31 total alignment errors, primarily 17 elements missing horizontal alignment and 8 rows with bottom-alignment mismatches. The page renders well visually; this is a moderate structural signal worth tidying in the curated card strip and taxonomy grid sections.",
+      "severity": "info",
+      "path": "/"
+    }
+  ],
+  "scores": {
+    "render_quality": 85.0,
+    "accessibility": 100.0,
+    "page_completeness": 100.0,
+    "layout_alignment": 52.0,
+    "component_consistency": 55.0,
+    "mobile_responsiveness": 75.0,
+    "motif_fidelity": 97.0,
+    "animation_implementation": 95.0
+  },
+  "repair_instructions": [
+    "On the Glossary page, fix the large blank right-side column. The 'related terms' sidebar panel occupies roughly a third of the page width but is empty for nearly the entire scroll height (~7,800px). Choose one of three approaches: (a) populate the sidebar with dynamically highlighted related-term links that update as the user scrolls to each definition section — at minimum show 3–5 linked terms per letter group; (b) collapse the right sidebar so it only becomes visible when a specific glossary term is clicked (a slide-in or sticky flyout), letting the definition list expand to ~70% page width at rest; or (c) remove the right sidebar column entirely and reformat the page as a single wide content column with inline cross-reference chips following each definition. Any of these will eliminate the 530×7800px blank rectangle and raise both the sparsity score and layout consistency score substantially.",
+    "On the Glossary page, after resolving the sidebar, audit the definition entry layout. Currently 100 of 108 measured elements lack horizontal alignment registration, suggesting the definition entries and their letter-section headers are not anchored to a shared left-rail grid line. Ensure all definition entries, letter headings, and gem-family tag chips share a consistent left-margin baseline aligned to the same grid column as the A-Z sticky rail.",
+    "On the About page, normalize alignment across the mixed section types. The contributor bio cards, data-sourcing methodology step cards, revision log date rows, and contact grid panels should each be wrapped in a consistent section container that constrains content to the same left/right column boundaries used in the page hero. Currently 63 elements are misaligned, suggesting several sections break out of the main content column. Add a shared `.content-column` wrapper (or equivalent CSS class) to every section in about.html and confirm that all inner grids snap to the same column grid.",
+    "On the Cutting Styles Gallery page, standardize the internal DOM structure of every cut card in the masonry grid. Each card should contain exactly: (1) an SVG diagram container div, (2) a title+subtitle text block div, and (3) a facet-count/category badge div. Currently some cards use this three-child structure while others collapse or omit a child node, creating the large component-style inconsistency. Audit all 12+ cut cards in cuts.html and make their internal HTML uniform. Also ensure the slide-in detail drawer is closed (not partially open) in the page's initial render state so screenshot captures do not include partially-rendered drawer content.",
+    "On the Mineral Specimen Index page, normalize the stat-row elements inside each classification card. Each card's data section should display rows for Hardness, Crystal System, RI, SG, and Origin using a uniform two-child flex row: a `<span class='stat-label'>` and a `<span class='stat-value'>`. Currently some rows render as empty container divs with no children (the data may be missing or injected via JavaScript after paint). Ensure all stat rows are populated with at least a placeholder dash ('—') when data is absent, so no stat row is a structurally empty node.",
+    "On the Home page, tighten alignment in the curated card strip (Featured Gem Families row) and the Browse by Mineral Class taxonomy grid. The 17 horizontally unaligned elements and 8 row bottom-alignment mismatches likely come from gem family icon cards using slightly inconsistent padding or margin-bottom values. Set a uniform card height on the Featured Gem Families chips (e.g., `min-height: 80px; align-items: center`) and ensure the taxonomy grid uses `align-items: stretch` so all cards in the same row reach the same bottom edge."
+  ],
+  "deterministic_checks": {
+    "all_declared_pages_present": true,
+    "missing_required_text": [],
+    "placeholder_hits": [],
+    "accessibility_issues_any_page": false,
+    "animation_frames_captured": true,
+    "render_sanity_all_passed": true,
+    "pages_checked": 8
+  }
+}

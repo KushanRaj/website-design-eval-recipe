@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <polygon points="50,8 78,28 82,58 60,92 40,92 18,58 22,28" fill="#3d0e1a" stroke="#e74c3c" stroke-width="2"/>
+  <polygon points="50,20 70,35 73,58 56,82 44,82 27,58 30,35" fill="#7a1a2a" stroke="#e74c3c" stroke-width="1" opacity="0.6"/>
+  <polygon points="50,32 62,44 64,58 52,72 48,72 36,58 38,44" fill="#e74c3c" opacity="0.22"/>
+  <line x1="50" y1="8" x2="50" y2="32" stroke="#e74c3c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="78" y1="28" x2="62" y2="44" stroke="#e74c3c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="82" y1="58" x2="64" y2="58" stroke="#e74c3c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="60" y1="92" x2="52" y2="72" stroke="#e74c3c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="40" y1="92" x2="48" y2="72" stroke="#e74c3c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="18" y1="58" x2="36" y2="58" stroke="#e74c3c" stroke-width="0.5" opacity="0.5"/>
+  <line x1="22" y1="28" x2="38" y2="44" stroke="#e74c3c" stroke-width="0.5" opacity="0.5"/>
+</svg>

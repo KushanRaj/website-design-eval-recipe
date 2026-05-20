@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mineral Specimen Index — Gem Classification Reference</title>
+  <meta name="description" content="Filterable index of gem species and mineral specimens with classification data, hardness, refractive index, crystal systems, and origin information.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="minerals.html" class="active">Mineral Index</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="cuts.html">Cut Styles</a></li>
+      <li><a href="origins.html">Origins Map</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="certification.html">Certification</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-search">
+      <input type="search" placeholder="Search specimens, terms…" aria-label="Search">
+    </div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Mineral Specimen Index</span>
+  </nav>
+
+  <main>
+    <div class="page-wrapper" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+      <div class="section-header">
+        <span class="eyebrow">Reference Archive</span>
+        <h1>Mineral Specimen Index</h1>
+        <p>Classification data, physical constants, and provenance records for all major gem species in the reference database. Hover any card to reveal the gem family's jewel-tone signature.</p>
+      </div>
+
+      <!-- Mobile filter toggle -->
+      <button class="btn mobile-filter-btn" style="margin-bottom:var(--space-lg);display:none;" aria-controls="filter-sidebar">
+        ⚙ Filter Specimens
+      </button>
+
+      <div class="sidebar-layout">
+
+        <!-- FILTER SIDEBAR -->
+        <aside class="filter-sidebar" id="filter-sidebar" aria-label="Filter gem specimens">
+          <div class="filter-sidebar-title">Filter Specimens</div>
+
+          <div class="filter-group" data-group="family">
+            <div class="filter-group-header" aria-expanded="true">
+              <span class="filter-group-title">Gem Family</span>
+              <span class="filter-group-toggle">▾</span>
+            </div>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="beryl"> Beryl Group
+                <span class="filter-count">12</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="corundum"> Corundum
+                <span class="filter-count">8</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="diamond"> Diamond
+                <span class="filter-count">3</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="quartz"> Quartz Group
+                <span class="filter-count">22</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="chrysoberyl"> Chrysoberyl
+                <span class="filter-count">4</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="tourmaline"> Tourmaline
+                <span class="filter-count">18</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="spinel"> Spinel
+                <span class="filter-count">6</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group" data-group="crystal">
+            <div class="filter-group-header">
+              <span class="filter-group-title">Crystal System</span>
+              <span class="filter-group-toggle">▾</span>
+            </div>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="hexagonal"> Hexagonal
+                <span class="filter-count">34</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="trigonal"> Trigonal
+                <span class="filter-count">28</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="cubic"> Cubic
+                <span class="filter-count">19</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="orthorhombic"> Orthorhombic
+                <span class="filter-count">22</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="tetragonal"> Tetragonal
+                <span class="filter-count">11</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="monoclinic"> Monoclinic
+                <span class="filter-count">9</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group" data-group="hardness">
+            <div class="filter-group-header">
+              <span class="filter-group-title">Mohs Hardness</span>
+              <span class="filter-group-toggle">▾</span>
+            </div>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="10"> 10 (Diamond)
+                <span class="filter-count">1</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="9"> 9 (Corundum)
+                <span class="filter-count">2</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="8-8.5"> 8–8.5
+                <span class="filter-count">18</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="7-7.5"> 7–7.5
+                <span class="filter-count">44</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="6-6.5"> 6–6.5
+                <span class="filter-count">22</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group" data-group="treatment">
+            <div class="filter-group-header">
+              <span class="filter-group-title">Treatment Status</span>
+              <span class="filter-group-toggle">▾</span>
+            </div>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="unheated"> Unheated specimens
+                <span class="filter-count">64</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="heated"> Commonly heated
+                <span class="filter-count">88</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="oiled"> Oiling / Resin
+                <span class="filter-count">12</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="untreated"> No treatment
+                <span class="filter-count">40</span>
+              </label>
+            </div>
+          </div>
+
+          <button class="btn btn-sm" style="width:100%;margin-top:var(--space-md);" onclick="document.querySelectorAll('.filter-option input').forEach(cb=>cb.checked=false);document.querySelectorAll('.gem-classification-card').forEach(c=>c.style.display='');document.querySelector('.result-count strong').textContent='24';document.querySelector('.active-filters').innerHTML='';">
+            Clear All Filters
+          </button>
+        </aside>
+
+        <!-- MAIN GRID -->
+        <div>
+          <!-- Active filters row -->
+          <div class="active-filters" aria-live="polite" aria-label="Active filters"></div>
+
+          <!-- Grid controls -->
+          <div class="gem-grid-controls">
+            <p class="result-count">Showing <strong>24</strong> of 342 specimens</p>
+            <select class="sort-select" aria-label="Sort specimens">
+              <option>Sort: Alphabetical A–Z</option>
+              <option>Sort: Hardness (High–Low)</option>
+              <option>Sort: Refractive Index</option>
+              <option>Sort: Recently Updated</option>
+            </select>
+          </div>
+
+          <!-- GEM CLASSIFICATION CARD GRID — hover jewel-shift animation lives here -->
+          <div class="gem-grid" role="list" aria-label="Gem classification cards">
+
+            <!-- EMERALD -->
+            <article class="gem-classification-card" data-gem-family="beryl" data-family="beryl" data-crystal="hexagonal" role="listitem" id="beryl" tabindex="0" aria-label="Emerald specimen">
+              <img src="img/gem-emerald.svg" class="card-gem-icon" alt="Emerald crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Emerald</div>
+              <div class="card-gem-species">Beryl · Al₂Be₃Si₆O₁₈</div>
+              <span class="tag tag-beryl">Beryl</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">7.5 – 8</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Hexagonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.565 – 1.602</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">2.67 – 2.78</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Colombia, Zambia, Brazil</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 7.5 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- SAPPHIRE -->
+            <article class="gem-classification-card" data-gem-family="blue-corundum" data-family="corundum" data-crystal="trigonal" role="listitem" id="sapphire" tabindex="0" aria-label="Sapphire specimen">
+              <img src="img/gem-sapphire.svg" class="card-gem-icon" alt="Sapphire crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Sapphire</div>
+              <div class="card-gem-species">Corundum · Al₂O₃</div>
+              <span class="tag tag-corundum-blue">Corundum</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">9.0</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Trigonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.762 – 1.770</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.99 – 4.00</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Kashmir, Burma, Sri Lanka</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 9 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- RUBY -->
+            <article class="gem-classification-card" data-gem-family="red-corundum" data-family="corundum" data-crystal="trigonal" role="listitem" id="ruby" tabindex="0" aria-label="Ruby specimen">
+              <img src="img/gem-ruby.svg" class="card-gem-icon" alt="Ruby crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Ruby</div>
+              <div class="card-gem-species">Corundum · Al₂O₃</div>
+              <span class="tag tag-corundum-red">Corundum</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">9.0</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Trigonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.762 – 1.770</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.99 – 4.00</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Burma, Mozambique, Thailand</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 9 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- AMETHYST -->
+            <article class="gem-classification-card" data-gem-family="amethyst" data-family="quartz" data-crystal="trigonal" role="listitem" id="amethyst" tabindex="0" aria-label="Amethyst specimen">
+              <img src="img/gem-amethyst.svg" class="card-gem-icon" alt="Amethyst crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Amethyst</div>
+              <div class="card-gem-species">Quartz · SiO₂</div>
+              <span class="tag tag-amethyst">Amethyst</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">7.0</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Trigonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.544 – 1.553</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">2.65</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Brazil, Uruguay, Zambia</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 7 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- ALEXANDRITE -->
+            <article class="gem-classification-card" data-gem-family="chrysoberyl" data-family="chrysoberyl" data-crystal="orthorhombic" role="listitem" id="chrysoberyl" tabindex="0" aria-label="Alexandrite specimen">
+              <img src="img/gem-chrysoberyl.svg" class="card-gem-icon" alt="Alexandrite crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Alexandrite</div>
+              <div class="card-gem-species">Chrysoberyl · BeAl₂O₄</div>
+              <span class="tag tag-chrysoberyl">Chrysoberyl</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">8.5</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Orthorhombic</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.746 – 1.755</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.73</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Russia, Sri Lanka, Brazil</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 8.5 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- DIAMOND -->
+            <article class="gem-classification-card" data-gem-family="diamond" data-family="diamond" data-crystal="cubic" role="listitem" id="diamond" tabindex="0" aria-label="Diamond specimen">
+              <img src="img/gem-diamond.svg" class="card-gem-icon" alt="Diamond crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Diamond</div>
+              <div class="card-gem-species">Native Carbon · C</div>
+              <span class="tag tag-diamond">Diamond</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">10.0</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Cubic</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">2.417</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.52</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Botswana, Russia, Canada</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 10 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- TOURMALINE -->
+            <article class="gem-classification-card" data-gem-family="tourmaline" data-family="tourmaline" data-crystal="trigonal" role="listitem" id="tourmaline" tabindex="0" aria-label="Tourmaline specimen">
+              <img src="img/gem-tourmaline.svg" class="card-gem-icon" alt="Tourmaline crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Paraíba Tourmaline</div>
+              <div class="card-gem-species">Elbaite · Na(Li,Al)₃Al₆Si₆O₁₈</div>
+              <span class="tag tag-tourmaline">Tourmaline</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">7.0 – 7.5</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Trigonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.614 – 1.666</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.06</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Brazil, Mozambique, Nigeria</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 7 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- SPINEL -->
+            <article class="gem-classification-card" data-gem-family="spinel" data-family="spinel" data-crystal="cubic" role="listitem" id="spinel" tabindex="0" aria-label="Spinel specimen">
+              <img src="img/gem-spinel.svg" class="card-gem-icon" alt="Spinel crystal diagram" width="40" height="40">
+              <div class="card-gem-name">Red Spinel</div>
+              <div class="card-gem-species">Spinel · MgAl₂O₄</div>
+              <span class="tag tag-spinel">Spinel</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">8.0</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Cubic</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.712 – 1.762</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.60</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Burma, Sri Lanka, Tajikistan</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 8 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <!-- Additional cards for grid density -->
+            <article class="gem-classification-card" data-gem-family="beryl" data-family="beryl" data-crystal="hexagonal" role="listitem" tabindex="0" aria-label="Aquamarine specimen">
+              <img src="img/gem-emerald.svg" class="card-gem-icon" alt="" width="40" height="40" style="filter:hue-rotate(150deg);">
+              <div class="card-gem-name">Aquamarine</div>
+              <div class="card-gem-species">Beryl · Al₂Be₃Si₆O₁₈</div>
+              <span class="tag tag-beryl">Beryl</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">7.5 – 8</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Hexagonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.567 – 1.590</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">2.68 – 2.74</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Brazil, Pakistan, Madagascar</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 7.5 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <article class="gem-classification-card" data-gem-family="amethyst" data-family="quartz" data-crystal="trigonal" role="listitem" tabindex="0" aria-label="Citrine specimen">
+              <img src="img/gem-amethyst.svg" class="card-gem-icon" alt="" width="40" height="40" style="filter:hue-rotate(90deg);">
+              <div class="card-gem-name">Citrine</div>
+              <div class="card-gem-species">Quartz · SiO₂</div>
+              <span class="tag tag-chrysoberyl">Quartz</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">7.0</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Trigonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.544 – 1.553</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">2.65</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Brazil, Bolivia, Spain</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 7 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <article class="gem-classification-card" data-gem-family="blue-corundum" data-family="corundum" data-crystal="trigonal" role="listitem" tabindex="0" aria-label="Padparadscha Sapphire specimen">
+              <img src="img/gem-sapphire.svg" class="card-gem-icon" alt="" width="40" height="40" style="filter:hue-rotate(-30deg);">
+              <div class="card-gem-name">Padparadscha</div>
+              <div class="card-gem-species">Corundum · Al₂O₃</div>
+              <span class="tag tag-corundum-blue">Corundum</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">9.0</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Trigonal</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.762 – 1.770</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.99 – 4.00</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Sri Lanka, Madagascar</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 9 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+            <article class="gem-classification-card" data-gem-family="chrysoberyl" data-family="chrysoberyl" data-crystal="orthorhombic" role="listitem" tabindex="0" aria-label="Cat's Eye Chrysoberyl specimen">
+              <img src="img/gem-chrysoberyl.svg" class="card-gem-icon" alt="" width="40" height="40">
+              <div class="card-gem-name">Cat's Eye</div>
+              <div class="card-gem-species">Chrysoberyl · BeAl₂O₄</div>
+              <span class="tag tag-chrysoberyl">Chrysoberyl</span>
+              <div class="stat-row"><span class="stat-label">Hardness</span><span class="stat-value">8.5</span></div>
+              <div class="stat-row"><span class="stat-label">Crystal</span><span class="stat-value">Orthorhombic</span></div>
+              <div class="stat-row"><span class="stat-label">RI</span><span class="stat-value">1.746 – 1.755</span></div>
+              <div class="stat-row"><span class="stat-label">SG</span><span class="stat-value">3.73</span></div>
+              <div class="stat-row"><span class="stat-label">Origin</span><span class="stat-value">Sri Lanka, India, Brazil</span></div>
+              <div class="card-footer">
+                <div class="card-hardness-bar" aria-label="Hardness 8.5 out of 10">
+                  <div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip filled"></div><div class="hardness-pip"></div><div class="hardness-pip"></div>
+                </div>
+                <a href="minerals.html" class="btn btn-sm">Details</a>
+              </div>
+            </article>
+
+          </div><!-- /.gem-grid -->
+
+          <!-- PAGINATION -->
+          <nav class="pagination" aria-label="Pagination">
+            <button class="page-btn" aria-label="Previous page">‹</button>
+            <button class="page-btn active" aria-current="page">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">…</button>
+            <button class="page-btn">15</button>
+            <button class="page-btn" aria-label="Next page">›</button>
+          </nav>
+
+        </div><!-- /.main column -->
+      </div><!-- /.sidebar-layout -->
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-brand-text">Gem Classification Reference</span>
+        <p class="footer-desc">Authoritative gemological data for collectors and professionals.</p>
+      </div>
+      <div><div class="footer-col-title">Reference</div><ul class="footer-links"><li><a href="minerals.html">Mineral Index</a></li><li><a href="grading.html">Grading</a></li><li><a href="cuts.html">Cut Styles</a></li><li><a href="origins.html">Origins Map</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links"><li><a href="glossary.html">Glossary</a></li><li><a href="certification.html">Certification</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><div class="footer-col-title">Gem Families</div><ul class="footer-links"><li><a href="minerals.html">Beryl Group</a></li><li><a href="minerals.html">Corundum</a></li><li><a href="minerals.html">Diamond</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Gemology Reference Database</span><span>Updated May 2026</span></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Show mobile filter button on small screens
+    if (window.innerWidth <= 900) {
+      document.querySelector('.mobile-filter-btn').style.display = 'flex';
+    }
+    window.addEventListener('resize', () => {
+      const btn = document.querySelector('.mobile-filter-btn');
+      if (btn) btn.style.display = window.innerWidth <= 900 ? 'flex' : 'none';
+    });
+  </script>
+</body>
+</html>

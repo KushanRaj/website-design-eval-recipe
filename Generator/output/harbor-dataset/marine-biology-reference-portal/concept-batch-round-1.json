@@ -1,0 +1,270 @@
+{
+  "seed_id": "marine-biology-reference-portal",
+  "concepts": [
+    {
+      "candidate_id": "ocean-index",
+      "domain": "marine biology reference",
+      "site_goal": "Provide taxonomists, marine researchers, and conservationists with a dense, authoritative single-source reference for species taxonomy, habitat distribution, peer-reviewed literature, and conservation metrics",
+      "audience": [
+        "marine biologists",
+        "taxonomists",
+        "conservation researchers",
+        "oceanographic graduate students"
+      ],
+      "description": "OceanIndex is a high-density institutional reference portal built on a strict blue-and-white grid. A three-panel taxonomy browser anchors the experience: a collapsible hierarchical tree on the left, a paginated species roster in the center, and a specimen detail panel on the right rail that slides in-place on click. Every page follows the same disciplined grid, monospace scientific annotations, and deep-sea blue (#003366) header band. Navigation is multi-level with persistent breadcrumbs. Data-heavy pages use sortable tables, faceted filters, and inline sparklines rather than decorative chrome.",
+      "motif": "Institutional deep-sea blue (#003366) header band on crisp white content panels; monospace scientific annotations for measurements and taxonomy ranks; strict 12-column grid with dense gutters; tabular data-first layout; muted teal accent for interactive affordances",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "hero split: left two-thirds shows rotating featured-species spotlight with large binomial name, phylum badge, and IUCN status pill; right third houses a persistent taxonomy quick-search widget with autocomplete; below the fold a three-column recently-added species card grid with thumbnail silhouette, common name, and date-added stamp",
+          "sections": [
+            "featured-species-spotlight",
+            "taxonomy-quick-search",
+            "recently-added-grid",
+            "site-stats-banner"
+          ]
+        },
+        {
+          "id": "taxonomy-browser",
+          "path": "/taxonomy",
+          "layout_pattern": "three-panel: 240px sticky left sidebar contains collapsible taxonomy tree from kingdom to species with node counts; 60% center column shows paginated species list rows (thumbnail, binomial, authority, habitat zone, IUCN status pill); 280px right rail holds the specimen detail panel that slides in on row click — panel contains morphology measurements, synonyms, depth range bar, and classification breadcrumb",
+          "sections": [
+            "taxonomy-tree-sidebar",
+            "species-list-table",
+            "specimen-detail-panel",
+            "pagination-controls"
+          ]
+        },
+        {
+          "id": "habitat-maps",
+          "path": "/habitat",
+          "layout_pattern": "full-width SVG world map occupying the upper 55% of viewport with clickable ocean-basin regions rendered as colored polygons; below the map: a horizontal depth-zone filter strip (epipelagic, mesopelagic, bathypelagic toggles); right-side legend panel lists active species overlays with color swatches and species counts; clicking a basin polygon filters an inline result tally beneath the filter strip",
+          "sections": [
+            "world-map-svg",
+            "depth-zone-filter-strip",
+            "overlay-legend-panel",
+            "basin-species-tally"
+          ]
+        },
+        {
+          "id": "publications",
+          "path": "/publications",
+          "layout_pattern": "220px left filter sidebar with faceted controls for year range slider, taxonomy phylum checkboxes, journal name multi-select, and open-access toggle; center region renders a sortable dense table with columns for title, lead author, journal, year, citation count badge, and a collapsible abstract row that expands inline; top bar shows active-filter chip row and result count",
+          "sections": [
+            "faceted-filter-sidebar",
+            "publications-sortable-table",
+            "active-filter-chips",
+            "abstract-inline-preview"
+          ]
+        },
+        {
+          "id": "conservation",
+          "path": "/conservation",
+          "layout_pattern": "dashboard grid: top row spans full width with an IUCN status distribution bar chart showing species counts per category; middle section is a card matrix where each card represents a taxonomic order with its dominant status, population trend arrow, and a sparkline of assessment history; bottom section contains per-class trend line charts with a year-range selector",
+          "sections": [
+            "iucn-status-bar-chart",
+            "order-status-card-matrix",
+            "trend-sparklines",
+            "year-range-selector"
+          ]
+        },
+        {
+          "id": "field-guide",
+          "path": "/field-guide",
+          "layout_pattern": "masonry card grid (3 columns desktop, 2 tablet, 1 mobile) where each card shows a specimen silhouette placeholder at top, common name in bold, scientific binomial in italics, a taxonomic rank badge (e.g., ORDER: Carcharhiniformes), habitat zone tag chips, maximum recorded length, and depth range data strip at card foot",
+          "sections": [
+            "search-and-filter-bar",
+            "field-guide-masonry-grid",
+            "card-detail-hover-tooltip"
+          ]
+        }
+      ],
+      "message_intent": [
+        "establish portal as the authoritative dense-reference destination for working marine scientists",
+        "enable rapid lookup and side-by-side comparison of species taxonomic data",
+        "surface geographic distribution patterns through layered habitat map overlays",
+        "communicate conservation urgency through dashboard-style status metrics and trend sparklines"
+      ],
+      "required_text": [
+        "Species Taxonomy",
+        "Habitat & Distribution",
+        "Conservation Status",
+        "Field Guide",
+        "Research Publications"
+      ],
+      "content_model": [
+        "species taxonomy records with full classification hierarchy from kingdom to subspecies",
+        "habitat zone polygon geodata with depth range and temperature band attributes",
+        "peer-reviewed publication metadata including DOI, abstract snippet, citation count, and taxa tags",
+        "IUCN Red List conservation status records with population trend and assessment year",
+        "field guide entries with morphological measurements, diagnostic characters, and behavioral notes"
+      ],
+      "interactions": [
+        "click species row in taxonomy browser to slide open specimen detail panel in right rail",
+        "click ocean zone polygon on habitat map to filter species list to that zone",
+        "sort publications table by year, citation count, or journal impact factor",
+        "toggle species taxon overlays on habitat map via checkbox legend",
+        "expand and collapse taxonomy tree nodes from phylum to species level"
+      ],
+      "animations": [
+        {
+          "id": "specimen-panel-slide",
+          "page": "taxonomy-browser",
+          "target": ".specimen-detail-panel",
+          "trigger": {
+            "type": "click",
+            "source": ".species-list-row"
+          },
+          "channels": [
+            "motion"
+          ],
+          "durationMs": 600,
+          "description": "Clicking a row in the center species list triggers the specimen detail panel in the right rail to animate from its collapsed off-canvas position (CSS transform: translateX(100%)) to its fully visible in-rail position (transform: translateX(0)) over 600ms with an ease-out cubic-bezier curve. The panel is already present in the DOM and absolutely positioned within the fixed-width right rail container, so no surrounding columns shift and no page scroll is triggered. The panel stays fully within the right rail viewport region for the entire 600ms transition."
+        }
+      ],
+      "asset_needs": [
+        "specimen silhouette SVG icons keyed to taxonomic class (e.g., Chondrichthyes, Actinopterygii, Cetacea)",
+        "ocean zone vector base layer with basin and depth-zone polygon topology",
+        "IUCN status color-token palette (LC green through EX black)",
+        "monospace typeface for scientific annotations (e.g., IBM Plex Mono)"
+      ],
+      "mobile_behavior": "collapsible sidebar navigation behind hamburger; taxonomy tree stacks above species list; specimen detail panel becomes full-width bottom drawer; publications table switches to stacked card list",
+      "difficulty": "hard"
+    },
+    {
+      "candidate_id": "coral-base",
+      "domain": "marine biology reference",
+      "site_goal": "Serve marine conservation officers, university researchers, and policy analysts with structured access to taxonomic classification depth, basin-level habitat distribution, peer-reviewed literature, and an interactive IUCN status matrix",
+      "audience": [
+        "conservation officers",
+        "university marine science researchers",
+        "marine policy analysts",
+        "advanced undergraduate and graduate students"
+      ],
+      "description": "CoralBase adopts an oceanographic-institute aesthetic: deep navy (#0A1628) headers contrast with white content panels, with coral-tinted accents (#E8572A) marking interactive elements. The Conservation Status Dashboard is the portal's analytical centerpiece — a matrix table cross-referencing taxonomic orders against all seven IUCN Red List categories, each cell showing a species count and capable of color-highlighting on click. Navigation uses persistent breadcrumbs and a mega-menu dropdown. Field guide entries follow a structured scholarly single-column format with named sections. Typography is clean and legible with clear hierarchy between headings and data labels.",
+      "motif": "Deep navy (#0A1628) headers on white content panels; coral accent (#E8572A) on interactive affordances; IUCN category colors as a controlled semantic palette; structured scholarly typography with clear heading hierarchy; breadcrumb navigation and mega-menu dropdowns",
+      "pages": [
+        {
+          "id": "home",
+          "path": "/",
+          "layout_pattern": "full-width top mega-navigation bar with taxa-category dropdowns; hero feature banner with organism-of-the-week name, image placeholder, and conservation status pill; horizontal auto-scrolling ticker strip showing latest publication titles with journal and year; four equal-width quick-access category tiles (Taxonomy, Habitat Maps, Literature, Conservation) each with an icon, label, and record count",
+          "sections": [
+            "mega-navigation",
+            "organism-of-the-week-banner",
+            "publications-ticker",
+            "category-tile-grid",
+            "portal-statistics-strip"
+          ]
+        },
+        {
+          "id": "taxonomy-classification",
+          "path": "/taxonomy",
+          "layout_pattern": "dual-panel: left 280px panel contains a searchable expand/collapse classification tree spanning phylum to species with indented hierarchy and node-count badges; right panel renders a two-column grid of taxonomy cards each showing a rank icon, scientific name in italics, authority citation, type locality, and a synonym count badge; selecting a tree node filters the right grid",
+          "sections": [
+            "classification-tree-panel",
+            "taxonomy-card-grid",
+            "tree-search-input",
+            "rank-filter-chips"
+          ]
+        },
+        {
+          "id": "habitat-distribution",
+          "path": "/habitat",
+          "layout_pattern": "vertically divided: upper half fills viewport width with a choropleth world map encoding species richness per ocean basin using a sequential blue color scale; lower half presents a tabular panel for the currently selected basin with columns for taxonomic order, species count, depth range, and endemic percentage; an unselected-state placeholder message prompts basin selection",
+          "sections": [
+            "choropleth-map",
+            "basin-data-table",
+            "richness-legend",
+            "depth-range-filter"
+          ]
+        },
+        {
+          "id": "scientific-literature",
+          "path": "/literature",
+          "layout_pattern": "full-width faceted search bar at top with keyword input and submit; below it a horizontal scrollable row of tag-filter chips grouped by Taxa, Year, and Journal with clear-all control; main content: paginated list of publication cards each containing title as linked heading, author byline, journal name, year badge, open-access icon where applicable, DOI link, and a two-sentence abstract excerpt with expand toggle",
+          "sections": [
+            "faceted-search-bar",
+            "tag-filter-chips",
+            "publication-card-list",
+            "pagination-controls"
+          ]
+        },
+        {
+          "id": "conservation-dashboard",
+          "path": "/conservation",
+          "layout_pattern": "page-width status matrix table: sticky left column lists taxonomic orders; seven data columns represent IUCN categories (LC, NT, VU, EN, CR, EW, EX) each with a color-coded column header; cells show species counts; clicking a cell highlights it with its category color and opens an inline collapsible species roster as an in-table sub-row directly below the clicked row; summary totals row pinned to table bottom",
+          "sections": [
+            "iucn-matrix-table",
+            "inline-species-roster",
+            "matrix-summary-totals",
+            "assessment-year-selector"
+          ]
+        },
+        {
+          "id": "field-guide-entries",
+          "path": "/field-guide",
+          "layout_pattern": "fixed 200px alphabetical index sidebar on the left with A-Z letter anchors and species count per letter; main content area renders single-column scholarly field entries with clearly labeled H3 sections: Morphology, Habitat, Behavior, Diet, Reproduction, Conservation Notes; each entry includes a morphology diagram placeholder, a distribution thumbnail map, and a metadata strip with authority, family, and IUCN status",
+          "sections": [
+            "alphabetical-index-sidebar",
+            "field-entry-header",
+            "morphology-section",
+            "habitat-section",
+            "conservation-notes-section",
+            "entry-metadata-strip"
+          ]
+        }
+      ],
+      "message_intent": [
+        "communicate conservation urgency with immediate visual weight through the color-coded IUCN status matrix",
+        "provide taxonomic classification depth that supports rigorous academic citation and cross-referencing",
+        "connect basin-level distribution data to conservation status context for policy-relevant analysis",
+        "position portal as the evidence base for peer-reviewed marine conservation decision-making"
+      ],
+      "required_text": [
+        "IUCN Red List Status",
+        "Taxonomic Classification",
+        "Habitat Distribution",
+        "Scientific Literature",
+        "Field Guide"
+      ],
+      "content_model": [
+        "hierarchical taxonomic classification records from kingdom to subspecies with authority, synonym list, and rank icons",
+        "ocean-basin choropleth geodata encoding species richness and endemic percentage per basin",
+        "scientific literature metadata with title, authors, journal, year, DOI, abstract excerpt, and taxa tags",
+        "IUCN Red List status matrix data cross-referencing taxonomic orders with all seven status categories",
+        "scholarly field guide entries with morphology, habitat, behavior, diet, reproduction, and conservation sections"
+      ],
+      "interactions": [
+        "click status matrix cell to color-highlight it and reveal an inline species roster beneath the table",
+        "expand and collapse taxonomy classification tree nodes from phylum to genus level",
+        "filter literature by faceted tag chips for taxa, year range, and journal name",
+        "click ocean basin polygon on choropleth map to load basin-specific species breakdown in lower panel",
+        "scroll alphabetical sidebar index to navigate directly to a field guide entry letter group"
+      ],
+      "animations": [
+        {
+          "id": "status-cell-color-activate",
+          "page": "conservation-dashboard",
+          "target": ".status-matrix-cell",
+          "trigger": {
+            "type": "click"
+          },
+          "channels": [
+            "color"
+          ],
+          "durationMs": 400,
+          "description": "Clicking a cell in the IUCN status matrix table triggers a CSS background-color transition on that cell from its neutral resting color (#F8F9FA light gray) to the IUCN category's designated color (e.g., #D32F2F deep red for CR, #E65100 amber for EN, #388E3C green for LC) over 400ms using a linear easing on the background-color property. The cell sits in its fixed table grid position throughout — no transform, no layout shift, no scroll, and no DOM replacement occur. The transition ends with the cell settled at the category highlight color, visually marking the selected state."
+        }
+      ],
+      "asset_needs": [
+        "IUCN Red List category color tokens mapped to all seven categories (LC through EX)",
+        "ocean basin choropleth base SVG with labeled basin polygons",
+        "taxonomic rank icon set (phylum through species glyphs)",
+        "structured field guide entry layout template with named section anchors"
+      ],
+      "mobile_behavior": "status matrix becomes horizontally scrollable with frozen first column; mega-menu collapses to hamburger drawer; literature cards stack single column; field guide sidebar becomes a select dropdown",
+      "difficulty": "hard"
+    }
+  ]
+}

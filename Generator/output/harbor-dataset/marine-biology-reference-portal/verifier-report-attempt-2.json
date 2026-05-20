@@ -1,0 +1,58 @@
+{
+  "status": "approved",
+  "issues": [
+    {
+      "type": "icon_style_warning",
+      "message": "The six feature navigation cards on the home page use SVG icons with noticeably different path complexity and visual weight (one group has 3 paths, another has 8 paths, etc.), producing a minor shape-consistency flag. Visually tolerable but worth aligning.",
+      "severity": "warning",
+      "path": "/"
+    },
+    {
+      "type": "component_sub_element_structure",
+      "message": "Field guide cards visually appear uniform, but the automated checker detects structural variation in sub-elements — likely because some cards conditionally omit a habitat tag row or render a different number of tag chips, causing differing child counts inside otherwise-identical card sections. The visual presentation is acceptable; the underlying markup should be normalized for long-term maintainability.",
+      "severity": "warning",
+      "path": "/field-guide"
+    },
+    {
+      "type": "component_sub_element_structure",
+      "message": "Conservation order cards look consistent in the screenshot, but the component checker finds mismatched element counts within several card data-row sub-elements. Likely caused by conditional sparkline rendering or variable badge presence for some orders. Low automated score (16) is misleading given the strong visual uniformity; nonetheless the markup should be standardized.",
+      "severity": "warning",
+      "path": "/conservation"
+    },
+    {
+      "type": "component_sub_element_structure",
+      "message": "Recently-added species cards on the home page show structural variation in their inner link blocks — some use a different element type for the card footer area versus the majority. Cards look visually identical in the screenshot; normalize the underlying markup so each card uses the same element hierarchy.",
+      "severity": "warning",
+      "path": "/"
+    },
+    {
+      "type": "layout_row_alignment",
+      "message": "All pages record 8–21 row-bottom alignment errors, primarily from card rows with variable-height content (differing numbers of habitat tag chips, long vs short diagnostic text). This produces mild ragged baselines in the grid, most visible in the field guide and conservation order matrix. Not a blocking issue, but tightening row heights would improve polish.",
+      "severity": "warning",
+      "path": null
+    }
+  ],
+  "scores": {
+    "accessibility": 1.0,
+    "render_quality": 0.96,
+    "page_completeness": 1.0,
+    "layout_alignment": 0.79,
+    "component_consistency": 0.52,
+    "mobile_responsiveness": 0.95
+  },
+  "repair_instructions": [
+    "On the home page, replace or redraw the SVG icons used inside the six feature navigation cards so they share a consistent visual language: same stroke weight, same level of path complexity (aim for 4–6 paths each), and the same visual bounding-box fill ratio. The current set mixes icons with very few paths and icons with many more, making them feel mismatched at a glance.",
+    "Normalize the HTML structure of every repeating card type (field guide cards, conservation order cards, recently-added species cards) so that each positional slot within the card always contains the same element tag and nesting depth, regardless of whether data is present. Where a field is absent for a particular record, render the container element with an empty or hidden state rather than omitting it entirely. This ensures the DOM tree is structurally identical across all instances of the same card type.",
+    "Fix row-height alignment in the field guide masonry grid and the conservation order card matrix by applying a consistent minimum card height and using CSS grid's 'align-items: stretch' (or equivalent flex stretching) so that cards within the same row reach the same bottom edge even when their content length differs. Consider capping diagnostic text at a fixed number of lines (e.g., 3 lines with text-overflow ellipsis) rather than letting it grow unbounded, to prevent height outliers from distorting row rhythm.",
+    "Review the taxonomy page specimen detail panel to confirm that clicking a species row triggers the translateX(100%) → translateX(0) CSS transition over 600ms with ease-out timing. The animation frame captures (0ms through 600ms) are present, which is a good sign; verify in the JS that the transition property is correctly set on the .specimen-detail-panel element and that the click handler on .species-list-row removes the off-canvas class rather than using a JavaScript-driven position override, so the CSS transition fires naturally without layout shift."
+  ],
+  "deterministic_checks": {
+    "html_page_count": 6,
+    "all_declared_pages_present": true,
+    "missing_required_text_count": 0,
+    "zero_accessibility_issues": true,
+    "all_render_sanity_passed": true,
+    "animation_frames_captured": true,
+    "specimen_panel_animation_present": true
+  }
+}

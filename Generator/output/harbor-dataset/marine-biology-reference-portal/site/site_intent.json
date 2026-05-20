@@ -1,0 +1,98 @@
+{
+  "site_name": "OceanIndex",
+  "tagline": "Marine Biology Reference Portal",
+  "concept_id": "marine-biology-reference-portal",
+  "candidate_id": "ocean-index",
+  "domain": "marine biology reference",
+  "description": "OceanIndex is a high-density institutional reference portal built on a strict blue-and-white grid. A three-panel taxonomy browser anchors the experience: a collapsible hierarchical tree on the left, a paginated species roster in the center, and a specimen detail panel on the right rail that slides in-place on click. Every page follows the same disciplined grid, monospace scientific annotations, and deep-sea blue (#003366) header band. Navigation is multi-level with persistent breadcrumbs. Data-heavy pages use sortable tables, faceted filters, and inline sparklines.",
+  "color_palette": {
+    "primary": "#003366",
+    "primary_dark": "#002244",
+    "accent_teal": "#007A8C",
+    "accent_teal_light": "#4CACBC",
+    "background": "#F3F5F8",
+    "white": "#FFFFFF"
+  },
+  "typography": {
+    "body": "System sans-serif stack (-apple-system, BlinkMacSystemFont, Segoe UI)",
+    "mono": "IBM Plex Mono (Google Fonts) — used for scientific annotations, measurements, taxonomy ranks, monospace data"
+  },
+  "pages": [
+    {
+      "id": "home",
+      "file": "index.html",
+      "title": "Home / Featured Species",
+      "description": "Hero split layout: featured-species spotlight (Whale Shark) on the left two-thirds with large binomial name, phylum badge, and IUCN status pill; right third holds a taxonomy quick-search widget with live autocomplete filtering. Below the fold: three-column recently-added species card grid and three portal navigation cards. Stats banner shows live site metrics."
+    },
+    {
+      "id": "taxonomy-browser",
+      "file": "taxonomy.html",
+      "title": "Species Taxonomy Browser",
+      "description": "Three-panel layout: 240px sticky left sidebar with collapsible taxonomy tree (Kingdom→Species with node counts); 60% center column with paginated species list table (thumbnail SVG, binomial, authority, habitat zone, IUCN status); 280px right rail with the specimen detail panel. Clicking a species row triggers the panel slide animation (translateX(100%)→translateX(0) over 600ms cubic-bezier ease-out). Panel shows morphology, depth range bar, habitat tags, classification breadcrumb, and synonyms."
+    },
+    {
+      "id": "habitat-maps",
+      "file": "habitat.html",
+      "title": "Habitat & Distribution Maps",
+      "description": "Full-width SVG world map with clickable ocean basin polygons (Pacific, Atlantic, Indian, Arctic, Southern, Mediterranean). Clicking a basin triggers a JS-populated tally card. Depth zone filter strip (Epipelagic, Mesopelagic, Bathypelagic, Abyssopelagic, Benthic) with toggle buttons. Right-side legend panel with species class overlays and checkboxes. Basin summary sortable table below map."
+    },
+    {
+      "id": "publications",
+      "file": "publications.html",
+      "title": "Research Publications",
+      "description": "220px left faceted filter sidebar (year range slider, taxonomy phylum checkboxes, journal multi-select, open-access toggle, citation count slider). Center: sortable dense publications table with title, author, journal, year, citation count badge, and inline abstract expansion via click. Active filter chips row at top. 12 representative publications from real marine biology literature."
+    },
+    {
+      "id": "conservation",
+      "file": "conservation.html",
+      "title": "Conservation Status Dashboard",
+      "description": "Dashboard layout: full-width IUCN status distribution bar chart (stacked proportional + individual column chart); order/class status card matrix (12 cards) each with dominant status pill, population trend arrow, and SVG sparkline of threatened-% over 2016–2024; class-level trend line charts (4 sparklines); summary statistics table. Year-range selector slider in chart header."
+    },
+    {
+      "id": "field-guide",
+      "file": "field-guide.html",
+      "title": "Field Guide Entries",
+      "description": "Search and filter bar (text search, class filter, status filter, habitat filter). Masonry card grid (3 columns desktop, 2 tablet, 1 mobile) with 12 species entries. Each card: SVG specimen silhouette, common name, binomial, rank badge, habitat tags, morphological measurements table, depth-range gradient strip, authority and class in card footer."
+    }
+  ],
+  "animations": [
+    {
+      "id": "specimen-panel-slide",
+      "page": "taxonomy.html",
+      "description": "Clicking a .species-list-row element triggers the .specimen-detail-panel in the right rail to slide from translateX(100%) to translateX(0). The panel is absolutely positioned within the fixed-width .tax-rail container (overflow:hidden). The 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) transition is declared in CSS via .specimen-detail-panel transition property and toggled by adding/removing the .panel-open class via JavaScript. No layout shift occurs; the rail container clips the off-canvas panel.",
+      "trigger_selector": ".species-list-row",
+      "target_selector": ".specimen-detail-panel",
+      "trigger_type": "click",
+      "duration_ms": 600,
+      "easing": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      "channel": "motion"
+    }
+  ],
+  "interactions": [
+    "Click species row → specimen detail panel slides in-place (600ms ease-out)",
+    "Click taxonomy tree node → expand/collapse children; set active state",
+    "Click ocean basin polygon → filter species tally and populate basin card",
+    "Toggle depth zone buttons → visual active/inactive state",
+    "Sort publications table by clicking column headers (asc/desc)",
+    "Click publication expand button → inline abstract row expands",
+    "Year range, phylum, open-access filter controls → live table filtering",
+    "Field guide search/filter → live card show/hide",
+    "Conservation year range slider → display label update",
+    "Mobile hamburger → nav drawer open/close"
+  ],
+  "shared_assets": [
+    "css/style.css",
+    "js/main.js"
+  ],
+  "files": [
+    "index.html",
+    "taxonomy.html",
+    "habitat.html",
+    "publications.html",
+    "conservation.html",
+    "field-guide.html",
+    "css/style.css",
+    "js/main.js",
+    "site_intent.json"
+  ]
+}

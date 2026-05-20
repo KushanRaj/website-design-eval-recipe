@@ -1,0 +1,20 @@
+{
+  "id": "marine-biology-reference-portal",
+  "one_liner": "Dense utilitarian marine biology reference portal covering species taxonomy, habitat distribution maps, research publications, conservation status dashboards, field guide entries, and specimen data cards; clean institutional blue-and-white grid layout with high information density, multi-level navigation, and click-triggered motion animations on interactive data visualization panels across six structured pages.",
+  "metadata": {
+    "animation_channel": "motion",
+    "animation_trigger": "click",
+    "animation_duration_ms_min": 300,
+    "animation_duration_ms_max": 900,
+    "animation_target_hint": "expandable specimen data card panel that slides open in-place",
+    "animation_side_effects": "none — no scroll, no layout shift, no element replacement",
+    "implied_pages": [
+      "Home / Featured Species",
+      "Species Taxonomy Browser",
+      "Habitat & Distribution Maps",
+      "Research Publications",
+      "Conservation Status Dashboard",
+      "Field Guide Entries"
+    ]
+  }
+}

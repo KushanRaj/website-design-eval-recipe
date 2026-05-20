@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cutting Styles Gallery — Gem Classification Reference</title>
+  <meta name="description" content="Visual gallery of gem cutting styles with SVG facet diagrams, proportion data, historical notes, and recommended gem types for each cut style.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .cut-svg-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl);
+      background: var(--bg-surface);
+    }
+    .cut-svg-container svg {
+      width: 100px;
+      height: 100px;
+    }
+    .drawer-svg {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto var(--space-lg);
+      display: block;
+    }
+    .drawer-section-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-gold);
+      margin: var(--space-lg) 0 var(--space-sm);
+      border-bottom: var(--divider-gold);
+      padding-bottom: var(--space-xs);
+    }
+    .drawer-data-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--text-secondary);
+    }
+    .drawer-data-label {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .featured-cut {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: var(--space-xl);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-2xl);
+      align-items: center;
+    }
+    .featured-cut-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-surface);
+      border-radius: 4px;
+      padding: var(--space-xl);
+    }
+    .angle-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-xl);
+      font-size: 0.8rem;
+    }
+    .angle-table th {
+      background: var(--bg-card);
+      color: var(--text-gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: var(--space-sm) var(--space-md);
+      text-align: left;
+      border-bottom: var(--divider-gold);
+      font-weight: 600;
+      font-family: var(--font-sans);
+    }
+    .angle-table td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    /* Uniform 3-child cut card structure */
+    .cut-card {
+      display: flex;
+      flex-direction: column;
+    }
+    .cut-card-visual {
+      flex-shrink: 0;
+    }
+    .cut-card-info {
+      flex: 1;
+    }
+    .cut-card-subtitle {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Gemology Reference Home">
+      <svg class="gem-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 28,10 28,22 16,30 4,22 4,10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="16,8 23,13 23,21 16,26 9,21 9,13" fill="currentColor" opacity="0.3"/>
+        <line x1="16" y1="2" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="10" x2="23" y2="13" stroke="currentColor" stroke-width="1"/>
+        <line x1="28" y1="22" x2="23" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="16" y1="30" x2="16" y2="26" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="22" x2="9" y2="21" stroke="currentColor" stroke-width="1"/>
+        <line x1="4" y1="10" x2="9" y2="13" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="nav-brand-text">Gem Classification Reference</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="minerals.html">Mineral Index</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="cuts.html" class="active">Cut Styles</a></li>
+      <li><a href="origins.html">Origins Map</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="certification.html">Certification</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-search"><input type="search" placeholder="Search specimens, terms…" aria-label="Search"></div>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Cutting Styles Gallery</span>
+  </nav>
+
+  <main>
+    <div class="page-wrapper" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+      <div class="section-header">
+        <span class="eyebrow">Visual Reference</span>
+        <h1>Cutting Styles Gallery</h1>
+        <p>Facet diagrams, proportion data, and historical context for 87 documented gem cutting styles. Click any card to open the detail drawer.</p>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="cuts-filter-bar" role="group" aria-label="Filter by cut category">
+        <button class="cut-filter-btn active" data-filter="all">All Styles</button>
+        <button class="cut-filter-btn" data-filter="brilliant">Brilliant Cuts</button>
+        <button class="cut-filter-btn" data-filter="step">Step Cuts</button>
+        <button class="cut-filter-btn" data-filter="mixed">Mixed Cuts</button>
+        <button class="cut-filter-btn" data-filter="fancy">Fancy Shapes</button>
+        <button class="cut-filter-btn" data-filter="cabochon">Cabochons</button>
+        <button class="cut-filter-btn" data-filter="historical">Historical</button>
+      </div>
+
+      <!-- FEATURED CUT -->
+      <section aria-labelledby="featured-cut-heading">
+        <div class="section-header">
+          <span class="eyebrow">Editor's Feature</span>
+          <h2 id="featured-cut-heading">The Round Brilliant</h2>
+        </div>
+        <div class="featured-cut">
+          <div class="featured-cut-visual">
+            <!-- Round brilliant SVG facet diagram -->
+            <svg width="160" height="160" viewBox="0 0 100 100" aria-label="Round brilliant facet diagram">
+              <!-- Girdle outline -->
+              <circle cx="50" cy="50" r="45" fill="none" stroke="var(--text-gold)" stroke-width="1"/>
+              <!-- Table -->
+              <polygon points="50,20 65,28 65,42 50,50 35,42 35,28" fill="rgba(176,200,232,0.15)" stroke="var(--diamond-accent)" stroke-width="0.8"/>
+              <!-- Star facets -->
+              <polygon points="50,5 57,20 50,20" fill="rgba(176,200,232,0.1)" stroke="var(--diamond-accent)" stroke-width="0.5"/>
+              <polygon points="71,15 65,28 57,20" fill="rgba(176,200,232,0.1)" stroke="var(--diamond-accent)" stroke-width="0.5"/>
+              <polygon points="85,35 65,42 71,15" fill="rgba(176,200,232,0.08)" stroke="var(--diamond-accent)" stroke-width="0.5" transform="rotate(45,50,50)"/>
+              <polygon points="50,5 43,20 50,20" fill="rgba(176,200,232,0.1)" stroke="var(--diamond-accent)" stroke-width="0.5" transform="rotate(90,50,50)"/>
+              <polygon points="50,5 57,20 50,20" fill="rgba(176,200,232,0.1)" stroke="var(--diamond-accent)" stroke-width="0.5" transform="rotate(180,50,50)"/>
+              <polygon points="50,5 57,20 50,20" fill="rgba(176,200,232,0.1)" stroke="var(--diamond-accent)" stroke-width="0.5" transform="rotate(270,50,50)"/>
+              <!-- Pavilion lines (simplified) -->
+              <line x1="50" y1="50" x2="5" y2="50" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.4"/>
+              <line x1="50" y1="50" x2="95" y2="50" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.4"/>
+              <line x1="50" y1="50" x2="50" y2="5" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.4"/>
+              <line x1="50" y1="50" x2="50" y2="95" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.4"/>
+              <!-- Upper girdle facets -->
+              <line x1="50" y1="5" x2="65" y2="28" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.4"/>
+              <line x1="50" y1="5" x2="35" y2="28" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.4"/>
+            </svg>
+          </div>
+          <div>
+            <p style="color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-md);">Developed by Marcel Tolkowsky in 1919, the Round Brilliant cut with 57 or 58 facets (with or without culet) remains the most scientifically optimized cut for maximum fire and brilliance in diamond. Tolkowsky's calculated crown angle of 34.5° and pavilion angle of 40.75° established the proportions that still define "ideal cut" today.</p>
+            <p style="color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-md);">The cut's evolution from the earlier Old European and Old Mine cuts represents a century of optical engineering — modern computer-modeled variants such as the "Super Ideal" push fire and scintillation metrics further while maintaining light performance.</p>
+            <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
+              <span class="tag tag-diamond">Diamond</span>
+              <span class="tag tag-corundum-blue">Sapphire</span>
+              <span class="tag tag-corundum-red">Ruby</span>
+              <span class="tag tag-beryl">Emerald</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MASONRY GALLERY -->
+      <section aria-labelledby="gallery-heading">
+        <div class="section-header">
+          <span class="eyebrow">Full Gallery</span>
+          <h2 id="gallery-heading">All Cut Styles</h2>
+        </div>
+
+        <div class="cuts-masonry" role="list">
+
+          <!-- Round Brilliant -->
+          <article class="cut-card" data-category="brilliant" data-cut-name="Round Brilliant" data-facets="57–58" data-best-for="Diamond, Sapphire, Ruby" data-notes="The most optically efficient cut for diamond. Tolkowsky's 1919 mathematical model. Crown angle 34.5°, pavilion 40.75°." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="90" height="90" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="44" fill="none" stroke="var(--diamond-accent)" stroke-width="1.2"/>
+                <polygon points="50,20 65,28 65,42 50,50 35,42 35,28" fill="rgba(176,200,232,0.12)" stroke="var(--diamond-accent)" stroke-width="0.8"/>
+                <line x1="50" y1="5" x2="50" y2="95" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.3"/>
+                <line x1="5" y1="50" x2="95" y2="50" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.3"/>
+                <line x1="18" y1="18" x2="82" y2="82" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.3"/>
+                <line x1="82" y1="18" x2="18" y2="82" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Round Brilliant</div>
+              <div class="cut-card-subtitle">Maximum fire &amp; brilliance</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">57–58 facets</span>
+              <span class="badge-category">Brilliant</span>
+            </div>
+          </article>
+
+          <!-- Princess Cut -->
+          <article class="cut-card" data-category="brilliant" data-cut-name="Princess Cut" data-facets="58–76" data-best-for="Diamond, Colored stones" data-notes="Square modified brilliant developed in the 1960s–70s. High brilliance in square format. Crown angle 25°, pavilion 40–41°." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="90" height="90" viewBox="0 0 100 100" aria-hidden="true">
+                <rect x="15" y="15" width="70" height="70" fill="none" stroke="var(--diamond-accent)" stroke-width="1.2"/>
+                <polygon points="50,15 85,15 85,50 50,50" fill="rgba(176,200,232,0.08)" stroke="var(--diamond-accent)" stroke-width="0.6"/>
+                <polygon points="15,15 50,15 50,50 15,50" fill="rgba(176,200,232,0.06)" stroke="var(--diamond-accent)" stroke-width="0.6"/>
+                <polygon points="15,50 50,50 15,85" fill="rgba(176,200,232,0.08)" stroke="var(--diamond-accent)" stroke-width="0.6"/>
+                <polygon points="50,50 85,50 85,85" fill="rgba(176,200,232,0.06)" stroke="var(--diamond-accent)" stroke-width="0.6"/>
+                <line x1="15" y1="15" x2="85" y2="85" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.3"/>
+                <line x1="85" y1="15" x2="15" y2="85" stroke="var(--diamond-accent)" stroke-width="0.4" opacity="0.3"/>
+                <rect x="32" y="32" width="36" height="36" fill="none" stroke="var(--diamond-accent)" stroke-width="0.6" opacity="0.5"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Princess Cut</div>
+              <div class="cut-card-subtitle">Square modified brilliant</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">58–76 facets</span>
+              <span class="badge-category">Brilliant</span>
+            </div>
+          </article>
+
+          <!-- Emerald Cut -->
+          <article class="cut-card" data-category="step" data-cut-name="Emerald Cut" data-facets="58" data-best-for="Emerald, Diamond, Aquamarine" data-notes="Classic step cut with cropped corners. Developed specifically for emeralds to reduce pressure during setting. Crown and pavilion step facets run parallel to girdle." role="listitem">
+            <div class="cut-card-visual" style="min-height:80px;">
+              <svg width="110" height="80" viewBox="0 0 110 80" aria-hidden="true">
+                <polygon points="20,5 90,5 105,15 105,65 90,75 20,75 5,65 5,15" fill="none" stroke="var(--beryl-accent)" stroke-width="1.2"/>
+                <polygon points="28,14 82,14 96,24 96,56 82,66 28,66 14,56 14,24" fill="rgba(46,204,113,0.08)" stroke="var(--beryl-accent)" stroke-width="0.7"/>
+                <polygon points="36,24 74,24 86,32 86,48 74,56 36,56 24,48 24,32" fill="rgba(46,204,113,0.06)" stroke="var(--beryl-accent)" stroke-width="0.5"/>
+                <rect x="42" y="32" width="26" height="16" fill="rgba(46,204,113,0.1)" stroke="var(--beryl-accent)" stroke-width="0.4"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Emerald Cut</div>
+              <div class="cut-card-subtitle">Rectangular step cut, cropped corners</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">58 facets</span>
+              <span class="badge-category">Step</span>
+            </div>
+          </article>
+
+          <!-- Oval Brilliant -->
+          <article class="cut-card" data-category="brilliant" data-cut-name="Oval Brilliant" data-facets="56–58" data-best-for="Sapphire, Ruby, Diamond" data-notes="Modified brilliant in elliptical shape. Length/width ratio typically 1.3–1.5. Prone to bowtie effect if poorly proportioned." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="110" height="80" viewBox="0 0 110 80" aria-hidden="true">
+                <ellipse cx="55" cy="40" rx="50" ry="34" fill="none" stroke="var(--blue-corundum-accent)" stroke-width="1.2"/>
+                <ellipse cx="55" cy="40" rx="30" ry="20" fill="rgba(52,152,219,0.1)" stroke="var(--blue-corundum-accent)" stroke-width="0.7"/>
+                <line x1="5" y1="40" x2="105" y2="40" stroke="var(--blue-corundum-accent)" stroke-width="0.4" opacity="0.3"/>
+                <line x1="55" y1="6" x2="55" y2="74" stroke="var(--blue-corundum-accent)" stroke-width="0.4" opacity="0.3"/>
+                <line x1="18" y1="12" x2="92" y2="68" stroke="var(--blue-corundum-accent)" stroke-width="0.3" opacity="0.25"/>
+                <line x1="92" y1="12" x2="18" y2="68" stroke="var(--blue-corundum-accent)" stroke-width="0.3" opacity="0.25"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Oval Brilliant</div>
+              <div class="cut-card-subtitle">Elongated brilliant, L/W 1.3–1.5</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">56–58 facets</span>
+              <span class="badge-category">Brilliant</span>
+            </div>
+          </article>
+
+          <!-- Cushion Cut -->
+          <article class="cut-card" data-category="mixed" data-cut-name="Cushion Cut" data-facets="58–64" data-best-for="Sapphire, Ruby, Diamond, Spinel" data-notes="Square or rectangular with rounded corners. Modern variant of the Old Mine cut. Valued for its soft, romantic outline and exceptional brilliance in colored stones." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="90" height="90" viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M 25,10 Q 50,5 75,10 Q 95,25 95,50 Q 95,75 75,90 Q 50,95 25,90 Q 5,75 5,50 Q 5,25 25,10 Z" fill="none" stroke="var(--red-corundum-accent)" stroke-width="1.2"/>
+                <path d="M 32,18 Q 50,13 68,18 Q 84,30 84,50 Q 84,70 68,82 Q 50,87 32,82 Q 16,70 16,50 Q 16,30 32,18 Z" fill="rgba(231,76,60,0.08)" stroke="var(--red-corundum-accent)" stroke-width="0.7"/>
+                <path d="M 40,28 Q 50,24 60,28 Q 72,36 72,50 Q 72,64 60,72 Q 50,76 40,72 Q 28,64 28,50 Q 28,36 40,28 Z" fill="rgba(231,76,60,0.06)" stroke="var(--red-corundum-accent)" stroke-width="0.5"/>
+                <line x1="5" y1="50" x2="95" y2="50" stroke="var(--red-corundum-accent)" stroke-width="0.3" opacity="0.25"/>
+                <line x1="50" y1="5" x2="50" y2="95" stroke="var(--red-corundum-accent)" stroke-width="0.3" opacity="0.25"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Cushion Cut</div>
+              <div class="cut-card-subtitle">Rounded corners, soft outline</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">58–64 facets</span>
+              <span class="badge-category">Mixed</span>
+            </div>
+          </article>
+
+          <!-- Marquise -->
+          <article class="cut-card" data-category="brilliant" data-cut-name="Marquise Brilliant" data-facets="55–58" data-best-for="Diamond, Emerald, Spinel" data-notes="Pointed oval named for the Marquise de Pompadour. Creates elongating effect on fingers. Optimal L/W ratio 1.85–2.1. Vulnerable at points." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="130" height="70" viewBox="0 0 130 70" aria-hidden="true">
+                <path d="M 5,35 Q 35,5 65,5 Q 95,5 125,35 Q 95,65 65,65 Q 35,65 5,35 Z" fill="none" stroke="var(--chrysoberyl-accent)" stroke-width="1.2"/>
+                <path d="M 15,35 Q 40,14 65,14 Q 90,14 115,35 Q 90,56 65,56 Q 40,56 15,35 Z" fill="rgba(241,196,15,0.08)" stroke="var(--chrysoberyl-accent)" stroke-width="0.7"/>
+                <line x1="5" y1="35" x2="125" y2="35" stroke="var(--chrysoberyl-accent)" stroke-width="0.4" opacity="0.3"/>
+                <line x1="65" y1="5" x2="65" y2="65" stroke="var(--chrysoberyl-accent)" stroke-width="0.4" opacity="0.3"/>
+                <ellipse cx="65" cy="35" rx="18" ry="12" fill="rgba(241,196,15,0.1)" stroke="var(--chrysoberyl-accent)" stroke-width="0.5"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Marquise Brilliant</div>
+              <div class="cut-card-subtitle">Pointed oval, L/W 1.85–2.1</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">55–58 facets</span>
+              <span class="badge-category">Brilliant</span>
+            </div>
+          </article>
+
+          <!-- Pear Shape -->
+          <article class="cut-card" data-category="brilliant" data-cut-name="Pear Shape" data-facets="56–58" data-best-for="Diamond, Topaz, Tourmaline" data-notes="Teardrop brilliant combining oval and marquise principles. Developed in Antwerp c.1475. L/W ratio 1.45–1.75 optimal." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="80" height="110" viewBox="0 0 80 110" aria-hidden="true">
+                <path d="M 40,5 Q 70,25 72,55 Q 72,90 40,105 Q 8,90 8,55 Q 10,25 40,5 Z" fill="none" stroke="var(--amethyst-accent)" stroke-width="1.2"/>
+                <path d="M 40,15 Q 62,32 63,55 Q 63,82 40,94 Q 17,82 17,55 Q 18,32 40,15 Z" fill="rgba(155,89,182,0.08)" stroke="var(--amethyst-accent)" stroke-width="0.7"/>
+                <ellipse cx="40" cy="65" rx="18" ry="22" fill="rgba(155,89,182,0.06)" stroke="var(--amethyst-accent)" stroke-width="0.5"/>
+                <line x1="40" y1="5" x2="40" y2="105" stroke="var(--amethyst-accent)" stroke-width="0.4" opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Pear Shape</div>
+              <div class="cut-card-subtitle">Teardrop brilliant, c.1475</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">56–58 facets</span>
+              <span class="badge-category">Brilliant</span>
+            </div>
+          </article>
+
+          <!-- Asscher Cut -->
+          <article class="cut-card" data-category="step" data-cut-name="Asscher Cut" data-facets="58" data-best-for="Diamond, Emerald, Aquamarine" data-notes="Square step cut with deeply cropped corners and high crown. Patented 1902 by I.J. Asscher. Creates distinctive 'hall of mirrors' appearance." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="90" height="90" viewBox="0 0 100 100" aria-hidden="true">
+                <polygon points="25,5 75,5 95,25 95,75 75,95 25,95 5,75 5,25" fill="none" stroke="var(--diamond-accent)" stroke-width="1.2"/>
+                <polygon points="30,14 70,14 87,30 87,70 70,87 30,87 13,70 13,30" fill="rgba(176,200,232,0.08)" stroke="var(--diamond-accent)" stroke-width="0.7"/>
+                <polygon points="35,24 65,24 78,36 78,64 65,76 35,76 22,64 22,36" fill="rgba(176,200,232,0.06)" stroke="var(--diamond-accent)" stroke-width="0.5"/>
+                <rect x="38" y="38" width="24" height="24" fill="rgba(176,200,232,0.1)" stroke="var(--diamond-accent)" stroke-width="0.4"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Asscher Cut</div>
+              <div class="cut-card-subtitle">Hall of mirrors step cut, 1902</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">58 facets</span>
+              <span class="badge-category">Step</span>
+            </div>
+          </article>
+
+          <!-- Radiant Cut -->
+          <article class="cut-card" data-category="mixed" data-cut-name="Radiant Cut" data-facets="70" data-best-for="Diamond, Colored stones" data-notes="Rectangular mixed cut combining emerald cut outline with brilliant faceting. Patented 1977. Maximum brilliance in rectangular format." role="listitem">
+            <div class="cut-card-visual" style="min-height:80px;">
+              <svg width="110" height="85" viewBox="0 0 110 85" aria-hidden="true">
+                <polygon points="22,5 88,5 104,18 104,67 88,80 22,80 6,67 6,18" fill="none" stroke="var(--chrysoberyl-accent)" stroke-width="1.2"/>
+                <polygon points="28,14 82,14 96,25 96,60 82,71 28,71 14,60 14,25" fill="rgba(241,196,15,0.08)" stroke="var(--chrysoberyl-accent)" stroke-width="0.7"/>
+                <line x1="6" y1="42" x2="104" y2="42" stroke="var(--chrysoberyl-accent)" stroke-width="0.3" opacity="0.3"/>
+                <line x1="55" y1="5" x2="55" y2="80" stroke="var(--chrysoberyl-accent)" stroke-width="0.3" opacity="0.3"/>
+                <line x1="22" y1="5" x2="88" y2="80" stroke="var(--chrysoberyl-accent)" stroke-width="0.3" opacity="0.2"/>
+                <line x1="88" y1="5" x2="22" y2="80" stroke="var(--chrysoberyl-accent)" stroke-width="0.3" opacity="0.2"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Radiant Cut</div>
+              <div class="cut-card-subtitle">Rectangular brilliant-step hybrid</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">70 facets</span>
+              <span class="badge-category">Mixed</span>
+            </div>
+          </article>
+
+          <!-- Cabochon -->
+          <article class="cut-card" data-category="cabochon" data-cut-name="Cabochon" data-facets="0" data-best-for="Star stones, Cat's eye, Opaque gems" data-notes="Unfaceted smooth domed cut. Optimal for asterism (star effect), chatoyancy (cat's eye), and opaque gems. High dome enhances optical phenomena." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="100" height="70" viewBox="0 0 100 70" aria-hidden="true">
+                <ellipse cx="50" cy="50" rx="44" ry="14" fill="rgba(26,188,156,0.15)" stroke="var(--tourmaline-accent)" stroke-width="1.2"/>
+                <path d="M 6,50 Q 6,10 50,10 Q 94,10 94,50" fill="rgba(26,188,156,0.2)" stroke="var(--tourmaline-accent)" stroke-width="1.2"/>
+                <!-- Dome highlights -->
+                <ellipse cx="38" cy="28" rx="12" ry="6" fill="rgba(255,255,255,0.08)" stroke="none"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Cabochon</div>
+              <div class="cut-card-subtitle">Smooth dome for optical phenomena</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">No facets</span>
+              <span class="badge-category">Cabochon</span>
+            </div>
+          </article>
+
+          <!-- Rose Cut -->
+          <article class="cut-card" data-category="historical" data-cut-name="Rose Cut" data-facets="12–24" data-best-for="Diamond, Garnet, Moonstone" data-notes="16th century cut with flat base and domed crown covered in triangular facets. Named for resemblance to rose petals. Prized in Georgian and Victorian jewelry." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="90" height="70" viewBox="0 0 100 80" aria-hidden="true">
+                <ellipse cx="50" cy="65" rx="44" ry="10" fill="rgba(155,89,182,0.12)" stroke="var(--amethyst-accent)" stroke-width="1"/>
+                <polygon points="50,10 72,40 78,65 50,65 22,65 28,40" fill="rgba(155,89,182,0.15)" stroke="var(--amethyst-accent)" stroke-width="1.2"/>
+                <polygon points="50,10 61,40 50,65 39,40" fill="rgba(155,89,182,0.08)" stroke="var(--amethyst-accent)" stroke-width="0.5"/>
+                <polygon points="50,10 72,40 61,40" fill="rgba(155,89,182,0.06)" stroke="var(--amethyst-accent)" stroke-width="0.4"/>
+                <polygon points="50,10 39,40 28,40" fill="rgba(155,89,182,0.06)" stroke="var(--amethyst-accent)" stroke-width="0.4"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Rose Cut</div>
+              <div class="cut-card-subtitle">Flat base, domed crown, 16th century</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">12–24 facets</span>
+              <span class="badge-category">Historical</span>
+            </div>
+          </article>
+
+          <!-- Heart Shape -->
+          <article class="cut-card" data-category="fancy" data-cut-name="Heart Shape" data-facets="56–58" data-best-for="Diamond, Pink Sapphire, Ruby" data-notes="Modified brilliant in heart outline. Requires precise symmetry — halves must mirror exactly. L/W ratio 0.95–1.05 optimal." role="listitem">
+            <div class="cut-card-visual">
+              <svg width="90" height="90" viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M 50,85 Q 5,55 5,30 Q 5,10 25,10 Q 38,10 50,24 Q 62,10 75,10 Q 95,10 95,30 Q 95,55 50,85 Z" fill="none" stroke="var(--red-corundum-accent)" stroke-width="1.2"/>
+                <path d="M 50,72 Q 16,48 16,30 Q 16,20 26,20 Q 38,20 50,34 Q 62,20 74,20 Q 84,20 84,30 Q 84,48 50,72 Z" fill="rgba(231,76,60,0.08)" stroke="var(--red-corundum-accent)" stroke-width="0.7"/>
+                <ellipse cx="50" cy="55" rx="16" ry="12" fill="rgba(231,76,60,0.06)" stroke="var(--red-corundum-accent)" stroke-width="0.4"/>
+              </svg>
+            </div>
+            <div class="cut-card-info">
+              <div class="cut-card-name">Heart Shape</div>
+              <div class="cut-card-subtitle">Symmetric brilliant, romantic motif</div>
+            </div>
+            <div class="cut-card-badge">
+              <span class="badge-facets">56–58 facets</span>
+              <span class="badge-category">Fancy</span>
+            </div>
+          </article>
+
+        </div><!-- /.cuts-masonry -->
+      </section>
+
+      <!-- ANGLE REFERENCE TABLE -->
+      <section class="page-section" aria-labelledby="angles-heading">
+        <div class="section-header">
+          <span class="eyebrow">Technical Data</span>
+          <h2 id="angles-heading">Facet Angle Reference Table</h2>
+        </div>
+        <table class="angle-table" aria-label="Gem cut angle and proportion reference">
+          <thead>
+            <tr>
+              <th>Cut Style</th>
+              <th>Crown Angle</th>
+              <th>Pavilion Angle</th>
+              <th>Table %</th>
+              <th>Total Depth %</th>
+              <th>Facets</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="color:var(--text-primary);">Round Brilliant (Ideal)</td><td>34.5°</td><td>40.75°</td><td>53–58%</td><td>59–63%</td><td>57–58</td></tr>
+            <tr><td style="color:var(--text-primary);">Princess Cut</td><td>25°–30°</td><td>40°–41°</td><td>67–72%</td><td>64–75%</td><td>58–76</td></tr>
+            <tr><td style="color:var(--text-primary);">Emerald Cut</td><td>12°–16°</td><td>43°–46°</td><td>60–70%</td><td>60–70%</td><td>58</td></tr>
+            <tr><td style="color:var(--text-primary);">Asscher Cut</td><td>18°–22°</td><td>43°–46°</td><td>60–68%</td><td>60–70%</td><td>58</td></tr>
+            <tr><td style="color:var(--text-primary);">Oval Brilliant</td><td>33°–35°</td><td>40°–41°</td><td>53–63%</td><td>58–62%</td><td>56–58</td></tr>
+            <tr><td style="color:var(--text-primary);">Cushion Brilliant</td><td>34°–35°</td><td>41°–42°</td><td>58–68%</td><td>61–67%</td><td>58–64</td></tr>
+            <tr><td style="color:var(--text-primary);">Radiant Cut</td><td>26°–30°</td><td>40°–41°</td><td>61–69%</td><td>61–67%</td><td>70</td></tr>
+            <tr><td style="color:var(--text-primary);">Pear Shape</td><td>33°–35°</td><td>40°–41°</td><td>53–65%</td><td>58–62%</td><td>56–58</td></tr>
+            <tr><td style="color:var(--text-primary);">Marquise Brilliant</td><td>33°–35°</td><td>40°–41°</td><td>53–63%</td><td>58–62%</td><td>55–58</td></tr>
+            <tr><td style="color:var(--text-primary);">Rose Cut</td><td>28°–45°</td><td>0° (flat)</td><td>n/a</td><td>20–30%</td><td>12–24</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div><!-- /.page-wrapper -->
+  </main>
+
+  <!-- CUT DETAIL DRAWER — closed by default (transform:translateX(100%) + visibility:hidden in CSS) -->
+  <aside class="cut-drawer" id="cut-drawer" aria-label="Cut style details" aria-hidden="true">
+    <button class="drawer-close" aria-label="Close drawer">×</button>
+    <h2 class="drawer-cut-name" style="font-family:var(--font-serif);font-size:1.8rem;color:var(--text-primary);margin-bottom:var(--space-lg);">Cut Name</h2>
+
+    <svg class="drawer-svg" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="var(--text-gold)" stroke-width="1"/>
+      <polygon points="50,20 65,28 65,42 50,50 35,42 35,28" fill="rgba(201,168,76,0.12)" stroke="var(--text-gold)" stroke-width="0.8"/>
+      <line x1="50" y1="5" x2="50" y2="95" stroke="var(--text-gold)" stroke-width="0.4" opacity="0.3"/>
+      <line x1="5" y1="50" x2="95" y2="50" stroke="var(--text-gold)" stroke-width="0.4" opacity="0.3"/>
+      <line x1="18" y1="18" x2="82" y2="82" stroke="var(--text-gold)" stroke-width="0.4" opacity="0.3"/>
+      <line x1="82" y1="18" x2="18" y2="82" stroke="var(--text-gold)" stroke-width="0.4" opacity="0.3"/>
+    </svg>
+
+    <div class="drawer-section-title">Specifications</div>
+    <div class="drawer-data-row"><span class="drawer-data-label">Facet Count</span><span class="drawer-facets">–</span></div>
+    <div class="drawer-data-row"><span class="drawer-data-label">Category</span><span class="drawer-category">–</span></div>
+    <div class="drawer-data-row"><span class="drawer-data-label">Best For</span><span class="drawer-best-for">–</span></div>
+
+    <div class="drawer-section-title">Notes</div>
+    <p class="drawer-notes" style="font-size:0.85rem;color:var(--text-secondary);line-height:1.65;"></p>
+  </aside>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><span class="nav-brand-text">Gem Classification Reference</span><p class="footer-desc">Authoritative gemological data for collectors and professionals.</p></div>
+      <div><div class="footer-col-title">Reference</div><ul class="footer-links"><li><a href="minerals.html">Mineral Index</a></li><li><a href="grading.html">Grading</a></li><li><a href="cuts.html">Cut Styles</a></li><li><a href="origins.html">Origins Map</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links"><li><a href="glossary.html">Glossary</a></li><li><a href="certification.html">Certification</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><div class="footer-col-title">Gem Families</div><ul class="footer-links"><li><a href="minerals.html">Beryl Group</a></li><li><a href="minerals.html">Corundum</a></li><li><a href="minerals.html">Diamond</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Gemology Reference Database</span><span>Updated May 2026</span></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
