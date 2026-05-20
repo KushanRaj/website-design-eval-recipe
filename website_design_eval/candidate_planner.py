@@ -218,7 +218,7 @@ async def _generate_candidate_manifest_claude_code_async(
         ),
         model=model,
         cwd=candidate_root,
-        max_turns=8,
+        max_turns=16,
         tools=["Read", "LS", "Glob", "Grep"],
         allowed_tools=["Read", "LS", "Glob", "Grep"],
         disallowed_tools=["Bash", "Write", "Edit", "MultiEdit", "NotebookEdit"],
@@ -234,6 +234,12 @@ async def _generate_candidate_manifest_claude_code_async(
         candidate_inventory=candidate_inventory,
         output_path=output_path,
     )
+    prompt_path = output_path.with_name(f"{output_path.stem}.prompt.txt")
+    transcript_path = output_path.with_name(f"{output_path.stem}.claude-transcript.jsonl")
+    prompt_path.parent.mkdir(parents=True, exist_ok=True)
+    prompt_path.write_text(prompt, encoding="utf-8")
+    if transcript_path.exists():
+        transcript_path.unlink()
     max_attempts = 3
     parsed: dict[str, Any] | None = None
     for attempt in range(1, max_attempts + 1):
@@ -245,6 +251,15 @@ async def _generate_candidate_manifest_claude_code_async(
                 AssistantMessage=AssistantMessage,
                 ResultMessage=ResultMessage,
                 TextBlock=TextBlock,
+                transcript_path=transcript_path,
+                transcript_context={
+                    "planner": "candidate_manifest",
+                    "attempt": attempt,
+                    "model": model,
+                    "max_turns": 16,
+                    "candidate_root": str(candidate_root),
+                    "output_path": str(output_path),
+                },
             )
             break
         except ClaudeManifestGenerationError as exc:

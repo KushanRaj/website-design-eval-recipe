@@ -564,6 +564,19 @@ If `verifier_entry` exists but `evaluator_process_start` is absent, the wrapper
 failed before invoking the evaluator. If `vlm_judge_start` exists without
 `vlm_judge_end`, the VLM call for that capture is the live blocker.
 
+When Claude Code candidate manifest planning is enabled, the evaluator also
+writes these files under `/logs/verifier/eval/`:
+
+```text
+generated-candidate-manifest.prompt.txt
+generated-candidate-manifest.claude-transcript.jsonl
+```
+
+The prompt file records the exact oracle/candidate planning prompt. The JSONL
+transcript records Claude SDK messages and errors, which is the first place to
+look if planning fails with a turn-limit error or returns an incomplete
+structured output.
+
 `reward.json` is flat and numeric so Harbor can consume it directly:
 
 ```json

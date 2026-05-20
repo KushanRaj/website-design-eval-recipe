@@ -42,6 +42,8 @@ Inputs to the planner:
 Output from the planner:
 
 - `generated-candidate-manifest.json`
+- `generated-candidate-manifest.prompt.txt`
+- `generated-candidate-manifest.claude-transcript.jsonl`
 
 The generated manifest preserves oracle capture IDs, but maps each capture to
 the candidate route and candidate action that should reach the same visible
@@ -75,6 +77,12 @@ There are two separate browser uses in this flow:
 The older deterministic fallback route/action resolver is still present for
 debugging or runs without `candidate_manifest_planner`, but Harbor `full-vlm`
 uses Claude Code-backed candidate manifest planning.
+
+Candidate planning currently gives Claude Code up to `16` turns. If planning
+fails, inspect `generated-candidate-manifest.prompt.txt` for the exact prompt
+and `generated-candidate-manifest.claude-transcript.jsonl` for the SDK messages,
+assistant text, result errors, and structured-output status captured before the
+failure.
 
 ## Important Boundary
 

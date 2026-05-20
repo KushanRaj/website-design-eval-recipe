@@ -7,6 +7,7 @@ import re
 import asyncio
 import inspect
 import threading
+from datetime import datetime
 from dataclasses import dataclass
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -1070,6 +1071,74 @@ def _is_transient_claude_error(error_text: str) -> bool:
     )
 
 
+def _json_safe(value: Any, *, max_text: int = 20000) -> Any:
+    if value is None or isinstance(value, bool | int | float):
+        return value
+    if isinstance(value, str):
+        return value if len(value) <= max_text else value[:max_text] + f"...[truncated {len(value) - max_text} chars]"
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item, max_text=max_text) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item, max_text=max_text) for item in value]
+    if hasattr(value, "model_dump"):
+        try:
+            return _json_safe(value.model_dump(), max_text=max_text)
+        except Exception:
+            pass
+    return _json_safe(repr(value), max_text=max_text)
+
+
+def _claude_message_diagnostic(message: Any) -> dict[str, Any]:
+    diagnostic: dict[str, Any] = {
+        "ts": datetime.utcnow().isoformat(timespec="milliseconds") + "Z",
+        "message_class": type(message).__name__,
+    }
+    for attr in (
+        "type",
+        "subtype",
+        "role",
+        "is_error",
+        "result",
+        "errors",
+        "api_error_status",
+        "stop_reason",
+        "usage",
+        "structured_output",
+    ):
+        if hasattr(message, attr):
+            value = getattr(message, attr)
+            if attr == "structured_output":
+                diagnostic["has_structured_output"] = value is not None
+                if value is not None:
+                    diagnostic["structured_output_preview"] = _json_safe(value, max_text=4000)
+            else:
+                diagnostic[attr] = _json_safe(value, max_text=4000)
+
+    content = getattr(message, "content", None)
+    if content is not None:
+        blocks = content if isinstance(content, list) else [content]
+        diagnostic["content"] = []
+        for block in blocks:
+            block_diag = {"block_class": type(block).__name__}
+            for attr in ("type", "name", "id", "text", "input"):
+                if hasattr(block, attr):
+                    block_diag[attr] = _json_safe(getattr(block, attr), max_text=8000)
+            if len(block_diag) == 1:
+                block_diag["repr"] = _json_safe(repr(block), max_text=8000)
+            diagnostic["content"].append(block_diag)
+    else:
+        diagnostic["repr"] = _json_safe(repr(message), max_text=8000)
+    return diagnostic
+
+
+def _append_claude_transcript(transcript_path: Path | None, event: dict[str, Any]) -> None:
+    if transcript_path is None:
+        return
+    transcript_path.parent.mkdir(parents=True, exist_ok=True)
+    with transcript_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(event, sort_keys=False, ensure_ascii=False) + "\n")
+
+
 async def _query_claude_manifest(
     prompt: str,
     options: Any,
@@ -1078,12 +1147,31 @@ async def _query_claude_manifest(
     AssistantMessage: type,
     ResultMessage: type,
     TextBlock: type,
+    transcript_path: Path | None = None,
+    transcript_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     chunks: list[str] = []
     structured_output: Any | None = None
     result_error: str | None = None
+    context = transcript_context or {}
+    _append_claude_transcript(
+        transcript_path,
+        {
+            "ts": datetime.utcnow().isoformat(timespec="milliseconds") + "Z",
+            "event": "query_start",
+            **_json_safe(context, max_text=4000),
+        },
+    )
     try:
         async for message in query(prompt=prompt, options=options):
+            _append_claude_transcript(
+                transcript_path,
+                {
+                    "event": "message",
+                    **_json_safe(context, max_text=4000),
+                    "message": _claude_message_diagnostic(message),
+                },
+            )
             if isinstance(message, AssistantMessage):
                 for block in message.content:
                     if isinstance(block, TextBlock):
@@ -1097,6 +1185,17 @@ async def _query_claude_manifest(
                 if getattr(message, "result", None) and not result_error:
                     chunks.append(str(message.result))
     except Exception as exc:
+        _append_claude_transcript(
+            transcript_path,
+            {
+                "ts": datetime.utcnow().isoformat(timespec="milliseconds") + "Z",
+                "event": "query_exception",
+                **_json_safe(context, max_text=4000),
+                "exception_class": type(exc).__name__,
+                "exception": str(exc),
+                "result_error": result_error,
+            },
+        )
         if result_error:
             raise ClaudeManifestGenerationError(result_error) from exc
         if _is_transient_claude_error(str(exc)):
@@ -1106,9 +1205,28 @@ async def _query_claude_manifest(
     if result_error:
         raise ClaudeManifestGenerationError(result_error)
     if isinstance(structured_output, dict):
+        _append_claude_transcript(
+            transcript_path,
+            {
+                "ts": datetime.utcnow().isoformat(timespec="milliseconds") + "Z",
+                "event": "query_success",
+                **_json_safe(context, max_text=4000),
+                "source": "structured_output",
+            },
+        )
         return structured_output
     raw = "\n".join(chunks).strip()
-    return _extract_json_object(raw)
+    parsed = _extract_json_object(raw)
+    _append_claude_transcript(
+        transcript_path,
+        {
+            "ts": datetime.utcnow().isoformat(timespec="milliseconds") + "Z",
+            "event": "query_success",
+            **_json_safe(context, max_text=4000),
+            "source": "text_chunks",
+        },
+    )
+    return parsed
 
 
 async def _generate_manifest_claude_code_async(
