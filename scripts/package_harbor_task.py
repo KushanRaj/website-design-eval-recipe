@@ -823,6 +823,7 @@ def main(argv: list[str] | None = None) -> int:
         "animation_bbox_iou": summary.get("mean_animation_bbox_iou"),
         "animation_motion_delta": summary.get("mean_animation_motion_delta"),
         "animation_target_pixelmatch": summary.get("mean_animation_target_pixelmatch"),
+        "animation_color_delta": summary.get("mean_animation_color_delta"),
         "animation_cssom_color": summary.get("mean_animation_cssom_color"),
         "capture_count": summary.get("capture_count"),
         "covered_capture_count": summary.get("covered_capture_count"),
