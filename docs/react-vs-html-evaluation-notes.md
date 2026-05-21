@@ -78,8 +78,12 @@ Primary source artifacts:
 
 ```text
 harbor-report-data/ec2-local-harbor-full-reward-12-20260520-120454/tables/summary.json
-/tmp/wde-pr-1/metrics-results/react-smoke-proper-full-modal-react-smoke-4-20260521-023358/*/reward.json
+local React proper-full reward artifacts collected on 2026-05-21
 ```
+
+The compact JSON above is the shareable record of the React comparison. The raw
+React verifier directories were local run artifacts and are not required to
+interpret the report.
 
 ## Caveats
 

@@ -7,7 +7,7 @@
   ],
   "sources": {
     "html_summary": "harbor-report-data/ec2-local-harbor-full-reward-12-20260520-120454/tables/summary.json",
-    "react_rewards": "/tmp/wde-pr-1/metrics-results/react-smoke-proper-full-modal-react-smoke-4-20260521-023358/*/reward.json"
+    "react_rewards": "local React proper-full reward artifacts collected on 2026-05-21"
   },
   "rows": [
     {

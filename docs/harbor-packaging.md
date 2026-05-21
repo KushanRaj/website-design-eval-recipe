@@ -311,10 +311,10 @@ Overriding memory to 32768 MB alters the task from its intended configuration.
 ```
 
 That warning means the run is no longer using the resource contract declared in
-`task.toml`; it is a benchmark reproducibility warning, not an execution error.
-For our private scaling experiments, this is expected. For a public benchmark
-submission, either use the declared task resources or update the task resource
-contract itself and regenerate the dataset.
+`task.toml`; it is a synthetic-dataset reproducibility warning, not an
+execution error. For our private scaling experiments, this is expected. For a
+shared dataset run, either use the declared task resources or update the task
+resource contract itself and regenerate the dataset.
 
 Recommended current experiment settings:
 
