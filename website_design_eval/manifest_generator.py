@@ -588,11 +588,18 @@ def _page_name_for_path(path: str) -> str:
     return stem
 
 
-def _normalize_discovered_path(base_url: str, current_url: str, href: str) -> str | None:
+def _normalize_discovered_path(
+    base_url: str,
+    current_url: str,
+    href: str,
+    *,
+    preserve_fragment: bool = False,
+) -> str | None:
     if not href or href.startswith(("mailto:", "tel:", "javascript:")):
         return None
     absolute = urljoin(current_url, href)
-    absolute, _fragment = urldefrag(absolute)
+    if not preserve_fragment:
+        absolute, _fragment = urldefrag(absolute)
     parsed = urlparse(absolute)
     base = urlparse(base_url)
     if parsed.scheme not in {"http", "https"} or parsed.netloc != base.netloc:
@@ -600,6 +607,8 @@ def _normalize_discovered_path(base_url: str, current_url: str, href: str) -> st
     path = parsed.path or "/"
     if parsed.query:
         path = f"{path}?{parsed.query}"
+    if preserve_fragment and parsed.fragment:
+        path = f"{path}#{parsed.fragment}"
     return path
 
 
@@ -653,7 +662,12 @@ def _browser_inventory(
 
                         links = observed.get("links") or []
                         for link in links:
-                            discovered = _normalize_discovered_path(server.base_url, page.url, str(link.get("href") or ""))
+                            discovered = _normalize_discovered_path(
+                                server.base_url,
+                                page.url,
+                                str(link.get("href") or ""),
+                                preserve_fragment=serve_mode == "spa",
+                            )
                             if discovered and discovered not in seen and len(seen) < max_routes:
                                 seen.add(discovered)
                                 route_queue.append(discovered)
@@ -814,6 +828,37 @@ def _selector_unique_in_source(root: Path, path: str, selector: str) -> bool:
         return False
 
 
+def _rendered_path_accessible(root: Path, path: str) -> bool:
+    try:
+        from playwright.sync_api import sync_playwright
+
+        server = StaticServer.start(root)
+        try:
+            with sync_playwright() as playwright:
+                browser = playwright.chromium.launch(headless=True)
+                try:
+                    context = browser.new_context(
+                        viewport=MANIFEST_VIEWPORT,
+                        device_scale_factor=1,
+                    )
+                    page = context.new_page()
+                    response = page.goto(
+                        f"{server.base_url.rstrip('/')}/{path.lstrip('/')}",
+                        wait_until="networkidle",
+                        timeout=30000,
+                    )
+                    page.wait_for_timeout(100)
+                    if response is not None and response.status >= 400:
+                        return False
+                    return bool(page.evaluate("() => document.body !== null"))
+                finally:
+                    browser.close()
+        finally:
+            server.close()
+    except Exception:
+        return False
+
+
 def _rendered_selector_count(root: Path, path: str, selector: str) -> int | None:
     try:
         from playwright.sync_api import sync_playwright
@@ -830,11 +875,15 @@ def _rendered_selector_count(root: Path, path: str, selector: str) -> int | None
                     page = context.new_page()
                     page.goto(f"{server.base_url.rstrip('/')}/{path.lstrip('/')}", wait_until="networkidle", timeout=30000)
                     page.wait_for_timeout(100)
-                    count = page.evaluate(
-                        "(selector) => document.querySelectorAll(selector).length",
-                        selector,
-                    )
-                    return int(count)
+                    try:
+                        return int(
+                            page.evaluate(
+                                "(selector) => document.querySelectorAll(selector).length",
+                                selector,
+                            )
+                        )
+                    except Exception:
+                        return int(page.locator(selector).count())
                 finally:
                     browser.close()
         finally:
@@ -1394,6 +1443,7 @@ def _sanitize_manifest_with_inventory(
 
     captures = []
     seen_ids = set()
+    rendered_path_cache: dict[str, bool] = {}
     for item in raw.get("captures") or []:
         if not isinstance(item, dict):
             continue
@@ -1402,7 +1452,12 @@ def _sanitize_manifest_with_inventory(
             path = "/" + path
         browser_path_known = path in inventory_paths
         file_path_known = (root / path.lstrip("/")).exists()
-        if not browser_path_known and not file_path_known:
+        rendered_path_known = False
+        if not browser_path_known and not file_path_known and "#" in path:
+            if path not in rendered_path_cache:
+                rendered_path_cache[path] = _rendered_path_accessible(root, path)
+            rendered_path_known = rendered_path_cache[path]
+        if not browser_path_known and not file_path_known and not rendered_path_known:
             continue
         capture_id = re.sub(r"[^a-zA-Z0-9_.-]+", "-", str(item.get("id") or "")).strip("-")
         if not capture_id:

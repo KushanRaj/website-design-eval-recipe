@@ -530,6 +530,14 @@ def _score_from_dreamsim(distance: float | None) -> float | None:
     return round(max(0.0, min(1.0, 1.0 - float(distance))), 6)
 
 
+def _resolved_candidate_root_for_framework(root: Path, framework: str) -> Path:
+    """Use built static output for framework projects when it is available."""
+
+    if framework in {"react", "solid"} and (root / "dist" / "index.html").exists():
+        return (root / "dist").resolve()
+    return root.resolve()
+
+
 def _screenshot_options(defaults: dict[str, Any], capture: dict[str, Any], path: Path) -> dict[str, Any]:
     screenshot_defaults = defaults.get("screenshot", {})
     capture_screenshot = capture.get("screenshot", {})
@@ -3193,7 +3201,30 @@ async def _evaluate_capture_async(
         )
 
     async with capture_semaphore:
-        if reference_route["status"] != "resolved":
+        if candidate_manifest is not None and candidate_capture is None:
+            _progress(
+                config,
+                "capture_expensive_artifacts_skipped",
+                capture_id=capture_id,
+                reason="candidate_manifest_capture_missing",
+            )
+            reference_artifact = _missing_artifact(
+                capture,
+                reference_artifact_dir,
+                side="reference",
+                reason="not_captured_candidate_manifest_capture_missing",
+                route=reference_route,
+            )
+            reference_actions = []
+            candidate_artifact = _missing_artifact(
+                capture,
+                candidate_artifact_dir,
+                side="candidate",
+                reason="candidate_manifest_capture_missing",
+                route=candidate_route,
+            )
+            candidate_actions = []
+        elif reference_route["status"] != "resolved":
             reference_artifact = _missing_artifact(
                 capture,
                 reference_artifact_dir,
@@ -3608,6 +3639,8 @@ def _build_report(result: dict[str, Any]) -> str:
                     ["mean_html_text_rouge_1_recall", summary.get("mean_html_text_rouge_1_recall")],
                     ["mean_html_tree_f1", summary.get("mean_html_tree_f1")],
                     ["mean_visual_block_score", summary.get("mean_visual_block_score")],
+                    ["mean_bbox_geometry_score", summary.get("mean_bbox_geometry_score")],
+                    ["mean_cssom_block_style_score", summary.get("mean_cssom_block_style_score")],
                     ["animations", summary.get("animation_count")],
                     ["scored_animations", summary.get("scored_animation_count")],
                     ["mean_animation_bbox_iou", summary.get("mean_animation_bbox_iou")],
@@ -3679,6 +3712,8 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
     html_text_rouge_scores = [_get_metric(metric, ["html_text", "rouge_1_recall"]) for metric in scored_metrics]
     html_tree_f1_scores = [_get_metric(metric, ["html_tree", "f1"]) for metric in scored_metrics]
     visual_scores = [_get_metric(metric, ["visual_block", "score"]) for metric in scored_metrics]
+    bbox_scores = [_get_metric(metric, ["bbox_geometry", "score"]) for metric in scored_metrics]
+    cssom_scores = [_get_metric(metric, ["cssom_block_style", "score"]) for metric in scored_metrics]
     animation_payloads = result.get("animations", {})
     animation_metrics = [payload.get("metrics", {}) for payload in animation_payloads.values()]
     animation_bbox = []
@@ -3709,6 +3744,8 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
         "mean_html_text_rouge_1_recall": _mean(numeric(html_text_rouge_scores)),
         "mean_html_tree_f1": _mean(numeric(html_tree_f1_scores)),
         "mean_visual_block_score": _mean(numeric(visual_scores)),
+        "mean_bbox_geometry_score": _mean(numeric(bbox_scores)),
+        "mean_cssom_block_style_score": _mean(numeric(cssom_scores)),
         "animation_count": len(animation_payloads),
         "scored_animation_count": sum(1 for metric in animation_metrics if metric.get("status") == "scored"),
         "mean_animation_bbox_iou": _mean(numeric(animation_bbox)),
@@ -3722,6 +3759,7 @@ def evaluate(config: EvaluateConfig) -> dict[str, Any]:
     started = time.time()
     _load_dotenv(config.repo_root / ".env")
     config.candidate_serve_mode = normalize_serve_mode(config.candidate_serve_mode)
+    config.candidate_root = _resolved_candidate_root_for_framework(config.candidate_root, config.candidate_framework)
     if config.dreamsim_cache_dir is None:
         config.dreamsim_cache_dir = str(config.repo_root / ".cache" / "dreamsim")
     config.output_dir.mkdir(parents=True, exist_ok=True)

@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from website_design_eval.evaluator import _route_for_capture
+from website_design_eval.evaluator import _resolved_candidate_root_for_framework, _route_for_capture
 
 
 class FrameworkRouteTests(unittest.TestCase):
@@ -43,6 +43,17 @@ class FrameworkRouteTests(unittest.TestCase):
 
             self.assertEqual(route["status"], "missing")
             self.assertEqual(route["failure_mode"], "spa_index_missing")
+
+    def test_framework_candidate_root_prefers_dist_build(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "index.html").write_text("<script type='module' src='/src/main.jsx'></script>", encoding="utf-8")
+            (root / "dist").mkdir()
+            (root / "dist" / "index.html").write_text("<main>built</main>", encoding="utf-8")
+
+            resolved = _resolved_candidate_root_for_framework(root, "react")
+
+            self.assertEqual(resolved, (root / "dist").resolve())
 
 
 if __name__ == "__main__":
