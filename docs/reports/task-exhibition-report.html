@@ -114,6 +114,21 @@ li { margin: 3px 0; }
 </section>
 
 <section class="page">
+  <h2>Animation-marked tasks</h2>
+  <p>Two tasks intentionally include browser-observed animation captures. These are not decorative extras: they test whether the agent can reproduce a specified visible transition from screenshots and frame evidence, not just a static page.</p>
+  <div class="figure"><img src="assets/animation-task-reference-strips.jpg"><div class="caption">Reference frame strips exposed as public animation evidence in the task package. Gemology stresses color transition on a mineral card; marine biology stresses a simple declarative animation state in a scientific reference UI.</div></div>
+</section>
+
+<section class="page">
+  <h2>Animation task intent</h2>
+  <div class="grid2">
+    <div class="card"><h3>Gemology reference database</h3><p>The animation is a hover-driven jewel-card color transition. The evaluator records target crops and computed RGB values over time, then scores the relative color delta from the first frame.</p></div>
+    <div class="card"><h3>Marine biology reference portal</h3><p>The animation task adds temporal behavior to an otherwise static reference portal. It checks that synthetic tasks can carry motion/color expectations while keeping the candidate-facing prompt simple.</p></div>
+  </div>
+  <div class="callout"><strong>Why this matters</strong> These tasks are a first pass at dynamic website replication. The agent is still asked to reproduce the design from screenshots and frame evidence, while the verifier uses hidden browser replay to check whether the intended transition was actually implemented.</div>
+</section>
+
+<section class="page">
   <h2>Browser tour: podcast channel directory</h2>
   <p>For the exhibition view, these screenshots are browser captures from the oracle site and the generated candidate site, not reward-cropped figures. They show the breadth of surfaces the agent is asked to reconstruct from screenshots alone.</p>
   <div class="tour-card"><img src="assets/pair-podcast-channels-browser.jpg"><div class="caption"><strong>Podcast network.</strong> The candidate preserves the dark media-network identity and channel/list structure, with drift in spacing, list density, and copy hierarchy.</div></div>
