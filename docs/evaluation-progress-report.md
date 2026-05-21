@@ -16,6 +16,7 @@ browser-state evaluator and a synthetic-site generation pipeline.
 | Screenshot replay | Working | `scripts/capture-screenshots.mjs` replays static captures and optional animation captures. |
 | Failed-state pruning | Working | Generator replay can prune failed optional captures instead of failing the whole seed. |
 | Manifest-aware evaluator | Working | Serves reference/candidate folders, captures browser-state artifacts with Python async Playwright, writes `candidate-capture-plan.json`, and computes metrics. |
+| Framework-aware candidates | Working V1 | HTML is served directly. React/Solid candidates are built, served from `dist/` with SPA fallback, and scored through the same browser-state evaluator. |
 | Reward curriculum | Working V0 | `website-design-eval reward` computes the current weighted capture reward. |
 | Harbor packaging | Working local path | Synthetic generated sites can be packaged into Harbor tasks with hidden verifier inputs. |
 | Animation V1 | Integrated V1 | Static captures and animation captures are both manifest items in the current reward. |
@@ -34,6 +35,8 @@ browser-state evaluator and a synthetic-site generation pipeline.
 | `docs/reward-curriculum-v0.md` | Current final-score proposal. |
 | `docs/evaluation-consolidation-2026-05-19.md` | Consolidated metric and evaluator notes. |
 | `docs/animation-evaluation-design.md` | Animation scoring design. |
+| `docs/framework-aware-evaluation.md` | React/Solid/HTML candidate contract and evaluator serving rules. |
+| `docs/react-vs-html-evaluation-notes.md` | Current four-site React-vs-HTML comparison and interpretation. |
 | `docs/harbor-packaging.md` | Harbor packaging and verifier-image flow. |
 
 ## Current Pipeline Shape
@@ -66,6 +69,22 @@ route loaded in Playwright
 Raw source files are still inputs for serving and debugging. They are not the
 main scoring substrate. This keeps the evaluator compatible with static HTML
 today and React/Solid later.
+
+For framework candidates, the shape is:
+
+```text
+HTML candidate
+  -> serve /app/site as static files
+
+React/Solid candidate
+  -> npm install or npm ci
+  -> npm run build
+  -> serve /app/site/dist with SPA fallback
+```
+
+After that preparation, both paths enter the same browser-state scoring path.
+The evaluator does not score React source or component structure. It scores the
+rendered app state that Playwright observes.
 
 Implementation note: the screenshot/capture evaluator path now uses Python
 async Playwright and runs captures through an `asyncio.TaskGroup` with

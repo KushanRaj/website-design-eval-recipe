@@ -82,6 +82,58 @@ li { margin: 3px 0; }
 </section>
 
 <section class="page">
+  <h2>React vs HTML: same browser-state evaluator</h2>
+  <div class="grid2">
+    <div>
+      <p>We also ran a small framework comparison on the same oracle screenshots. The candidate agent was asked to build the reproduction in React instead of plain HTML, while the evaluator kept the same reward semantics.</p>
+      <p>The important implementation decision is that React is not scored as React source. The verifier builds the candidate, serves <code>/app/site/dist</code> with SPA fallback, generates the candidate capture plan against the rendered app, and then scores the same browser-state artifacts as the HTML path.</p>
+      <div class="callout good"><strong>Why this matters</strong> This validates the earlier design choice: screenshots, rendered <code>outerHTML</code>, CSSOM, bbox geometry, VLM, DreamSim, pixelmatch, and capture coverage all come from the browser. That keeps the reward compatible with HTML now and React/Solid later.</div>
+    </div>
+    <div class="card">
+      <h3>Candidate contract</h3>
+      <table>
+        <tr><th>Candidate</th><th>Prep</th><th>Served root</th><th>Mode</th></tr>
+        <tr><td>HTML</td><td>No build</td><td><code>/app/site</code></td><td>Static files</td></tr>
+        <tr><td>React</td><td><code>npm install</code> / <code>npm ci</code>, then <code>npm run build</code></td><td><code>/app/site/dist</code></td><td>SPA fallback</td></tr>
+      </table>
+      <p class="small">The oracle remains unchanged. The public input is still screenshots only; the framework requirement changes how the candidate is built, not what the evaluator scores.</p>
+    </div>
+  </div>
+  <table>
+    <tr><th>Site</th><th>HTML reward</th><th>React reward</th><th>Coverage</th><th>HTML metric</th><th>CSSOM</th><th>Read</th></tr>
+    <tr><td>Botanical garden nursery</td><td>0.607</td><td>0.143</td><td>0.975 → 0.622</td><td>0.477 → 0.160</td><td>0.622 → 0.155</td><td>React covered only part of the manifest and missed enough content/style detail that the reward fell sharply.</td></tr>
+    <tr><td>K-12 education</td><td>0.678</td><td>0.133</td><td>0.957 → 0.468</td><td>0.634 → 0.127</td><td>0.646 → 0.153</td><td>React failed many candidate states and content/layout checks. This is a failed candidate, not evidence that React itself is worse.</td></tr>
+    <tr><td>Regional credit union</td><td>0.569</td><td>0.582</td><td>1.000 → 1.000</td><td>0.485 → 0.459</td><td>0.521 → 0.836</td><td>React slightly outscored HTML. The SPA build and route/state replay worked cleanly.</td></tr>
+    <tr><td>Curling federation</td><td>0.414</td><td>0.304</td><td>0.947 → 1.000</td><td>0.382 → 0.258</td><td>0.503 → 0.605</td><td>React looked globally closer but lost on rendered content. The reward did not over-credit high screenshot similarity.</td></tr>
+  </table>
+  <p class="small">The conclusion is intentionally modest: React is mixed on four paired sites, and the reward is able to expose whether the failure is state coverage, rendered content, or local style/layout.</p>
+</section>
+
+<section class="page evidence-page">
+  <h2>Framework comparison evidence: botanical garden nursery</h2>
+  <div class="figure tall"><img src="assets/framework-react-html-botanical-garden-nursery.jpg"><div class="caption">The React candidate reproduced some visual language, but missed enough routes/states and rendered detail that the reward drops from 0.607 to 0.143.</div></div>
+  <div class="metric-strip"><span class="chip"><strong>coverage</strong> 0.975 → 0.622</span><span class="chip"><strong>DreamSim</strong> 0.826 → 0.414</span><span class="chip"><strong>HTML metric</strong> 0.477 → 0.160</span><span class="chip"><strong>CSSOM</strong> 0.622 → 0.155</span></div>
+</section>
+
+<section class="page evidence-page">
+  <h2>Framework comparison evidence: K-12 education</h2>
+  <div class="figure tall"><img src="assets/framework-react-html-site-01-education-k12.jpg"><div class="caption">Same oracle screenshots, two candidate instructions. The React candidate failed state coverage and rendered content; the reward drops from 0.678 to 0.133.</div></div>
+  <div class="metric-strip"><span class="chip"><strong>HTML coverage</strong> 0.957</span><span class="chip"><strong>React coverage</strong> 0.468</span><span class="chip"><strong>HTML metric</strong> 0.634 → 0.127</span><span class="chip"><strong>CSSOM</strong> 0.646 → 0.153</span></div>
+</section>
+
+<section class="page evidence-page">
+  <h2>Framework comparison evidence: regional credit union</h2>
+  <div class="figure tall"><img src="assets/framework-react-html-regional-credit-union.jpg"><div class="caption">React slightly beat HTML on this task. Both had complete coverage, and the React candidate scored higher on VLM, bbox geometry, CSSOM, pixelmatch, and screenshot size.</div></div>
+  <div class="metric-strip"><span class="chip"><strong>HTML reward</strong> 0.569</span><span class="chip"><strong>React reward</strong> 0.582</span><span class="chip"><strong>VLM</strong> 0.674 → 0.856</span><span class="chip"><strong>CSSOM</strong> 0.521 → 0.836</span></div>
+</section>
+
+<section class="page evidence-page">
+  <h2>Framework comparison evidence: curling federation</h2>
+  <div class="figure tall"><img src="assets/framework-react-html-curling-federation.jpg"><div class="caption">The React candidate has stronger broad visual signals than the HTML candidate, but weaker rendered text/content. The final reward falls from 0.414 to 0.304, which is the right direction for a plausible but less faithful reproduction.</div></div>
+  <div class="metric-strip"><span class="chip"><strong>DreamSim</strong> 0.780 → 0.833</span><span class="chip"><strong>pixelmatch</strong> 0.404 → 0.802</span><span class="chip"><strong>HTML metric</strong> 0.382 → 0.258</span><span class="chip"><strong>reward</strong> 0.414 → 0.304</span></div>
+</section>
+
+<section class="page">
   <h2>2. Reward overview</h2>
   <div class="grid2">
     <div>
