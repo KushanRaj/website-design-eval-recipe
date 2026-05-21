@@ -15,7 +15,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageStat
 from playwright.async_api import Browser as AsyncBrowser
 from playwright.async_api import Page as AsyncPage
 from playwright.async_api import async_playwright
@@ -28,7 +28,7 @@ from .block_visual import (
     visual_block_match_from_blocks,
 )
 from .candidate_planner import generate_candidate_manifest
-from .cssom import _color_similarity
+from .cssom import _parse_rgb
 from .scoring import (
     _pick_torch_device,
     cssom_block_style_score_from_snapshots,
@@ -441,6 +441,10 @@ ANIMATION_SAMPLE_SCRIPT = """
   const rect = el.getBoundingClientRect();
   const style = {};
   for (const prop of track || []) style[prop] = cs.getPropertyValue(prop);
+  const px = (prop) => {
+    const value = parseFloat(cs.getPropertyValue(prop));
+    return Number.isFinite(value) ? value : 0;
+  };
   return {
     selector,
     bbox_px: {
@@ -450,7 +454,16 @@ ANIMATION_SAMPLE_SCRIPT = """
       height: rect.height
     },
     visible: cs.display !== 'none' && cs.visibility !== 'hidden' && Number(cs.opacity) !== 0 && rect.width > 0 && rect.height > 0,
-    style
+    style,
+    visual: {
+      area_px: Math.max(0, rect.width * rect.height),
+      border_widths_px: {
+        top: px('border-top-width'),
+        right: px('border-right-width'),
+        bottom: px('border-bottom-width'),
+        left: px('border-left-width')
+      }
+    }
   };
 }
 """
@@ -1389,6 +1402,18 @@ def _distance(a: tuple[float, float] | None, b: tuple[float, float] | None) -> f
     return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2) ** 0.5
 
 
+def _vector_delta(a: tuple[float, float] | None, b: tuple[float, float] | None) -> tuple[float, float] | None:
+    if a is None or b is None:
+        return None
+    return (b[0] - a[0], b[1] - a[1])
+
+
+def _vector_magnitude(vector: tuple[float, float] | None) -> float | None:
+    if vector is None:
+        return None
+    return (vector[0] ** 2 + vector[1] ** 2) ** 0.5
+
+
 def _clip_box(box: dict[str, Any] | None, width: int, height: int) -> tuple[int, int, int, int] | None:
     safe = _safe_box(box)
     if safe is None:
@@ -1667,27 +1692,54 @@ def _score_motion_target(reference_rows: list[dict[str, Any]], candidate_rows: l
     interval_scores = []
     weighted_total = 0.0
     weight_sum = 0.0
+    movement_floor = 1.0
     for index in range(max(0, min(len(reference_rows), len(candidate_rows)) - 1)):
         ref_a = _bbox_center((reference_rows[index].get("sample") or {}).get("bbox_px"))
         ref_b = _bbox_center((reference_rows[index + 1].get("sample") or {}).get("bbox_px"))
         cand_a = _bbox_center((candidate_rows[index].get("sample") or {}).get("bbox_px"))
         cand_b = _bbox_center((candidate_rows[index + 1].get("sample") or {}).get("bbox_px"))
-        ref_move = _distance(ref_a, ref_b)
-        cand_move = _distance(cand_a, cand_b)
-        if ref_move is None or cand_move is None or ref_move <= 1.0:
+        ref_vector = _vector_delta(ref_a, ref_b)
+        cand_vector = _vector_delta(cand_a, cand_b)
+        ref_move = _vector_magnitude(ref_vector)
+        cand_move = _vector_magnitude(cand_vector)
+        if ref_vector is None or cand_vector is None or ref_move is None or cand_move is None:
             continue
-        interval_score = max(0.0, 1.0 - abs(cand_move - ref_move) / max(ref_move, 1.0))
+
+        if ref_move <= movement_floor and cand_move <= movement_floor:
+            interval_score = 1.0
+            weight = 0.0
+            reason = "both_stationary"
+            error = 0.0
+        elif ref_move <= movement_floor:
+            interval_score = 0.0
+            weight = cand_move
+            reason = "reference_stationary_candidate_moved"
+            error = cand_move
+        else:
+            error = _distance(ref_vector, cand_vector) or 0.0
+            interval_score = max(0.0, 1.0 - error / ref_move)
+            weight = ref_move
+            reason = None
+        direction_cosine = None
+        if ref_move > movement_floor and cand_move > movement_floor:
+            direction_cosine = (ref_vector[0] * cand_vector[0] + ref_vector[1] * cand_vector[1]) / (ref_move * cand_move)
         interval_scores.append(
             {
                 "interval": [index, index + 1],
                 "reference_movement_px": round(ref_move, 6),
                 "candidate_movement_px": round(cand_move, 6),
+                "reference_delta_xy": [round(ref_vector[0], 6), round(ref_vector[1], 6)],
+                "candidate_delta_xy": [round(cand_vector[0], 6), round(cand_vector[1], 6)],
+                "error_px": round(error, 6),
+                "direction_cosine": round(direction_cosine, 6) if direction_cosine is not None else None,
                 "score": round(interval_score, 6),
-                "weight": round(ref_move, 6),
+                "weight": round(weight, 6),
+                "method": "vector_delta",
+                "reason": reason,
             }
         )
-        weighted_total += interval_score * ref_move
-        weight_sum += ref_move
+        weighted_total += interval_score * weight
+        weight_sum += weight
 
     return {
         "bbox_iou": round(float(sum(ious) / len(ious)), 6) if ious else 0.0,
@@ -1702,48 +1754,238 @@ def _normalize_style_value(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip().lower())
 
 
-def _animation_style_similarity(prop: str, reference: str, candidate: str) -> float:
-    if prop.endswith("color") or prop == "color":
-        color_score = _color_similarity(reference, candidate)
-        if color_score is not None:
-            return color_score
-    return 1.0 if reference == candidate else 0.0
+def _is_color_property(prop: str) -> bool:
+    return prop.endswith("color") or prop == "color"
+
+
+def _parse_px(value: Any) -> float | None:
+    if isinstance(value, int | float):
+        return float(value)
+    match = re.search(r"-?\d+(?:\.\d+)?", str(value or ""))
+    if not match:
+        return None
+    return float(match.group(0))
+
+
+def _sample_bbox_size(sample: dict[str, Any]) -> tuple[float, float] | None:
+    bbox = sample.get("bbox_px") or {}
+    width = _parse_px(bbox.get("width"))
+    height = _parse_px(bbox.get("height"))
+    if width is None or height is None or width <= 0 or height <= 0:
+        return None
+    return width, height
+
+
+def _sample_border_widths(sample: dict[str, Any], *, fallback_px: float = 1.0) -> dict[str, float]:
+    visual_widths = ((sample.get("visual") or {}).get("border_widths_px") or {})
+    style = sample.get("style") or {}
+
+    def width_for(side: str) -> float:
+        value = _parse_px(visual_widths.get(side))
+        if value is None:
+            value = _parse_px(style.get(f"border-{side}-width"))
+        if value is None:
+            return fallback_px
+        return max(0.0, value)
+
+    return {
+        "top": width_for("top"),
+        "right": width_for("right"),
+        "bottom": width_for("bottom"),
+        "left": width_for("left"),
+    }
+
+
+def _border_area(width: float, height: float, widths: dict[str, float]) -> float:
+    top = min(widths["top"], height)
+    bottom = min(widths["bottom"], max(0.0, height - top))
+    remaining_height = max(0.0, height - top - bottom)
+    left = min(widths["left"], width)
+    right = min(widths["right"], max(0.0, width - left))
+    return max(0.0, (top * width) + (bottom * width) + (left * remaining_height) + (right * remaining_height))
+
+
+def _color_property_visual_area_weight(prop: str, sample: dict[str, Any]) -> float:
+    size = _sample_bbox_size(sample)
+    if size is None:
+        return 1.0
+    width, height = size
+    area = max(1.0, width * height)
+    widths = _sample_border_widths(sample)
+    border = min(area, _border_area(width, height, widths))
+    inner = max(1.0, area - border)
+
+    if prop in {"background", "background-color"}:
+        return inner
+    if prop == "border-color":
+        return max(1.0, border)
+    if prop == "border-top-color":
+        return max(1.0, width * min(widths["top"], height))
+    if prop == "border-bottom-color":
+        return max(1.0, width * min(widths["bottom"], height))
+    if prop == "border-left-color":
+        return max(1.0, height * min(widths["left"], width))
+    if prop == "border-right-color":
+        return max(1.0, height * min(widths["right"], width))
+    return 1.0
+
+
+def _color_delta_score(
+    reference_base: str,
+    candidate_base: str,
+    reference_value: str,
+    candidate_value: str,
+    *,
+    movement_floor: float = 1.0,
+) -> tuple[float | None, dict[str, Any]]:
+    ref_base = _parse_rgb(reference_base)
+    cand_base = _parse_rgb(candidate_base)
+    ref_rgb = _parse_rgb(reference_value)
+    cand_rgb = _parse_rgb(candidate_value)
+    if ref_base is None or cand_base is None or ref_rgb is None or cand_rgb is None:
+        return None, {"method": "relative_rgb_delta", "reason": "rgb_parse_failed"}
+
+    ref_delta = tuple(ref_rgb[index] - ref_base[index] for index in range(3))
+    cand_delta = tuple(cand_rgb[index] - cand_base[index] for index in range(3))
+    ref_magnitude = sum(value * value for value in ref_delta) ** 0.5
+    cand_magnitude = sum(value * value for value in cand_delta) ** 0.5
+    if ref_magnitude <= movement_floor:
+        return None, {
+            "method": "relative_rgb_delta",
+            "reason": "reference_delta_below_floor",
+            "reference_delta_rgb": [round(value, 6) for value in ref_delta],
+            "candidate_delta_rgb": [round(value, 6) for value in cand_delta],
+            "reference_delta_magnitude": round(ref_magnitude, 6),
+            "candidate_delta_magnitude": round(cand_magnitude, 6),
+        }
+
+    error = sum((cand_delta[index] - ref_delta[index]) ** 2 for index in range(3)) ** 0.5
+    score = max(0.0, 1.0 - error / ref_magnitude)
+    return score, {
+        "method": "relative_rgb_delta",
+        "reference_delta_rgb": [round(value, 6) for value in ref_delta],
+        "candidate_delta_rgb": [round(value, 6) for value in cand_delta],
+        "reference_delta_magnitude": round(ref_magnitude, 6),
+        "candidate_delta_magnitude": round(cand_magnitude, 6),
+        "error_magnitude": round(error, 6),
+        "weight": round(ref_magnitude, 6),
+    }
+
+
+def _load_rgba_image(path: Any) -> Image.Image:
+    return Image.open(path).convert("RGBA")
+
+
+def _delta_image(image: Image.Image, base: Image.Image) -> Image.Image:
+    if image.size != base.size:
+        image = image.resize(base.size)
+    return ImageChops.difference(image.convert("RGB"), base.convert("RGB"))
+
+
+def _image_channel_sum(image: Image.Image) -> float:
+    return float(sum(ImageStat.Stat(image.convert("RGB")).sum[:3]))
+
+
+def _target_crop_delta_pixel_score(
+    reference_base_path: Any,
+    candidate_base_path: Any,
+    reference_path: Any,
+    candidate_path: Any,
+    *,
+    movement_floor: float = 1.0,
+) -> float | None:
+    ref_base = _load_rgba_image(reference_base_path)
+    ref_image = _load_rgba_image(reference_path)
+    cand_base = _load_rgba_image(candidate_base_path)
+    cand_image = _load_rgba_image(candidate_path)
+    cand_base = cand_base.resize(ref_base.size)
+    cand_image = cand_image.resize(ref_base.size)
+    ref_delta = _delta_image(ref_image, ref_base)
+    cand_delta = _delta_image(cand_image, cand_base)
+    reference_delta_sum = _image_channel_sum(ref_delta)
+    if reference_delta_sum <= movement_floor:
+        return None
+    error_sum = _image_channel_sum(ImageChops.difference(ref_delta, cand_delta))
+    return max(0.0, 1.0 - error_sum / reference_delta_sum)
 
 
 def _score_color_target(reference_rows: list[dict[str, Any]], candidate_rows: list[dict[str, Any]]) -> dict[str, Any]:
     pixel_scores = []
+    delta_pixel_scores = []
     cssom_scores = []
+    cssom_weighted_total = 0.0
+    cssom_weight_sum = 0.0
     cssom_rows = []
-    for ref_row, cand_row in zip(reference_rows, candidate_rows, strict=False):
+    reference_base_style = ((reference_rows[0].get("sample") or {}).get("style") or {}) if reference_rows else {}
+    candidate_base_style = ((candidate_rows[0].get("sample") or {}).get("style") or {}) if candidate_rows else {}
+    reference_base_crop = reference_rows[0].get("crop_path") if reference_rows else None
+    candidate_base_crop = candidate_rows[0].get("crop_path") if candidate_rows else None
+    for frame_index, (ref_row, cand_row) in enumerate(zip(reference_rows, candidate_rows, strict=False)):
         ref_crop = ref_row.get("crop_path")
         cand_crop = cand_row.get("crop_path")
         if ref_crop and cand_crop:
             pixel_scores.append(pixelmatch_score(ref_crop, cand_crop)["score"])
+            if reference_base_crop and candidate_base_crop:
+                delta_pixel_scores.append(
+                    _target_crop_delta_pixel_score(reference_base_crop, candidate_base_crop, ref_crop, cand_crop)
+                )
         ref_style = (ref_row.get("sample") or {}).get("style") or {}
         cand_style = (cand_row.get("sample") or {}).get("style") or {}
+        ref_sample = ref_row.get("sample") or {}
         props = sorted(set(ref_style) | set(cand_style))
         prop_scores = []
         for prop in props:
             ref_value = _normalize_style_value(ref_style.get(prop))
             cand_value = _normalize_style_value(cand_style.get(prop))
-            score = _animation_style_similarity(prop, ref_value, cand_value)
-            prop_scores.append(score)
+            method_fields: dict[str, Any]
+            if _is_color_property(prop):
+                score, method_fields = _color_delta_score(
+                    _normalize_style_value(reference_base_style.get(prop)),
+                    _normalize_style_value(candidate_base_style.get(prop)),
+                    ref_value,
+                    cand_value,
+                )
+                if score is not None:
+                    delta_weight = float(method_fields.get("weight", 1.0))
+                    area_weight = _color_property_visual_area_weight(prop, ref_sample)
+                    aggregate_weight = delta_weight * area_weight
+                    cssom_weighted_total += score * aggregate_weight
+                    cssom_weight_sum += aggregate_weight
+                    method_fields["delta_weight"] = round(delta_weight, 6)
+                    method_fields["visual_area_weight_px"] = round(area_weight, 6)
+                    method_fields["aggregate_weight"] = round(aggregate_weight, 6)
+                    prop_scores.append(score)
+            else:
+                score = 1.0 if ref_value == cand_value else 0.0
+                method_fields = {"method": "exact"}
+                prop_scores.append(score)
             cssom_rows.append(
                 {
+                    "frame_index": frame_index,
                     "property": prop,
                     "reference": ref_value,
                     "candidate": cand_value,
-                    "score": round(score, 6),
-                    "method": "rgb_distance" if prop.endswith("color") or prop == "color" else "exact",
+                    "score": round(score, 6) if score is not None else None,
+                    **method_fields,
                 }
             )
         if prop_scores:
             cssom_scores.append(sum(prop_scores) / len(prop_scores))
+    cssom_score = float(cssom_weighted_total / cssom_weight_sum) if cssom_weight_sum else (
+        float(sum(cssom_scores) / len(cssom_scores)) if cssom_scores else None
+    )
     return {
         "target_box_pixelmatch": round(float(sum(pixel_scores) / len(pixel_scores)), 6) if pixel_scores else None,
         "target_box_pixelmatch_by_frame": pixel_scores,
-        "cssom_color": round(float(sum(cssom_scores) / len(cssom_scores)), 6) if cssom_scores else None,
+        "target_box_delta_pixelmatch": round(
+            float(sum(score for score in delta_pixel_scores if score is not None) / len([score for score in delta_pixel_scores if score is not None])),
+            6,
+        ) if any(score is not None for score in delta_pixel_scores) else None,
+        "target_box_delta_pixelmatch_by_frame": delta_pixel_scores,
+        "color_delta": round(cssom_score, 6) if cssom_score is not None else None,
+        "cssom_color": round(cssom_score, 6) if cssom_score is not None else None,
         "cssom_color_by_property": cssom_rows,
+        "cssom_color_method": "relative_rgb_delta_area_weighted",
     }
 
 
@@ -3482,7 +3724,7 @@ def _build_report(result: dict[str, Any]) -> str:
                     _get_metric(scores, ["motion", "bbox_iou"]),
                     _get_metric(scores, ["motion", "motion_delta"]),
                     _get_metric(scores, ["color", "target_box_pixelmatch"]),
-                    _get_metric(scores, ["color", "cssom_color"]),
+                    _get_metric(scores, ["color", "color_delta"]),
                     animation.get("missing_reason") or metrics.get("reason"),
                 ]
             )
@@ -3516,7 +3758,7 @@ def _build_report(result: dict[str, Any]) -> str:
                     ["mean_animation_bbox_iou", summary.get("mean_animation_bbox_iou")],
                     ["mean_animation_motion_delta", summary.get("mean_animation_motion_delta")],
                     ["mean_animation_target_pixelmatch", summary.get("mean_animation_target_pixelmatch")],
-                    ["mean_animation_cssom_color", summary.get("mean_animation_cssom_color")],
+                    ["mean_animation_color_delta", summary.get("mean_animation_color_delta")],
                 ],
             ),
             "## Captures",
@@ -3556,7 +3798,7 @@ def _build_report(result: dict[str, Any]) -> str:
                         "BBox IoU",
                         "Motion Delta",
                         "Target Pixel",
-                        "CSSOM Color",
+                        "Color Delta",
                         "Reason",
                     ],
                     animation_rows,
@@ -3594,7 +3836,7 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
             animation_bbox.append(_get_metric(scores, ["motion", "bbox_iou"]))
             animation_motion.append(_get_metric(scores, ["motion", "motion_delta"]))
             animation_pixel.append(_get_metric(scores, ["color", "target_box_pixelmatch"]))
-            animation_cssom.append(_get_metric(scores, ["color", "cssom_color"]))
+            animation_cssom.append(_get_metric(scores, ["color", "color_delta"]))
 
     def numeric(values: list[Any]) -> list[float]:
         return [float(value) for value in values if isinstance(value, int | float)]
@@ -3617,6 +3859,7 @@ def _summarize(result: dict[str, Any]) -> dict[str, Any]:
         "mean_animation_bbox_iou": _mean(numeric(animation_bbox)),
         "mean_animation_motion_delta": _mean(numeric(animation_motion)),
         "mean_animation_target_pixelmatch": _mean(numeric(animation_pixel)),
+        "mean_animation_color_delta": _mean(numeric(animation_cssom)),
         "mean_animation_cssom_color": _mean(numeric(animation_cssom)),
     }
 
@@ -3804,7 +4047,7 @@ def print_functional_status(result: dict[str, Any]) -> None:
         "mean_animation_bbox_iou": summary.get("mean_animation_bbox_iou"),
         "mean_animation_motion_delta": summary.get("mean_animation_motion_delta"),
         "mean_animation_target_pixelmatch": summary.get("mean_animation_target_pixelmatch"),
-        "mean_animation_cssom_color": summary.get("mean_animation_cssom_color"),
+        "mean_animation_color_delta": summary.get("mean_animation_color_delta"),
         "output_dir": result["metadata"]["output_dir"],
         "metrics": str(Path(result["metadata"]["output_dir"]) / "metrics.json"),
         "report": str(Path(result["metadata"]["output_dir"]) / "functional-report.md"),

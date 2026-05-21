@@ -275,8 +275,12 @@ def _score_animation(animation_payload: dict[str, Any]) -> dict[str, Any]:
     motion_bbox = _mean_animation_target_scores(metrics, ["motion", "bbox_iou"])
     motion_delta = _mean_animation_target_scores(metrics, ["motion", "motion_delta"])
     bbox_geometry = _mean_available([motion_bbox, motion_delta])
-    pixel_match = _mean_animation_target_scores(metrics, ["color", "target_box_pixelmatch"])
-    cssom_style = _mean_animation_target_scores(metrics, ["color", "cssom_color"])
+    pixel_match = _mean_animation_target_scores(metrics, ["color", "target_box_delta_pixelmatch"])
+    if pixel_match is None:
+        pixel_match = _mean_animation_target_scores(metrics, ["color", "target_box_pixelmatch"])
+    cssom_style = _mean_animation_target_scores(metrics, ["color", "color_delta"])
+    if cssom_style is None:
+        cssom_style = _mean_animation_target_scores(metrics, ["color", "cssom_color"])
     coverage = 1.0 if any(value is not None for value in (bbox_geometry, pixel_match, cssom_style)) else 0.0
 
     components = {

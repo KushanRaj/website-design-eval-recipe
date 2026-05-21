@@ -214,8 +214,8 @@ Implemented shape:
 
 V1 only supports:
 
-- `motion`: bbox IoU and movement-weighted motion delta
-- `color`: target-box pixelmatch and CSSOM color comparison
+- `motion`: bbox IoU and reference-weighted directional motion delta
+- `color`: target-box delta pixelmatch and visual-area-weighted relative RGB color delta
 
 Full-page DreamSim/CLIP/SSIM are not animation reward channels. Animation intent
 comes from the concept/oracle side; the evaluator should not infer animation

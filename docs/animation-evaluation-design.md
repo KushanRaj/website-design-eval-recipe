@@ -15,8 +15,8 @@ Start with two animation channels only:
 
 Do not introduce a broad taxonomy yet. In V1:
 
-- motion is scored with target bounding-box IoU and movement-weighted motion delta
-- color is scored with target-box pixelmatch and CSSOM color comparison
+- motion is scored with target bounding-box IoU and reference-weighted directional motion delta
+- color is scored with target-box delta pixelmatch and visual-area-weighted relative RGB color delta
 - growth/shrink is not a separate channel; it affects the target bbox and is therefore covered by bbox IoU
 - CLIP, DreamSim, SSIM, and full-page metrics are diagnostics only for animation, not primary scores
 - shadows, blur, filters, SVG morphs, canvas/WebGL, Lottie, and video are out of V1 unless they can be represented as a simple color or motion target
@@ -37,11 +37,38 @@ As of 2026-05-20:
   inventory.
 - `scripts/capture-screenshots.mjs` can replay animation entries and write frame
   timelines under `screenshots/reference/animations/<id>/`.
-- `website_design_eval/evaluator.py` has early animation capture/scoring hooks
-  for bbox motion, target pixelmatch, and CSSOM color.
+- `website_design_eval/evaluator.py` has animation capture/scoring hooks for
+  bbox motion, target-box delta pixelmatch, and visual-area-weighted relative
+  RGB color delta.
 
-Animation V1 is still not part of the final reward curriculum. It is an
-additional browser-state metric track.
+Animation V1 is part of the current reward surface as a manifest item. It does
+not get a separate multiplier by default; each animation contributes according
+to its manifest weight, exactly like a static capture.
+
+## Learnings And Insights
+
+The first two animation trials exposed a useful pattern: animation reward must
+measure the browser-observed delta, not broad visual plausibility.
+
+For motion, comparing movement magnitude alone is not enough. In the marine
+specimen panel case, the oracle panel slid horizontally while the candidate
+panel changed height and shifted its center vertically. A magnitude-only metric
+gave partial credit because both targets "moved" by some number of pixels. The
+correct signal is directional: compare the `(dx, dy)` vector between adjacent
+sampled frames and weight intervals by oracle movement. Wrong-axis movement
+should score zero.
+
+For color, absolute target-crop pixelmatch is too forgiving. In the gemology
+case, the candidate kept the card visually similar and changed mainly the
+border, while the oracle changed the card background. Whole-target pixelmatch
+remained high because most pixels were still similar. The reward now uses
+target-crop delta pixelmatch and visual-area-weighted CSS color deltas, so a
+thin border cannot dominate a missed full-card fill transition.
+
+The practical rule is: keep absolute pixelmatch, DreamSim, and VLM as useful
+diagnostics, but use channel-specific temporal deltas for animation reward. The
+manifest tells us the target, trigger, channel, and sampled timeline; the metric
+should ask whether the candidate reproduced that intended browser-state change.
 
 ## Pipeline Roles
 
@@ -260,15 +287,15 @@ area(union(reference_box_t, candidate_box_t))
 
 This catches whether the animated element is in the right place and roughly the right size at each frame.
 
-`motion_delta` compares movement between adjacent samples:
+`motion_delta` compares directional movement between adjacent samples:
 
 ```text
-reference movement from t[i] to t[i+1]
+reference delta vector from t[i] to t[i+1]
 vs
-candidate movement from t[i] to t[i+1]
+candidate delta vector from t[i] to t[i+1]
 ```
 
-The important correction is that `motion_delta` must be weighted by reference movement distance. Idle intervals should not give static candidates free credit. If the oracle does not move between two samples, that interval should contribute little or nothing to the motion-delta score.
+The important correction is that `motion_delta` must compare vectors, not just movement magnitude. If the oracle slides horizontally and the candidate's target only changes height, the candidate should get no motion-delta credit for that interval. Motion intervals are weighted by reference movement distance, so idle intervals do not give static candidates free credit. If the oracle does not move between two samples, that interval contributes little or nothing unless the candidate moves, in which case it is a real failure.
 
 Do not use CLIP, DreamSim, pixelmatch, or full-page similarity as primary motion scores. A static object can look visually similar while failing to move.
 
@@ -276,12 +303,27 @@ Do not use CLIP, DreamSim, pixelmatch, or full-page similarity as primary motion
 
 For V1 color, use:
 
-- `target_box_pixelmatch`
-- `cssom_color`
+- `target_box_delta_pixelmatch`
+- `color_delta`
 
-`target_box_pixelmatch` compares only the target crop at each sampled timestamp. It should not compare the full page because small target-level color changes get diluted.
+`target_box_delta_pixelmatch` compares the target crop's browser-observed change from the first sampled frame. Absolute target-crop pixelmatch is still useful as a diagnostic, but it is too forgiving for animation reward because a mostly unchanged card can look similar while failing the intended transition.
 
-`cssom_color` compares browser-computed color properties for the target:
+`color_delta` compares the browser-computed RGB change from the first sampled
+frame. It does not reward absolute color similarity. A candidate that starts
+near the oracle final color but does not animate should score poorly.
+
+`color_delta` is visual-area weighted. A border-only change should not dominate
+the score when the oracle changes the whole card background. Background color is
+weighted by the target's fill area; border color is weighted by the estimated
+border area from the browser box model.
+
+This delta-based framing is important for honesty. The question is not "did the
+candidate ever show a similar color?" It is "did the candidate make the same
+browser-observed color change over the sampled timeline?" For color animations,
+absolute final-state similarity can be useful as a diagnostic, but it should not
+be the primary reward signal.
+
+The tracked properties are:
 
 - `background-color`
 - `color`
@@ -293,6 +335,16 @@ For V1 color, use:
 This gives an interpretable diagnostic when a candidate visually misses the intended color change.
 
 CLIP and DreamSim are too forgiving for simple color changes and should remain secondary diagnostics only.
+
+### Reward Weight Caveat
+
+Animation captures are still one set of manifest items inside the full task.
+If a task has many static captures and one animation capture, a failed animation
+will only move the overall task reward in proportion to that one manifest
+weight. That is intentional for the current equal-item curriculum, but it is an
+important interpretation caveat: if an animation is central to the task, the
+oracle manifest should give that animation a higher weight or the reward should
+use an animation-specific gate/cap.
 
 ### Size And Growth
 
@@ -371,7 +423,7 @@ The evaluator should report channel-level signals, not only one aggregate:
       },
       "color": {
         "target_box_pixelmatch": 0.91,
-        "cssom_color": 0.88
+        "color_delta": 0.88
       }
     }
   }
@@ -455,7 +507,7 @@ motion channel:
 
 color channel:
   target_box_pixelmatch
-  cssom_color
+  color_delta
 ```
 
 ## Implementation Start Plan

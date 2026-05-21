@@ -49,13 +49,27 @@ pass for bad outputs: a numeric score of `0.0` is still treated as a real zero.
 Animation rows reuse the same component machinery with only the metrics that
 exist for the animation channel:
 
-- motion contributes through `bbox_geometry`, using target bbox IoU and motion
-  delta.
+- motion contributes through `bbox_geometry`, using target bbox IoU and
+  reference-weighted directional motion delta.
 - color contributes through `pixel_match` and `cssom_style`, using target-box
-  pixel match and tracked computed color styles.
+  delta pixel match and visual-area-weighted relative RGB color delta from the
+  first sampled frame.
 - screenshot size, HTML, VLM, visual block, and DreamSim are unavailable for the
   animation row unless explicitly added later, so they are removed from that
   row's denominator.
+
+The color term is deliberately delta-based rather than absolute. For animation,
+the honest question is whether the browser-observed style changed in the same
+way over the timeline. A candidate should not receive high color-animation
+credit merely because its initial or final color is close to the oracle; it must
+match the relative RGB movement from the first sampled frame.
+
+One caveat: animations are weighted like other manifest items. If a task has
+many static captures and only one animation capture, even a severe animation
+failure will only move the final task reward by that item's share of total
+manifest weight. If animation fidelity is central to a task, the manifest should
+assign that capture a higher weight or the curriculum should add an
+animation-specific gate/cap.
 
 ## Gate
 

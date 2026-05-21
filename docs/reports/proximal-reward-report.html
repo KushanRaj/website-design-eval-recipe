@@ -30,7 +30,7 @@ tr:nth-child(even) td { background: #fbfcfe; }
 .figure { width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 4px; }
 .figure img { display: block; max-width: 100%; max-height: 133mm; margin: 0 auto; object-fit: contain; }
 .figure.tall img { max-height: 145mm; }
-.figure.honesty img { max-height: 112mm; }
+.figure.honesty img { max-height: 118mm; }
 .caption { font-size: 9pt; color: #475569; margin-top: 6px; }
 .evidence-page { gap: 9px; }
 .evidence-page .figure img { max-height: 132mm; }
@@ -105,6 +105,47 @@ li { margin: 3px 0; }
 </section>
 
 <section class="page">
+  <h2>Animation reward: deltas, not absolutes</h2>
+  <div class="grid2">
+    <div>
+      <p>For animation captures, the reward should be honest about temporal behavior. A color animation is not scored by asking whether the candidate ever shows a similar color; it is scored by asking whether the browser-observed target changes in the same way from the first sampled frame.</p>
+      <p>This is why the animation color metric uses <strong>target crop delta</strong> and <strong>visual-area-weighted color delta</strong>. If the oracle changes the whole card background but the candidate only changes a thin border, the border does not dominate the score.</p>
+    </div>
+    <div class="card">
+      <h3>Animation channels</h3>
+      <table>
+        <tr><th>Channel</th><th>Primary signal</th><th>What it checks</th></tr>
+        <tr><td>Motion</td><td>bbox IoU + motion delta</td><td>Target position/size and movement over sampled frames.</td></tr>
+        <tr><td>Color</td><td>target crop delta + area-weighted color delta</td><td>Local target change and relative RGB change over time.</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="callout warning"><strong>Interpretation caveat</strong> Animation captures are manifest items. If a task has many static captures and only one animation capture, even a severe animation miss only moves the overall reward by that capture's share of total manifest weight. If animation fidelity is central to the task, the manifest should weight that capture higher or the curriculum should add an animation-specific gate.</div>
+</section>
+
+<section class="page evidence-page">
+  <h2>Animation evaluation: both animation captures scored</h2>
+  <p>The two animation tasks were evaluated through candidate-side manifest planning. Both oracle animation intents were mapped to candidate routes, triggers, and targets, and both produced scored animation rows.</p>
+  <table>
+    <tr><th>Task</th><th>Reward</th><th>Coverage</th><th>Animation</th><th>Key animation scores</th><th>Read</th></tr>
+    <tr><td>Gemology reference database</td><td>0.588</td><td>1.000</td><td><code>gem-card-jewel-shift</code></td><td>target delta pixelmatch 0.002; color delta 0.028; absolute crop pixelmatch 0.914</td><td>The candidate created the right interactive card target, but it mostly changed border treatment while missing the oracle's full-card background transition.</td></tr>
+    <tr><td>Marine biology reference portal</td><td>0.533</td><td>1.000</td><td><code>specimen-panel-slide</code></td><td>bbox IoU 0.354; directional motion delta 0.000</td><td>The candidate found the correct specimen-panel intent and motion target, but it did not reproduce the oracle's horizontal slide path.</td></tr>
+  </table>
+  <div class="metric-strip"><span class="chip"><strong>mean reward</strong> 0.560</span><span class="chip"><strong>mean DreamSim</strong> 0.868</span><span class="chip"><strong>mean VLM</strong> 0.684</span><span class="chip"><strong>manifest coverage</strong> 1.000</span></div>
+</section>
+
+<section class="page evidence-page">
+  <h2>Animation evidence: gemology color transition</h2>
+  <div class="figure tall"><img src="assets/animation-modal-gemology-frames.jpg"><div class="caption">Gemology color animation sampled at 0, 200, 400, and 600ms. The planner mapped the oracle animation to <code>#specimen-grid &gt; div:nth-of-type(1)</code> on <code>/mineral-index.html</code>; the target is scored from browser-captured frames, not static source.</div></div>
+  <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.588</span><span class="chip"><strong>target delta pixelmatch</strong> 0.002</span><span class="chip"><strong>color delta</strong> 0.028</span><span class="chip"><strong>absolute crop pixelmatch</strong> 0.914</span><span class="chip"><strong>VLM</strong> 0.722</span></div>
+</section>
+
+<section class="page evidence-page">
+  <h2>Animation evidence: marine specimen panel motion</h2>
+  <div class="figure tall"><img src="assets/animation-modal-marine-frames.jpg"><div class="caption">Marine specimen panel slide sampled at 0, 150, 300, 450, and 600ms. The candidate manifest mapped the oracle slide intent to <code>#species-tbody tr:nth-of-type(1)</code> and <code>#detail-panel</code>, and the motion channel was scored from browser-captured frames.</div></div>
+  <div class="metric-strip"><span class="chip"><strong>reward</strong> 0.533</span><span class="chip"><strong>bbox IoU</strong> 0.354</span><span class="chip"><strong>motion delta</strong> 0.000</span><span class="chip"><strong>DreamSim</strong> 0.869</span><span class="chip"><strong>VLM</strong> 0.647</span></div>
+</section>
+<section class="page">
   <h2>3. Trial-level reward results</h2>
   <p>The spread is meaningful: the best candidate is about 3.5x the lowest reward. DreamSim remains high for weak candidates, while rendered HTML, CSSOM, and visual-block/geometry metrics separate fidelity.</p>
   <table class="leaderboard">
@@ -127,9 +168,15 @@ li { margin: 3px 0; }
 
 <section class="page evidence-page">
   <h2>Reward honesty check: does 0.6 look better than 0.2?</h2>
-  <div class="figure honesty"><img src="assets/reward-honesty-gradient.jpg"><div class="caption">A quick ordered read: high reward preserves page grammar and local structure; mid/high reward keeps the system but loses some density/state detail; low reward preserves mood while failing concrete reproduction.</div></div>
   <p><strong>Short answer: yes, directionally.</strong> The 0.6-0.7 candidates are visibly more faithful than the 0.2 candidates. The high-reward pages preserve the original page type, repeated components, content density, nav/sidebar/footer grammar, and browser-rendered structure. The low-reward pages may still be attractive, but they are closer to a genre rewrite than a reproduction. A 0.6 is not pixel-perfect; it is a candidate that cleared more of the browser-state reproduction checks.</p>
   <div class="metric-strip"><span class="chip"><strong>0.6+</strong> retained page grammar</span><span class="chip"><strong>0.4-0.6</strong> broad match with local drift</span><span class="chip"><strong>0.2-ish</strong> vibe without faithful reproduction</span></div>
+  <div class="figure honesty"><img src="assets/pair-k12-high.jpg"><div class="caption">High reward example: page grammar, dashboard density, cards, and institutional structure mostly survive.</div></div>
+</section>
+
+<section class="page evidence-page">
+  <h2>Reward honesty check: low reward is visibly weaker</h2>
+  <div class="figure honesty"><img src="assets/pair-lutherie-low.jpg"><div class="caption">Low reward example: broad mood survives, but local structure, typography, copy organization, and layout fidelity are weak.</div></div>
+  <p>This is the intended behavior. The reward does not collapse to "does this look like the same genre?" It drops when browser-rendered structure and local geometry are not faithful.</p>
 </section>
 
 <section class="page evidence-page">
