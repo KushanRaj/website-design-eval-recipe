@@ -6,16 +6,14 @@ import os
 import re
 import asyncio
 import inspect
-import threading
 from datetime import datetime
-from dataclasses import dataclass
-from functools import partial
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Callable
 from urllib.parse import urldefrag, urljoin, urlparse
 
 from bs4 import BeautifulSoup
+
+from .static_server import StaticServer, normalize_serve_mode
 
 
 logger = logging.getLogger(__name__)
@@ -267,34 +265,6 @@ BROWSER_INVENTORY_SCRIPT = """
   };
 }
 """
-
-
-class _QuietHandler(SimpleHTTPRequestHandler):
-    def log_message(self, _format: str, *_args: Any) -> None:
-        return
-
-
-@dataclass
-class StaticServer:
-    root: Path
-    httpd: ThreadingHTTPServer
-    thread: threading.Thread
-    base_url: str
-
-    @classmethod
-    def start(cls, root: Path) -> "StaticServer":
-        root = root.resolve()
-        handler = partial(_QuietHandler, directory=str(root))
-        httpd = ThreadingHTTPServer(("127.0.0.1", 0), handler)
-        host, port = httpd.server_address[:2]
-        thread = threading.Thread(target=httpd.serve_forever, daemon=True)
-        thread.start()
-        return cls(root=root, httpd=httpd, thread=thread, base_url=f"http://{host}:{port}")
-
-    def close(self) -> None:
-        self.httpd.shutdown()
-        self.httpd.server_close()
-        self.thread.join(timeout=2)
 
 
 MANIFEST_OUTPUT_SCHEMA: dict[str, Any] = {
@@ -597,6 +567,19 @@ def _static_route_paths(root: Path) -> list[str]:
     return paths or ["/"]
 
 
+def _unique_route_paths(paths: list[str]) -> list[str]:
+    seen: set[str] = set()
+    unique: list[str] = []
+    for path in paths:
+        if not path:
+            continue
+        normalized = path if path.startswith("/") else f"/{path}"
+        if normalized not in seen:
+            seen.add(normalized)
+            unique.append(normalized)
+    return unique
+
+
 def _page_name_for_path(path: str) -> str:
     parsed = urlparse(path)
     stem = Path(parsed.path or "/").stem
@@ -605,11 +588,18 @@ def _page_name_for_path(path: str) -> str:
     return stem
 
 
-def _normalize_discovered_path(base_url: str, current_url: str, href: str) -> str | None:
+def _normalize_discovered_path(
+    base_url: str,
+    current_url: str,
+    href: str,
+    *,
+    preserve_fragment: bool = False,
+) -> str | None:
     if not href or href.startswith(("mailto:", "tel:", "javascript:")):
         return None
     absolute = urljoin(current_url, href)
-    absolute, _fragment = urldefrag(absolute)
+    if not preserve_fragment:
+        absolute, _fragment = urldefrag(absolute)
     parsed = urlparse(absolute)
     base = urlparse(base_url)
     if parsed.scheme not in {"http", "https"} or parsed.netloc != base.netloc:
@@ -617,14 +607,23 @@ def _normalize_discovered_path(base_url: str, current_url: str, href: str) -> st
     path = parsed.path or "/"
     if parsed.query:
         path = f"{path}?{parsed.query}"
+    if preserve_fragment and parsed.fragment:
+        path = f"{path}#{parsed.fragment}"
     return path
 
 
-def _browser_inventory(root: Path, *, max_routes: int = 24) -> dict[str, Any]:
+def _browser_inventory(
+    root: Path,
+    *,
+    max_routes: int = 24,
+    serve_mode: str = "static",
+    route_paths: list[str] | None = None,
+) -> dict[str, Any]:
     from playwright.sync_api import sync_playwright
 
-    server = StaticServer.start(root)
-    route_queue = _static_route_paths(root)
+    serve_mode = normalize_serve_mode(serve_mode)
+    server = StaticServer.start(root, serve_mode=serve_mode)
+    route_queue = _unique_route_paths([*(route_paths or []), *_static_route_paths(root)])
     seen = set(route_queue)
     pages: list[dict[str, Any]] = []
     try:
@@ -663,7 +662,12 @@ def _browser_inventory(root: Path, *, max_routes: int = 24) -> dict[str, Any]:
 
                         links = observed.get("links") or []
                         for link in links:
-                            discovered = _normalize_discovered_path(server.base_url, page.url, str(link.get("href") or ""))
+                            discovered = _normalize_discovered_path(
+                                server.base_url,
+                                page.url,
+                                str(link.get("href") or ""),
+                                preserve_fragment=serve_mode == "spa",
+                            )
                             if discovered and discovered not in seen and len(seen) < max_routes:
                                 seen.add(discovered)
                                 route_queue.append(discovered)
@@ -686,6 +690,7 @@ def _browser_inventory(root: Path, *, max_routes: int = 24) -> dict[str, Any]:
     return {
         "root": str(root),
         "source": "playwright_rendered_browser_state",
+        "serve_mode": serve_mode,
         "viewport": MANIFEST_VIEWPORT,
         "pages": pages,
     }
@@ -823,6 +828,37 @@ def _selector_unique_in_source(root: Path, path: str, selector: str) -> bool:
         return False
 
 
+def _rendered_path_accessible(root: Path, path: str) -> bool:
+    try:
+        from playwright.sync_api import sync_playwright
+
+        server = StaticServer.start(root)
+        try:
+            with sync_playwright() as playwright:
+                browser = playwright.chromium.launch(headless=True)
+                try:
+                    context = browser.new_context(
+                        viewport=MANIFEST_VIEWPORT,
+                        device_scale_factor=1,
+                    )
+                    page = context.new_page()
+                    response = page.goto(
+                        f"{server.base_url.rstrip('/')}/{path.lstrip('/')}",
+                        wait_until="networkidle",
+                        timeout=30000,
+                    )
+                    page.wait_for_timeout(100)
+                    if response is not None and response.status >= 400:
+                        return False
+                    return bool(page.evaluate("() => document.body !== null"))
+                finally:
+                    browser.close()
+        finally:
+            server.close()
+    except Exception:
+        return False
+
+
 def _rendered_selector_count(root: Path, path: str, selector: str) -> int | None:
     try:
         from playwright.sync_api import sync_playwright
@@ -839,11 +875,15 @@ def _rendered_selector_count(root: Path, path: str, selector: str) -> int | None
                     page = context.new_page()
                     page.goto(f"{server.base_url.rstrip('/')}/{path.lstrip('/')}", wait_until="networkidle", timeout=30000)
                     page.wait_for_timeout(100)
-                    count = page.evaluate(
-                        "(selector) => document.querySelectorAll(selector).length",
-                        selector,
-                    )
-                    return int(count)
+                    try:
+                        return int(
+                            page.evaluate(
+                                "(selector) => document.querySelectorAll(selector).length",
+                                selector,
+                            )
+                        )
+                    except Exception:
+                        return int(page.locator(selector).count())
                 finally:
                     browser.close()
         finally:
@@ -1403,6 +1443,7 @@ def _sanitize_manifest_with_inventory(
 
     captures = []
     seen_ids = set()
+    rendered_path_cache: dict[str, bool] = {}
     for item in raw.get("captures") or []:
         if not isinstance(item, dict):
             continue
@@ -1411,7 +1452,12 @@ def _sanitize_manifest_with_inventory(
             path = "/" + path
         browser_path_known = path in inventory_paths
         file_path_known = (root / path.lstrip("/")).exists()
-        if not browser_path_known and not file_path_known:
+        rendered_path_known = False
+        if not browser_path_known and not file_path_known and "#" in path:
+            if path not in rendered_path_cache:
+                rendered_path_cache[path] = _rendered_path_accessible(root, path)
+            rendered_path_known = rendered_path_cache[path]
+        if not browser_path_known and not file_path_known and not rendered_path_known:
             continue
         capture_id = re.sub(r"[^a-zA-Z0-9_.-]+", "-", str(item.get("id") or "")).strip("-")
         if not capture_id:

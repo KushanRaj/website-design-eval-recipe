@@ -9,10 +9,14 @@ import tomllib
 from pathlib import Path
 from typing import Any
 
-from package_harbor_task import package_task
+try:
+    from package_harbor_task import package_task
+except ModuleNotFoundError:  # pragma: no cover - used when imported as scripts.package_synthetic_dataset
+    from scripts.package_harbor_task import package_task
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+VALID_CANDIDATE_FRAMEWORKS = ("html", "react", "solid")
 
 
 def _resolve_path(path: str | Path) -> Path:
@@ -50,8 +54,9 @@ keywords = ["synthetic", "website-replication", "screenshot-only", "visual-evalu
     )
 
 
-def _write_readme(dataset_dir: Path, *, name: str) -> None:
+def _write_readme(dataset_dir: Path, *, name: str, candidate_frameworks: list[str]) -> None:
     display_dir = _display_path(dataset_dir)
+    framework_text = ", ".join(candidate_frameworks)
     _write_text(
         dataset_dir / "README.md",
         f"""
@@ -68,6 +73,8 @@ scripts/run_harbor_full_reward.sh {display_dir}
 The agent-facing workspace contains only numbered reference screenshots. The
 oracle site, replay manifest, and metric config are packaged under
 `tests/private/` and are only available to the verifier.
+
+Candidate framework variants in this dataset: {framework_text}.
 """,
     )
 
@@ -102,6 +109,31 @@ def _read_dataset_task_count(dataset_dir: Path) -> int:
     return len(payload.get("tasks") or [])
 
 
+def _parse_candidate_frameworks(raw: str | None, fallback: str) -> list[str]:
+    if raw is None or not raw.strip():
+        return [fallback]
+    frameworks = [part.strip().lower() for part in raw.split(",") if part.strip()]
+    if not frameworks:
+        raise ValueError("--candidate-frameworks must include at least one framework")
+    invalid = [framework for framework in frameworks if framework not in VALID_CANDIDATE_FRAMEWORKS]
+    if invalid:
+        raise ValueError(
+            f"Unknown candidate framework(s): {invalid}. "
+            f"Allowed values: {', '.join(VALID_CANDIDATE_FRAMEWORKS)}"
+        )
+    unique: list[str] = []
+    for framework in frameworks:
+        if framework not in unique:
+            unique.append(framework)
+    return unique
+
+
+def _variant_slug(slug: str, framework: str, frameworks: list[str]) -> str:
+    if len(frameworks) == 1:
+        return slug
+    return f"{slug}-{framework}"
+
+
 def package_dataset(
     *,
     source_root: Path,
@@ -114,8 +146,9 @@ def package_dataset(
     metric_profile: str,
     verifier_allow_internet: bool,
     agent_memory_mb: int,
-    candidate_framework: str,
     force: bool,
+    candidate_framework: str = "html",
+    candidate_frameworks: list[str] | None = None,
 ) -> dict[str, Any]:
     source_root = source_root.resolve()
     dataset_dir = dataset_dir.resolve()
@@ -128,34 +161,38 @@ def package_dataset(
     sites = _discover_sites(source_root)
     org = dataset_name.split("/", 1)[0]
     packaged: list[dict[str, Any]] = []
+    frameworks = candidate_frameworks or [candidate_framework]
 
     for site_dir in sites:
         slug = site_dir.parent.name
-        task_name = f"{org}/{task_prefix}{slug}"
-        task_dir = dataset_dir / slug
-        package_task(
-            site_dir,
-            task_dir,
-            task_name=task_name,
-            force=True,
-            verifier_base_image=verifier_base_image,
-            agent_base_image=agent_base_image,
-            metric_profile=metric_profile,
-            vendor_evaluator=False,
-            verifier_allow_internet=verifier_allow_internet,
-            agent_memory_mb=agent_memory_mb,
-            candidate_framework=candidate_framework,
-        )
-        packaged.append(
-            {
-                "site": slug,
-                "task_name": task_name,
-                "task_dir": _display_path(task_dir),
-            }
-        )
+        for framework in frameworks:
+            task_slug = _variant_slug(slug, framework, frameworks)
+            task_name = f"{org}/{task_prefix}{task_slug}"
+            task_dir = dataset_dir / task_slug
+            package_task(
+                site_dir,
+                task_dir,
+                task_name=task_name,
+                force=True,
+                verifier_base_image=verifier_base_image,
+                agent_base_image=agent_base_image,
+                metric_profile=metric_profile,
+                vendor_evaluator=False,
+                verifier_allow_internet=verifier_allow_internet,
+                agent_memory_mb=agent_memory_mb,
+                candidate_framework=framework,
+            )
+            packaged.append(
+                {
+                    "site": slug,
+                    "candidate_framework": framework,
+                    "task_name": task_name,
+                    "task_dir": _display_path(task_dir),
+                }
+            )
 
     _write_dataset_toml(dataset_dir, name=dataset_name, description=description)
-    _write_readme(dataset_dir, name=dataset_name)
+    _write_readme(dataset_dir, name=dataset_name, candidate_frameworks=frameworks)
     _run_harbor_add(dataset_dir)
 
     task_count = _read_dataset_task_count(dataset_dir)
@@ -167,6 +204,7 @@ def package_dataset(
     return {
         "dataset_dir": str(dataset_dir),
         "dataset_name": dataset_name,
+        "candidate_frameworks": frameworks,
         "task_count": len(packaged),
         "tasks": packaged,
     }
@@ -195,7 +233,12 @@ def main(argv: list[str] | None = None) -> int:
         "--candidate-framework",
         choices=["html", "react", "solid"],
         default="html",
-        help="Framework requirement to expose in every packaged task.",
+        help="Framework requirement to expose in every packaged task when --candidate-frameworks is not set.",
+    )
+    parser.add_argument(
+        "--candidate-frameworks",
+        default=None,
+        help="Comma-separated framework variants to package for every oracle site, for example html,react,solid.",
     )
     parser.add_argument(
         "--metric-profile",
@@ -205,6 +248,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--verifier-allow-internet", action="store_true")
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args(argv)
+    try:
+        candidate_frameworks = _parse_candidate_frameworks(
+            args.candidate_frameworks,
+            args.candidate_framework,
+        )
+    except ValueError as exc:
+        parser.error(str(exc))
 
     result = package_dataset(
         source_root=_resolve_path(args.source_root),
@@ -218,6 +268,7 @@ def main(argv: list[str] | None = None) -> int:
         verifier_allow_internet=args.verifier_allow_internet,
         agent_memory_mb=args.agent_memory_mb,
         candidate_framework=args.candidate_framework,
+        candidate_frameworks=candidate_frameworks,
         force=args.force,
     )
     print(json.dumps(result, indent=2, sort_keys=True))

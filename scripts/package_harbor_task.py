@@ -38,6 +38,10 @@ def _enabled(capture: dict[str, Any]) -> bool:
     return capture.get("enabled", True) is not False
 
 
+def _serve_mode_for_framework(candidate_framework: str) -> str:
+    return "spa" if candidate_framework in {"react", "solid"} else "static"
+
+
 def _copy_public_screenshots(site_dir: Path, manifest: dict[str, Any], output_dir: Path) -> None:
     source_dir = Path(manifest.get("outputDir") or "./screenshots/reference")
     if not source_dir.is_absolute():
@@ -76,6 +80,7 @@ def _task_toml(
     agent_memory_mb: int = 8192,
 ) -> str:
     verifier_internet = "true" if verifier_allow_internet else "false"
+    candidate_serve_mode = _serve_mode_for_framework(candidate_framework)
     keywords = ['"web"', '"design-replication"', '"visual-evaluation"', '"screenshot-only"']
     tags = ['"website"', '"visual"']
     if candidate_framework == "html":
@@ -104,6 +109,7 @@ tags = [{", ".join(tags)}]
 has_animations = {str(has_animations).lower()}
 animation_count = {animation_count}
 candidate_framework = "{candidate_framework}"
+serve_mode = "{candidate_serve_mode}"
 
 [agent]
 timeout_sec = 1800
@@ -134,9 +140,40 @@ workdir = "/app"
 
 def _instruction_md(*, has_animations: bool, candidate_framework: str) -> str:
     framework_line = {
-        "html": "Use HTML, CSS, and JavaScript unless you have a strong reason to add a build tool.",
-        "react": "Build the candidate implementation in React. The oracle may be static HTML; reproduce the visual result and interactions in React.",
-        "solid": "Build the candidate implementation in Solid. The oracle may be static HTML; reproduce the visual result and interactions in Solid.",
+        "html": """
+Build your implementation under `/app/site`. Use local files only. The main
+entry point should be `/app/site/index.html`; additional pages may be created as
+separate HTML files when the screenshots imply multiple routes.
+
+Use HTML, CSS, and JavaScript unless you have a strong reason to add a build
+tool.
+""",
+        "react": """
+Build your implementation in React under `/app/site`. The oracle may be static
+HTML; reproduce the visual result and interactions in React.
+
+Your submission must include `package.json`, source files, and a build script
+available as `npm run build`. `/app/site/index.html` is the Vite app entry file,
+not a separate page that must match every route.
+
+The production site must build cleanly to static files under `/app/site/dist/`
+and work without `npm run dev`, a long-running development server, or runtime
+CDN scripts. Use normal client-side routes, interactions, and animations when
+they help reproduce the screenshots authentically.
+""",
+        "solid": """
+Build your implementation in Solid under `/app/site`. The oracle may be static
+HTML; reproduce the visual result and interactions in Solid.
+
+Your submission must include `package.json`, source files, and a build script
+available as `npm run build`. `/app/site/index.html` is the Vite app entry file,
+not a separate page that must match every route.
+
+The production site must build cleanly to static files under `/app/site/dist/`
+and work without `npm run dev`, a long-running development server, or runtime
+CDN scripts. Use normal client-side routes, interactions, and animations when
+they help reproduce the screenshots authentically.
+""",
     }.get(candidate_framework, "Use the requested implementation framework while matching the screenshots.")
     animation_line = (
         "This task includes animation states. Reproduce visible motion/color transitions implied by the reference animation frames, not just the static layout."
@@ -149,10 +186,6 @@ def _instruction_md(*, has_animations: bool, candidate_framework: str) -> str:
 Recreate the website design shown in the reference screenshots.
 
 The only reference materials are the screenshots under `/app/reference/screenshots/`.
-
-Build your implementation under `/app/site`. Use local files only. The
-main entry point should be `/app/site/index.html`; additional pages may be
-created as separate HTML files when the screenshots imply multiple routes.
 
 {framework_line}
 
@@ -253,8 +286,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import shutil
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -346,12 +381,281 @@ def _require_capture_metric(
         raise RuntimeError(f"Required metric {label} did not produce any numeric capture scores")
 
 
-def _candidate_root(explicit: str | None) -> Path:
+def _relative_file_sample(root: Path, limit: int = 40) -> list[str]:
+    if not root.exists():
+        return []
+    files = [
+        str(path.relative_to(root))
+        for path in sorted(root.rglob("*"))
+        if path.is_file() and len(path.parts) - len(root.parts) <= 4
+    ]
+    return files[:limit]
+
+
+def _candidate_diagnostics(site: Path, candidate_framework: str, candidate_serve_mode: str) -> dict[str, Any]:
+    def exists(relative: str) -> bool:
+        return (site / relative).exists()
+
+    return {
+        "candidate_framework": candidate_framework,
+        "candidate_serve_mode": candidate_serve_mode,
+        "site_root": str(site),
+        "expected_dist_index": str(site / "dist" / "index.html"),
+        "site_exists": site.exists(),
+        "package_json_exists": exists("package.json"),
+        "site_index_exists": exists("index.html"),
+        "dist_exists": exists("dist"),
+        "dist_index_exists": exists("dist/index.html"),
+        "build_index_exists": exists("build/index.html"),
+        "out_index_exists": exists("out/index.html"),
+        "public_index_exists": exists("public/index.html"),
+        "file_sample": _relative_file_sample(site),
+    }
+
+
+def _write_candidate_diagnostics(
+    logs_dir: Path,
+    *,
+    site: Path,
+    candidate_framework: str,
+    candidate_serve_mode: str,
+    status: str,
+    reason: str | None = None,
+    extra: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    payload = _candidate_diagnostics(site, candidate_framework, candidate_serve_mode)
+    payload["status"] = status
+    if reason:
+        payload["reason"] = reason
+    if extra:
+        payload.update(extra)
+    _write_json(logs_dir / "candidate-prep-diagnostics.json", payload)
+    return payload
+
+
+def _run_candidate_command(
+    command: list[str],
+    *,
+    cwd: Path,
+    logs_dir: Path,
+    label: str,
+    timeout_sec: int,
+) -> dict[str, Any]:
+    command_logs = logs_dir / "candidate-build"
+    command_logs.mkdir(parents=True, exist_ok=True)
+    started = time.time()
+    result: dict[str, Any] = {
+        "label": label,
+        "command": command,
+        "cwd": str(cwd),
+        "timeout_sec": timeout_sec,
+        "stdout_path": str(command_logs / f"{label}.stdout.txt"),
+        "stderr_path": str(command_logs / f"{label}.stderr.txt"),
+    }
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=cwd,
+            text=True,
+            capture_output=True,
+            timeout=timeout_sec,
+            check=False,
+        )
+        (command_logs / f"{label}.stdout.txt").write_text(completed.stdout or "", encoding="utf-8")
+        (command_logs / f"{label}.stderr.txt").write_text(completed.stderr or "", encoding="utf-8")
+        result.update(
+            {
+                "exit_code": completed.returncode,
+                "elapsed_seconds": round(time.time() - started, 3),
+                "timed_out": False,
+            }
+        )
+        return result
+    except subprocess.TimeoutExpired as exc:
+        stdout = exc.stdout.decode("utf-8", errors="replace") if isinstance(exc.stdout, bytes) else (exc.stdout or "")
+        stderr = exc.stderr.decode("utf-8", errors="replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+        (command_logs / f"{label}.stdout.txt").write_text(stdout, encoding="utf-8")
+        (command_logs / f"{label}.stderr.txt").write_text(stderr, encoding="utf-8")
+        result.update(
+            {
+                "exit_code": None,
+                "elapsed_seconds": round(time.time() - started, 3),
+                "timed_out": True,
+                "error": f"timeout after {timeout_sec}s",
+            }
+        )
+        return result
+    except FileNotFoundError as exc:
+        (command_logs / f"{label}.stdout.txt").write_text("", encoding="utf-8")
+        (command_logs / f"{label}.stderr.txt").write_text(str(exc), encoding="utf-8")
+        result.update(
+            {
+                "exit_code": None,
+                "elapsed_seconds": round(time.time() - started, 3),
+                "timed_out": False,
+                "error": str(exc),
+            }
+        )
+        return result
+
+
+def _prepare_framework_candidate_root(
+    site: Path,
+    *,
+    candidate_framework: str,
+    candidate_serve_mode: str,
+    logs_dir: Path,
+) -> Path:
+    dist = site / "dist"
+    if (dist / "index.html").exists():
+        _write_candidate_diagnostics(
+            logs_dir,
+            site=site,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            status="prepared",
+            reason="existing_dist",
+        )
+        return dist.resolve()
+
+    if not (site / "package.json").exists():
+        diagnostics = _write_candidate_diagnostics(
+            logs_dir,
+            site=site,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            status="build_not_attempted",
+            reason="package_json_missing",
+        )
+        raise RuntimeError(
+            f"candidate_framework={candidate_framework} requires a buildable /app/site package. "
+            f"Missing package.json and missing dist/index.html. "
+            f"Files under /app/site: {diagnostics.get('file_sample')}"
+        )
+
+    install_timeout = _int_env("WDE_NPM_INSTALL_TIMEOUT_SEC", 600)
+    build_timeout = _int_env("WDE_NPM_BUILD_TIMEOUT_SEC", 1200)
+    install_command = ["npm", "ci"] if (site / "package-lock.json").exists() else ["npm", "install"]
+    install_result = _run_candidate_command(
+        install_command,
+        cwd=site,
+        logs_dir=logs_dir,
+        label="npm-install",
+        timeout_sec=install_timeout,
+    )
+    if install_result.get("exit_code") != 0:
+        _write_candidate_diagnostics(
+            logs_dir,
+            site=site,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            status="build_failed",
+            reason="npm_install_failed",
+            extra={"install": install_result},
+        )
+        raise RuntimeError(f"Candidate dependency install failed: {install_result}")
+
+    build_result = _run_candidate_command(
+        ["npm", "run", "build"],
+        cwd=site,
+        logs_dir=logs_dir,
+        label="npm-run-build",
+        timeout_sec=build_timeout,
+    )
+    if build_result.get("exit_code") != 0:
+        _write_candidate_diagnostics(
+            logs_dir,
+            site=site,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            status="build_failed",
+            reason="npm_run_build_failed",
+            extra={"install": install_result, "build": build_result},
+        )
+        raise RuntimeError(f"Candidate build failed: {build_result}")
+
+    if (dist / "index.html").exists():
+        _write_candidate_diagnostics(
+            logs_dir,
+            site=site,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            status="built",
+            extra={"install": install_result, "build": build_result},
+        )
+        return dist.resolve()
+
+    alternates = [
+        str(path.relative_to(site))
+        for path in (site / "build", site / "out", site / "public")
+        if (path / "index.html").exists()
+    ]
+    diagnostics = _write_candidate_diagnostics(
+        logs_dir,
+        site=site,
+        candidate_framework=candidate_framework,
+        candidate_serve_mode=candidate_serve_mode,
+        status="dist_missing",
+        reason="build_completed_without_dist_index",
+        extra={"install": install_result, "build": build_result, "alternate_build_roots": alternates},
+    )
+    raise RuntimeError(
+        f"candidate_framework={candidate_framework} build completed but did not produce /app/site/dist/index.html. "
+        f"Found alternate build roots: {alternates}. "
+        f"Files under /app/site: {diagnostics.get('file_sample')}"
+    )
+
+
+def _candidate_root(
+    explicit: str | None,
+    candidate_framework: str,
+    candidate_serve_mode: str,
+    logs_dir: Path,
+) -> Path:
     if explicit:
-        return Path(explicit).resolve()
-    site = Path("/app/site")
+        root = Path(explicit).resolve()
+        if candidate_framework in {"react", "solid"} and (
+            (root / "package.json").exists() or (root / "dist" / "index.html").exists()
+        ):
+            return _prepare_framework_candidate_root(
+                root,
+                candidate_framework=candidate_framework,
+                candidate_serve_mode=candidate_serve_mode,
+                logs_dir=logs_dir,
+            )
+        _write_candidate_diagnostics(
+            logs_dir,
+            site=root,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            status="explicit_candidate_root",
+        )
+        return root
+    site = Path(os.environ.get("WDE_SITE_ROOT", "/app/site"))
+    if candidate_framework in {"react", "solid"}:
+        return _prepare_framework_candidate_root(
+            site,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            logs_dir=logs_dir,
+        )
     if (site / "index.html").exists():
+        _write_candidate_diagnostics(
+            logs_dir,
+            site=site,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
+            status="prepared",
+        )
         return site
+    _write_candidate_diagnostics(
+        logs_dir,
+        site=Path("/app"),
+        candidate_framework=candidate_framework,
+        candidate_serve_mode=candidate_serve_mode,
+        status="fallback_app_root",
+        reason="/app/site/index.html_missing",
+    )
     return Path("/app").resolve()
 
 
@@ -364,7 +668,6 @@ def main(argv: list[str] | None = None) -> int:
 
     tests_dir = Path(args.tests_dir).resolve()
     logs_dir = Path(args.logs_dir).resolve()
-    candidate_root = _candidate_root(args.candidate_root)
     private_dir = tests_dir / "private"
     vendor_dir = tests_dir / "vendor"
     image_repo_root = Path(os.environ.get("WDE_REPO_ROOT", "/opt/wde"))
@@ -377,8 +680,20 @@ def main(argv: list[str] | None = None) -> int:
     from website_design_eval.reward import build_reward_markdown, compute_reward
 
     metric_config = _read_json(private_dir / "metric-config.json")
+    candidate_framework = os.environ.get("WDE_CANDIDATE_FRAMEWORK") or metric_config.get("candidate_framework") or "html"
+    candidate_serve_mode = (
+        os.environ.get("WDE_CANDIDATE_SERVE_MODE")
+        or metric_config.get("candidate_serve_mode")
+        or ("spa" if candidate_framework in {"react", "solid"} else "static")
+    )
     eval_dir = logs_dir / "eval"
     eval_dir.mkdir(parents=True, exist_ok=True)
+    candidate_root = _candidate_root(
+        args.candidate_root,
+        candidate_framework,
+        candidate_serve_mode,
+        logs_dir,
+    )
 
     capture_filter_raw = os.environ.get("WDE_CAPTURE_FILTER", "").strip()
     capture_filter = {part.strip() for part in capture_filter_raw.split(",") if part.strip()} or None
@@ -421,6 +736,8 @@ def main(argv: list[str] | None = None) -> int:
             reference_root=(private_dir / "oracle-site").resolve(),
             reference_manifest=(private_dir / "screenshot-manifest.json").resolve(),
             candidate_root=candidate_root,
+            candidate_framework=candidate_framework,
+            candidate_serve_mode=candidate_serve_mode,
             output_dir=eval_dir,
             repo_root=repo_root,
             skip_vlm=skip_vlm,
@@ -551,20 +868,27 @@ log_event() {
   local event="$1"
   shift || true
   local ts
-  ts="$(date -Is)"
+  ts="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+  json_escape() {
+    local value="$1"
+    value="${value//\\/\\\\}"
+    value="${value//\"/\\\"}"
+    value="${value//$'\n'/\\n}"
+    value="${value//$'\r'/\\r}"
+    value="${value//$'\t'/\\t}"
+    printf '%s' "$value"
+  }
   local payload
-  payload="{\\"ts\\":\\"$ts\\",\\"event\\":\\"$event\\""
+  payload="{\"ts\":\"$(json_escape "$ts")\",\"event\":\"$(json_escape "$event")\""
   while (($#)); do
     local key="$1"
     local value="$2"
     shift 2
-    value="${value//\\/\\\\}"
-    value="${value//\"/\\\"}"
-    payload="$payload,\\"$key\\":\\"$value\\""
+    payload="$payload,\"$(json_escape "$key")\":\"$(json_escape "$value")\""
   done
   payload="$payload}"
-  echo "[wde-verifier] $payload"
-  echo "$payload" >> "$LOG_DIR/verifier-progress.jsonl"
+  printf '[wde-verifier] %s\n' "$payload"
+  printf '%s\n' "$payload" >> "$LOG_DIR/verifier-progress.jsonl"
 }
 
 log_event "verifier_entry" "tests_dir" "$TESTS_DIR" "candidate_root" "$CANDIDATE_ROOT"
@@ -771,7 +1095,10 @@ def package_task(
     private_dir = task_dir / "tests" / "private"
     _copytree(site_dir, private_dir / "oracle-site", ignore_extra={"screenshots"})
     shutil.copyfile(manifest_path, private_dir / "screenshot-manifest.json")
-    _write_json(private_dir / "metric-config.json", _metric_config(metric_profile))
+    metric_config = _metric_config(metric_profile)
+    metric_config["candidate_framework"] = candidate_framework
+    metric_config["candidate_serve_mode"] = _serve_mode_for_framework(candidate_framework)
+    _write_json(private_dir / "metric-config.json", metric_config)
 
     _copytree(site_dir, task_dir / "solution" / "oracle-site", ignore_extra={"screenshots", "screenshot-manifest.json"})
 
